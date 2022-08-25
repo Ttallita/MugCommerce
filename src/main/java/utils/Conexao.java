@@ -5,25 +5,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexao {
-    private static String driver;
-    private static String url;
-    private static String user;
-    private static String password;
 
     public Connection getConexao() throws SQLException, ClassNotFoundException{
 
-        driver = "org.postgresql.Driver";
-        url = "jdbc:postgresql://localhost/fanLoot";
-        user = "postgres";
+        String driver = "org.postgresql.Driver";
+        String url = "jdbc:postgresql://localhost/emug";
+        String user = "postgres";
 
         //Mudar senha para conexão com banco
         //password = "post24SQL05";
-        password = "hitagi710";
+        String password = "hitagi710";
 
         Class.forName(driver);
-        Connection conn = DriverManager.getConnection(url, user, password);
 
-        return conn;
+        return DriverManager.getConnection(url, user, password);
     }
 
     public void fecharConexao(Connection conn) {
