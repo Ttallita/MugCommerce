@@ -1,6 +1,16 @@
+html, body {
+    height: 100vh;
+    overflow: auto;
+    background-color: #DFDEDE;
+}
+
 footer {
-    padding: 15px;
-    background-color: gray;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
 }
 
 .container-produto{
