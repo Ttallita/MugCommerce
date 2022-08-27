@@ -5,13 +5,18 @@ html, body {
 }
 
 footer {
-  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   text-align: center;
   padding: 10px;
 }
+
+.banner-home {
+  height: 400px;
+  background-color: rgb(47, 129, 72);
+}
+
 
 .container-produto{
 
