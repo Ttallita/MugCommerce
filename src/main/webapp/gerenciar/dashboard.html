@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title>Gerenciar - Dashboard</title>
 
     <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
@@ -13,34 +13,122 @@
 
 <body>
 
-    <div class="l-navbar p-5 m-5">
-        <p>Admin</p>
-        <nav class="l-nav">
-            <div class="nav_list">
-                <div class="list-group btn-group-vertical">
-                    <a class="nav_link" id="paginaPrincipal" type="button" href="/emug/adm/dashboard.html">
-                        <span class="material-icons inline-icon">home</span> Principal
-                    </a>
+    <header>
+        <div class="navbar bg-dark navbar-dark">
+            <div class="container-fluid">
 
-                    <a class="nav_link active-navbar" id="paginaClientes" type="button" href="/emug/adm/clientes.html">
-                        <span class="material-icons inline-icon">people</span> Clientes
-                    </a>
+                <img src="\emug\assets\img\logo_generico.jpeg" alt="logo" class="logo">
 
-                    <a class="nav_link" id="paginaVendas" type="button" href="/emug/adm/vendas.html">
-                        <span class="material-icons inline-icon">show_chart</span> Vendas
-                    </a>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">
+                        <span class="material-icons">search</span>
+                    </button>
+                </form>
 
-                    <a class="nav_link" id="paginaEstoque" type="button" href="/emug/adm/estoque.html">
-                        <span class="material-icons inline-icon">all_inbox</span> Estoque
-                    </a>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-light" type="submit">
+                        <span class="material-icons">account_circle</span>
+                    </button>
+                    <button class="btn btn-light" type="submit">
+                        <span class="material-icons">shopping_cart</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-0">
+            <div class="container-fluid">
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Produtos</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+    </header>
+    
+    <main class="d-flex flex-nowrap mt-5">
+
+        <!--Sidebar-->
+        <div class="l-navbar ms-5 me-5">
+            <p>Admin</p>
+            <nav class="l-nav">
+                <div class="nav_list">
+                    <div class="list-group btn-group-vertical">
+                        <a class="nav_link active-navbar" id="paginaPrincipal" type="button" href="/emug/gerenciar/dashboard.html">
+                            <span class="material-icons inline-icon">home</span> Dashboard
+                        </a>
+    
+                        <a class="nav_link" id="paginaClientes" type="button" href="/emug/gerenciar/clientes.html">
+                            <span class="material-icons inline-icon">people</span> Clientes
+                        </a>
+    
+                        <a class="nav_link" id="paginaVendas" type="button" href="/emug/gerenciar/vendas.html">
+                            <span class="material-icons inline-icon">show_chart</span> Vendas
+                        </a>
+    
+                        <a class="nav_link" id="paginaEstoque" type="button" href="/emug/gerenciar/estoque.html">
+                            <span class="material-icons inline-icon">all_inbox</span> Estoque
+                        </a>
+
+                        <a href="#" class="nav_link">
+                            <span class="material-icons inline-icon">logout</span>Sair
+                        </a>
+                        
+                    </div>
+                </div>
+    
+            </nav>
+        </div>
+    
+        <div class="w-75 bg-white rounded p-5">
+            <h5>Dashboard</h5>
+
+            <hr>
+
+            <!-- Gráficos-->
+            <div class="container">
+                <div class="row g-5">
+
+                    <div class="col-12 align-self-center text-center">
+                        <h5>Gráfico vendas</h5>
+                        <img src="\emug\assets\img\grafico_exemplo.jpg" class="img-fluid" alt="img_grafico">
+                    </div>
+
+                    <div class="col-12 align-self-center text-center">
+                        <h5>Taxa de trocas</h5>
+                        <img src="\emug\assets\img\grafico_exemplo2.png" class="img-fluid" alt="img_grafico">
+                    </div>
+
                 </div>
             </div>
+        </div>
+    </main>
 
-            <a href="#" class="nav_link"> <span class="material-icons inline-icon">logout</span>Sair</a>
-
-        </nav>
-    </div>
-
+    <footer class="bg-dark text-center text-white">
+        &copy;Todos direitos reservados André e Tallita
+    </footer>
+    
     <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 
 </body>

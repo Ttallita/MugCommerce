@@ -1,9 +1,16 @@
 :root {
-  --first-color: #112f1a;
-  --first-color-light: #2f8148;
+  --first-color: #134880;
+  --first-color-light: #268fff;
   --white-color: #F7F6FB;
-  --bs-link-hover-color: #42ff7b;
+  --bs-link-hover-color: #73b7ff;
 }
+
+/**Paleta
+  #134880
+  #73b7ff
+  #268fff
+  #395b80
+*/
 
 html, body {
   height: 100vh;
@@ -20,7 +27,7 @@ footer {
 
 a {
   text-decoration: none;
-  color: #0d6efd;
+  color: #395b80;
 }
 
 
@@ -30,7 +37,7 @@ a {
 
 .banner-home {
   height: 400px;
-  background-color: #2f8148;
+  background-color: #395b80;
 }
 
 .logo {
