@@ -15,8 +15,17 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  text-align: center;
   padding: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #1c512c;
+}
+
+
+.img-produto-carrinho {
+    height: 100px;
 }
 
 .banner-home {
@@ -24,15 +33,14 @@ footer {
   background-color: #2f8148;
 }
 
-/** Navbar **/
-
-a {
-  text-decoration: none;
-  color: #1c512c;
+.logo {
+  height: 10%;
+  width: 10%;
 }
 
+
+/** Sidebar **/
 .l-navbar {
-  /* position: fixed; */
   height: 80vh;
 }
 

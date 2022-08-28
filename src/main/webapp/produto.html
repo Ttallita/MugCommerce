@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+
+    <link rel="stylesheet" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="webjars/material-design-icons/4.0.0/material-icons.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+</head>
+<body>
+<header>
+    <div class="navbar bg-dark navbar-dark">
+        <div class="container-fluid">
+
+            <img src="\emug\assets\img\logo_generico.jpeg" alt="logo" class="logo">
+
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" aria-label="Search">
+                <button class="btn btn-success" type="submit">
+                    <span class="material-icons">search</span>
+                </button>
+            </form>
+
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-light" type="submit">
+                    <span class="material-icons">account_circle</span>
+                </button>
+                <button class="btn btn-light" type="submit">
+                    <span class="material-icons">shopping_cart</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
+        <div class="container-fluid">
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Produtos</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+<main class="container mt-3">
+    <div class="row mt-4 bg-white rounded p-4 mb-3">
+        <div class="col-md-4">
+            <div class="card  mb-3">
+                <img alt="produto" class="p-2" src="\emug\assets\img\caneca_exemplo.jpeg">
+            </div>
+        </div>
+        <div class="col-md-5 p-3">
+            <div>
+                <p class="text-muted">Caneca Personalizada</p>
+                <h2 class="title">Caneca</h2>
+                <p>Descrição</p>
+                <ul class="list-group mt-4">
+                    <li class="d-flex  justify-content-between">
+                        <h6 class="fw-bolder">Material</h6>
+
+                        <h6 class="text-muted align-middle">material</h6>
+                    </li>
+                    <li class="d-flex  justify-content-between">
+                        <h6 class="fw-bolder">Fabricante</h6>
+                        <h6 class="text-muted align-middle">fabricante</h6>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3 border p-3">
+            <div>
+                <p class="text-muted">10 vendidos</p>
+                <div class="mb-3">
+                    <h2>R$ 100,00</h2>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="dropdown mb-3">
+                        <a type="button" id="alterarEndereco" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#alterarEnderecoModal">
+                            Envio para casa de Nathan Silva
+                            <span class="material-icons inline-icon">keyboard_arrow_down</span>
+                        </a>
+                        <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
+                            <li>
+                                <a href="" class="dropdown-item">
+                                    Envio para casa de Nathan Silva
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">Adicionar endereço</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <p>Frete: R$ 00,00</p>
+                    <div class="row g-2 m-2 align-items-center">
+                        <div class="col-auto">
+                            <label class="col-form-label">Quantidade:</label>
+                        </div>
+                        <div class="col-4">
+                            <input class="form-control" type="number">
+                        </div>
+                        <div class="col-auto">
+                            <span class="form-text">(10 disponíveis)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-1 col-10 mx-auto mt-3">
+                    <a type="button" href="" class="btn btn-success rounded-pill">Comprar</a>
+                    <button type="button" class="btn  btn-outline-success rounded-pill">Adicionar ao carrinho</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="bg-dark text-center text-white">
+    &copy;Todos direitos reservados André e Tallita
+</footer>
+</body>
+<script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+</html>
