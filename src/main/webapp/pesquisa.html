@@ -57,112 +57,283 @@
 
     </header>
 
-    <div class="container p-5">
-        <div class="row">
-            <div class="card mb-3">
-                <div class="card-body">
-                    1-10 de 50 resultados para "palavra pesquisada".
-                </div>
+    <main class="wrapper container">
+
+        <div class="row mt-4 bg-white rounded p-4 mb-3">
+            <div class="col-md-12 p-3 border rounded mb-5">
+                1-10 de 50 resultados para <strong class="text-muted">"palavra pesquisada"</strong>
             </div>
-            <div class="col-3">
-                Filtrar por
-                <hr/>
-                <h6>Categoria</h6>
-                <div>Anime</div>
-                <div>Series</div>
-                <div>Filmes</div>
-                <div>Mundo Geek</div>
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                <h5 class="fw-bolder">Categoria</h5>
+                <ul class="list-group mt-4">
+                    <li class="d-flex justify-content-between">
+                        <a class="text-decoration-none" href="#">Anime</a>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <a class="text-decoration-none" href="#">Series</a>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <a class="text-decoration-none" href="#">Mundo Geek</a>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <a class="text-decoration-none" href="#">Jogos</a>
+                    </li>
+                </ul>
 
                 <br/>
-                <h6>Preço</h6>
-                <div>Até R$ 50,00</div>
-                <div>R$ 50,00 até R$ 150,00</div>
-                <div>Mais de R$ 150,00</div>
-                <div class="row">
-                    <div class="col">
-                        <input type="number" class="form-control" placeholder="R$ min" aria-label="Min Price">
-                    </div>
-                    -
-                    <div class="col">
-                        <input type="number" class="form-control" placeholder="R$ max" aria-label="Max price">
-                    </div>
-                </div>
+                <h5 class="fw-bolder">Preço</h5>
+                <ul class="list-group mt-4">
+                    <li class="d-flex  justify-content-between">
+                        <a class="text-decoration-none" href="#">Até $50,00</a>
+                        <h6 class="text-muted align-middle">(5)</h6>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <a class="text-decoration-none" href="#">R$ 50,00 a R$ 150,00 </a>
+                        <h6 class="text-muted">(5)</h6>
+                    </li>
+                    <li class="d-flex justify-content-between">
+                        <a class="text-decoration-none" href="#">Mais de R$ 150,00</a>
+                        <h6 class="text-muted">(5)</h6>
+                    </li>
+                    <li class="d-flex justify-content-between ">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="R$ min" type="text">
+                            <span class="input-group-text">-</span>
+                            <input type="text" class="form-control" placeholder="R$ max">
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="col-9">
-                <h6>Resultados</h6>
-                <div class="row">
-                    <!-- Produto -->
-                    <div class="col">
-                        <div class="card text-center">
-                            <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
-                            <div class="card-body">
-                                <em>Nome produto</em>
-                                <h6>R$ 00,00</h6>
+
+            <div class="col-lg-9">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="btn-group float-end">
+                            <button type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    class="btn btn-primary dropdown-toggle" id="ordenarResultados">Ordenar por</button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                                <li><a class="dropdown-item" href="#">Mais relevantes</a></li>
+                                <li><a class="dropdown-item" href="#">Maior preço</a></li>
+                                <li><a class="dropdown-item" href="#">Menor preço</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row row-cols-xl-4">
+                    <div class="col mb-3 ">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                                 alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Canecas</h6>
+                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col">
-                        <div class="card text-center">
-                            <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
-                            <div class="card-body">
-                                <em>Nome produto</em>
-                                <h6>R$ 00,00</h6>
+                    <div class="col mb-3">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Canecas</h6>
+                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col">
-                        <div class="card text-center">
-                            <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
-                            <div class="card-body">
-                                <em>Nome produto</em>
-                                <h6>R$ 00,00</h6>
+                    <div class="col mb-3">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Canecas</h6>
+                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col">
-                        <div class="card text-center">
-                            <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
-                            <div class="card-body">
-                                <em>Nome produto</em>
-                                <h6>R$ 00,00</h6>
+                    <div class="col mb-3">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                                 alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Canecas</h6>
+                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col">
-                        <div class="card text-center">
-                            <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
-                            <div class="card-body">
-                                <em>Nome produto</em>
-                                <h6>R$ 00,00</h6>
+                    <div class="col mb-3">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                                 alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Canecas</h6>
+                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                                 alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Canecas</h6>
+                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Canecas</h6>
+                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                                 alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Canecas</h6>
+                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Canecas</h6>
+                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="card produto">
+                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
+                            <div class="card-body pt-0">
+                                <h6>Pelúcia</h6>
+                                <a class="fw-bolder h5 text-decoration-none" href="/emug/produto.jsp">Hatsune</a>
+                                <div class="row">
+                                    <div class="col-8">R$40.00</div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-outline-primary btn-circle" id="adicionarCarrinhoBtn">
+                                            <span class="material-icons md-18">add_shopping_cart</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <br/><br/>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">«</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">»</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div style="z-index: 11" class="position-fixed bottom-0 end-0 p-2">
+            <div id="liveToast" role="alert" aria-live="assertive" aria-atomic="true" class="toast fade hide">
+                <div class="toast-body">
+                    <img src="\emug\assets\img\pelucias\caneca_porco.jpeg" alt="..." class="rounded me-2 w-25">
+                </div>
+                <div class="toast-header">
+                    <strong class="me-auto">Hatsune</strong><small>adicionado ao carrinho</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
     <footer class="bg-dark text-center text-white">
         &copy;Todos direitos reservados André e Tallita
     </footer>
