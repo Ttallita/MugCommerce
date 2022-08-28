@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Perfil</title>
+    <title>Perfil - Atualizar senha</title>
 
     <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
@@ -76,11 +76,11 @@
             <nav class="l-nav">
                 <div class="nav_list">
                     <div class="list-group btn-group-vertical">
-                        <a class="nav_link active-navbar" id="paginaAtualizar" type="button" href="/emug/cliente/perfil.html">
+                        <a class="nav_link" id="paginaAtualizar" type="button" href="/emug/cliente/perfil.html">
                             <span class="material-icons inline-icon">account_circle</span> Perfil
                         </a>
 
-                        <a class="nav_link" id="paginaAtualizar" type="button" href="/emug/cliente/atualizarSenha.html">
+                        <a class="nav_link active-navbar" id="paginaAtualizar" type="button" href="/emug/cliente/atualizarSenha.html">
                             <span class="material-icons inline-icon">lock</span> Atualizar senha
                         </a>
 
@@ -110,58 +110,32 @@
     
 
         <div class="w-75 bg-white rounded p-5">
-            <h5>Perfil</h5>
+            <h5>Atualizar senha</h5>
 
             <hr>
 
             <div class="container">
 
-                <!-- Editar cadastro cliente -->
+                <!-- Atualizar senha -->
                 <form>
-
                     <div class="row g-3 p-4">
 
-                        <div class="col-sm-3">
-                            <small>Nome</small>
-                            <input type="text" class="form-control" id="nome" name="nome" value="">
+                        <div class="col-sm-12">
+                            <small>Senha antiga</small>
+                            <input type="password" class="form-control" id="senhaAntiga" name="senhaAntiga" value="">
                         </div>
-        
-                        <div class="col-sm-6">
-                            <small>Sobrenome</small>
-                            <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="">
-                        </div>
-        
-                        <div class="col-sm-3">
-                            <small>CPF</small>
-                            <input type="text" class="form-control" id="cpf" name="cpf" value="">
-                        </div>
-        
-                        <div class="col-md-4">
-                            <small>Gênero</small>
-                            <select class="form-select" id="genero" name="genero">
-                                <option value="">Selecione</option>
-                                <option>Masculino</option>
-                                <option>Feminimo</option>
-                                <option>Outro</option>
-                                <option>Prefiro não informar</option>
-                            </select>
-                        </div>
-        
-                        <div class="col-sm-4">
-                            <small>Data de nascimento</small>
-                            <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
-                        </div>
-        
-                        <div class="col-sm-4">
-                            <small>Telefone</small>
-                            <input type="phone" class="form-control" id="telefone" name="telefone" value="">
-                        </div>
-        
-                        <hr>
-        
-                        <button type="button" class="w-100 btn btn-primary btn-sm">Atualizar</button>
 
-                    </div>
+                        <div class="col-sm-12">
+                            <small>Senha</small>
+                            <input type="password" class="form-control" id="senhaNova" name="senhaNova" value="">
+                        </div>
+        
+                        <div class="col-sm-12">
+                            <small>Confirmação senha</small>
+                            <input type="password" class="form-control" id="senhaConfirmacao" name="senhaConfirmacao" value="">
+                        </div>
+
+                        <button type="button" class="w-100 btn btn-primary btn-sm">Atualizar</button>
 
                 </form>
             </div>

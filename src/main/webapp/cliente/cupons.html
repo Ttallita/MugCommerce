@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Perfil</title>
+    <title>Perfil - Cupons</title>
 
     <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
@@ -76,7 +76,7 @@
             <nav class="l-nav">
                 <div class="nav_list">
                     <div class="list-group btn-group-vertical">
-                        <a class="nav_link active-navbar" id="paginaAtualizar" type="button" href="/emug/cliente/perfil.html">
+                        <a class="nav_link" id="paginaAtualizar" type="button" href="/emug/cliente/perfil.html">
                             <span class="material-icons inline-icon">account_circle</span> Perfil
                         </a>
 
@@ -96,7 +96,7 @@
                             <span class="material-icons inline-icon">credit_card</span> Cartões
                         </a>
     
-                        <a class="nav_link" id="paginaEstoque" type="button" href="/emug/cliente/cupons.html">
+                        <a class="nav_link active-navbar" id="paginaEstoque" type="button" href="/emug/cliente/cupons.html">
                             <span class="material-icons inline-icon">discount</span> Cupons
                         </a>
                         
@@ -110,65 +110,53 @@
     
 
         <div class="w-75 bg-white rounded p-5">
-            <h5>Perfil</h5>
+            <h5>Cupons</h5>
 
             <hr>
 
             <div class="container">
+                <div class="row row-cols-xl-2">
 
-                <!-- Editar cadastro cliente -->
-                <form>
-
-                    <div class="row g-3 p-4">
-
-                        <div class="col-sm-3">
-                            <small>Nome</small>
-                            <input type="text" class="form-control" id="nome" name="nome" value="">
+                    <!-- Cupom -->
+                    <div class="border row p-2 rounded m-1">
+                        <div class="d-flex justify-content-between mt-2">
+                            <small>Promocional</small>
+                            <h6>Validade: 00/00/0000</h6>
                         </div>
-        
-                        <div class="col-sm-6">
-                            <small>Sobrenome</small>
-                            <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="">
+                        <div class="d-flex justify-content-between">
+                            <h6>Nome cupom</h6>
+                            <h6>R$ 00,00</h6>
                         </div>
-        
-                        <div class="col-sm-3">
-                            <small>CPF</small>
-                            <input type="text" class="form-control" id="cpf" name="cpf" value="">
-                        </div>
-        
-                        <div class="col-md-4">
-                            <small>Gênero</small>
-                            <select class="form-select" id="genero" name="genero">
-                                <option value="">Selecione</option>
-                                <option>Masculino</option>
-                                <option>Feminimo</option>
-                                <option>Outro</option>
-                                <option>Prefiro não informar</option>
-                            </select>
-                        </div>
-        
-                        <div class="col-sm-4">
-                            <small>Data de nascimento</small>
-                            <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
-                        </div>
-        
-                        <div class="col-sm-4">
-                            <small>Telefone</small>
-                            <input type="phone" class="form-control" id="telefone" name="telefone" value="">
-                        </div>
-        
-                        <hr>
-        
-                        <button type="button" class="w-100 btn btn-primary btn-sm">Atualizar</button>
-
+                        <p>Descrição cupom</p>
                     </div>
 
-                </form>
+                    <div class="border row p-2 rounded m-1">
+                        <div class="d-flex justify-content-between mt-2">
+                            <small>Promocional</small>
+                            <h6>Validade: 00/00/0000</h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6>Nome cupom</h6>
+                            <h6>R$ 00,00</h6>
+                        </div>
+                        <p>Descrição cupom</p>
+                    </div>
+
+                    <div class="border row p-2 rounded m-1">
+                        <div class="d-flex justify-content-between mt-2">
+                            <small>Promocional</small>
+                            <h6>Validade: 00/00/0000</h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6>Nome cupom</h6>
+                            <h6>R$ 00,00</h6>
+                        </div>
+                        <p>Descrição cupom</p>
+                    </div>
+
+                </div>
             </div>
 
-            <hr>
-
-            </div>
         </div>
     </main>
 
