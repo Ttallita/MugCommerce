@@ -14,153 +14,146 @@
 </head>
 
 <body>
+    <div class="container card w-50 mt-5 mb-5">
+        <h3 class="text-center mt-5">Cadastro</h3>
+        <form>
 
-    
-  <div class="container card w-50 mt-5 mb-5">
-    <h3 class="text-center mt-5">Cadastro</h3>
-    <form>
+            <div class="row g-3 p-4">
+                <!--Conta-->
+                <h5>Conta</h5>
+                <div class="col-sm-6">
+                    <small>Email</small>
+                    <input type="email" class="form-control" id="email" name="email" value="">
+                </div>
 
-      <div class="row g-3 p-4">
-          <!--Conta-->
-          <h5>Conta</h5>
-          <div class="col-sm-6">
-            <small>Email</small>
-            <input type="email" class="form-control" id="email" name="email" value="">
-          </div>
-    
-          <div class="col-sm-3">
-            <small>Senha</small>
-            <input type="password" class="form-control" id="senha" name="senha" value="">
-          </div>
-    
-          <div class="col-sm-3">
-            <small>Confirmação senha</small>
-            <input type="password" class="form-control" id="senhaConfirmacao" name="senhaConfirmacao" value="">
-          </div>
-    
-    
-          <!-- Dados pessoais -->
-          <hr>
-          <h5>Dados pessoais</h5>
-    
-          <div class="col-sm-3">
-            <small>Nome</small>
-            <input type="text" class="form-control" id="nome" name="nome" value="">
-          </div>
-          
-          <div class="col-sm-6">
-            <small>Sobrenome</small>
-            <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="">
-          </div>
+                <div class="col-sm-3">
+                    <small>Senha</small>
+                    <input type="password" class="form-control" id="senha" name="senha" value="">
+                </div>
 
-          <div class="col-sm-3">
-            <small>CPF</small>
-            <input type="text" class="form-control" id="cpf" name="cpf" value="">
-          </div>
-    
-          <div class="col-md-4">
-            <small>Gênero</small>
-            <select class="form-select" id="genero" name="genero">
-              <option value="">Selecione</option>
-              <option>Masculino</option>
-              <option>Feminimo</option>
-              <option>Outro</option>
-              <option>Prefiro não informar</option>
-            </select>
-          </div>
-
-          <div class="col-sm-4">
-            <small>Data de nascimento</small>
-            <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
-          </div>
-    
-          <div class="col-sm-4">
-            <small>Telefone</small>
-            <input type="phone" class="form-control" id="telefone" name="telefone" value="">
-          </div>
-    
-          <!--Endereço-->
-          <hr>
-          <h5>Endereço</h5>
-    
-          <div class="col-sm-4">
-            <small>Tipo de residência</small>
-            <input type="text" class="form-control" id="tpResidencia" name="tpResidencia" value="">
-          </div>
-    
-          <div class="col-sm-4">
-            <small>Tipo de logradouro</small>
-            <input type="text" class="form-control" id="tpLogradouro" name="tpLogradouro" value="">
-          </div>
-    
-          <div class="col-sm-4">
-            <small>Logradouro</small>
-            <input type="text" class="form-control" id="logradouro" name="logradouro" value="">
-          </div>
-
-          <div class="col-sm-6">
-            <small>Bairro</small>
-            <input type="text" class="form-control" id="bairro" name="bairro" value="">
-          </div>
-
-          <div class="col-sm-2">
-            <small>Número</small>
-            <input type="text" class="form-control" id="numeroEndereco" name="numeroEndereco" value="">
-          </div>
-    
-          <div class="col-sm-4">
-            <small>CEP</small>
-            <input type="text" class="form-control" id="cep" name="cep" value="">
-          </div>
-    
-          <div class="col-md-4">
-            <small>País</small>
-            <select class="form-select" id="pais" name="pais">
-              <option value="">Selecione</option>
-              <option>Brasil</option>
-              <option>Uruguai</option>
-            </select>
-          </div>
-    
-          <div class="col-md-4">
-            <small>Estado</small>
-            <select class="form-select" id="estado" name="estado">
-              <option value="">Selecione</option>
-              <option>São Paulo</option>
-              <option>Rio de Janeiro</option>
-              <option>Minas gerais</option>
-            </select>
-          </div>
-    
-          <div class="col-md-4">
-            <small>Apelido endereço</small>
-            <select class="form-select" id="cidade" name="cidade">
-              <option value="">Selecione</option>
-              <option>Cidade</option>
-              <option>Cidade</option>
-            </select>
-          </div>
-
-          <div class="col-sm-12">
-            <small>Apelido endereço</small>
-            <input type="text" class="form-control" id="apelidoEndereco" name="apelidoEndereco" value="">
-          </div>
-    
-          <div class="col-sm-12">
-            <small>Observação<small class="text-muted">(Opcional)</small></small>
-            <input type="text" class="form-control" id="observacaoEndereco" name="observacaoEndereco" value="">
-          </div>
-
-          <hr>
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Cadastrar</button>
-
-        </div>
-      </form>
+                <div class="col-sm-3">
+                    <small>Confirmação senha</small>
+                    <input type="password" class="form-control" id="senhaConfirmacao" name="senhaConfirmacao" value="">
+                </div>
 
 
+                <!-- Dados pessoais -->
+                <hr>
+                <h5>Dados pessoais</h5>
 
-  </div>
+                <div class="col-sm-3">
+                    <small>Nome</small>
+                    <input type="text" class="form-control" id="nome" name="nome" value="">
+                </div>
 
+                <div class="col-sm-6">
+                    <small>Sobrenome</small>
+                    <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="">
+                </div>
+
+                <div class="col-sm-3">
+                    <small>CPF</small>
+                    <input type="text" class="form-control" id="cpf" name="cpf" value="">
+                </div>
+
+                <div class="col-md-4">
+                    <small>Gênero</small>
+                    <select class="form-select" id="genero" name="genero">
+                        <option value="">Selecione</option>
+                        <option>Masculino</option>
+                        <option>Feminimo</option>
+                        <option>Outro</option>
+                        <option>Prefiro não informar</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-4">
+                    <small>Data de nascimento</small>
+                    <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
+                </div>
+
+                <div class="col-sm-4">
+                    <small>Telefone</small>
+                    <input type="phone" class="form-control" id="telefone" name="telefone" value="">
+                </div>
+
+                <!--Endereço-->
+                <hr>
+                <h5>Endereço</h5>
+
+                <div class="col-sm-4">
+                    <small>Tipo de residência</small>
+                    <input type="text" class="form-control" id="tpResidencia" name="tpResidencia" value="">
+                </div>
+
+                <div class="col-sm-4">
+                    <small>Tipo de logradouro</small>
+                    <input type="text" class="form-control" id="tpLogradouro" name="tpLogradouro" value="">
+                </div>
+
+                <div class="col-sm-4">
+                    <small>Logradouro</small>
+                    <input type="text" class="form-control" id="logradouro" name="logradouro" value="">
+                </div>
+
+                <div class="col-sm-6">
+                    <small>Bairro</small>
+                    <input type="text" class="form-control" id="bairro" name="bairro" value="">
+                </div>
+
+                <div class="col-sm-2">
+                    <small>Número</small>
+                    <input type="text" class="form-control" id="numeroEndereco" name="numeroEndereco" value="">
+                </div>
+
+                <div class="col-sm-4">
+                    <small>CEP</small>
+                    <input type="text" class="form-control" id="cep" name="cep" value="">
+                </div>
+
+                <div class="col-md-4">
+                    <small>País</small>
+                    <select class="form-select" id="pais" name="pais">
+                        <option value="">Selecione</option>
+                        <option>Brasil</option>
+                        <option>Uruguai</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <small>Estado</small>
+                    <select class="form-select" id="estado" name="estado">
+                        <option value="">Selecione</option>
+                        <option>São Paulo</option>
+                        <option>Rio de Janeiro</option>
+                        <option>Minas gerais</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <small>Apelido endereço</small>
+                    <select class="form-select" id="cidade" name="cidade">
+                        <option value="">Selecione</option>
+                        <option>Cidade</option>
+                        <option>Cidade</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-12">
+                    <small>Apelido endereço</small>
+                    <input type="text" class="form-control" id="apelidoEndereco" name="apelidoEndereco" value="">
+                </div>
+
+                <div class="col-sm-12">
+                    <small>Observação<small class="text-muted">(Opcional)</small></small>
+                    <input type="text" class="form-control" id="observacaoEndereco" name="observacaoEndereco" value="">
+                </div>
+
+                <hr>
+
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Cadastrar</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

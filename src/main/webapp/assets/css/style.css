@@ -8,8 +8,11 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  text-align: center;
   padding: 10px;
+}
+
+.img-produto-carrinho {
+    height: 100px;
 }
 
 .banner-home {
@@ -22,10 +25,3 @@ footer {
     width: 10%;
 }
 
-.container-produto{
-
-}
-
-.container-form{
-
-}
