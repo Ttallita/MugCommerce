@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
+    <title>Gerenciar - Estoque</title>
 
     <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
@@ -13,35 +13,203 @@
 
 <body>
 
-    <div class="l-navbar p-5 m-5">
-        <p>Admin</p>
-        <nav class="l-nav">
-            <div class="nav_list">
-                <div class="list-group btn-group-vertical">
-                    <a class="nav_link" id="paginaPrincipal" type="button" href="/emug/adm/dashboard.html">
-                        <span class="material-icons inline-icon">home</span> Principal
-                    </a>
+    <header>
+        <div class="navbar bg-dark navbar-dark">
+            <div class="container-fluid">
 
-                    <a class="nav_link active-navbar" id="paginaClientes" type="button" href="/emug/adm/clientes.html">
-                        <span class="material-icons inline-icon">people</span> Clientes
-                    </a>
+                <img src="\emug\assets\img\logo_generico.jpeg" alt="logo" class="logo">
 
-                    <a class="nav_link" id="paginaVendas" type="button" href="/emug/adm/vendas.html">
-                        <span class="material-icons inline-icon">show_chart</span> Vendas
-                    </a>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">
+                        <span class="material-icons">search</span>
+                    </button>
+                </form>
 
-                    <a class="nav_link" id="paginaEstoque" type="button" href="/emug/adm/estoque.html">
-                        <span class="material-icons inline-icon">all_inbox</span> Estoque
-                    </a>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-light" type="submit">
+                        <span class="material-icons">account_circle</span>
+                    </button>
+                    <button class="btn btn-light" type="submit">
+                        <span class="material-icons">shopping_cart</span>
+                    </button>
                 </div>
+
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-0">
+            <div class="container-fluid">
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Produtos</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+    </header>
+    
+    <main class="d-flex flex-nowrap mt-5">
+
+        <!--Sidebar-->
+        <div class="l-navbar ms-5 me-5">
+            <p>Admin</p>
+            <nav class="l-nav">
+                <div class="nav_list">
+                    <div class="list-group btn-group-vertical">
+                        <a class="nav_link" id="paginaPrincipal" type="button" href="/emug/gerenciar/dashboard.html">
+                            <span class="material-icons inline-icon">home</span> Dashboard
+                        </a>
+    
+                        <a class="nav_link" id="paginaClientes" type="button" href="/emug/gerenciar/clientes.html">
+                            <span class="material-icons inline-icon">people</span> Clientes
+                        </a>
+    
+                        <a class="nav_link" id="paginaVendas" type="button" href="/emug/gerenciar/vendas.html">
+                            <span class="material-icons inline-icon">show_chart</span> Vendas
+                        </a>
+    
+                        <a class="nav_link active-navbar" id="paginaEstoque" type="button" href="/emug/gerenciar/estoque.html">
+                            <span class="material-icons inline-icon">all_inbox</span> Estoque
+                        </a>
+                    </div>
+                </div>
+    
+                <a href="#" class="nav_link"> <span class="material-icons inline-icon">logout</span>Sair</a>
+    
+            </nav>
+        </div>
+    
+    
+        <div class="w-75 bg-white rounded p-5">
+            <h5>Vendas</h5>
+
+            <hr>
+
+            <!-- Filtro de vendas-->
+            <div class="container">
+                <form>
+                    <div class="row g-3">
+
+                        <div class="col-sm-4">
+                            <small>Status</small>
+                            <select class="form-select" aria-label="Default select example">
+                                <option value="">Selecione</option>
+                                <option value="">Aprovado</option>
+                                <option value="">Entregue</option>
+                                <option value="">Em processamento</option>
+                                <option value="">Troca solicitada</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <small>Valor compra</small>
+                            <div class="input-group">
+                                <input class="form-control" id="vlrCompra" placeholder="R$ min" type="text">
+                                <span class="input-group-text">-</span>
+                                <input type="text" class="form-control" placeholder="R$ max">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <small>Valor venda</small>
+                            <div class="input-group">
+                                <input class="form-control" id="vlrVenda" placeholder="R$ min" type="text">
+                                <span class="input-group-text">-</span>
+                                <input type="text" class="form-control" placeholder="R$ max">
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-primary btn-sm">Pesquisar</button>
+                        </div>
+
+                    </div>
+
+                </form>
             </div>
 
-            <a href="#" class="nav_link"> <span class="material-icons inline-icon">logout</span>Sair</a>
+            <hr>
 
-        </nav>
-    </div>
+            <div class="table-responsive p-3 rounded mb-4">
 
+                <table class="table table-hover" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Quant. Produtos</th>
+                            <th>Valor compra</th>
+                            <th>Valor venda</th>
+                            <th>Quant. estoque</th>
+                            <th>Limite venda</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>nome</td>
+                            <td>00</td>
+                            <td>R$ 00,00</td>
+                            <td>R$ 00,00</td>
+                            <td>00</td>
+                            <td>00</td>
+                            <td>
+                                <span class="material-icons">edit</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>nome</td>
+                            <td>00</td>
+                            <td>R$ 00,00</td>
+                            <td>R$ 00,00</td>
+                            <td>00</td>
+                            <td>00</td>
+                            <td>
+                                <span class="material-icons">edit</span>
+                            </td>
+                        </tr>
+        
+                    </tbody>
+                </table>
+
+                <button type="button" class="w-100 btn btn-primary btn-sm">Adicionar produto</button>
+
+            </div>
+            
+        </div>
+    </main>
+
+    <footer class="bg-dark text-center text-white">
+        &copy;Todos direitos reservados André e Tallita
+    </footer>
+    
     <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+    <script src='webjars/jquery/3.6.0/jquery.min.js'></script>
+    <script src='webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js'></script>
+
+    <script>
+        $('#vlrVenda').mask("#.##0,00", {reverse: true});
+    </script>
 
 </body>
 
