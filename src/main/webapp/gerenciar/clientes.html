@@ -1,0 +1,66 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+
+    <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
+    <link rel="stylesheet" href="../assets/css/style.css"/>
+</head>
+
+<body>
+
+    
+    <main class="d-flex flex-nowrap">
+        <div class="l-navbar ms-5 me-5">
+            <p>Admin</p>
+            <!--Sidebar-->
+            <nav class="l-nav">
+                <div class="nav_list">
+                    <div class="list-group btn-group-vertical">
+                        <a class="nav_link" id="paginaPrincipal" type="button" href="/emug/adm/dashboard.html">
+                            <span class="material-icons inline-icon">home</span> Dashboard
+                        </a>
+    
+                        <a class="nav_link active-navbar" id="paginaClientes" type="button" href="/emug/adm/clientes.html">
+                            <span class="material-icons inline-icon">people</span> Clientes
+                        </a>
+    
+                        <a class="nav_link" id="paginaVendas" type="button" href="/emug/adm/vendas.html">
+                            <span class="material-icons inline-icon">show_chart</span> Vendas
+                        </a>
+    
+                        <a class="nav_link" id="paginaEstoque" type="button" href="/emug/adm/estoque.html">
+                            <span class="material-icons inline-icon">all_inbox</span> Estoque
+                        </a>
+                    </div>
+                </div>
+    
+                <a href="#" class="nav_link"> <span class="material-icons inline-icon">logout</span>Sair</a>
+    
+            </nav>
+        </div>
+    
+    
+        <div class="w-75 bg-white rounded p-5">
+            <h4 class="fw-bold">Clientes</h4>
+    
+            <div class="table-responsive border p-3 rounded mb-4">
+
+            </div>
+            
+        </div>
+    </main>
+
+    <footer class="bg-dark text-center text-white">
+        &copy;Todos direitos reservados André e Tallita
+    </footer>
+
+    <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
