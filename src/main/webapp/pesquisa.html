@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+
+    <link rel="stylesheet" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="webjars/material-design-icons/4.0.0/material-icons.css"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+</head>
+<body>
+    <header>
+        <div class="navbar ms-4 me-4">
+            <div class="container-fluid">
+
+                <img src="\emug\assets\img\logo_generico.jpeg" alt="logo" class="w-25">
+        
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">
+                        <span class="material-icons">search</span>
+                    </button>
+                </form>
+    
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-light" type="submit">
+                        <span class="material-icons">account_circle</span>
+                    </button>
+                    <button class="btn btn-light" type="submit">
+                        <span class="material-icons">shopping_cart</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
+            <div class="container-fluid">
+
+                <a class="navbar-brand ms-5" href="#">MugCommerce</a>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Produtos</a>
+                        </li>
+                    </ul>
+                </div>
+    
+            </div>
+        </nav>
+
+    </header>
+
+        <!--Lançamentos-->
+        <div class="container-sm p-5">
+            <div class="row">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        1-10 de 50 resultados para "palavra pesquisada".
+                    </div>
+                </div>
+                <div class="col-3">
+                    Filtrar por
+                    <hr />
+                    <h6>Categoria</h6>
+                    <div>Anime</div>
+                    <div>Series</div>
+                    <div>Filmes</div>
+                    <div>Mundo Geek</div>
+
+                    <br/>
+                    <h6>Preço</h6>
+                    <div>Até R$ 50,00</div>
+                    <div>R$ 50,00 até R$ 150,00</div>
+                    <div>Mais de R$ 150,00</div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="number" class="form-control" placeholder="R$ min" aria-label="Min Price">
+                        </div>
+                        -
+                        <div class="col">
+                            <input type="number" class="form-control" placeholder="R$ max" aria-label="Max price">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <h6>Resultados</h6>
+                    <div class="row">
+                        <!-- Produto -->
+                        <div class="col">
+                            <div class="card text-center">
+                                <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
+                                <div class="card-body">
+                                    <em>Nome produto</em>
+                                    <h6>R$ 00,00</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card text-center">
+                                <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
+                                <div class="card-body">
+                                    <em>Nome produto</em>
+                                    <h6>R$ 00,00</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card text-center">
+                                <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
+                                <div class="card-body">
+                                    <em>Nome produto</em>
+                                    <h6>R$ 00,00</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card text-center">
+                                <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
+                                <div class="card-body">
+                                    <em>Nome produto</em>
+                                    <h6>R$ 00,00</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card text-center">
+                                <img class="img-fluid p-4" src="\emug\assets\img\caneca_porco.jpeg" alt="nome_produto">
+                                <div class="card-body">
+                                    <em>Nome produto</em>
+                                    <h6>R$ 00,00</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+</html>
