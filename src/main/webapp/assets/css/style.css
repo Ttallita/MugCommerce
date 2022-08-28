@@ -11,10 +11,6 @@ footer {
   padding: 10px;
 }
 
-.img-produto-carrinho {
-    height: 100px;
-}
-
 .banner-home {
   height: 400px;
   background-color: rgb(47, 129, 72);
@@ -23,5 +19,9 @@ footer {
 .logo {
     height: 10%;
     width: 10%;
+}
+
+.paragraph-no-space {
+    margin: 0px;
 }
 

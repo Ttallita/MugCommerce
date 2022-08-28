@@ -8,9 +8,9 @@ public class Conexao {
 
     public Connection getConexao() throws SQLException, ClassNotFoundException{
 
-        String driver = "org.postgresql.Driver";
-        String url = "jdbc:postgresql://localhost/emug";
-        String user = "postgres";
+        final String driver = "org.postgresql.Driver";
+        final String url = "jdbc:postgresql://localhost/emug";
+        final String user = "postgres";
 
         //Mudar senha para conexão com banco
         //password = "post24SQL05";

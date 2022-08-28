@@ -56,51 +56,96 @@
         </nav>
 
     </header>
+    <main class="wrapper container mt-3">
+        <div class="row mt-3 mb-3 bg-white rounded p-4">
+            <div class="col-lg-9">
+                <h3 class="mb-3 fw-bold">
+                    Carrinho<strong class="text-muted h4">(1)</strong>
+                </h3>
+                <div>
+                    <div class="container">
+                        <div class="row  border-bottom">
+                            <div class="col-3">
+                                <div class="card produto mb-3">
+                                    <img alt="produto" src="\emug\assets\img\caneca_porco.jpeg" class="p-2">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4 class="mb-3">
+                                    <h6 class="text-muted">Categoria</h6>
+                                    Caneca porco
+                                </h4>
 
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-9">
-                <h4>Carrinho de compras</h4>
-                <hr/>
-                <div class="row">
-                    <div class="col-3">
-                        <img src="\emug\assets\img\caneca_porco.jpeg" class="w-75 h-75">
-                    </div>
-                    <div class="col-4">
-                        Caneca Porco
-                        <br/>
-                    </div>
-                    <div class="col-2">
-                        <label for="quantidade" class="form-label">Quantidade</label>
-                        <input type="number" class="form-control" id="quantidade">
-                    </div>
-                    <div class="col-3">
-                        Preço: R$ 104, 90
-                    </div>
-                    <div class="col-3">
-                        <img src="\emug\assets\img\caneca_exemplo.jpeg" class="w-75 h-75">
-                    </div>
-                    <div class="col-4">
-                        Caneca Personalizavel
-                        <br/>
-                    </div>
-                    <div class="col-2">
-                        <label for="quantidade" class="form-label">Quantidade</label>
-                        <input type="number" class="form-control" id="quantidade">
-                    </div>
-                    <div class="col-3">
-                        Preço: R$ 104, 90
+                                <div class="float-end col-4">
+                                    <label>Quantidade:</label>
+                                    <input type="number" class="form-control">
+                                    <h6 class="text-muted small">10 disponíveis</h6>
+                                </div>
+
+                                <h4>R$ 100,00</h4>
+                                <div class="d-flex col-12 justify-content-between">
+                                    <a class="text-decoration-none">Excluir</a>
+                                    <a class="text-decoration-none" href="/LootCommerce/cliente/confirmarPedido.jsp">Comprar agora</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
-            <div class="col-3">
-                <p>Subtotal (3 itens): R$ 104,90</p>
-                <button class="btn btn-success" type="submit">Fechar Pedido</button>
+            <div class="col-lg-3 order-md-last">
+                <div class="row vstack mt-5">
+                    <div class="p-0 mb-2">
+                        <a type="button" id="alterarEndereco" class="text-decoration-none" data-bs-toggle="modal"
+                           data-bs-target="#alterarEnderecoModal">
+                            Envio para casa de Samuel Silva
+                            <span class="material-icons inline-icon">keyboard_arrow_down</span></a>
+                    </div>
+                    <div class="container border rounded py-4">
+                        <strong class="text-muted">Adicionar cupom</strong>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" aria-label="Recipient's username"
+                                   aria-describedby="button-addon2" placeholder="Nome cupom">
+                            <button class="btn btn-primary" type="button" id="button-addon2">
+                                Aplicar
+                            </button>
+                        </div>
+                        <div class="toast align-items-center text-white bg-primary border-0 fade show" role="alert"
+                             aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body p-2">PROMOCAO</div>
+                                <div class="toast-body p-2">R$ 10,00</div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                        data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container border rounded mt-3 py-4">
+                        <ul class="list-group">
+                            <li class="d-flex justify-content-between">
+                                <strong class="text-muted">Carrinho:</strong>
+                                <strong>$0.00</strong>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <strong class="text-muted">Frete:</strong>
+                                <strong>$0.00</strong>
+                            </li>
+                            <li class="d-flex justify-content-between">
+                                <strong class="text-muted">Desconto:</strong>
+                                <strong>- R$ 0.00</strong>
+                            </li>
+                            <li class="d-flex justify-content-between py-3">
+                                <strong class="text-muted">Total:</strong>
+                                <h5 class="font-weight-bold">R$ 400,00</h5>
+                            </li>
+                            <a href="/LootCommerce/cliente/confirmarPedido.jsp" class="btn btn-primary rounded-pill py-2 ">
+                                Comprar carrinho
+                            </a>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 </body>
 <script src="/emug/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 </html>
