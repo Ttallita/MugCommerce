@@ -12,37 +12,51 @@
 </head>
 <body>
     <header>
-        <div class="navbar ms-4 me-4">
+        <div class="navbar bg-dark navbar-dark">
             <div class="container-fluid">
 
-                <img src="\emug\assets\img\logo_branco.png" alt="logo" class="logo">
-        
-                <form class="d-flex justify-content-center">
+                <a href="/emug/index.html">
+                    <img src="\emug\assets\img\logo_branco.png" alt="logo" class="logo w-50">
+                </a>
+
+                <form class="d-flex" action="pesquisa.html">
                     <input class="form-control me-2" type="search" aria-label="Search">
                     <button class="btn btn-success" type="submit">
                         <span class="material-icons">search</span>
                     </button>
                 </form>
-    
+
                 <div class="d-flex align-items-center gap-3">
                     <button class="btn btn-light" type="submit">
-                        <span class="material-icons">account_circle</span>
+                        <a href="cliente/perfil.html">
+                            <span class="material-icons">account_circle</span>
+                        </a>
                     </button>
                     <button class="btn btn-light" type="submit">
-                        <span class="material-icons">shopping_cart</span>
+                        <a href="cliente/carrinho.html">
+                            <span class="material-icons">shopping_cart</span>
+                        </a>
                     </button>
                 </div>
 
             </div>
         </div>
-    
+
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
             <div class="container-fluid">
 
-                <a class="navbar-brand ms-5" href="#">MugCommerce</a>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
@@ -51,7 +65,7 @@
                         </li>
                     </ul>
                 </div>
-    
+
             </div>
         </nav>
 
@@ -123,11 +137,11 @@
                 <div class="row row-cols-xl-4">
                     <div class="col mb-3 ">
                         <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
                                  alt="...">
                             <div class="card-body pt-0">
                                 <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <h5 class="fw-bolder">Caneca</h5>
                                 <div class="row">
                                     <div class="col-8">R$40.00</div>
                                 </div>
@@ -136,10 +150,10 @@
                     </div>
                     <div class="col mb-3">
                         <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
+                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="...">
                             <div class="card-body pt-0">
                                 <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <h5 class="fw-bolder">Caneca</h5>
                                 <div class="row">
                                     <div class="col-8">R$40.00</div>
                                 </div>
@@ -148,11 +162,11 @@
                     </div>
                     <div class="col mb-3">
                         <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
+                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="...">
                             <div class="card-body pt-0">
                                 <h6>Canecas</h6>
                                 <a href="produto.html">
-                                    <h5 class="fw-bolder">Fancy Product</h5>
+                                    <h5 class="fw-bolder">Caneca</h5>
                                 </a>
                                 <div class="row">
                                     <div class="col-8">R$40.00</div>
@@ -162,11 +176,11 @@
                     </div>
                     <div class="col mb-3">
                         <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
                                  alt="...">
                             <div class="card-body pt-0">
                                 <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <h5 class="fw-bolder">Caneca</h5>
                                 <div class="row">
                                     <div class="col-8">R$40.00</div>
                                 </div>
@@ -175,11 +189,11 @@
                     </div>
                     <div class="col mb-3">
                         <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
                                  alt="...">
                             <div class="card-body pt-0">
                                 <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <h5 class="fw-bolder">Caneca</h5>
                                 <div class="row">
                                     <div class="col-8">R$40.00</div>
                                 </div>
@@ -188,11 +202,11 @@
                     </div>
                     <div class="col mb-3">
                         <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
                                  alt="...">
                             <div class="card-body pt-0">
                                 <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <h5 class="fw-bolder">Caneca</h5>
                                 <div class="row">
                                     <div class="col-8">R$40.00</div>
                                 </div>
@@ -201,10 +215,10 @@
                     </div>
                     <div class="col mb-3">
                         <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
+                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="...">
                             <div class="card-body pt-0">
                                 <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <h5 class="fw-bolder">Caneca</h5>
                                 <div class="row">
                                     <div class="col-8">R$40.00</div>
                                 </div>
@@ -213,11 +227,11 @@
                     </div>
                     <div class="col mb-3">
                         <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg"
+                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
                                  alt="...">
                             <div class="card-body pt-0">
                                 <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <h5 class="fw-bolder">Caneca</h5>
                                 <div class="row">
                                     <div class="col-8">R$40.00</div>
                                 </div>
@@ -226,29 +240,12 @@
                     </div>
                     <div class="col mb-3">
                         <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
+                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="...">
                             <div class="card-body pt-0">
                                 <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <h5 class="fw-bolder">Caneca</h5>
                                 <div class="row">
                                     <div class="col-8">R$40.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\caneca_porco.jpeg" alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Pelúcia</h6>
-                                <a class="fw-bolder h5 text-decoration-none" href="/emug/produto.jsp">Hatsune</a>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
-                                    <div class="col-4">
-                                        <button type="button" class="btn btn-outline-primary btn-circle" id="adicionarCarrinhoBtn">
-                                            <span class="material-icons md-18">add_shopping_cart</span>
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
