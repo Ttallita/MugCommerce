@@ -16,51 +16,50 @@
 <body>
 
     
-  <div class="container card">
-
+  <div class="container card w-50 mt-5 mb-5">
+    <h3 class="text-center mt-5">Cadastro</h3>
     <form>
 
-      <div class="row g-3">
+      <div class="row g-3 p-4">
           <!--Conta-->
-          <div class="col-sm-12">
-            <label for="email" class="form-label">Email</label>
+          <h5>Conta</h5>
+          <div class="col-sm-6">
+            <small>Email</small>
             <input type="email" class="form-control" id="email" name="email" value="">
-            <!-- <div class="invalid-feedback">
-              Valid first name is required.
-            </div> -->
           </div>
     
-          <div class="col-sm-6">
-            <label for="senha" class="form-label">Senha</label>
+          <div class="col-sm-3">
+            <small>Senha</small>
             <input type="password" class="form-control" id="senha" name="senha" value="">
           </div>
     
-          <div class="col-sm-6">
-            <label for="senhaConfirmacao" class="form-label">Confirmação senha</label>
+          <div class="col-sm-3">
+            <small>Confirmação senha</small>
             <input type="password" class="form-control" id="senhaConfirmacao" name="senhaConfirmacao" value="">
           </div>
     
     
           <!-- Dados pessoais -->
-          <hr class="my-4">
+          <hr>
+          <h5>Dados pessoais</h5>
     
-          <div class="col-sm-6">
-            <label for="nome" class="form-label">Nome</label>
+          <div class="col-sm-3">
+            <small>Nome</small>
             <input type="text" class="form-control" id="nome" name="nome" value="">
           </div>
-    
+          
           <div class="col-sm-6">
-            <label for="sobrenome" class="form-label">Sobrenome</label>
+            <small>Sobrenome</small>
             <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="">
           </div>
 
-          <div class="col-sm-4">
-            <label for="cpf" class="form-label">CPF</label>
+          <div class="col-sm-3">
+            <small>CPF</small>
             <input type="text" class="form-control" id="cpf" name="cpf" value="">
           </div>
     
           <div class="col-md-4">
-            <label for="genero" class="form-label">Gênero</label>
+            <small>Gênero</small>
             <select class="form-select" id="genero" name="genero">
               <option value="">Selecione</option>
               <option>Masculino</option>
@@ -69,65 +68,53 @@
               <option>Prefiro não informar</option>
             </select>
           </div>
-    
+
           <div class="col-sm-4">
-            <label for="dtNascimento" class="form-label">Data de nascimento</label>
+            <small>Data de nascimento</small>
             <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
           </div>
     
-          <!-- Telefone -->
-          <hr class="my-4">
-    
-          <div class="col-sm-6">
-            <label for="telefone" class="form-label">Telefone</label>
+          <div class="col-sm-4">
+            <small>Telefone</small>
             <input type="phone" class="form-control" id="telefone" name="telefone" value="">
           </div>
     
           <!--Endereço-->
-          <hr class="my-4">
+          <hr>
+          <h5>Endereço</h5>
     
-          <div class="col-sm-6">
-            <label for="tpResidencia" class="form-label">Tipo de residência</label>
+          <div class="col-sm-4">
+            <small>Tipo de residência</small>
             <input type="text" class="form-control" id="tpResidencia" name="tpResidencia" value="">
-          </div>
-    
-          <div class="col-sm-6">
-            <label for="tpLogradouro" class="form-label">Tipo de logradouro</label>
-            <input type="text" class="form-control" id="tpLogradouro" name="tpLogradouro" value="">
-          </div>
-    
-          <div class="col-sm-6">
-            <label for="logradouro" class="form-label">Logradouro</label>
-            <input type="text" class="form-control" id="logradouro" name="logradouro" value="">
-          </div>
-    
-          <div class="col-sm-6">
-            <label for="tpResidencia" class="form-label">Tipo de residência</label>
-            <input type="text" class="form-control" id="tpResidencia" name="tpResidencia" value="">
-          </div>
-    
-          <div class="col-sm-3">
-            <label for="numeroEndereco" class="form-label">Número endereço</label>
-            <input type="text" class="form-control" id="numeroEndereco" name="numeroEndereco" value="">
-          </div>
-    
-          <div class="col-sm-6">
-            <label for="bairro" class="form-label">Bairro</label>
-            <input type="text" class="form-control" id="bairro" name="bairro" value="">
-          </div>
-    
-          <div class="col-sm-6">
-            <label for="bairro" class="form-label">Bairro</label>
-            <input type="text" class="form-control" id="bairro" name="bairro" value="">
           </div>
     
           <div class="col-sm-4">
-            <label for="cep" class="form-label">CEP</label>
+            <small>Tipo de logradouro</small>
+            <input type="text" class="form-control" id="tpLogradouro" name="tpLogradouro" value="">
+          </div>
+    
+          <div class="col-sm-4">
+            <small>Logradouro</small>
+            <input type="text" class="form-control" id="logradouro" name="logradouro" value="">
+          </div>
+
+          <div class="col-sm-6">
+            <small>Bairro</small>
+            <input type="text" class="form-control" id="bairro" name="bairro" value="">
+          </div>
+
+          <div class="col-sm-2">
+            <small>Número</small>
+            <input type="text" class="form-control" id="numeroEndereco" name="numeroEndereco" value="">
+          </div>
+    
+          <div class="col-sm-4">
+            <small>CEP</small>
             <input type="text" class="form-control" id="cep" name="cep" value="">
           </div>
     
           <div class="col-md-4">
-            <label for="pais" class="form-label">País</label>
+            <small>País</small>
             <select class="form-select" id="pais" name="pais">
               <option value="">Selecione</option>
               <option>Brasil</option>
@@ -136,7 +123,7 @@
           </div>
     
           <div class="col-md-4">
-            <label for="estado" class="form-label">Estado</label>
+            <small>Estado</small>
             <select class="form-select" id="estado" name="estado">
               <option value="">Selecione</option>
               <option>São Paulo</option>
@@ -146,7 +133,7 @@
           </div>
     
           <div class="col-md-4">
-            <label for="cidade" class="form-label">Cidade</label>
+            <small>Apelido endereço</small>
             <select class="form-select" id="cidade" name="cidade">
               <option value="">Selecione</option>
               <option>Cidade</option>
@@ -155,18 +142,18 @@
           </div>
 
           <div class="col-sm-12">
-            <label for="apelidoEndereco" class="form-label">Apelido do endereço</label>
+            <small>Apelido endereço</small>
             <input type="text" class="form-control" id="apelidoEndereco" name="apelidoEndereco" value="">
           </div>
     
           <div class="col-sm-12">
-            <label for="observacaoEndereco" class="form-label">Observação</label><span class="text-muted">(Opcional)</span></label>
+            <small>Observação<small class="text-muted">(Opcional)</small></small>
             <input type="text" class="form-control" id="observacaoEndereco" name="observacaoEndereco" value="">
           </div>
 
-          <div class="d-grid gap-2 col-8 mx-auto align-middle">
-            <button class="btn btn-primary" type="button">Cadastrar</button>
-          </div>
+          <hr>
+
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Cadastrar</button>
 
         </div>
       </form>
