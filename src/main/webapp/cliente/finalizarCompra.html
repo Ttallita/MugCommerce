@@ -71,8 +71,7 @@
                     <div class="col-6 p-3">
                         <strong>Endereço de entrega</strong>
                         <!--Aciona modal alterar endereço entrega-->
-                        <a type="button" id="alterarEndereco" class="text-decoration-none" data-bs-toggle="modal"
-                           data-bs-target="#alterarEnderecoModal">
+                        <a type="button" id="alterarEndereco" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Alterar
                         </a>
                         <h6>Casa</h6>
@@ -180,93 +179,33 @@
             </div>
         </div>
 
-        <!--Modal alterar endereço-->
-        <c:import url="/includes/alterarEnderecoModal.jsp" charEncoding="UTF-8"/>
-
-        <!--Modal alterar forma de pagamento-->
-        <div class="modal fade" id="alterarFormaPagamentoModal" data-bs-backdrop="static" data-bs-keyboard="false"
-             tabindex="-1" aria-labelledby="alterarFormaPagamentoLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header border-0">
-                        <h5 class="modal-title" id="alterarFormaPagamentoLabel">Alterar forma de pagamento</h5>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Escolha o endereço</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form class="needs-validation" action="..." method="POST" novalidate="">
-                        <input type="hidden" name="operacao" value="salvar">
-                        <div class="modal-body">
-                            <div class="row g-2 mb-4">
-                                <h6 class="col-md-12 fw-bold">Cartões salvos</h6>
-                                <div class="border p-2 rounded">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="">
-                                        <div class="col-md-12 d-flex justify-content-between">
-                                            <span>Imagem bandeira</span><span class="fw-bold d-block">**** **** **** 1234</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="border p-2 rounded">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="">
-                                        <div class="col-md-12 d-flex justify-content-between">
-                                            <span>Imagem bandeira</span><span class="fw-bold d-block">**** **** **** 1234</span>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Rua Frei Caneca, 86, Vila São Pedro - Santo André - SP - CEP 09210190
+                                </label>
                             </div>
-                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <button data-bs-toggle="tab" data-bs-target="#alterarFormaPagamento" type="button" role="tab" aria-selected="false" class="nav-link fw-bold" id="alterarFormaPagamentoBtn">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="">
-                                        <label class="form-check-label fw-bold">Adicionar cartão</label>
-                                    </div>
-                                </button>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Rua Frei Caneca, 86, Vila São Pedro - Santo André - SP - CEP 09210190
+                                </label>
                             </div>
-                            <div class="tab-content" id="nav-tabContent">
-                                <div role="tabpanel" class="tab-pane fade" id="alterarFormaPagamento">
-                                    <div class="row g-2">
-                                        <div class="col-md-9">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="nomeCartao" name="nomeCartao" placeholder="" required>
-                                                <label for="nomeCartao">Nome impresso</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-floating">
-                                                <select class="form-select" id="bandeira" name="bandeira" required>
-                                                    <option value="">Selecione</option>
-                                                    <option>Visa</option>
-                                                    <option>Mastercard</option>
-                                                </select>
-                                                <label>Bandeira</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="numCartao" name="numCartao" placeholder="" required>
-                                                <label for="numCartao" class="form-label">Número do cartão</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="dtValidade" name="dtValidade" placeholder="" required>
-                                                <label for="dtValidade" class="form-label">Validade</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="codigoCartao" name="codigoCartao" placeholder="" required>
-                                                <label for="codigoCartao" class="form-label">CVV</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer border-0">
-                            <input type="submit" id="alterarFormaPagamentoBtn" value="Atualizar" class="btn btn-success">
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Adicionar outro endereço</button>
+                    </div>
                 </div>
             </div>
         </div>
