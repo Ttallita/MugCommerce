@@ -12,12 +12,14 @@
 </head>
 <body>
     <header>
-        <div class="navbar ms-4 me-4">
+        <div class="navbar bg-dark navbar-dark">
             <div class="container-fluid">
 
-                <img src="\emug\assets\img\logo_generico.jpeg" alt="logo" class="logo">
+                <a href="/emug/index.html">
+                    <img src="\emug\assets\img\logo_branco.png" alt="logo" class="logo w-50">
+                </a>
 
-                <form class="d-flex justify-content-center">
+                <form class="d-flex" action="pesquisa.html">
                     <input class="form-control me-2" type="search" aria-label="Search">
                     <button class="btn btn-success" type="submit">
                         <span class="material-icons">search</span>
@@ -26,10 +28,14 @@
 
                 <div class="d-flex align-items-center gap-3">
                     <button class="btn btn-light" type="submit">
-                        <span class="material-icons">account_circle</span>
+                        <a href="cliente/perfil.html">
+                            <span class="material-icons">account_circle</span>
+                        </a>
                     </button>
                     <button class="btn btn-light" type="submit">
-                        <span class="material-icons">shopping_cart</span>
+                        <a href="cliente/carrinho.html">
+                            <span class="material-icons">shopping_cart</span>
+                        </a>
                     </button>
                 </div>
 
@@ -39,10 +45,18 @@
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
             <div class="container-fluid">
 
-                <a class="navbar-brand ms-5" href="#">MugCommerce</a>
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
@@ -67,7 +81,7 @@
                         <div class="row  border-bottom">
                             <div class="col-3">
                                 <div class="card produto mb-3">
-                                    <img alt="produto" src="\emug\assets\img\caneca_porco.jpeg" class="p-2">
+                                    <img alt="produto" src="\emug\assets\img\canecas\caneca_porco.jpeg" class="p-2">
                                 </div>
                             </div>
                             <div class="col">
@@ -94,12 +108,6 @@
             </div>
             <div class="col-lg-3 order-md-last">
                 <div class="row vstack mt-5">
-                    <div class="p-0 mb-2">
-                        <a type="button" id="alterarEndereco" class="text-decoration-none" data-bs-toggle="modal"
-                           data-bs-target="#alterarEnderecoModal">
-                            Envio para casa de Samuel Silva
-                            <span class="material-icons inline-icon">keyboard_arrow_down</span></a>
-                    </div>
                     <div class="container border rounded py-4">
                         <strong class="text-muted">Adicionar cupom</strong>
                         <div class="input-group mb-3">

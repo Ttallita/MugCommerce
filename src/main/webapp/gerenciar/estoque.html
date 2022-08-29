@@ -17,9 +17,11 @@
         <div class="navbar bg-dark navbar-dark">
             <div class="container-fluid">
 
-                <img src="\emug\assets\img\logo_generico.jpeg" alt="logo" class="logo">
+                <a href="/emug/index.html">
+                    <img src="\emug\assets\img\logo_branco.png" alt="logo" class="logo w-50">
+                </a>
 
-                <form class="d-flex">
+                <form class="d-flex" action="pesquisa.html">
                     <input class="form-control me-2" type="search" aria-label="Search">
                     <button class="btn btn-success" type="submit">
                         <span class="material-icons">search</span>
@@ -28,8 +30,13 @@
 
                 <div class="d-flex align-items-center gap-3">
                     <button class="btn btn-light" type="submit">
-                        <a href="gerenciar/dashboard.html">
-                            <span class="material-icons pt-1">dashboard</span>
+                        <a href="cliente/perfil.html">
+                            <span class="material-icons">account_circle</span>
+                        </a>
+                    </button>
+                    <button class="btn btn-light" type="submit">
+                        <a href="cliente/carrinho.html">
+                            <span class="material-icons">shopping_cart</span>
                         </a>
                     </button>
                 </div>
@@ -37,7 +44,7 @@
             </div>
         </div>
 
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-0">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
             <div class="container-fluid">
 
                 <button class="navbar-toggler"
