@@ -1,17 +1,25 @@
 package model.cliente;
 
+import model.cliente.endereco.TelefoneType;
+
 import java.util.Objects;
 
 public class Telefone {
-    private String tipo;
+    private TelefoneType tipo;
     private String ddd;
     private String numero;
 
-    public String getTipo() {
+    public Telefone(TelefoneType tipo, String ddd, String numero) {
+        this.tipo = tipo;
+        this.ddd = ddd;
+        this.numero = numero;
+    }
+
+    public TelefoneType getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(TelefoneType tipo) {
         this.tipo = tipo;
     }
 
