@@ -147,7 +147,7 @@
                 </div>
                 <hr>
                 <input type="hidden" name="operacao" value="salvar">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">Cadastrar</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" name="botaoCadastro">Cadastrar</button>
             </div>
         </form>
     </div>
