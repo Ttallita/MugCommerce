@@ -1,5 +1,6 @@
 package model.cliente;
 
+import model.EntidadeDominio;
 import model.Usuario;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
@@ -7,7 +8,7 @@ import model.cupom.Cupom;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Cliente extends Usuario {
+public class Cliente extends EntidadeDominio {
 
     private String nome;
     private String sobrenome;
@@ -19,6 +20,8 @@ public class Cliente extends Usuario {
     private List<CartaoDeCredito> cartoesDeCredito;
     private List<Cupom> cupons;
     private int ranking;
+
+    private Usuario usuario;
 
     public String getNome() {
         return nome;
@@ -98,5 +101,13 @@ public class Cliente extends Usuario {
 
     public void setRanking(int ranking) {
         this.ranking = ranking;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

@@ -12,9 +12,7 @@ public class Conexao {
         final String url = "jdbc:postgresql://localhost/emug";
         final String user = "postgres";
 
-        //Mudar senha para conexão com banco
-        //password = "post24SQL05";
-        String password = "hitagi710";
+        String password = "postgres@local";
 
         Class.forName(driver);
 

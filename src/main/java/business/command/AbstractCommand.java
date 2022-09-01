@@ -1,7 +1,7 @@
-package controller.command;
+package business.command;
 
-import controller.facade.Facade;
-import controller.facade.IFacade;
+import business.facade.Facade;
+import business.facade.IFacade;
 
 public abstract class AbstractCommand implements ICommand{
     protected IFacade facade = new Facade();

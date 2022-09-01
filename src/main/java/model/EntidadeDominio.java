@@ -1,6 +1,6 @@
 package model;
 
-public abstract class EntidadeDominio implements IEntidade{
+public abstract class EntidadeDominio {
     private Long id;
     private boolean ativo;
 

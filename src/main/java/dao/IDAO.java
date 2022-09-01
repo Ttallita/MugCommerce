@@ -1,7 +1,6 @@
 package dao;
 
 import model.EntidadeDominio;
-import model.IEntidade;
 
 import java.util.List;
 

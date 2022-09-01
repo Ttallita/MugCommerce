@@ -1,6 +1,6 @@
-package controller.viewHelper.impl;
+package business.viewHelper.impl;
 
-import controller.viewHelper.IViewHelper;
+import business.viewHelper.IViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;

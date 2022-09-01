@@ -1,11 +1,12 @@
-package controller.command;
+package business.command;
 
 import model.EntidadeDominio;
 import model.Result;
 
-public class ListarCommand extends AbstractCommand{
+public class AtualizarCommand extends AbstractCommand{
+
     @Override
     public Result execute(EntidadeDominio entidade, String operacao) {
-        return facade.listar(entidade, operacao);
+        return facade.atualizar(entidade);
     }
 }

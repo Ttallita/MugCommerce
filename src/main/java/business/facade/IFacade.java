@@ -1,4 +1,4 @@
-package controller.facade;
+package business.facade;
 
 import model.EntidadeDominio;
 import model.Result;

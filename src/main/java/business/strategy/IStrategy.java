@@ -1,4 +1,4 @@
-package controller.strategy;
+package business.strategy;
 
 import model.EntidadeDominio;
 

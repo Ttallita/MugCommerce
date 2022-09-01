@@ -70,30 +70,4 @@ public class CartaoDeCredito extends EntidadeDominio {
         this.cliente = cliente;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CartaoDeCredito that = (CartaoDeCredito) o;
-        return codigo == that.codigo
-                && Objects.equals(numCartao, that.numCartao)
-                && Objects.equals(nomeImpressoCartao, that.nomeImpressoCartao)
-                && Objects.equals(bandeira, that.bandeira);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(numCartao, nomeImpressoCartao, bandeira, codigo);
-    }
-
-    @Override
-    public String toString() {
-        return "CartaoDeCredito{" +
-                "numCartao='" + numCartao + '\'' +
-                ", nomeImpressoCartao='" + nomeImpressoCartao + '\'' +
-                ", bandeira='" + bandeira + '\'' +
-                ", codigo=" + codigo +
-                '}';
-    }
-
 }

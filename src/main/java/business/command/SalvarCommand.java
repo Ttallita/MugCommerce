@@ -1,9 +1,7 @@
-package controller.command;
+package business.command;
 
 import model.EntidadeDominio;
 import model.Result;
-
-import javax.servlet.http.HttpSession;
 
 public class SalvarCommand extends AbstractCommand{
 

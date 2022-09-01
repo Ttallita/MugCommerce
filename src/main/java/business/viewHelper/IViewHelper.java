@@ -1,4 +1,4 @@
-package controller.viewHelper;
+package business.viewHelper;
 
 import model.EntidadeDominio;
 import model.Result;
@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public interface IViewHelper {
 
-    public EntidadeDominio getEntidade(HttpServletRequest request);
+    EntidadeDominio getEntidade(HttpServletRequest request);
 
-    public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
+    void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
 }
