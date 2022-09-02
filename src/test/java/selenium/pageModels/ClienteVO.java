@@ -11,22 +11,31 @@ public class ClienteVO {
     private String genero;
     private String dtNascimento;
     private String telefone;
-    private String tpResidencia;
-    private String tpLogradouro;
-    private String logradouro;
-    private String bairro;
-    private String numeroEndereco;
-    private String cep;
-    private String pais;
-    private String estado;
-    private String cidade;
-    private String apelidoEndereco;
-    private String observacaoEndereco;
+
+    private EnderecoVO enderecoVO;
 
     public ClienteVO(String email, String senha) {
         this.email = email;
         this.senha = senha;
     }
+
+    public static ClienteVO createClienteVOPadrao(){
+        ClienteVO cliente = new ClienteVO("email@email.com", "senha123456");
+
+        cliente.setEmail("clienteTeste@teste.com");
+        cliente.setSenha("Senha@123");
+        cliente.setSenhaConfirmacao("Senha@123");
+        cliente.setNome("Maria");
+        cliente.setSobrenome("dos Anjos");
+        cliente.setCpf("303.799.550-59");
+        cliente.setGenero("M");
+        cliente.setDtNascimento("12/12/2001");
+        cliente.setTelefone("11944506708");
+        cliente.setEnderecoVO(EnderecoVO.createEnderecoPadrao());
+
+        return cliente;
+    }
+
 
     public String getEmail() {
         return email;
@@ -100,96 +109,12 @@ public class ClienteVO {
         this.telefone = telefone;
     }
 
-    public String getTpResidencia() {
-        return tpResidencia;
+    public EnderecoVO getEnderecoVO() {
+        return enderecoVO;
     }
 
-    public void setTpResidencia(String tpResidencia) {
-        this.tpResidencia = tpResidencia;
+    public void setEnderecoVO(EnderecoVO enderecoVO) {
+        this.enderecoVO = enderecoVO;
     }
 
-    public String getTpLogradouro() {
-        return tpLogradouro;
-    }
-
-    public void setTpLogradouro(String tpLogradouro) {
-        this.tpLogradouro = tpLogradouro;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getNumeroEndereco() {
-        return numeroEndereco;
-    }
-
-    public void setNumeroEndereco(String numeroEndereco) {
-        this.numeroEndereco = numeroEndereco;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getApelidoEndereco() {
-        return apelidoEndereco;
-    }
-
-    public void setApelidoEndereco(String apelidoEndereco) {
-        this.apelidoEndereco = apelidoEndereco;
-    }
-
-    public String getObservacaoEndereco() {
-        return observacaoEndereco;
-    }
-
-    public void setObservacaoEndereco(String observacaoEndereco) {
-        this.observacaoEndereco = observacaoEndereco;
-    }
-
-//    String email, String senha, String senhaConfirmacao, String nome,
-//    String sobrenome,  String cpf, String genero, String dtNascimento, String telefone,
-//    String tpResidencia, String tpLogradouro, String logradouro, String bairro, String numeroEndereco,
-//    String cep, String pais, String estado, String cidade, String apelidoEndereco, String observacaoEndereco
 }

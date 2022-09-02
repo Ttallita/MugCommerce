@@ -10,6 +10,7 @@ import selenium.pageModels.CadastroClientePage;
 import selenium.pageModels.ClienteVO;
 import selenium.pageModels.LoginPage;
 
+
 public class TesteLogin {
 
     private WebDriver driver;
@@ -22,17 +23,31 @@ public class TesteLogin {
 
     @Test
     public void testeLoginCliente(){
-        driver.get("http://localhost:8080/emug/login.html");
+        ClienteVO cliente = ClienteVO.createClienteVOPadrao();
+
+        driver.get("http://localhost:8080/emug/login.jsp");
         LoginPage loginPage = new LoginPage(driver);
 
-        loginPage.logar("a", "a","a");
+        loginPage.logar(cliente);
     }
 
     @Test
-    public void testeCadastroCliente(){
-        ClienteVO cliente = new ClienteVO("email@email.com", "senha123456");
+    public void testeCadastroCliente() throws InterruptedException {
+        ClienteVO cliente = ClienteVO.createClienteVOPadrao();
 
-        driver.get("http://localhost:8080/emug/login.html");
+        driver.get("http://localhost:8080/emug/login.jsp");
+        LoginPage loginPage = new LoginPage(driver);
+
+        CadastroClientePage cadastroPage = loginPage.acessarCadastro();
+        cadastroPage.cadastrar(cliente);
+    }
+
+    @Test
+    public void testeCadastroClienteInvalido() throws InterruptedException {
+        ClienteVO cliente = ClienteVO.createClienteVOPadrao();
+        cliente.setSenha("senhaInvalida");
+
+        driver.get("http://localhost:8080/emug/login.jsp");
         LoginPage loginPage = new LoginPage(driver);
 
         CadastroClientePage cadastroPage = loginPage.acessarCadastro();
