@@ -8,7 +8,7 @@ public class Endereco extends EntidadeDominio {
     private String tipoResidencia;
     private String tipoLogradouro;
     private String logradouro;
-    private int numero;
+    private Integer numero;
     private String bairro;
     private String cep;
     private String cidade;
@@ -41,14 +41,6 @@ public class Endereco extends EntidadeDominio {
 
     public void setLogradouro(String logradouro) {
         this.logradouro = logradouro;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
     }
 
     public String getBairro() {
@@ -123,4 +115,11 @@ public class Endereco extends EntidadeDominio {
         this.cliente = cliente;
     }
 
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
 }

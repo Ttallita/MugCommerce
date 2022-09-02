@@ -11,6 +11,7 @@
     <body>
         <div class="container-fluid d-flex h-100 align-items-center justify-content-center">
             <div class="row">
+
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
@@ -18,23 +19,23 @@
                             <form>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" name="email" aria-describedby="emailHelp">
+                                    <input id="email" type="email" class="form-control" name="email" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
                                     <label for="senha" class="form-label">Senha</label>
-                                    <input type="password" class="form-control" name="senha">
+                                    <input id="senha" type="password" class="form-control" name="senha">
                                 </div>
                                 <div class="mb-3">
                                     <label for="senhaConfirmacao" class="form-label">Confirmar Senha</label>
-                                    <input type="password" class="form-control" name="senhaConfirmacao">
+                                    <input id="senhaConfirmacao" type="password" class="form-control" name="senhaConfirmacao">
                                 </div>
                                 <div class="d-grid gap-2 col-8 mx-auto align-middle">
-                                    <a href="index.html">
+                                    <a href="index.jsp">
                                         <button class="btn btn-primary" type="button" name="botaoLogin">Fazer Login</button>
                                     </a>
                                 </div>
                             </form>
-                            Não possui conta? <a href="cadastroCliente.html" name="botaoCadastro">Cadastre-se</a>
+                            Não possui conta? <a href="cadastro.jsp" >Cadastre-se</a>
                         </div>
                     </div>
                 </div>

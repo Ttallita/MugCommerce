@@ -62,4 +62,10 @@ public class UsuarioDAO implements IDAO {
     public List<EntidadeDominio> listar(EntidadeDominio entidade, String operacao) {
         return null;
     }
+
+    public Usuario findUsuarioByEmail(String email) {
+        // TODO implementar
+
+        return null;
+    }
 }

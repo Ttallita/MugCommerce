@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * @author andre
+ */
 public class LoginViewHelper implements IViewHelper {
 
     @Override
@@ -56,7 +59,7 @@ public class LoginViewHelper implements IViewHelper {
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
             } else {
-                String msgErros[] = result.getMsg().split("\n");
+                String[] msgErros = result.getMsg().split("\n");
                 request.setAttribute("mensagem", msgErros);
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }

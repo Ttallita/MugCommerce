@@ -19,6 +19,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author andre
+ */
 public class ClienteViewHelper implements IViewHelper {
 
     @Override
@@ -49,7 +52,7 @@ public class ClienteViewHelper implements IViewHelper {
         endereco.setTipoLogradouro(request.getParameter("tpLogradouro"));
         endereco.setLogradouro(request.getParameter("logradouro"));
         endereco.setBairro(request.getParameter("bairro"));
-        endereco.setNumero(Integer.parseInt(request.getParameter("numeroEndereco")));
+        endereco.setNumero(getNumeroEndereco(request.getParameter("numeroEndereco")));
         endereco.setCep(request.getParameter("cep"));
         endereco.setPais(request.getParameter("pais"));
         endereco.setEstado(request.getParameter("estado"));
@@ -65,15 +68,31 @@ public class ClienteViewHelper implements IViewHelper {
 
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String operacao = request.getParameter("operacao");
 
+        String[] mensagens = null;
+        String msgTela = result.getMsg();
+        if(operacao.equals("salvar")) {
+            if(msgTela != null) {
+                mensagens = msgTela.split("\n");
+
+                Cliente cliente = (Cliente) result.getEntidades().get(0);
+                request.setAttribute("cliente", cliente);
+            }
+            else
+                mensagens = new String[] { "Cadastrado com sucesso" };
+
+        }
+;
+        request.setAttribute("mensagens", mensagens);
+        request.setAttribute("erro", msgTela != null);
+        request.getRequestDispatcher("cadastro.jsp").forward(request, response);
     }
 
     public Telefone criaTelefone(String numero) {
         String[] telefone = numero.split(" ");
 
-        if(telefone.length != 2
-                && telefone[1].length() != 9
-                && telefone[1].length() != 10)
+        if(telefone.length != 2 || (telefone[1].length() != 9 && telefone[1].length() != 10))
             return new Telefone();
 
         boolean ehCelular = telefone[1].length() == 10;
@@ -86,5 +105,12 @@ public class ClienteViewHelper implements IViewHelper {
         return new Telefone(telefoneType, dddSemParenteses, telefone[1]);
     }
 
+    public Integer getNumeroEndereco(String numero) {
+        try {
+            return Integer.parseInt(numero);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
 
 }

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="webjars/material-design-icons/4.0.0/material-icons.css"/>
     <link rel="stylesheet" href="assets/css/style.css"/>
-
 </head>
 <body>
     <header>
