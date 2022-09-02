@@ -1,21 +1,23 @@
 package selenium.scripts;
 
-import org.junit.jupiter.api.*;
+import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.chrome.ChromeDriver;
 import selenium.pageModels.CadastroClientePage;
 import selenium.pageModels.ClienteVO;
 import selenium.pageModels.LoginPage;
 
 public class TesteLogin {
 
-    private static WebDriver driver;
+    private WebDriver driver;
 
-    @BeforeAll
-    public static void setup(){
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
+    @BeforeEach
+    public void setup(){
+        ChromeDriverManager.getInstance().setup();
+        driver = new ChromeDriver();
     }
 
     @Test
@@ -37,8 +39,8 @@ public class TesteLogin {
         cadastroPage.cadastrar(cliente);
     }
 
-    @AfterAll
-    public static void tearDown(){
+    @AfterEach
+    public void tearDown(){
         driver.quit();
     }
 
