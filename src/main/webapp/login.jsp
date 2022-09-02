@@ -35,7 +35,7 @@
                                     </a>
                                 </div>
                             </form>
-                            Não possui conta? <a href="cadastro.jsp" >Cadastre-se</a>
+                            Não possui conta? <a href="cadastroCliente.jsp" name="botaoCadastro">Cadastre-se</a>
                         </div>
                     </div>
                 </div>
