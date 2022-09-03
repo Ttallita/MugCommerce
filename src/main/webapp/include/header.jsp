@@ -30,6 +30,9 @@
                         </button>
                     </div>
                 </c:when>
+                <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'ADMINISTRADOR'}">
+                    <!-- TODO criar menus de administrador -->
+                </c:when>
                 <c:otherwise>
                     <div class="d-flex align-items-center gap-3">
                         <button class="btn btn-light" type="submit">

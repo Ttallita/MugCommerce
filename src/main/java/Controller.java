@@ -24,7 +24,7 @@ public class Controller extends HttpServlet{
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final Map<String, ICommand> commandMap;
+    private final Map<String, AbstractCommand> commandMap;
 
     private final Map<String, IViewHelper> viewHelperMap;
 
@@ -67,7 +67,7 @@ public class Controller extends HttpServlet{
 
         String operacao = req.getParameter("operacao");
 
-        ICommand command = commandMap.get(operacao);
+        AbstractCommand command = commandMap.get(operacao);
 
         IViewHelper viewHelper = viewHelperMap.get(req.getRequestURI());
 

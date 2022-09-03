@@ -7,9 +7,9 @@ import javax.servlet.http.HttpSession;
 
 public interface IFacade {
 
-    public abstract Result salvar(EntidadeDominio entidade);
-    public abstract Result atualizar(EntidadeDominio entidade);
-    public abstract Result deletar(EntidadeDominio entidade);
-    public abstract Result listar(EntidadeDominio entidade, String operacao);
+    Result salvar(EntidadeDominio entidade);
+    Result atualizar(EntidadeDominio entidade);
+    Result deletar(EntidadeDominio entidade);
+    Result listar(EntidadeDominio entidade, String operacao);
 
 }
