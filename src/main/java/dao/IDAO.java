@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IDAO {
 
-    public EntidadeDominio salvar(EntidadeDominio entidade);
-    public abstract EntidadeDominio atualizar(EntidadeDominio entidade);
-    public abstract EntidadeDominio deletar(EntidadeDominio entidade);
-    public abstract List<EntidadeDominio> listar(EntidadeDominio entidade, String operacao);
+    EntidadeDominio salvar(EntidadeDominio entidade);
+    EntidadeDominio atualizar(EntidadeDominio entidade);
+    EntidadeDominio deletar(EntidadeDominio entidade);
+    List<EntidadeDominio> listar(EntidadeDominio entidade, String operacao);
 
 }

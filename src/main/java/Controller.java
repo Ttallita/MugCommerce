@@ -1,6 +1,7 @@
 import business.command.*;
 import business.viewHelper.IViewHelper;
 import business.viewHelper.impl.ClienteViewHelper;
+import business.viewHelper.impl.LoginViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 
@@ -37,6 +38,7 @@ public class Controller extends HttpServlet{
 
         viewHelperMap = new HashMap<>();
         viewHelperMap.put("/emug/cadastro", new ClienteViewHelper());
+        viewHelperMap.put("/emug/login", new LoginViewHelper());
 
 
     }

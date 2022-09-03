@@ -15,17 +15,7 @@
 
 <body>
     <div class="container card w-50 mt-5 mb-5">
-        <c:if test="${not empty mensagens}">
-            <div class="alert alert-${erro ? 'danger' : 'success'} alert-dismissible fade show mt-4" role="alert">
-                <ul style="margin-bottom: 0">
-                    <c:forEach var="mensagem" items="${mensagens}">
-                        <li>${mensagem}</li>
-                    </c:forEach>
-                </ul>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </c:if>
-
+        <jsp:include page="include/alert.jsp" />
         <h3 class="text-center mt-5">Cadastro</h3>
         <form action="/emug/cadastro" method="POST">
             <div class="row g-3 p-4">
@@ -167,6 +157,7 @@
                 Já possui uma conta? <a href="login.jsp">Entre</a>
             </small>
         </div>
+        <br/>
     </div>
 </body>
 <script src="assets/js/geral.js"></script>

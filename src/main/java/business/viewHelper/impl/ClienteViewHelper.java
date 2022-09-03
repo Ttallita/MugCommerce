@@ -86,7 +86,7 @@ public class ClienteViewHelper implements IViewHelper {
 ;
         request.setAttribute("mensagens", mensagens);
         request.setAttribute("erro", msgTela != null);
-        request.getRequestDispatcher("cadastro.jsp").forward(request, response);
+        request.getRequestDispatcher("cadastroCliente.jsp").forward(request, response);
     }
 
     public Telefone criaTelefone(String numero) {

@@ -2,9 +2,11 @@ package dao;
 
 import model.EntidadeDominio;
 import model.Usuario;
+import model.UsuarioType;
 import utils.Conexao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioDAO implements IDAO {
@@ -60,6 +62,42 @@ public class UsuarioDAO implements IDAO {
 
     @Override
     public List<EntidadeDominio> listar(EntidadeDominio entidade, String operacao) {
+        Usuario usuario = (Usuario) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "SELECT * FROM usuarios WHERE usr_email = ? AND usr_senha = ?";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setString(1, usuario.getEmail());
+            pstm.setString(2, usuario.getSenha());
+
+            ResultSet rs = pstm.executeQuery();
+
+            List<EntidadeDominio> entidadesConsulta = new ArrayList<>();
+            while (rs.next()) {
+                Usuario usuarioConsulta = new Usuario();
+                usuarioConsulta.setId(rs.getLong(1));
+                usuarioConsulta.setEmail(rs.getString(2));
+                usuarioConsulta.setSenha(rs.getString(3));
+                usuarioConsulta.setTipoUsuario(UsuarioType.valueOf(rs.getString(4)));
+                usuarioConsulta.setAtivo(rs.getBoolean(5));
+
+                entidadesConsulta.add(usuarioConsulta);
+            }
+
+            return entidadesConsulta;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(conn);
+        }
+
         return null;
     }
 

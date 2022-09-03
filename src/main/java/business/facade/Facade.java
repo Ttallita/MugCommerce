@@ -4,8 +4,10 @@ import business.strategy.IStrategy;
 import business.strategy.impl.cliente.*;
 import dao.ClienteDAO;
 import dao.IDAO;
+import dao.UsuarioDAO;
 import model.EntidadeDominio;
 import model.Result;
+import model.Usuario;
 import model.cliente.Cliente;
 
 import java.util.HashMap;
@@ -20,6 +22,7 @@ public class Facade implements IFacade {
 
     public Facade() {
         daosMap = new HashMap<>();
+        daosMap.put(Usuario.class.getName(), new UsuarioDAO());
         daosMap.put(Cliente.class.getName(), new ClienteDAO());
 
         regrasDeNegocioMap = new HashMap<>();
@@ -58,6 +61,38 @@ public class Facade implements IFacade {
         return result;
     }
 
+    @Override
+    public Result atualizar(EntidadeDominio entidade) {
+        return null;
+    }
+
+    @Override
+    public Result deletar(EntidadeDominio entidade) {
+        return null;
+    }
+
+    @Override
+    public Result listar(EntidadeDominio entidade, String operacao) {
+        Result result = new Result();
+
+        String nomeClasse = entidade.getClass().getName();
+
+        String resultado = executarRegras(entidade, "listar", nomeClasse);
+
+        List<EntidadeDominio> resultadoConsulta = null;
+
+        if(resultado == null) {
+            IDAO dao = daosMap.get(nomeClasse);
+
+            resultadoConsulta = dao.listar(entidade, "login");
+        }
+
+        result.setMsg(resultado);
+        result.setEntidades(resultadoConsulta);
+
+        return result;
+    }
+
     private String executarRegras(EntidadeDominio entidade, String operacao, String nomeClasse) {
         Map<String, List<IStrategy>> regras = regrasDeNegocioMap.get(nomeClasse);
 
@@ -79,21 +114,6 @@ public class Facade implements IFacade {
         if(builder.length() > 0)
             return builder.toString();
 
-        return null;
-    }
-
-    @Override
-    public Result atualizar(EntidadeDominio entidade) {
-        return null;
-    }
-
-    @Override
-    public Result deletar(EntidadeDominio entidade) {
-        return null;
-    }
-
-    @Override
-    public Result listar(EntidadeDominio entidade, String operacao) {
         return null;
     }
 }

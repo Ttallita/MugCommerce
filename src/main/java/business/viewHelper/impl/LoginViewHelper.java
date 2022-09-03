@@ -23,46 +23,33 @@ public class LoginViewHelper implements IViewHelper {
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
 
-        String operacao = request.getParameter("operacao");
-
         Usuario usuario = new Usuario();
 
-        if(operacao.equals("login")) {
-            usuario.setEmail(email);
-            usuario.setSenha(senha);
-        }
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
 
         return usuario;
     }
 
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String operacao = request.getParameter("operacao");
+        List<EntidadeDominio> entidades = result.getEntidades();
 
-        if(operacao.equals("login")) {
-            if(result.getMsg() == null) {
-                List<EntidadeDominio> entidades = result.getEntidades();
+        if(entidades.isEmpty())
+            result.setMsg("Usuario/Senha incorreto.");
+        else {
+            Usuario usuario = (Usuario) entidades.get(0);
+            request.getSession().setAttribute("usuarioLogado", usuario);
+        }
 
-                if(entidades.size() > 0) {
-                    Usuario usuario = (Usuario) entidades.get(0);
+        if(result.getMsg() == null)
+            response.sendRedirect("index.jsp");
+        else {
+            String[] msgErros = result.getMsg().split("\n");
 
-                    request.getSession().setAttribute("usuarioLogado", usuario);
-
-                    if(usuario.getTipoUsuario().equals(UsuarioType.CLIENTE)) {
-                        response.sendRedirect("index.jsp");
-                    } else {
-                        response.sendRedirect("/LootCommerce/admin/controle?operacao=listarTodos");
-                    }
-
-                } else {
-                    request.setAttribute("mensagem", "Email e/ou senha incorretos");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                }
-            } else {
-                String[] msgErros = result.getMsg().split("\n");
-                request.setAttribute("mensagem", msgErros);
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
+            request.setAttribute("erro", true);
+            request.setAttribute("mensagens", msgErros);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }
