@@ -1,3 +1,7 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -76,44 +80,7 @@
     
     <main class="d-flex flex-nowrap mt-5">
 
-        <!--Sidebar-->
-        <div class="l-navbar ms-5 me-5">
-            <p>Nome cliente</p>
-            <nav class="l-nav">
-                <div class="nav_list">
-                    <div class="list-group btn-group-vertical">
-                        <a class="nav_link" id="paginaAtualizar" type="button" href="/emug/cliente/perfil.html">
-                            <span class="material-icons inline-icon">account_circle</span> Perfil
-                        </a>
-
-                        <a class="nav_link" id="paginaAtualizar" type="button" href="/emug/cliente/atualizarSenha.html">
-                            <span class="material-icons inline-icon">lock</span> Atualizar senha
-                        </a>
-
-                        <a class="nav_link active-navbar" id="paginaEstoque" type="button" href="/emug/cliente/compras.html">
-                            <span class="material-icons inline-icon">shopping_bag</span> Compras
-                        </a>
-
-                        <a class="nav_link" id="paginaClientes" type="button" href="/emug/cliente/enderecos.html">
-                            <span class="material-icons inline-icon">local_shipping</span> Endereços
-                        </a>
-                        
-                        <a class="nav_link" id="paginaVendas" type="button" href="/emug/cliente/cartoes.html">
-                            <span class="material-icons inline-icon">credit_card</span> Cartões
-                        </a>
-
-                        <a class="nav_link" id="paginaCupons" type="button" href="/emug/cliente/cupons.html">
-                            <span class="material-icons inline-icon">local_play</span> Cupons
-                        </a>
-
-                        <a class="nav_link" id="" href="">
-                            <span class="material-icons inline-icon">logout</span>Sair
-                        </a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    
+        <jsp:include page="../include/sidebarCliente.jsp" />
 
         <div class="w-75 bg-white rounded p-5">
             <h5>Compras</h5>

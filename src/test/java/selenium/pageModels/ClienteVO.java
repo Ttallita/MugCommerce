@@ -14,13 +14,8 @@ public class ClienteVO {
 
     private EnderecoVO enderecoVO;
 
-    public ClienteVO(String email, String senha) {
-        this.email = email;
-        this.senha = senha;
-    }
-
     public static ClienteVO createClienteVOPadrao(){
-        ClienteVO cliente = new ClienteVO("email@email.com", "senha123456");
+        ClienteVO cliente = new ClienteVO();
 
         cliente.setEmail("clienteTeste@teste.com");
         cliente.setSenha("Senha@123");
@@ -28,7 +23,7 @@ public class ClienteVO {
         cliente.setNome("Maria");
         cliente.setSobrenome("dos Anjos");
         cliente.setCpf("303.799.550-59");
-        cliente.setGenero("M");
+        cliente.setGenero("F");
         cliente.setDtNascimento("12/12/2001");
         cliente.setTelefone("11944506708");
         cliente.setEnderecoVO(EnderecoVO.createEnderecoPadrao());

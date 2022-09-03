@@ -38,7 +38,7 @@
                         <a class="nav_link" id="paginaClientes" type="button" href="/emug/cliente/enderecos.html">
                             <span class="material-icons inline-icon">local_shipping</span> Endereços
                         </a>
-                        
+
                         <a class="nav_link" id="paginaVendas" type="button" href="/emug/cliente/cartoes.html">
                             <span class="material-icons inline-icon">credit_card</span> Cartões
                         </a>
@@ -68,17 +68,17 @@
                             <label for="nome"><small>Nome</small></label>
                             <input type="text" class="form-control" id="nome" name="nome" value="${cliente.nome}">
                         </div>
-        
+
                         <div class="col-sm-6">
                             <label for="sobrenome"><small>Sobrenome</small></label>
                             <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="${cliente.sobrenome}">
                         </div>
-        
+
                         <div class="col-sm-3">
                             <label for="cpf"><small>CPF</small></label>
                             <input type="text" class="form-control" id="cpf" name="cpf" value="${cliente.cpf}">
                         </div>
-        
+
                         <div class="col-md-4">
                             <label for="genero"><small>Gênero</small></label>
                             <select class="form-select" id="genero" name="genero">
@@ -94,12 +94,12 @@
                             <label for="dtNascimento"><small>Data de nascimento</small></label>
                             <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="${cliente.dataNascimento}">
                         </div>
-        
+
                         <div class="col-sm-4">
                             <label for="telefone"><small>Telefone</small></label>
                             <input type="text" class="form-control" id="telefone" name="telefone" value="${cliente.telefone.ddd} ${cliente.telefone.numero}">
                         </div>
-        
+
                         <hr>
                         <input type="hidden" name="operacao" value="atualizar">
                         <input type="submit" class="w-100 btn btn-primary btn-sm" value="Atualizar"/>

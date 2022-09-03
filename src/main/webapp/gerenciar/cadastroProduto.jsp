@@ -71,12 +71,17 @@
 
                 <div class="col-md-4">
                     <label for="status"><small>Status</small></label>
-                    <select class="form-select" id="status" name="status">
-                        <option value="">Selecione</option>
-                        <option>Status A</option>
-                        <option>Status B</option>
-                    </select>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ativo" id="ativo" value="option1">
+                        <label class="form-check-label" for="ativo">Ativo</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inativo" id="inativo" value="option2">
+                        <label class="form-check-label" for="inativo">Inativo</label>
+                    </div>
                 </div>
+                  
 
                 <div class="col-sm-12">
                     <label for="descricao"><small>Descrição</small></label>

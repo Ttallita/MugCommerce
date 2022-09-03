@@ -33,7 +33,7 @@
                                     <input class="btn btn-primary" type="submit" value="Fazer Login" name="botaoLogin"/>
                                 </div>
                             </form>
-                            Não possui conta? <a href="cadastroCliente.jsp" >Cadastre-se</a>
+                            Não possui conta? <a href="cadastroCliente.jsp" name="linkCadastro">Cadastre-se</a>
                         </div>
                     </div>
                 </div>
