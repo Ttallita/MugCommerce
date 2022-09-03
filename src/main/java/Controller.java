@@ -17,7 +17,8 @@ import java.io.Serial;
 
 @WebServlet(urlPatterns = {
         "/login",
-        "/cadastro"
+        "/cadastro",
+        "/clientes/*"
 })
 public class Controller extends HttpServlet{
 
@@ -31,7 +32,7 @@ public class Controller extends HttpServlet{
     public Controller() {
         commandMap = new HashMap<>();
         commandMap.put("salvar", new SalvarCommand());
-        commandMap.put("editar", new AtualizarCommand());
+        commandMap.put("atualizar", new AtualizarCommand());
         commandMap.put("excluir", new ExcluirCommand());
         commandMap.put("listar", new ListarCommand());
         commandMap.put("login", new ListarCommand());
@@ -39,8 +40,8 @@ public class Controller extends HttpServlet{
         viewHelperMap = new HashMap<>();
         viewHelperMap.put("/emug/cadastro", new ClienteViewHelper());
         viewHelperMap.put("/emug/login", new LoginViewHelper());
-
-
+        viewHelperMap.put("/emug/clientes/perfil", new ClienteViewHelper());
+        viewHelperMap.put("/emug/clientes", new ClienteViewHelper());
     }
 
     @Override

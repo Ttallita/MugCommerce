@@ -3,10 +3,13 @@ package dao;
 import model.EntidadeDominio;
 import model.Usuario;
 import model.cliente.Cliente;
+import model.cliente.Telefone;
 import model.cliente.endereco.Endereco;
+import model.cliente.endereco.TelefoneType;
 import utils.Conexao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDAO implements IDAO {
@@ -15,7 +18,7 @@ public class ClienteDAO implements IDAO {
     public EntidadeDominio salvar(EntidadeDominio entidade) {
         Cliente cliente = (Cliente) entidade;
         Conexao conexao = new Conexao();
-        Connection connection;
+        Connection connection = null;
         try {
             connection = conexao.getConexao();
 
@@ -59,6 +62,8 @@ public class ClienteDAO implements IDAO {
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
         }
 
         return entidade;
@@ -66,6 +71,35 @@ public class ClienteDAO implements IDAO {
 
     @Override
     public EntidadeDominio atualizar(EntidadeDominio entidade) {
+        Cliente cliente = (Cliente) entidade;
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+        try {
+            connection = conexao.getConexao();
+
+            String sql = "UPDATE clientes SET cli_nome = ?, cli_sobrenome = ?, cli_cpf = ?, cli_genero = ?, " +
+                    "cli_dt_nasc = ?, cli_telefone_num = ?, cli_telefone_ddd = ?, cli_telefone_tp = ? where cli_usr_id = ?";
+
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setString(1, cliente.getNome());
+            pstm.setString(2, cliente.getSobrenome());
+            pstm.setString(3, cliente.getCpf());
+            pstm.setString(4, cliente.getGenero());
+            pstm.setObject(5, cliente.getDataNascimento());
+            pstm.setString(6, cliente.getTelefone().getNumero());
+            pstm.setString(7, cliente.getTelefone().getDdd());
+            pstm.setString(8, cliente.getTelefone().getTipo().name());
+            pstm.setLong(9, cliente.getUsuario().getId());
+            pstm.execute();
+
+            return cliente;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
+        }
+
         return null;
     }
 
@@ -76,6 +110,47 @@ public class ClienteDAO implements IDAO {
 
     @Override
     public List<EntidadeDominio> listar(EntidadeDominio entidade, String operacao) {
+        Cliente cliente = (Cliente) entidade;
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+        try {
+            connection = conexao.getConexao();
+
+            String sql = "SELECT * FROM clientes where cli_usr_id = ?";
+
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setLong(1, cliente.getUsuario().getId());
+            pstm.execute();
+
+            ResultSet rs = pstm.executeQuery();
+
+            List<EntidadeDominio> clientes = new ArrayList<>();
+            while (rs.next()) {
+                cliente.setId(rs.getLong(1));
+                cliente.setNome(rs.getString(2));
+                cliente.setSobrenome(rs.getString(3));
+                cliente.setCpf(rs.getString(4));
+                cliente.setDataNascimento(rs.getTimestamp(5).toLocalDateTime().toLocalDate());
+                cliente.setGenero(rs.getString(6));
+
+                Telefone telefone = new Telefone();
+                telefone.setNumero(rs.getString(7));
+                telefone.setDdd(rs.getString(8));
+                telefone.setTipo(TelefoneType.valueOf(rs.getString(9)));
+
+                cliente.setTelefone(telefone);
+                cliente.setRanking(rs.getInt(10));
+                clientes.add(cliente);
+            }
+
+            return clientes;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
+        }
+
         return null;
     }
 }

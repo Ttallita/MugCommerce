@@ -10,6 +10,7 @@ import model.Result;
 import model.Usuario;
 import model.cliente.Cliente;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,8 +36,16 @@ public class Facade implements IFacade {
                 new VerificarSenhaStrategy()
         );
 
+        List<IStrategy> regrasAtualizarCliente = List.of(
+                new VerificarClienteStrategy(),
+                new VerificaCPFStrategy(),
+                new VerificarDataStrategy()
+        );
+
+
         Map<String, List<IStrategy>> mapStrategyCliente = new HashMap<>();
         mapStrategyCliente.put("salvar", regrasSalvarCliente);
+        mapStrategyCliente.put("atualizar", regrasAtualizarCliente);
 
         regrasDeNegocioMap.put(Cliente.class.getName(), mapStrategyCliente);
     }
@@ -63,7 +72,22 @@ public class Facade implements IFacade {
 
     @Override
     public Result atualizar(EntidadeDominio entidade) {
-        return null;
+        Result result = new Result();
+
+        String nomeClasse = entidade.getClass().getName();
+
+        String resultado = executarRegras(entidade, "atualizar", nomeClasse);
+
+        if(resultado == null) {
+            IDAO dao = daosMap.get(nomeClasse);
+
+            entidade = dao.atualizar(entidade);
+        }
+
+        result.setMsg(resultado);
+        result.setEntidades(List.of(entidade));
+
+        return result;
     }
 
     @Override
@@ -91,6 +115,7 @@ public class Facade implements IFacade {
         result.setEntidades(resultadoConsulta);
 
         return result;
+
     }
 
     private String executarRegras(EntidadeDominio entidade, String operacao, String nomeClasse) {
@@ -101,12 +126,14 @@ public class Facade implements IFacade {
         if(regras != null) {
             List<IStrategy> strategys = regras.get(operacao);
 
-            for (IStrategy strategy : strategys) {
-                String resultado = strategy.processa(entidade);
+            if(strategys != null) {
+                for (IStrategy strategy : strategys) {
+                    String resultado = strategy.processa(entidade);
 
-                if(resultado != null) {
-                    builder.append(resultado)
-                            .append("\n");
+                    if(resultado != null) {
+                        builder.append(resultado)
+                                .append("\n");
+                    }
                 }
             }
         }

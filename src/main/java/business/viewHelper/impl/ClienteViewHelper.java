@@ -26,15 +26,53 @@ public class ClienteViewHelper implements IViewHelper {
 
     @Override
     public EntidadeDominio getEntidade(HttpServletRequest request) {
+        String operacao = request.getParameter("operacao");
 
-        Usuario usuario = new Usuario();
+        if(operacao.equals("salvar")) {
+            Usuario usuario = new Usuario();
 
-        usuario.setEmail(request.getParameter("email"));
-        usuario.setTipoUsuario(UsuarioType.CLIENTE);
-        usuario.setSenha(request.getParameter("senha"));
-        usuario.setConfirmarSenha(request.getParameter("senhaConfirmacao"));
-        usuario.setAtivo(true);
+            usuario.setEmail(request.getParameter("email"));
+            usuario.setTipoUsuario(UsuarioType.CLIENTE);
+            usuario.setSenha(request.getParameter("senha"));
+            usuario.setConfirmarSenha(request.getParameter("senhaConfirmacao"));
+            usuario.setAtivo(true);
 
+            Cliente cliente = criaClienteBasico(request, usuario);
+
+            Endereco endereco = new Endereco();
+            endereco.setTipoResidencia(request.getParameter("tpResidencia"));
+            endereco.setTipoLogradouro(request.getParameter("tpLogradouro"));
+            endereco.setLogradouro(request.getParameter("logradouro"));
+            endereco.setBairro(request.getParameter("bairro"));
+            endereco.setNumero(getNumeroEndereco(request.getParameter("numeroEndereco")));
+            endereco.setCep(request.getParameter("cep"));
+            endereco.setPais(request.getParameter("pais"));
+            endereco.setEstado(request.getParameter("estado"));
+            endereco.setCidade(request.getParameter("cidade"));
+            endereco.setApelido(request.getParameter("apelidoEndereco"));
+            endereco.setObservacoes(request.getParameter("observacaoEndereco"));
+            endereco.setTipoEndereco(EnderecoType.COBRANCA_ENTREGA);
+
+            cliente.setEnderecos(List.of(endereco));
+            return cliente;
+        } else if(operacao.equals("listar")) {
+            Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+
+            Cliente cliente = new Cliente();
+            cliente.setUsuario(usuarioLogado);
+
+            return cliente;
+        } else if(operacao.equals("atualizar")) {
+            Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+
+            return criaClienteBasico(request, usuarioLogado);
+        }
+
+
+        return null;
+    }
+
+    private Cliente criaClienteBasico(HttpServletRequest request, Usuario usuario) {
         Cliente cliente = new Cliente();
         cliente.setUsuario(usuario);
         cliente.setNome(request.getParameter("nome"));
@@ -47,46 +85,7 @@ public class ClienteViewHelper implements IViewHelper {
         cliente.setDataNascimento(dataNascimento);
         cliente.setTelefone(criaTelefone(request.getParameter("telefone")));
 
-        Endereco endereco = new Endereco();
-        endereco.setTipoResidencia(request.getParameter("tpResidencia"));
-        endereco.setTipoLogradouro(request.getParameter("tpLogradouro"));
-        endereco.setLogradouro(request.getParameter("logradouro"));
-        endereco.setBairro(request.getParameter("bairro"));
-        endereco.setNumero(getNumeroEndereco(request.getParameter("numeroEndereco")));
-        endereco.setCep(request.getParameter("cep"));
-        endereco.setPais(request.getParameter("pais"));
-        endereco.setEstado(request.getParameter("estado"));
-        endereco.setCidade(request.getParameter("cidade"));
-        endereco.setApelido(request.getParameter("apelidoEndereco"));
-        endereco.setObservacoes(request.getParameter("observacaoEndereco"));
-        endereco.setTipoEndereco(EnderecoType.COBRANCA_ENTREGA);
-
-        cliente.setEnderecos(List.of(endereco));
-
         return cliente;
-    }
-
-    @Override
-    public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String operacao = request.getParameter("operacao");
-
-        String[] mensagens = null;
-        String msgTela = result.getMsg();
-        if(operacao.equals("salvar")) {
-            if(msgTela != null) {
-                mensagens = msgTela.split("\n");
-
-                Cliente cliente = (Cliente) result.getEntidades().get(0);
-                request.setAttribute("cliente", cliente);
-            }
-            else
-                mensagens = new String[] { "Cadastrado com sucesso" };
-
-        }
-;
-        request.setAttribute("mensagens", mensagens);
-        request.setAttribute("erro", msgTela != null);
-        request.getRequestDispatcher("cadastroCliente.jsp").forward(request, response);
     }
 
     public Telefone criaTelefone(String numero) {
@@ -112,5 +111,48 @@ public class ClienteViewHelper implements IViewHelper {
             return null;
         }
     }
+
+    @Override
+    public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String operacao = request.getParameter("operacao");
+
+        String[] mensagens;
+        String msgTela = result.getMsg();
+        switch (operacao) {
+            case "salvar" -> {
+                if (msgTela != null) {
+                    mensagens = msgTela.split("\n");
+
+                    Cliente cliente = (Cliente) result.getEntidades().get(0);
+                    request.setAttribute("cliente", cliente);
+                } else
+                    mensagens = new String[]{"Cadastrado com sucesso"};
+                request.setAttribute("mensagens", mensagens);
+                request.setAttribute("erro", msgTela != null);
+                request.getRequestDispatcher("cadastroCliente.jsp").forward(request, response);
+            }
+            case "listar" -> {
+                Cliente cliente = (Cliente) result.getEntidades().get(0);
+                request.setAttribute("cliente", cliente);
+
+                request.getRequestDispatcher("/cliente/perfil.jsp").forward(request, response);
+            }
+            case "atualizar" -> {
+                Cliente cliente = (Cliente) result.getEntidades().get(0);
+                request.setAttribute("cliente", cliente);
+
+                if (msgTela != null)
+                    mensagens = msgTela.split("\n");
+                else
+                    mensagens = new String[]{ "Atualizado com Sucesso" };
+
+                request.setAttribute("mensagens", mensagens);
+                request.setAttribute("erro", msgTela != null);
+                request.getRequestDispatcher("/cliente/perfil.jsp").forward(request, response);
+            }
+        }
+        }
+
+
 
 }
