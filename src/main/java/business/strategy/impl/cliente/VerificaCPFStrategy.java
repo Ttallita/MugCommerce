@@ -12,7 +12,7 @@ public class VerificaCPFStrategy implements IStrategy {
     public String processa(EntidadeDominio entidade) {
         Cliente cliente = (Cliente) entidade;
 
-        String cpf = cliente.getCpf();
+        String cpf = cliente.getCpf().trim();
 
         if(cpf.trim().isEmpty()) {
             return "Digite um cpf válido";

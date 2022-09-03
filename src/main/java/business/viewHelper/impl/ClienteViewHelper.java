@@ -155,8 +155,5 @@ public class ClienteViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/cliente/perfil.jsp").forward(request, response);
             }
         }
-        }
-
-
-
+    }
 }

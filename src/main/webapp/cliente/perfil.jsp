@@ -47,10 +47,9 @@
                             <label for="genero"><small>Gênero</small></label>
                             <select class="form-select" id="genero" name="genero">
                                 <option value="">Selecione</option>
-                                <option ${cliente.genero == 'Masculino' ? 'selected' : ''}>Masculino</option>
-                                <option ${cliente.genero == 'Feminino' ? 'selected' : ''}>Feminino</option>
-                                <option ${cliente.genero == 'Outro' ? 'selected' : ''}>Outro</option>
-                                <option ${cliente.genero == 'Prefiro não informar' ? 'selected' : ''}>Prefiro não informar</option>
+                                <option value="Masculino" ${cliente.genero == 'Masculino' ? 'selected' : ''}>Masculino</option>
+                                <option value="Feminino" ${cliente.genero == 'Feminino' ? 'selected' : ''}>Feminino</option>
+                                <option value="Outro" ${cliente.genero == 'Outro' ? 'selected' : ''}>Outro</option>
                             </select>
                         </div>
         
@@ -81,7 +80,7 @@
 <script src="<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"/>"></script>
 <script src="<c:url value="/webjars/jquery/3.6.0/jquery.min.js"/>"></script>
 <script src="<c:url value="/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js"/>"></script>
-<script src="<c:url value="../assets/js/geral.js"/>"></script>
+<script src="<c:url value="/assets/js/geral.js"/>"></script>
 <script>
     aplicaMascaraTelefone()
     $('#cpf').mask("000.000.000-00")

@@ -19,14 +19,18 @@ public class VerificarDataStrategy implements IStrategy {
 
         LocalDate dataAtual = LocalDate.now();
 
-        if(dataNascimento.isAfter(dataAtual))
-            return "A data de nascimento não pode ser maior que a atual";
+        if(dataNascimento.isAfter(dataAtual) || dataNascimento.equals(dataAtual))
+            return "A data de nascimento não pode ser maior ou igual que a atual";
 
 
         long anosDiferenca = ChronoUnit.YEARS.between(dataNascimento, dataAtual);
 
-        if(anosDiferenca < 18)
+        if(anosDiferenca < 18 )
             return "É necessario ter mais de 18 anos para criar uma conta";
+
+
+        if(anosDiferenca > 150)
+            return "Data de nascimento impossivel";
 
         return null;
     }
