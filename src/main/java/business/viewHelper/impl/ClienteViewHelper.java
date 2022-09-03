@@ -28,44 +28,48 @@ public class ClienteViewHelper implements IViewHelper {
     public EntidadeDominio getEntidade(HttpServletRequest request) {
         String operacao = request.getParameter("operacao");
 
-        if(operacao.equals("salvar")) {
-            Usuario usuario = new Usuario();
+        switch (operacao) {
+            case "salvar" -> {
+                Usuario usuario = new Usuario();
 
-            usuario.setEmail(request.getParameter("email"));
-            usuario.setTipoUsuario(UsuarioType.CLIENTE);
-            usuario.setSenha(request.getParameter("senha"));
-            usuario.setConfirmarSenha(request.getParameter("senhaConfirmacao"));
-            usuario.setAtivo(true);
+                usuario.setEmail(request.getParameter("email"));
+                usuario.setTipoUsuario(UsuarioType.CLIENTE);
+                usuario.setSenha(request.getParameter("senha"));
+                usuario.setConfirmarSenha(request.getParameter("senhaConfirmacao"));
+                usuario.setAtivo(true);
 
-            Cliente cliente = criaClienteBasico(request, usuario);
+                Cliente cliente = criaClienteBasico(request, usuario);
 
-            Endereco endereco = new Endereco();
-            endereco.setTipoResidencia(request.getParameter("tpResidencia"));
-            endereco.setTipoLogradouro(request.getParameter("tpLogradouro"));
-            endereco.setLogradouro(request.getParameter("logradouro"));
-            endereco.setBairro(request.getParameter("bairro"));
-            endereco.setNumero(getNumeroEndereco(request.getParameter("numeroEndereco")));
-            endereco.setCep(request.getParameter("cep"));
-            endereco.setPais(request.getParameter("pais"));
-            endereco.setEstado(request.getParameter("estado"));
-            endereco.setCidade(request.getParameter("cidade"));
-            endereco.setApelido(request.getParameter("apelidoEndereco"));
-            endereco.setObservacoes(request.getParameter("observacaoEndereco"));
-            endereco.setTipoEndereco(EnderecoType.COBRANCA_ENTREGA);
+                Endereco endereco = new Endereco();
+                endereco.setTipoResidencia(request.getParameter("tpResidencia"));
+                endereco.setTipoLogradouro(request.getParameter("tpLogradouro"));
+                endereco.setLogradouro(request.getParameter("logradouro"));
+                endereco.setBairro(request.getParameter("bairro"));
+                endereco.setNumero(getNumeroEndereco(request.getParameter("numeroEndereco")));
+                endereco.setCep(request.getParameter("cep"));
+                endereco.setPais(request.getParameter("pais"));
+                endereco.setEstado(request.getParameter("estado"));
+                endereco.setCidade(request.getParameter("cidade"));
+                endereco.setApelido(request.getParameter("apelidoEndereco"));
+                endereco.setObservacoes(request.getParameter("observacaoEndereco"));
+                endereco.setTipoEndereco(EnderecoType.COBRANCA_ENTREGA);
 
-            cliente.setEnderecos(List.of(endereco));
-            return cliente;
-        } else if(operacao.equals("listar")) {
-            Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+                cliente.setEnderecos(List.of(endereco));
+                return cliente;
+            }
+            case "listar" -> {
+                Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
-            Cliente cliente = new Cliente();
-            cliente.setUsuario(usuarioLogado);
+                Cliente cliente = new Cliente();
+                cliente.setUsuario(usuarioLogado);
 
-            return cliente;
-        } else if(operacao.equals("atualizar")) {
-            Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+                return cliente;
+            }
+            case "atualizar" -> {
+                Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
-            return criaClienteBasico(request, usuarioLogado);
+                return criaClienteBasico(request, usuarioLogado);
+            }
         }
 
 
@@ -126,7 +130,7 @@ public class ClienteViewHelper implements IViewHelper {
                     Cliente cliente = (Cliente) result.getEntidades().get(0);
                     request.setAttribute("cliente", cliente);
                 } else
-                    mensagens = new String[]{"Cadastrado com sucesso"};
+                    mensagens = new String[]{"Cadastrado com sucesso. <a href=\"login.jsp\">Clique aqui para logar</a>"};
                 request.setAttribute("mensagens", mensagens);
                 request.setAttribute("erro", msgTela != null);
                 request.getRequestDispatcher("cadastroCliente.jsp").forward(request, response);
