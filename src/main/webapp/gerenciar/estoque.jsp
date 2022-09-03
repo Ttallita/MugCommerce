@@ -1,10 +1,14 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar - Vendas</title>
+    <title>Gerenciar - Estoque</title>
 
     <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
@@ -75,68 +79,34 @@
     
     <main class="d-flex flex-nowrap mt-5">
 
-        <!--Sidebar-->
-        <div class="l-navbar ms-5 me-5">
-            <p>Admin</p>
-            <nav class="l-nav">
-                <div class="nav_list">
-                    <div class="list-group btn-group-vertical">
-                        <a class="nav_link" id="paginaPrincipal" type="button" href="/emug/gerenciar/dashboard.html">
-                            <span class="material-icons inline-icon">home</span> Dashboard
-                        </a>
-    
-                        <a class="nav_link" id="paginaClientes" type="button" href="/emug/gerenciar/clientes.html">
-                            <span class="material-icons inline-icon">people</span> Clientes
-                        </a>
-    
-                        <a class="nav_link active-navbar" id="paginaVendas" type="button" href="/emug/gerenciar/vendas.html">
-                            <span class="material-icons inline-icon">show_chart</span> Vendas
-                        </a>
-    
-                        <a class="nav_link" id="paginaEstoque" type="button" href="/emug/gerenciar/estoque.html">
-                            <span class="material-icons inline-icon">all_inbox</span> Estoque
-                        </a>
-
-                        <a href="#" class="nav_link">
-                            <span class="material-icons inline-icon">logout</span>Sair
-                        </a>
-                        
-                    </div>
-                </div>
-    
-            </nav>
-        </div>
-    
+        <jsp:include page="../include/sidebarAdm.jsp" />
     
         <div class="w-75 bg-white rounded p-5">
-            <h5>Vendas</h5>
+            <h5>Estoque</h5>
 
             <hr>
 
-            <!-- Filtro de vendas-->
+            <!-- Filtro de Estoque-->
             <div class="container">
                 <form>
                     <div class="row g-3">
 
                         <div class="col-sm-4">
-                            <small>Status</small>
-                            <select class="form-select" aria-label="Default select example">
-                                <option value="">Selecione</option>
-                                <option value="">Aprovado</option>
-                                <option value="">Entregue</option>
-                                <option value="">Em processamento</option>
-                                <option value="">Troca solicitada</option>
-                            </select>
+                            <small>Valor compra</small>
+                            <div class="input-group">
+                                <input class="form-control" id="minCompra" placeholder="R$ min" type="text">
+                                <span class="input-group-text">-</span>
+                                <input type="text" class="form-control" id="maxCompra" placeholder="R$ max">
+                            </div>
                         </div>
 
                         <div class="col-sm-4">
-                            <small>Data de compra</small>
-                            <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
-                        </div>
-
-                        <div class="col-sm-4">
-                            <small>Data de entrega</small>
-                            <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
+                            <small>Valor venda</small>
+                            <div class="input-group">
+                                <input class="form-control" id="minVenda" placeholder="R$ min" type="text">
+                                <span class="input-group-text">-</span>
+                                <input type="text" class="form-control" id="maxVenda" placeholder="R$ max">
+                            </div>
                         </div>
                         
                         <div class="col-sm-12">
@@ -155,36 +125,37 @@
                 <table class="table table-hover" width="100%">
                     <thead>
                         <tr>
-                            <th>Cliente</th>
+                            <th>Nome</th>
                             <th>Quant. Produtos</th>
-                            <th>Valor</th>
-                            <th>Data compra</th>
-                            <th>Data entrega</th>
-                            <th>Status</th>
+                            <th>Valor compra</th>
+                            <th>Valor venda</th>
+                            <th>Quant. estoque</th>
+                            <th>Limite venda</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
 
                         <tr>
-                            <td>nome sobrenome</td>
+                            <td>nome</td>
                             <td>00</td>
                             <td>R$ 00,00</td>
-                            <td>00/00/0000</td>
-                            <td>00/00/0000</td>
+                            <td>R$ 00,00</td>
+                            <td>00</td>
+                            <td>00</td>
                             <td>
-                                Aprovado
                                 <span class="material-icons">edit</span>
                             </td>
                         </tr>
 
                         <tr>
-                            <td>nome sobrenome</td>
+                            <td>nome</td>
                             <td>00</td>
                             <td>R$ 00,00</td>
-                            <td>00/00/0000</td>
-                            <td>00/00/0000</td>
+                            <td>R$ 00,00</td>
+                            <td>00</td>
+                            <td>00</td>
                             <td>
-                                Entregue
                                 <span class="material-icons">edit</span>
                             </td>
                         </tr>
@@ -192,19 +163,25 @@
                     </tbody>
                 </table>
 
+                <button type="button" class="w-100 btn btn-primary btn-sm">Adicionar produto</button>
             </div>
-            
         </div>
     </main>
 
     <br/>
-
     <footer class="bg-dark text-center text-white">
         &copy;Todos direitos reservados André e Tallita
     </footer>
+    
+    <script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+    <script src='../webjars/jquery/3.6.0/jquery.min.js'></script>
+    <script src='../webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js'></script>
 
-    <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
-
+    <script>
+        $('#minVenda').mask("#.##0,00", {reverse: true});
+        $('#maxVenda').mask("#.##0,00", {reverse: true});
+        $('#minCompra').mask("#.##0,00", {reverse: true});
+        $('#maxCompra').mask("#.##0,00", {reverse: true});
+    </script>
 </body>
-
 </html>

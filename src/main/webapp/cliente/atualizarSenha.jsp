@@ -1,10 +1,15 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar - Dashboard</title>
+
+    <title>Perfil - Atualizar senha</title>
 
     <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
@@ -75,69 +80,50 @@
     
     <main class="d-flex flex-nowrap mt-5">
 
-        <!--Sidebar-->
-        <div class="l-navbar ms-5 me-5">
-            <p>Admin</p>
-            <nav class="l-nav">
-                <div class="nav_list">
-                    <div class="list-group btn-group-vertical">
-                        <a class="nav_link active-navbar" id="paginaPrincipal" type="button" href="/emug/gerenciar/dashboard.html">
-                            <span class="material-icons inline-icon">home</span> Dashboard
-                        </a>
-    
-                        <a class="nav_link" id="paginaClientes" type="button" href="/emug/gerenciar/clientes.html">
-                            <span class="material-icons inline-icon">people</span> Clientes
-                        </a>
-    
-                        <a class="nav_link" id="paginaVendas" type="button" href="/emug/gerenciar/vendas.html">
-                            <span class="material-icons inline-icon">show_chart</span> Vendas
-                        </a>
-    
-                        <a class="nav_link" id="paginaEstoque" type="button" href="/emug/gerenciar/estoque.html">
-                            <span class="material-icons inline-icon">all_inbox</span> Estoque
-                        </a>
+        <jsp:include page="../include/sidebarCliente.jsp" />
 
-                        <a href="#" id="sair" class="nav_link">
-                            <span class="material-icons inline-icon">logout</span>Sair
-                        </a>
-                        
-                    </div>
-                </div>
-    
-            </nav>
-        </div>
-    
         <div class="w-75 bg-white rounded p-5">
-            <h5>Dashboard</h5>
+            <h5>Atualizar senha</h5>
 
             <hr>
 
-            <!-- Gráficos-->
             <div class="container">
-                <div class="row g-5">
 
-                    <div class="col-12 align-self-center text-center">
-                        <h5>Gráfico vendas</h5>
-                        <img src="\emug\assets\img\grafico_exemplo.jpg" class="img-fluid" alt="img_grafico">
-                    </div>
+                <!-- Atualizar senha -->
+                <form>
+                    <div class="row g-3 p-4">
 
-                    <div class="col-12 align-self-center text-center">
-                        <h5>Taxa de trocas</h5>
-                        <img src="\emug\assets\img\grafico_exemplo2.png" class="img-fluid" alt="img_grafico">
-                    </div>
+                        <div class="col-sm-12">
+                            <small>Senha antiga</small>
+                            <input type="password" class="form-control" id="senhaAntiga" name="senhaAntiga" value="">
+                        </div>
 
-                </div>
+                        <div class="col-sm-12">
+                            <small>Senha</small>
+                            <input type="password" class="form-control" id="senhaNova" name="senhaNova" value="">
+                        </div>
+        
+                        <div class="col-sm-12">
+                            <small>Confirmação senha</small>
+                            <input type="password" class="form-control" id="senhaConfirmacao" name="senhaConfirmacao" value="">
+                        </div>
+
+                        <button type="button" class="w-100 btn btn-primary btn-sm">Atualizar</button>
+
+                </form>
+            </div>
+
+            <hr>
+
             </div>
         </div>
     </main>
-    <br/>
 
+    <br/>
     <footer class="bg-dark text-center text-white">
         &copy;Todos direitos reservados André e Tallita
     </footer>
     
-    <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
-
+    <script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 </body>
-
 </html>

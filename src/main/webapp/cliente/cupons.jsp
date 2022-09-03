@@ -1,3 +1,6 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html lang="en">
 
 <head>
@@ -5,10 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Perfil - Atualizar senha</title>
+    <title>Perfil - Cupons</title>
 
     <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css"/>
 </head>
 
@@ -76,80 +79,80 @@
     
     <main class="d-flex flex-nowrap mt-5">
 
-        <!--Sidebar-->
-        <div class="l-navbar ms-5 me-5">
-            <p>Nome cliente</p>
-            <nav class="l-nav">
-                <div class="nav_list">
-                    <div class="list-group btn-group-vertical">
-                        <a class="nav_link" id="paginaAtualizar" type="button" href="/emug/cliente/perfil.html">
-                            <span class="material-icons inline-icon">account_circle</span> Perfil
-                        </a>
-
-                        <a class="nav_link active-navbar" id="paginaAtualizar" type="button" href="/emug/cliente/atualizarSenha.html">
-                            <span class="material-icons inline-icon">lock</span> Atualizar senha
-                        </a>
-
-                        <a class="nav_link" id="paginaEstoque" type="button" href="/emug/cliente/compras.html">
-                            <span class="material-icons inline-icon">shopping_bag</span> Compras
-                        </a>
-
-                        <a class="nav_link" id="paginaClientes" type="button" href="/emug/cliente/enderecos.html">
-                            <span class="material-icons inline-icon">local_shipping</span> Endereços
-                        </a>
-                        
-                        <a class="nav_link" id="paginaVendas" type="button" href="/emug/cliente/cartoes.html">
-                            <span class="material-icons inline-icon">credit_card</span> Cartões
-                        </a>
-
-                        <a class="nav_link" id="paginaCupons" type="button" href="/emug/cliente/cupons.html">
-                            <span class="material-icons inline-icon">local_play</span> Cupons
-                        </a>
-
-
-                        <a class="nav_link" id="" href="">
-                            <span class="material-icons inline-icon">logout</span>Sair
-                        </a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    
+        <jsp:include page="../include/sidebarCliente.jsp" />
 
         <div class="w-75 bg-white rounded p-5">
-            <h5>Atualizar senha</h5>
+            <h5>Cupons</h5>
 
             <hr>
 
             <div class="container">
+                <!-- Cupom -->
 
-                <!-- Atualizar senha -->
-                <form>
-                    <div class="row g-3 p-4">
+                <div class="row row-cols-xl-2">
 
-                        <div class="col-sm-12">
-                            <small>Senha antiga</small>
-                            <input type="password" class="form-control" id="senhaAntiga" name="senhaAntiga" value="">
+                    <div class="col">
+                        <div class="border p-2 rounded m-1">
+                            <div class="d-flex justify-content-between mt-2">
+                                <small>Promocional</small>
+                                <h6>Validade: 00/00/0000</h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6>Nome cupom</h6>
+                                <h6>R$ 00,00</h6>
+                            </div>
+                            <p>Descrição cupom</p>
                         </div>
+                    </div>
 
-                        <div class="col-sm-12">
-                            <small>Senha</small>
-                            <input type="password" class="form-control" id="senhaNova" name="senhaNova" value="">
+                    <div class="col">
+
+                        <div class="border p-2 rounded m-1">
+                            <div class="d-flex justify-content-between mt-2">
+                                <small>Promocional</small>
+                                <h6>Validade: 00/00/0000</h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6>Nome cupom</h6>
+                                <h6>R$ 00,00</h6>
+                            </div>
+                            <p>Descrição cupom</p>
                         </div>
-        
-                        <div class="col-sm-12">
-                            <small>Confirmação senha</small>
-                            <input type="password" class="form-control" id="senhaConfirmacao" name="senhaConfirmacao" value="">
+                    </div>
+
+
+                    <div class="col">
+                        <div class="border p-2 rounded m-1">
+                            <div class="d-flex justify-content-between mt-2">
+                                <small>Promocional</small>
+                                <h6>Validade: 00/00/0000</h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6>Nome cupom</h6>
+                                <h6>R$ 00,00</h6>
+                            </div>
+                            <p>Descrição cupom</p>
                         </div>
+                    </div>
 
-                        <button type="button" class="w-100 btn btn-primary btn-sm">Atualizar</button>
+                    <div class="col">
+                        <div class="border p-2 rounded m-1">
+                            <div class="d-flex justify-content-between mt-2">
+                                <small>Promocional</small>
+                                <h6>Validade: 00/00/0000</h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6>Nome cupom</h6>
+                                <h6>R$ 00,00</h6>
+                            </div>
+                            <p>Descrição cupom</p>
+                        </div>
+                    </div>
 
-                </form>
+
+                </div>
             </div>
 
-            <hr>
-
-            </div>
         </div>
     </main>
 

@@ -1,3 +1,7 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -74,38 +78,8 @@
     </header>
     
     <main class="d-flex flex-nowrap mt-5">
-        <div class="l-navbar ms-5 me-5">
-            <p>Admin</p>
-            <!--Sidebar-->
-            <nav class="l-nav">
-                <div class="nav_list">
-                    <div class="list-group btn-group-vertical">
-                        <a class="nav_link" id="paginaPrincipal" type="button" href="/emug/gerenciar/dashboard.html">
-                            <span class="material-icons inline-icon">home</span> Dashboard
-                        </a>
-    
-                        <a class="nav_link active-navbar" id="paginaClientes" type="button" href="/emug/gerenciar/clientes.html">
-                            <span class="material-icons inline-icon">people</span> Clientes
-                        </a>
-    
-                        <a class="nav_link" id="paginaVendas" type="button" href="/emug/gerenciar/vendas.html">
-                            <span class="material-icons inline-icon">show_chart</span> Vendas
-                        </a>
-    
-                        <a class="nav_link" id="paginaEstoque" type="button" href="/emug/gerenciar/estoque.html">
-                            <span class="material-icons inline-icon">all_inbox</span> Estoque
-                        </a>
 
-                        <a href="#" class="nav_link">
-                            <span class="material-icons inline-icon">logout</span>Sair
-                        </a>
-                        
-                    </div>
-                </div>
-    
-            </nav>
-        </div>
-    
+        <jsp:include page="../include/sidebarCliente.jsp" />
     
         <div class="w-75 bg-white rounded p-5">
             <h5>Clientes</h5>
