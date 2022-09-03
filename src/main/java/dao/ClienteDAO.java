@@ -57,6 +57,11 @@ public class ClienteDAO implements IDAO {
 
 
         } catch (SQLException | ClassNotFoundException e) {
+
+            /**
+             * TODO melhorar comportamentos em caso de exceção
+             */
+
             System.err.println(e.getMessage());
             e.printStackTrace();
         }

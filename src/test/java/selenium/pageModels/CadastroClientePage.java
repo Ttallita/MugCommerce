@@ -61,7 +61,7 @@ public class CadastroClientePage extends PageAbstract{
         botaoCadastro = driver.findElement(By.name("botaoCadastro"));
     }
 
-    public LoginPage cadastrar(ClienteVO cliente) throws InterruptedException {
+    public CadastroClientePage cadastrar(ClienteVO cliente) throws InterruptedException {
         campoEmail.sendKeys(cliente.getEmail());
         campoSenha.sendKeys(cliente.getSenha());
         campoSenhaConfirmacao.sendKeys(cliente.getSenhaConfirmacao());
@@ -88,7 +88,11 @@ public class CadastroClientePage extends PageAbstract{
 
         botaoCadastro.click();
 
-        return new LoginPage(driver);
+        return this;
+    }
+
+    public String getMensagemAlert(){
+         return driver.findElement(By.className("alert")).findElement(By.tagName("li")).getText();
     }
 
     public void selecionarData(String dataNascimento) throws InterruptedException {
@@ -100,7 +104,6 @@ public class CadastroClientePage extends PageAbstract{
         }
 
         acoes.perform();
-
     }
 
 }

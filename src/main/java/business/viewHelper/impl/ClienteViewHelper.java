@@ -80,7 +80,7 @@ public class ClienteViewHelper implements IViewHelper {
                 request.setAttribute("cliente", cliente);
             }
             else
-                mensagens = new String[] { "Cadastrado com sucesso" };
+                mensagens = new String[] { "Cadastrado com sucesso. <a href=\"login.jsp\">Clique aqui para logar</a>" };
 
         }
 ;
