@@ -164,7 +164,7 @@
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-primary btn-sm"><span class="material-icons">done</span></button>
-                                    <button type="button" class="btn btn-primary btn-sm">Pesquisar</button>
+                                    <button type="button" class="btn btn-primary btn-sm"><span class="material-icons">clear</span></button>
                                 </td>
                             </tr>
             
