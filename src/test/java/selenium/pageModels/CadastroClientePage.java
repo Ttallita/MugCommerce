@@ -1,36 +1,38 @@
 package selenium.pageModels;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+
+import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class CadastroClientePage extends PageAbstract{
 
     // Formulário
-    private WebElement campoEmail;
-    private WebElement campoSenha;
-    private WebElement campoSenhaConfirmacao;
-    private WebElement campoNome;
-    private WebElement campoSobrenome;
-    private WebElement campoCpf;
-    private WebElement campoGenero;
-    private WebElement campoDtNascimento;
-    private WebElement campoTelefone;
-    private WebElement campoTpResidencia;
-    private WebElement campoTpLogradouro;
-    private WebElement campoLogradouro;
-    private WebElement campoBairro;
-    private WebElement campoNumeroEndereco;
-    private WebElement campoCep;
-    private WebElement campoPais;
-    private WebElement campoEstado;
-    private WebElement campoCidade;
-    private WebElement campoApelidoEndereco;
-    private WebElement campoObservacaoEndereco;
+    private final WebElement campoEmail;
+    private final WebElement campoSenha;
+    private final WebElement campoSenhaConfirmacao;
+    private final WebElement campoNome;
+    private final WebElement campoSobrenome;
+    private final WebElement campoCpf;
+    private final WebElement campoGenero;
+    private final WebElement campoDtNascimento;
+    private final WebElement campoTelefone;
+    private final WebElement campoTpResidencia;
+    private final WebElement campoTpLogradouro;
+    private final WebElement campoLogradouro;
+    private final WebElement campoBairro;
+    private final WebElement campoNumeroEndereco;
+    private final WebElement campoCep;
+    private final WebElement campoPais;
+    private final WebElement campoEstado;
+    private final WebElement campoCidade;
+    private final WebElement campoApelidoEndereco;
+    private final WebElement campoObservacaoEndereco;
 
-    private WebElement botaoCadastro;
+    private final WebElement botaoCadastro;
 
-    public static final String TITULO_PAGINA = "Cadastro";
+    public static final String TITULO_PAGINA = "Cadastro - Cliente";
 
     public CadastroClientePage(WebDriver driver){
         super(driver, TITULO_PAGINA);
@@ -59,8 +61,7 @@ public class CadastroClientePage extends PageAbstract{
         botaoCadastro = driver.findElement(By.name("botaoCadastro"));
     }
 
-    public LoginPage cadastrar(ClienteVO cliente) {
-
+    public LoginPage cadastrar(ClienteVO cliente) throws InterruptedException {
         campoEmail.sendKeys(cliente.getEmail());
         campoSenha.sendKeys(cliente.getSenha());
         campoSenhaConfirmacao.sendKeys(cliente.getSenhaConfirmacao());
@@ -68,23 +69,38 @@ public class CadastroClientePage extends PageAbstract{
         campoSobrenome.sendKeys(cliente.getSobrenome());
         campoCpf.sendKeys(cliente.getCpf());
         campoGenero.sendKeys(cliente.getGenero());
-        campoDtNascimento.sendKeys(cliente.getDtNascimento());
+        selecionarData(cliente.getDtNascimento());
         campoTelefone.sendKeys(cliente.getTelefone());
-        campoTpResidencia.sendKeys(cliente.getTpResidencia());
-        campoTpLogradouro.sendKeys(cliente.getTpLogradouro());
-        campoLogradouro.sendKeys(cliente.getLogradouro());
-        campoBairro.sendKeys(cliente.getBairro());
-        campoNumeroEndereco.sendKeys(cliente.getNumeroEndereco());
-        campoCep.sendKeys(cliente.getCep());
-        campoPais.sendKeys(cliente.getPais());
-        campoEstado.sendKeys(cliente.getEstado());
-        campoCidade.sendKeys(cliente.getCidade());
-        campoApelidoEndereco.sendKeys(cliente.getApelidoEndereco());
-        campoObservacaoEndereco.sendKeys(cliente.getObservacaoEndereco());
+
+        EnderecoVO endereco = cliente.getEnderecoVO();
+
+        campoTpResidencia.sendKeys(endereco.getTpResidencia());
+        campoTpLogradouro.sendKeys(endereco.getTpLogradouro());
+        campoLogradouro.sendKeys(endereco.getLogradouro());
+        campoBairro.sendKeys(endereco.getBairro());
+        campoNumeroEndereco.sendKeys(endereco.getNumeroEndereco());
+        campoCep.sendKeys(endereco.getCep());
+        campoPais.sendKeys(endereco.getPais());
+        campoEstado.sendKeys(endereco.getEstado());
+        campoCidade.sendKeys(endereco.getCidade());
+        campoApelidoEndereco.sendKeys(endereco.getApelidoEndereco());
+        campoObservacaoEndereco.sendKeys(endereco.getObservacaoEndereco());
 
         botaoCadastro.click();
 
         return new LoginPage(driver);
+    }
+
+    public void selecionarData(String dataNascimento) throws InterruptedException {
+        campoDtNascimento.sendKeys("");
+        Actions acoes = new Actions(driver);
+
+        for(String a : dataNascimento.split("/")){
+            acoes.sendKeys(Keys.chord(a));
+        }
+
+        acoes.perform();
+
     }
 
 }

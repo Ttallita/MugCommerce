@@ -26,10 +26,10 @@ public class LoginPage extends PageAbstract{
         botaoLogin = driver.findElement(By.name("botaoLogin"));
     }
 
-    public HomePage logar(String email, String senha, String senhaConfirmacao){
-        campoEmail.sendKeys(email);
-        campoSenha.sendKeys(senha);
-        campoSenhaConfirmacao.sendKeys(senhaConfirmacao);
+    public HomePage logar(ClienteVO cliente){
+        campoEmail.sendKeys(cliente.getEmail());
+        campoSenha.sendKeys(cliente.getSenha());
+        campoSenhaConfirmacao.sendKeys(cliente.getSenhaConfirmacao());
 
         botaoLogin.click();
 

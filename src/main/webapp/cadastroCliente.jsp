@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cadastro</title>
+    <title>Cadastro - Cliente</title>
 
     <link rel="stylesheet" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="webjars/material-design-icons/4.0.0/material-icons.css"/>
@@ -20,18 +20,18 @@
         <form action="/emug/cadastro" method="POST">
             <div class="row g-3 p-4">
                 <h5>Conta</h5>
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <label for="email"><small>Email</small></label>
                     <input type="email" class="form-control" id="email" name="email" value="${cliente.usuario.email}">
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-sm-6">
                     <label for="senha"><small>Senha</small></label>
                     <input type="password" class="form-control" id="senha" name="senha" value="${cliente.usuario.senha}">
-                    <small>A senha deve conter pelo 8 caracteres, incluindo caracteres maisculos, minusculos e especiais.</small>
+                    <small>A senha deve conter pelo menos 8 caracteres, incluir caracteres maiúsculos, minúsculos e especiais.</small>
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-sm-6">
                     <label for="senhaConfirmacao"><small>Confirmação senha</small></label>
                     <input type="password" class="form-control" id="senhaConfirmacao" name="senhaConfirmacao" value="${cliente.usuario.confirmarSenha}">
                 </div>
@@ -161,7 +161,7 @@
     </div>
 </body>
 <script src="assets/js/geral.js"></script>
-<script src="<c:url value="webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"/>"></script>
+<script src='<c:url value="webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"/>'></script>
 <script src='<c:url value="webjars/jquery/3.6.0/jquery.min.js"/>'></script>
 <script src='<c:url value="webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js"/>'></script>
 <script>
