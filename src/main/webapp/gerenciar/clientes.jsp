@@ -79,7 +79,7 @@
     
     <main class="d-flex flex-nowrap mt-5">
 
-        <jsp:include page="../include/sidebarCliente.jsp" />
+        <jsp:include page="../include/sidebarAdm.jsp" />
     
         <div class="w-75 bg-white rounded p-5">
             <h5>Clientes</h5>

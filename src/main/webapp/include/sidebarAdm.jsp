@@ -13,19 +13,23 @@
         <div class="nav_list">
             <div class="list-group btn-group-vertical">
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'dashboard') ? 'active-navbar' : ''}" id="paginaPrincipal" type="button" href="/emug/gerenciar/dashboard.html">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'dashboard') ? 'active-navbar' : ''}" id="paginaPrincipal" type="button" href="/emug/gerenciar/dashboard.jsp">
                     <span class="material-icons inline-icon">home</span> Dashboard
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'clientes') ? 'active-navbar' : ''} active-navbar" id="paginaClientes" type="button" href="/emug/gerenciar/clientes.html">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'clientes') ? 'active-navbar' : ''}" id="paginaClientes" type="button" href="/emug/gerenciar/clientes.jsp">
                     <span class="material-icons inline-icon">people</span> Clientes
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'vendas') ? 'active-navbar' : ''}" id="paginaVendas" type="button" href="/emug/gerenciar/vendas.html">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'vendas') ? 'active-navbar' : ''}" id="paginaVendas" type="button" href="/emug/gerenciar/vendas.jsp">
                     <span class="material-icons inline-icon">show_chart</span> Vendas
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'estoque') ? 'active-navbar' : ''}" id="paginaEstoque" type="button" href="/emug/gerenciar/estoque.html">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'solicitacoesPendentes') ? 'active-navbar' : ''}" id="paginaSolicitacoes" type="button" href="/emug/gerenciar/solicitacoesPendentes.jsp">
+                    <span class="material-icons inline-icon">fact_check</span> Solicitações pendentes
+                </a>
+
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'estoque') ? 'active-navbar' : ''}" id="paginaEstoque" type="button" href="/emug/gerenciar/estoque.jsp">
                     <span class="material-icons inline-icon">all_inbox</span> Estoque
                 </a>
 
