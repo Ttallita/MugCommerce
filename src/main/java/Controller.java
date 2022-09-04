@@ -2,6 +2,7 @@ import business.command.*;
 import business.viewHelper.IViewHelper;
 import business.viewHelper.impl.ClienteViewHelper;
 import business.viewHelper.impl.LoginViewHelper;
+import business.viewHelper.impl.UsuarioViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 
@@ -40,8 +41,8 @@ public class Controller extends HttpServlet{
         viewHelperMap = new HashMap<>();
         viewHelperMap.put("/emug/cadastro", new ClienteViewHelper());
         viewHelperMap.put("/emug/login", new LoginViewHelper());
-        viewHelperMap.put("/emug/clientes/perfil", new ClienteViewHelper());
         viewHelperMap.put("/emug/clientes", new ClienteViewHelper());
+        viewHelperMap.put("/emug/clientes/atualizarSenha", new UsuarioViewHelper());
     }
 
     @Override

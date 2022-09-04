@@ -1,9 +1,11 @@
 package business.strategy.impl.cliente;
 
 import business.strategy.IStrategy;
+import dao.UsuarioDAO;
 import model.EntidadeDominio;
 import model.Usuario;
 import model.cliente.Cliente;
+import utils.Utils;
 
 public class VerificarSenhaStrategy implements IStrategy {
 
@@ -14,15 +16,25 @@ public class VerificarSenhaStrategy implements IStrategy {
         String senha;
         String senhaConfirmacao;
 
+
         if(nomeClasse.equals("Cliente")) {
             Cliente cliente = (Cliente) entidade;
             senha = cliente.getUsuario().getSenha();
             senhaConfirmacao = cliente.getUsuario().getConfirmarSenha();
-
         } else  {
             Usuario usuario = (Usuario) entidade;
             senha = usuario.getSenha();
             senhaConfirmacao = usuario.getConfirmarSenha();
+
+
+            if(!usuario.getSenhaAntiga().isEmpty()) {
+                Usuario usuarioBanco = (Usuario) new UsuarioDAO().listar(entidade, "findById").get(0);
+
+                String senhaSha512 = Utils.getSha512(usuario.getSenhaAntiga());
+
+                if(!senhaSha512.equals(usuarioBanco.getSenha()))
+                    return "Senha anterior incorreta";
+            }
         }
 
         String caracteresEspeciais = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";

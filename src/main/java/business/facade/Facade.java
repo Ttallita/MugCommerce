@@ -47,7 +47,15 @@ public class Facade implements IFacade {
         mapStrategyCliente.put("salvar", regrasSalvarCliente);
         mapStrategyCliente.put("atualizar", regrasAtualizarCliente);
 
+        List<IStrategy> regrasAtualizarUsuario = List.of(
+                new VerificarSenhaStrategy()
+        );
+
+        Map<String, List<IStrategy>> mapaStrategyUsuario = new HashMap<>();
+        mapaStrategyUsuario.put("atualizar", regrasAtualizarUsuario);
+
         regrasDeNegocioMap.put(Cliente.class.getName(), mapStrategyCliente);
+        regrasDeNegocioMap.put(Usuario.class.getName(), mapaStrategyUsuario);
     }
 
     @Override

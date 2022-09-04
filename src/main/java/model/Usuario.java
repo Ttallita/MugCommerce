@@ -1,11 +1,19 @@
 package model;
 
+/**
+ * @author andre
+ */
 public class Usuario extends EntidadeDominio{
 
     private String email;
     private String senha;
     private String confirmarSenha;
     private UsuarioType tipoUsuario;
+
+    /**
+     * Esse campo não deve ser persistido no campo, servindo apenas para verificação
+     */
+    private String senhaAntiga;
 
     public String getEmail() {
         return email;
@@ -37,5 +45,13 @@ public class Usuario extends EntidadeDominio{
 
     public void setTipoUsuario(UsuarioType tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getSenhaAntiga() {
+        return senhaAntiga;
+    }
+
+    public void setSenhaAntiga(String senhaAntiga) {
+        this.senhaAntiga = senhaAntiga;
     }
 }

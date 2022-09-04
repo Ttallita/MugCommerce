@@ -10,112 +10,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Perfil - Atualizar senha</title>
-
-    <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
-    <link rel="stylesheet" href="../assets/css/style.css"/>
+    <link rel="stylesheet" href='<c:url value="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" />'/>
+    <link rel="stylesheet" href='<c:url value="/webjars/material-design-icons/4.0.0/material-icons.css" />'/>
+    <link rel="stylesheet" href='<c:url value="/assets/css/style.css" />'/>
 </head>
 
 <body>
-
-    <header>
-        <div class="navbar bg-dark navbar-dark">
-            <div class="container-fluid">
-
-                <a href="/emug/index.html">
-                    <img src="\emug\assets\img\logo_branco.png" alt="logo" class="logo w-50">
-                </a>
-
-                <form class="d-flex" action="pesquisa.html">
-                    <input class="form-control me-2" type="search" aria-label="Search">
-                    <button class="btn btn-primary" type="submit">
-                        <span class="material-icons">search</span>
-                    </button>
-                </form>
-
-                <div class="d-flex align-items-center gap-3">
-                    <button class="btn btn-light" type="submit">
-                        <a href="cliente/perfil.html">
-                            <span class="material-icons">account_circle</span>
-                        </a>
-                    </button>
-                    <button class="btn btn-light" type="submit">
-                        <a href="cliente/carrinho.html">
-                            <span class="material-icons">shopping_cart</span>
-                        </a>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
-            <div class="container-fluid">
-
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Produtos</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </nav>
-
-    </header>
-    
+    <jsp:include page="../include/header.jsp"/>
     <main class="d-flex flex-nowrap mt-5">
-
         <jsp:include page="../include/sidebarCliente.jsp" />
-
         <div class="w-75 bg-white rounded p-5">
             <h5>Atualizar senha</h5>
-
             <hr>
-
             <div class="container">
-
+                <jsp:include page="../include/alert.jsp" />
                 <!-- Atualizar senha -->
-                <form>
+                <form action="/emug/clientes/atualizarSenha" method="POST">
                     <div class="row g-3 p-4">
 
                         <div class="col-sm-12">
-                            <small>Senha antiga</small>
+                            <label for="senhaAntiga"><small>Senha antiga</small></label>
                             <input type="password" class="form-control" id="senhaAntiga" name="senhaAntiga" value="">
                         </div>
 
                         <div class="col-sm-12">
-                            <small>Senha</small>
+                            <label for="senhaNova"><small>Senha</small></label>
                             <input type="password" class="form-control" id="senhaNova" name="senhaNova" value="">
+                            <small>A senha deve conter pelo menos 8 caracteres, incluir caracteres maiúsculos, minúsculos e especiais.</small>
                         </div>
         
                         <div class="col-sm-12">
-                            <small>Confirmação senha</small>
+                            <label for="senhaConfirmacao"><small>Confirmação senha</small></label>
                             <input type="password" class="form-control" id="senhaConfirmacao" name="senhaConfirmacao" value="">
                         </div>
-
-                        <button type="button" class="w-100 btn btn-primary btn-sm">Atualizar</button>
-
+                        <input type="hidden" name="operacao" value="atualizar">
+                        <button type="submit" class="w-100 btn btn-primary btn-sm">Atualizar</button>
+                    </div>
                 </form>
             </div>
-
             <hr>
-
-            </div>
         </div>
     </main>
 
@@ -123,7 +56,6 @@
     <footer class="bg-dark text-center text-white">
         &copy;Todos direitos reservados André e Tallita
     </footer>
-    
-    <script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+    <script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js'/>"></script>
 </body>
 </html>

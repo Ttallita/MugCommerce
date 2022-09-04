@@ -23,9 +23,8 @@ public class VerificarClienteStrategy implements IStrategy {
         }
 
         if(cliente.getSobrenome().length() > 255) {
-            return "O campo nome deve ter no máximo 255 caracteres";
+            return "O campo sobrenome deve ter no máximo 255 caracteres";
         }
-
 
         if(cliente.getGenero().isBlank()) {
             return "Escolha um gênero valído";
