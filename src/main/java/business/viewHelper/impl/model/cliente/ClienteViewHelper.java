@@ -1,4 +1,4 @@
-package business.viewHelper.impl;
+package business.viewHelper.impl.model.cliente;
 
 import business.viewHelper.IViewHelper;
 import model.EntidadeDominio;

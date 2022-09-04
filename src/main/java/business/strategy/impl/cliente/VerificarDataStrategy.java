@@ -20,7 +20,7 @@ public class VerificarDataStrategy implements IStrategy {
         LocalDate dataAtual = LocalDate.now();
 
         if(dataNascimento.isAfter(dataAtual) || dataNascimento.equals(dataAtual))
-            return "A data de nascimento não pode ser maior ou igual que a atual";
+            return "A data de nascimento não pode ser maior ou igual que a data atual";
 
 
         long anosDiferenca = ChronoUnit.YEARS.between(dataNascimento, dataAtual);

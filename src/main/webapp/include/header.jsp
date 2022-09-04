@@ -23,14 +23,14 @@
             <c:choose>
                 <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'CLIENTE'}">
                     <div class="d-flex align-items-center gap-3">
-                        <a href="<c:url value="/clientes/perfil?operacao=listar" />">
+                        <a href="<c:url value="/clientes?operacao=listar" />">
                             <button class="btn btn-light pr-2" type="button">
                                  <span class="material-icons">account_circle</span>
                             </button>
                         </a>
                         <a href="<c:url value="/cliente/carrinho.html"/> ">
                             <button class="btn btn-light" type="button">
-                                    <span class="material-icons">shopping_cart</span>
+                                <span class="material-icons">shopping_cart</span>
                             </button>
                         </a>
                     </div>

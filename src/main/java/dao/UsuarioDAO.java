@@ -4,6 +4,7 @@ import model.EntidadeDominio;
 import model.Usuario;
 import model.UsuarioType;
 import utils.Conexao;
+import utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class UsuarioDAO implements IDAO {
 
             PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, usuario.getEmail());
-            pstm.setString(2, usuario.getSenha());
+            pstm.setString(2, Utils.getSha512(usuario.getSenha()));
             pstm.setString(3, usuario.getTipoUsuario().toString());
             pstm.setBoolean(4, usuario.isAtivo());
 
@@ -52,6 +53,30 @@ public class UsuarioDAO implements IDAO {
 
     @Override
     public EntidadeDominio atualizar(EntidadeDominio entidade) {
+        Usuario usuario = (Usuario) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "UPDATE usuarios SET usr_senha = ? WHERE usr_id = ?;";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setString(1, Utils.getSha512(usuario.getSenha()));
+            pstm.setLong(2, usuario.getId());
+
+            pstm.execute();
+
+            return usuario;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(conn);
+        }
+
         return null;
     }
 
@@ -70,11 +95,17 @@ public class UsuarioDAO implements IDAO {
         try {
             conn = conexao.getConexao();
 
-            String sql = "SELECT * FROM usuarios WHERE usr_email = ? AND usr_senha = ?";
-
-            PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setString(1, usuario.getEmail());
-            pstm.setString(2, usuario.getSenha());
+            PreparedStatement pstm = null;
+            if(operacao.equals("login")) {
+                String sql = "SELECT * FROM usuarios WHERE usr_email = ? AND usr_senha = ?";
+                pstm = conn.prepareStatement(sql);
+                pstm.setString(1, usuario.getEmail());
+                pstm.setString(2, Utils.getSha512(usuario.getSenha()));
+            } else if(operacao.equals("findById")) {
+                String sql = "SELECT * FROM usuarios WHERE usr_id = ?";
+                pstm = conn.prepareStatement(sql);
+                pstm.setLong(1, usuario.getId());
+            }
 
             ResultSet rs = pstm.executeQuery();
 
@@ -106,4 +137,5 @@ public class UsuarioDAO implements IDAO {
 
         return null;
     }
+
 }
