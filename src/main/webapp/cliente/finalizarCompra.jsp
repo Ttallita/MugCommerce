@@ -224,6 +224,11 @@
             </div>
         </div>
     </main>
+
+    <jsp:include page="include/footer.jsp"/>
+
 </body>
+
 <script src="/emug/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+
 </html>

@@ -8,7 +8,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar - Vendas</title>
+    
+    <title>Gerenciar - Solicitações</title>
 
     <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
@@ -86,7 +87,7 @@
 
             <hr>
 
-            <!-- Filtro de vendas-->
+            <!-- Filtro de solicitações -->
             <div class="container">
                 <form>
                     <div class="row g-3">
@@ -95,21 +96,8 @@
                             <small>Status</small>
                             <select class="form-select" aria-label="Default select example">
                                 <option value="">Selecione</option>
-                                <option value="">Aprovado</option>
-                                <option value="">Entregue</option>
-                                <option value="">Em processamento</option>
                                 <option value="">Troca solicitada</option>
                             </select>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <small>Data de compra</small>
-                            <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
-                        </div>
-
-                        <div class="col-sm-4">
-                            <small>Data de entrega</small>
-                            <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
                         </div>
                         
                         <div class="col-sm-12">
@@ -121,104 +109,109 @@
                 </form>
             </div>
 
+            <hr>
 
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <div class="container">
 
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-gerenciar-vendas-tab" data-bs-toggle="pill" data-bs-target="#pills-gerenciar-vendas" type="button" role="tab" aria-controls="pills-gerenciar-vendas" aria-selected="true">Gerenciar vendas</button>
-                </li>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-avancado-tab" data-bs-toggle="pill" data-bs-target="#pills-avancado" type="button" role="tab" aria-controls="pills-avancado" aria-selected="false">Avançado</button>
-                </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-gerenciar-solicitacoes-tab" data-bs-toggle="pill" data-bs-target="#pills-gerenciar-solicitacoes" type="button" role="tab" aria-controls="pills-gerenciar-solicitacoes" aria-selected="true">Gerenciar solicitações</button>
+                    </li>
 
-            </ul>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-avancado-tab" data-bs-toggle="pill" data-bs-target="#pills-avancado" type="button" role="tab" aria-controls="pills-avancado" aria-selected="false">Avançado</button>
+                    </li>
+
+                </ul>
 
 
-            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-content" id="pills-tabContent">
 
-                <div class="tab-pane fade show active" id="pills-gerenciar-vendas" role="tabpanel" aria-labelledby="pills-gerenciar-vendas-tab" tabindex="0">
-                    
-                    <table class="table table-hover" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Cliente</th>
-                                <th>Quant. Produtos</th>
-                                <th>Valor</th>
-                                <th>Data compra</th>
-                                <th>Data entrega</th>
-                                <th>Status</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-    
-                            <tr>
-                                <td>nome sobrenome</td>
-                                <td>00</td>
-                                <td>R$ 00,00</td>
-                                <td>00/00/0000</td>
-                                <td>00/00/0000</td>
-                                <td>
-                                    Aprovado
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-primary btn-sm"><span class="material-icons">done</span></button>
-                                    <button type="button" class="btn btn-primary btn-sm"><span class="material-icons">clear</span></button>
-                                </td>
-                            </tr>
-            
-                        </tbody>
-                    </table>
+                    <div class="tab-pane fade show active" id="pills-gerenciar-solicitacoes" role="tabpanel" aria-labelledby="pills-gerenciar-solicitacoes-tab" tabindex="0">
+                        
+                        <table class="table table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Nome produto</th>
+                                    <th>Cliente</th>
+                                    <th>Quant.</th>
+                                    <th>Valor</th>
+                                    <th>Data compra</th>
+                                    <th>Data entrega</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        
+                                <tr>
+                                    <td>nome produto</td>
+                                    <td>nome sobrenome</td>
+                                    <td>00</td>
+                                    <td>R$ 00,00</td>
+                                    <td>00/00/0000</td>
+                                    <td>00/00/0000</td>
+                                    <td>
+                                        Aprovado
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm"><span class="material-icons">done</span></button>
+                                        <button type="button" class="btn btn-primary btn-sm"><span class="material-icons">clear</span></button>
+                                    </td>
+                                </tr>
+                
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-avancado" role="tabpanel" aria-labelledby="pills-avancado-tab" tabindex="0">
+                        <table class="table table-hover" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Nome produto</th>
+                                    <th>Cliente</th>
+                                    <th>Quant.</th>
+                                    <th>Valor</th>
+                                    <th>Data compra</th>
+                                    <th>Data entrega</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        
+                                <tr>
+                                    <td>nome produto</td>
+                                    <td>nome sobrenome</td>
+                                    <td>00</td>
+                                    <td>R$ 00,00</td>
+                                    <td>00/00/0000</td>
+                                    <td>00/00/0000</td>
+                                    <td>
+                                        Aprovado
+                                        <span class="material-icons">edit</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>nome produto</td>
+                                    <td>nome sobrenome</td>
+                                    <td>00</td>
+                                    <td>R$ 00,00</td>
+                                    <td>00/00/0000</td>
+                                    <td>00/00/0000</td>
+                                    <td>
+                                        Aprovado
+                                        <span class="material-icons">edit</span>
+                                    </td>
+                                </tr>
+                
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-                <div class="tab-pane fade" id="pills-avancado" role="tabpanel" aria-labelledby="pills-avancado-tab" tabindex="0">
-                    <table class="table table-hover" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Cliente</th>
-                                <th>Quant. Produtos</th>
-                                <th>Valor</th>
-                                <th>Data compra</th>
-                                <th>Data entrega</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-    
-                            <tr>
-                                <td>nome sobrenome</td>
-                                <td>00</td>
-                                <td>R$ 00,00</td>
-                                <td>00/00/0000</td>
-                                <td>00/00/0000</td>
-                                <td>
-                                    Aprovado
-                                    <span class="material-icons">edit</span>
-                                </td>
-                            </tr>
-    
-                            <tr>
-                                <td>nome sobrenome</td>
-                                <td>00</td>
-                                <td>R$ 00,00</td>
-                                <td>00/00/0000</td>
-                                <td>00/00/0000</td>
-                                <td>
-                                    Entregue
-                                    <span class="material-icons">edit</span>
-                                </td>
-                            </tr>
-            
-                        </tbody>
-                    </table>
-                </div>
-
             </div>
               
-            
-
-            <hr>
 
             
         </div>
@@ -226,9 +219,7 @@
 
     <br/>
 
-    <footer class="bg-dark text-center text-white">
-        &copy;Todos direitos reservados André e Tallita
-    </footer>
+    <jsp:include page="../include/footer.jsp"/>
 
     <script src="/emug/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 

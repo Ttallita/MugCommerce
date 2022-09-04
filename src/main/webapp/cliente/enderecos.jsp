@@ -116,7 +116,7 @@
                                 <td>País</td>
                                 <td>CEP</td>
                                 <td>
-                                    <span class="material-icons">edit</span>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEndereco"><span class="material-icons">edit</span></button>
                                 </td>
                             </tr>
     
@@ -130,14 +130,15 @@
                                 <td>País</td>
                                 <td>CEP</td>
                                 <td>
-                                    <span class="material-icons">edit</span>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEndereco"><span class="material-icons">edit</span></button>
                                 </td>
                             </tr>
             
                         </tbody>
                     </table>
     
-                    <button type="button" class="w-100 btn btn-primary btn-sm">Adicionar endereço</button>
+                    <a type="button" class="w-100 btn btn-primary btn-sm" href="/emug/formularios/formEndereco.jsp">Adicionar endereço</a>
+                
                 </div>
             </div>
 
@@ -145,10 +146,11 @@
     </main>
 
     <br/>
-    <footer class="bg-dark text-center text-white">
-        &copy;Todos direitos reservados André e Tallita
-    </footer>
+    
+    <jsp:include page="../include/footer.jsp"/>
     
     <script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+
 </body>
+
 </html>

@@ -159,7 +159,11 @@
         </div>
         <br/>
     </div>
+
+    <jsp:include page="include/footer.jsp"/>
+    
 </body>
+
 <script src="assets/js/geral.js"></script>
 <script src='<c:url value="webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"/>'></script>
 <script src='<c:url value="webjars/jquery/3.6.0/jquery.min.js"/>'></script>
@@ -169,4 +173,5 @@
     $('#cpf').mask("000.000.000-00")
     $('#cep').mask("00000-000")
 </script>
+
 </html>

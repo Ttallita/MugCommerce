@@ -122,18 +122,6 @@
             </div>
 
 
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-gerenciar-vendas-tab" data-bs-toggle="pill" data-bs-target="#pills-gerenciar-vendas" type="button" role="tab" aria-controls="pills-gerenciar-vendas" aria-selected="true">Gerenciar vendas</button>
-                </li>
-
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-avancado-tab" data-bs-toggle="pill" data-bs-target="#pills-avancado" type="button" role="tab" aria-controls="pills-avancado" aria-selected="false">Avançado</button>
-                </li>
-
-            </ul>
-
 
             <div class="tab-content" id="pills-tabContent">
 
@@ -216,19 +204,58 @@
 
             </div>
               
-            
+            <!-- Modal Detalhes venda-->
+            <div class="modal fade" id="detalhesCompra" tabindex="-1" aria-labelledby="detalhesCompraLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title fw-bold" id="detalhesCompraLabel">Detalhes compra</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
-            <hr>
+                    <div class="modal-body m-5">
 
+                        <h6 class="fw-bold">00/00/0000</h6>
+                        <h6>Status</h6>
+                        <h6>Chegou no dia 00/00/0000</h6>
+
+                        <!-- Produto -->
+                        <div class="row border rounded p-3">
+                            <div class="col-2">
+                                <div class="card produto mb-3">
+                                    <img alt="produto" src="\emug\assets\img\canecas\caneca_porco.jpeg" class="p-2">
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <h6 class="text-muted">Categoria</h6>
+                                <h5>Nome produto</h5>
+                                <h6>Quantidade: 00</h6>
+                                <h6>Valor: R$ 00,00</h6>
+                            </div>
+
+                            <div class="col-2">
+                                <button type="button" class="btn btn-primary btn-sm">Trocar</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Cancelar compra</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+
+                </div>
+                </div>
+            </div>
             
         </div>
     </main>
 
     <br/>
 
-    <footer class="bg-dark text-center text-white">
-        &copy;Todos direitos reservados André e Tallita
-    </footer>
+    <jsp:include page="../include/footer.jsp"/>
 
     <script src="/emug/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 

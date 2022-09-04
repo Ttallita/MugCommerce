@@ -39,9 +39,10 @@
                 </div>
             </div>
         </div>
-        <footer class="bg-dark text-center text-white">
-            &copy;Todos direitos reservados André e Tallita
-        </footer>
+
+        <jsp:include page="include/footer.jsp"/>
+
     </body>
+    
     <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 </html>
