@@ -1,89 +1,26 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar - Clientes</title>
 
-    <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
-    <link rel="stylesheet" href="../assets/css/style.css"/>
+    <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" />"/>
+    <link rel="stylesheet" href="<c:url value="/webjars/material-design-icons/4.0.0/material-icons.css" />"/>
+    <link rel="stylesheet" href="<c:url value="/assets/css/style.css" />"/>
 </head>
 
 <body>
-
-    <header>
-        <div class="navbar bg-dark navbar-dark">
-            <div class="container-fluid">
-
-                <a href="/emug/index.html">
-                    <img src="\emug\assets\img\logo_branco.png" alt="logo" class="logo w-50">
-                </a>
-
-                <form class="d-flex" action="pesquisa.html">
-                    <input class="form-control me-2" type="search" aria-label="Search">
-                    <button class="btn btn-primary" type="submit">
-                        <span class="material-icons">search</span>
-                    </button>
-                </form>
-
-                <div class="d-flex align-items-center gap-3">
-                    <button class="btn btn-light" type="submit">
-                        <a href="cliente/perfil.html">
-                            <span class="material-icons">account_circle</span>
-                        </a>
-                    </button>
-                    <button class="btn btn-light" type="submit">
-                        <a href="cliente/carrinho.html">
-                            <span class="material-icons">shopping_cart</span>
-                        </a>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
-            <div class="container-fluid">
-
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Produtos</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </nav>
-
-    </header>
-    
+    <jsp:include page="../include/header.jsp"/>
     <main class="d-flex flex-nowrap mt-5">
-
         <jsp:include page="../include/sidebarAdm.jsp" />
-    
         <div class="w-75 bg-white rounded p-5">
             <h5>Clientes</h5>
-
             <hr>
 
             <!-- Filtro de cliente-->
@@ -92,22 +29,23 @@
                     <div class="row g-3">
 
                         <div class="col-sm-12">
-                            <small>Pesquisa</small>
+                            <label for="pesquisa">
+                                <small>Pesquisa</small>
+                            </label>
                             <input type="text" class="form-control" id="pesquisa" name="pesquisa" value="">
                         </div>
                         <div class="col-sm-4">
                             <small>Gênero</small>
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" aria-label="Select gênero">
                                 <option selected>Selecione</option>
-                                <option value="1">Masculino</option>
-                                <option value="2">Feminino</option>
-                                <option value="3">Outro</option>
-                                <option value="4">Prefiro não informar</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                                <option value="Outro">Outro</option>
                             </select>
                         </div>
 
                         <div class="col-md-4">
-                            <small>País</small>
+                            <label for="pais"><small>País</small></label>
                             <select class="form-select" id="pais" name="pais">
                                 <option value="">Selecione</option>
                                 <option>Brasil</option>
@@ -116,7 +54,9 @@
                         </div>
         
                         <div class="col-md-4">
-                            <small>Estado</small>
+                            <label for="estado">
+                                <small>Estado</small>
+                            </label>
                             <select class="form-select" id="estado" name="estado">
                                 <option value="">Selecione</option>
                                 <option>São Paulo</option>
@@ -128,54 +68,48 @@
                         <div class="col-sm-12">
                             <button type="button" class="btn btn-primary btn-sm">Pesquisar</button>
                         </div>
-
                     </div>
-
                 </form>
             </div>
 
             <hr>
-
             <div class="table-responsive p-3 rounded mb-4">
-
                 <table class="table table-hover" width="100%">
                     <thead>
                         <tr>
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Gênero</th>
-                            <th>Rank</th>
-                            <th>Nascimento</th>
+                            <th>Data de Nascimento</th>
                             <th>Telefone</th>
-                            <th></th>
+                            <th>Rank</th>
+                            <th>Editar</th>
+                            <th>Inativar</th>
                         </tr>
                     </thead>
                     <tbody>
-        
-                        <tr>
-                            <td>nome sobrenome</td>
-                            <td>cpf</td>
-                            <td>genero</td>
-                            <td>ranking</td>
-                            <td>dataNascimento</td>
-                            <td>telefone.numero</td>
-                            <td><span class="material-icons">edit</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>nome sobrenome</td>
-                            <td>cpf</td>
-                            <td>genero</td>
-                            <td>ranking</td>
-                            <td>dataNascimento</td>
-                            <td>telefone.numero</td>
-                            <td><span class="material-icons">edit</span></td>
-                        </tr>
-        
+                        <c:forEach var="cliente" items="${clientes}">
+                                <tr>
+                                <td>${cliente.nome} ${cliente.sobrenome}</td>
+                                <td>${cliente.cpf}</td>
+                                <td>${cliente.genero}</td>
+                                <td>
+                                    <fmt:parseDate  value="${cliente.dataNascimento}"  type="date" pattern="yyyy-MM-dd" var="dataParseada" />
+                                    <fmt:formatDate value="${dataParseada}" type="date" pattern="dd/MM/yyyy" var="dataFormatada" />
+                                    ${dataFormatada}
+                                </td>
+                                <td>(${cliente.telefone.ddd}) ${cliente.telefone.numero}</td>
+                                <td>${cliente.ranking}</td>
+                                <td><span class="material-icons text-primary">edit</span></td>
+                                <td><span class="material-icons text-danger">delete</span></td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
 
-                <a type="button" href="/emug/cadastroCliente.html" class="w-100 btn btn-primary btn-sm" >Adicionar cliente</a>
+                <button type="button" class="w-100 btn btn-primary btn-sm">
+                    <a href='<c:url value="/cadastroCliente.jsp"/>'>Adicionar cliente</a>
+                </button>
 
             </div>
             
@@ -186,9 +120,7 @@
     <footer class="bg-dark text-center text-white">
         &copy;Todos direitos reservados André e Tallita
     </footer>
-
-    <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
-
 </body>
+<script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 
 </html>

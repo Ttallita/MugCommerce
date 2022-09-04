@@ -1,4 +1,4 @@
-package business.viewHelper.impl;
+package business.viewHelper.impl.model;
 
 import business.viewHelper.IViewHelper;
 import dao.UsuarioDAO;

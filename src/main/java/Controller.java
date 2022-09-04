@@ -1,8 +1,9 @@
 import business.command.*;
 import business.viewHelper.IViewHelper;
-import business.viewHelper.impl.ClienteViewHelper;
+import business.viewHelper.impl.model.adm.ClienteAdmViewHelper;
+import business.viewHelper.impl.model.cliente.ClienteViewHelper;
 import business.viewHelper.impl.LoginViewHelper;
-import business.viewHelper.impl.UsuarioViewHelper;
+import business.viewHelper.impl.model.UsuarioViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 
@@ -19,7 +20,8 @@ import java.io.Serial;
 @WebServlet(urlPatterns = {
         "/login",
         "/cadastro",
-        "/clientes/*"
+        "/clientes/*",
+        "/adm/*"
 })
 public class Controller extends HttpServlet{
 
@@ -37,12 +39,15 @@ public class Controller extends HttpServlet{
         commandMap.put("excluir", new ExcluirCommand());
         commandMap.put("listar", new ListarCommand());
         commandMap.put("login", new ListarCommand());
+        commandMap.put("listarTodos", new ListarCommand());
 
         viewHelperMap = new HashMap<>();
         viewHelperMap.put("/emug/cadastro", new ClienteViewHelper());
         viewHelperMap.put("/emug/login", new LoginViewHelper());
         viewHelperMap.put("/emug/clientes", new ClienteViewHelper());
         viewHelperMap.put("/emug/clientes/atualizarSenha", new UsuarioViewHelper());
+
+        viewHelperMap.put("/emug/adm/clientes", new ClienteAdmViewHelper());
     }
 
     @Override

@@ -121,31 +121,40 @@ public class ClienteDAO implements IDAO {
         try {
             connection = conexao.getConexao();
 
-            String sql = "SELECT * FROM clientes where cli_usr_id = ?";
+            String sql;
+            PreparedStatement pstm = null;
+            if(operacao.equals("listar")) {
+                sql = "SELECT * FROM clientes where cli_usr_id = ?";
 
-            PreparedStatement pstm = connection.prepareStatement(sql);
-            pstm.setLong(1, cliente.getUsuario().getId());
+                pstm = connection.prepareStatement(sql);
+                pstm.setLong(1, cliente.getUsuario().getId());
+            } else if (operacao.equals("listarTodos")) {
+                sql = "SELECT * FROM clientes";
+                pstm = connection.prepareStatement(sql);
+            }
+
             pstm.execute();
 
             ResultSet rs = pstm.executeQuery();
 
             List<EntidadeDominio> clientes = new ArrayList<>();
             while (rs.next()) {
-                cliente.setId(rs.getLong(1));
-                cliente.setNome(rs.getString(2));
-                cliente.setSobrenome(rs.getString(3));
-                cliente.setCpf(rs.getString(4));
-                cliente.setDataNascimento(rs.getTimestamp(5).toLocalDateTime().toLocalDate());
-                cliente.setGenero(rs.getString(6));
+                Cliente clienteConsulta = new Cliente();
+                clienteConsulta.setId(rs.getLong(1));
+                clienteConsulta.setNome(rs.getString(2));
+                clienteConsulta.setSobrenome(rs.getString(3));
+                clienteConsulta.setCpf(rs.getString(4));
+                clienteConsulta.setDataNascimento(rs.getTimestamp(5).toLocalDateTime().toLocalDate());
+                clienteConsulta.setGenero(rs.getString(6));
 
                 Telefone telefone = new Telefone();
                 telefone.setNumero(rs.getString(7));
                 telefone.setDdd(rs.getString(8));
                 telefone.setTipo(TelefoneType.valueOf(rs.getString(9)));
 
-                cliente.setTelefone(telefone);
-                cliente.setRanking(rs.getInt(10));
-                clientes.add(cliente);
+                clienteConsulta.setTelefone(telefone);
+                clienteConsulta.setRanking(rs.getInt(10));
+                clientes.add(clienteConsulta);
             }
 
             return clientes;

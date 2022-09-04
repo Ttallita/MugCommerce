@@ -116,7 +116,7 @@ public class Facade implements IFacade {
         if(resultado == null) {
             IDAO dao = daosMap.get(nomeClasse);
 
-            resultadoConsulta = dao.listar(entidade, "login");
+            resultadoConsulta = dao.listar(entidade, operacao);
         }
 
         result.setMsg(resultado);

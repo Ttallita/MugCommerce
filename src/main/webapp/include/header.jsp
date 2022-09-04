@@ -30,7 +30,7 @@
                         </a>
                         <a href="<c:url value="/cliente/carrinho.html"/> ">
                             <button class="btn btn-light" type="button">
-                                    <span class="material-icons">shopping_cart</span>
+                                <span class="material-icons">shopping_cart</span>
                             </button>
                         </a>
                     </div>

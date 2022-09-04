@@ -17,7 +17,7 @@
                     <span class="material-icons inline-icon">home</span> Dashboard
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'clientes') ? 'active-navbar' : ''}" id="paginaClientes" type="button" href="/emug/gerenciar/clientes.jsp">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'clientes') ? 'active-navbar' : ''}" id="paginaClientes" type="button" href="/emug/adm/clientes?operacao=listarTodos">
                     <span class="material-icons inline-icon">people</span> Clientes
                 </a>
 
