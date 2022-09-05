@@ -169,9 +169,8 @@
     </main>
 
     <br/>
-    <footer class="bg-dark text-center text-white">
-        &copy;Todos direitos reservados André e Tallita
-    </footer>
+    
+    <jsp:include page="../include/footer.jsp"/>
     
     <script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
     <script src='../webjars/jquery/3.6.0/jquery.min.js'></script>

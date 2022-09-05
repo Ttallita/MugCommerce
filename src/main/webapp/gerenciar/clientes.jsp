@@ -19,6 +19,7 @@
     <jsp:include page="../include/header.jsp"/>
     <main class="d-flex flex-nowrap mt-5">
         <jsp:include page="../include/sidebarAdm.jsp" />
+    
         <div class="w-75 bg-white rounded p-5">
             <h5>Clientes</h5>
             <hr>
@@ -68,7 +69,9 @@
                         <div class="col-sm-12">
                             <button type="button" class="btn btn-primary btn-sm">Pesquisar</button>
                         </div>
+
                     </div>
+
                 </form>
             </div>
 
@@ -117,9 +120,8 @@
     </main>
     <br/>
 
-    <footer class="bg-dark text-center text-white">
-        &copy;Todos direitos reservados André e Tallita
-    </footer>
+    <jsp:include page="../include/footer.jsp"/>
+
 </body>
 <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 

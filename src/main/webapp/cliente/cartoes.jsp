@@ -127,7 +127,7 @@
                         </tbody>
                     </table>
     
-                    <button type="button" class="w-100 btn btn-primary btn-sm">Adicionar cartão</button>
+                    <a type="button" class="w-100 btn btn-primary btn-sm" href="/emug/formularios/formCartaoCredito.jsp">Adicionar cartão</a>
                 </div>
             </div>
 
@@ -135,10 +135,11 @@
     </main>
 
     <br/>
-    <footer class="bg-dark text-center text-white">
-        &copy;Todos direitos reservados André e Tallita
-    </footer>
+
+    <jsp:include page="../include/footer.jsp"/>
     
     <script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+
 </body>
+
 </html>

@@ -17,10 +17,14 @@
 <body>
     <jsp:include page="../include/header.jsp"/>
     <main class="d-flex flex-nowrap mt-5">
+
         <jsp:include page="../include/sidebarCliente.jsp" />
+
         <div class="w-75 bg-white rounded p-5">
             <h5>Atualizar senha</h5>
+
             <hr>
+
             <div class="container">
                 <jsp:include page="../include/alert.jsp" />
                 <!-- Atualizar senha -->
@@ -52,9 +56,10 @@
     </main>
 
     <br/>
-    <footer class="bg-dark text-center text-white">
-        &copy;Todos direitos reservados André e Tallita
-    </footer>
+
+    <jsp:include page="../include/footer.jsp"/>
+
     <script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js'/>"></script>
 </body>
+
 </html>
