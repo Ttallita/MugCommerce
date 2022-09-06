@@ -5,8 +5,6 @@
 
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
 
-        <button type="button" class="btn btn-primary btn-sm ms-3"><span class="material-icons">arrow_back</span></button>
-
         <div class="container">
 
             <a href='<c:url value="/index.jsp"/>'>

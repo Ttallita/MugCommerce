@@ -11,3 +11,13 @@ function aplicaMascaraTelefone() {
     $('#telefone').mask(behavior, options);
 }
 
+function abrirModal(id) {
+    document.getElementById("idRemover").value = id;
+
+    let modalRemover = new bootstrap.Modal(document.getElementById('removeModal'), {
+        keyboard: false
+    });
+
+    modalRemover.show();
+}
+

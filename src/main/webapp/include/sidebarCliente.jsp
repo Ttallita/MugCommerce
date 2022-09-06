@@ -23,7 +23,7 @@
                     <span class="material-icons inline-icon">shopping_bag</span> Compras
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'enderecos') ? 'active-navbar' : ''}" id="paginaClientes" type="button" href="/emug/cliente/enderecos.jsp">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'enderecos') ? 'active-navbar' : ''}" id="paginaClientes" type="button" href="/emug/clientes/enderecos?operacao=listar">
                     <span class="material-icons inline-icon">local_shipping</span> Endereços
                 </a>
                 

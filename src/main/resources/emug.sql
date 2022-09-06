@@ -27,6 +27,7 @@ CREATE TABLE enderecos (
     end_cli_usr_id    int          NOT NULL,
     end_tp            varchar(20)  NOT NULL,
     end_apelido       varchar(255) NOT NULL,
+    end_tp_residencia varchar(255) NOT NULL,
     end_tp_logradouro varchar(255) NOT NULL,
     end_logradouro    varchar(255) NOT NULL,
     end_num           varchar(10)  NOT NULL,

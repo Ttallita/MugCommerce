@@ -23,6 +23,13 @@ public class Cliente extends EntidadeDominio {
 
     private Usuario usuario;
 
+    public Cliente() {}
+
+    public Cliente(Usuario usuario) {
+        super();
+        this.usuario = usuario;
+    }
+
     public String getNome() {
         return nome;
     }

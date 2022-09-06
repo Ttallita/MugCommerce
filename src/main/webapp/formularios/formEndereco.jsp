@@ -10,9 +10,9 @@
 
     <title>Cadastro</title>
 
-    <link rel="stylesheet" href="/emug/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/emug/webjars/material-design-icons/4.0.0/material-icons.css"/>
-    <link rel="stylesheet" href="/emug/assets/css/style.css"/>
+    <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" />"/>
+    <link rel="stylesheet" href="<c:url value="/webjars/material-design-icons/4.0.0/material-icons.css" />"/>
+    <link rel="stylesheet" href="<c:url value="/assets/css/style.css" />"/>
 </head>
 
 <body>
@@ -22,41 +22,60 @@
     <div class="container align-items-center justify-content-center w-50 p-4">
         <div class="card p-3">
         
-            <h3 class="text-center mb-4">Cadastro</h3>
+            <h3 class="text-center mb-4">
+                ${isEditar ? 'Editar' : 'Cadastro'}
+            </h3>
 
-            <form action="/emug/cadastroEndereco" method="POST">
+            <form action="/emug/clientes/enderecos" method="POST">
                 <div class="row g-3">
 
-                    <h6>Insira os dados do novo endereço</h6>
+                    <c:if test="${!isEditar}">
+                        <h6>Insira os dados do novo endereço</h6>
+                    </c:if>
+
+
+                    <c:if test="${isEditar}">
+                        <h6>Atualize os dados do endereço</h6>
+                    </c:if>
 
                     <div class="col-sm-4">
                         <label for="tpResidencia"><small>Tipo de residência</small></label>
-                        <input type="text" class="form-control" id="tpResidencia" name="tpResidencia" value="${cliente.enderecos[0].tipoResidencia}">
+                        <input type="text" class="form-control" id="tpResidencia" name="tpResidencia" value="${endereco.tipoResidencia}">
                     </div>
 
                     <div class="col-sm-4">
                         <label for="tpLogradouro"><small>Tipo de logradouro</small></label>
-                        <input type="text" class="form-control" id="tpLogradouro" name="tpLogradouro" value="${cliente.enderecos[0].tipoLogradouro}">
+                        <input type="text" class="form-control" id="tpLogradouro" name="tpLogradouro" value="${endereco.tipoLogradouro}">
                     </div>
 
                     <div class="col-sm-4">
+                        <label for="tpEndereco"><small>Tipo de Endereço</small></label>
+                        <select class="form-select" id="tpEndereco" name="tpEndereco">
+                            <option value="">Selecione</option>
+                            <option value="ENTREGA">Entrega</option>
+                            <option value="COBRANCA">Cobrança</option>
+                            <option value="COBRANCA_ENTREGA">Entrega e cobrança</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-12">
                         <label for="logradouro"><small>Logradouro</small></label>
-                        <input type="text" class="form-control" id="logradouro" name="logradouro" value="${cliente.enderecos[0].logradouro}">
+                        <input type="text" class="form-control" id="logradouro" name="logradouro" value="${endereco.logradouro}">
                     </div>
 
                     <div class="col-sm-6">
                         <label for="bairro"><small>Bairro</small></label>
-                        <input type="text" class="form-control" id="bairro" name="bairro" value="${cliente.enderecos[0].bairro}">
+                        <input type="text" class="form-control" id="bairro" name="bairro" value="${endereco.bairro}">
                     </div>
 
                     <div class="col-sm-2">
                         <label for="numeroEndereco"><small>Número</small></label>
-                        <input type="text" class="form-control" id="numeroEndereco" name="numeroEndereco" value="${cliente.enderecos[0].numero}">
+                        <input type="text" class="form-control" id="numeroEndereco" name="numeroEndereco" value="${endereco.numero}">
                     </div>
 
                     <div class="col-sm-4">
                         <label for="cep"><small>CEP</small></label>
-                        <input type="text" class="form-control" id="cep" name="cep" value="${cliente.enderecos[0].cep}">
+                        <input type="text" class="form-control" id="cep" name="cep" value="${endereco.cep}">
                     </div>
 
                     <div class="col-md-4">
@@ -89,18 +108,21 @@
 
                     <div class="col-sm-12">
                         <label for="apelidoEndereco"><small>Apelido endereço</small></label>
-                        <input type="text" class="form-control" id="apelidoEndereco" name="apelidoEndereco" value="${cliente.enderecos[0].apelido}">
+                        <input type="text" class="form-control" id="apelidoEndereco" name="apelidoEndereco" value="${endereco.apelido}">
                     </div>
 
                     <div class="col-sm-12">
                         <label for="observacaoEndereco">
                             <small>Observação<small class="text-muted">(Opcional)</small></small>
                         </label>
-                        <input type="text" class="form-control" id="observacaoEndereco" name="observacaoEndereco" value="${cliente.enderecos[0].observacoes}">
+                        <input type="text" class="form-control" id="observacaoEndereco" name="observacaoEndereco" value="${endereco.observacoes}">
                     </div>
 
-                    <button class="w-100 btn btn-primary btn-lg" type="submit" name="botaoCadastro">Cadastrar</button>
-
+                    <input type="hidden" name="id" value="${endereco.id}">
+                    <input type="hidden" name="operacao" value="${isEditar ? 'atualizar' : 'salvar'}">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit" name="botaoCadastro">
+                        ${isEditar ? 'Atualizar' : 'Cadastrar'}
+                    </button>
                 </div>
             </form>
 
@@ -118,7 +140,7 @@
 <script>
     aplicaMascaraTelefone()
     $('#cpf').mask("000.000.000-00")
-    $('.money').mask('000.000.000.000.000,00', {reverse: true});
+    $('#cep').mask("00000-000")
 </script>
 
 </html>

@@ -40,19 +40,7 @@ public class ClienteViewHelper implements IViewHelper {
 
                 Cliente cliente = criaClienteBasico(request, usuario);
 
-                Endereco endereco = new Endereco();
-                endereco.setTipoResidencia(request.getParameter("tpResidencia"));
-                endereco.setTipoLogradouro(request.getParameter("tpLogradouro"));
-                endereco.setLogradouro(request.getParameter("logradouro"));
-                endereco.setBairro(request.getParameter("bairro"));
-                endereco.setNumero(getNumeroEndereco(request.getParameter("numeroEndereco")));
-                endereco.setCep(request.getParameter("cep"));
-                endereco.setPais(request.getParameter("pais"));
-                endereco.setEstado(request.getParameter("estado"));
-                endereco.setCidade(request.getParameter("cidade"));
-                endereco.setApelido(request.getParameter("apelidoEndereco"));
-                endereco.setObservacoes(request.getParameter("observacaoEndereco"));
-                endereco.setTipoEndereco(EnderecoType.COBRANCA_ENTREGA);
+                Endereco endereco = (Endereco) new EnderecoViewHelper().getEntidade(request);
 
                 cliente.setEnderecos(List.of(endereco));
                 return cliente;
@@ -108,13 +96,6 @@ public class ClienteViewHelper implements IViewHelper {
         return new Telefone(telefoneType, dddSemParenteses, telefone[1]);
     }
 
-    public Integer getNumeroEndereco(String numero) {
-        try {
-            return Integer.parseInt(numero);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
 
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

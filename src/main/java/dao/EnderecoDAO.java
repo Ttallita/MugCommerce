@@ -2,9 +2,11 @@ package dao;
 
 import model.EntidadeDominio;
 import model.cliente.endereco.Endereco;
+import model.cliente.endereco.EnderecoType;
 import utils.Conexao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EnderecoDAO implements IDAO{
@@ -18,11 +20,12 @@ public class EnderecoDAO implements IDAO{
         try {
             conn = conexao.getConexao();
 
-            String sql = "INSERT INTO enderecos (end_cli_usr_id, end_tp, end_apelido, end_tp_logradouro, end_logradouro, end_num, end_bairro, end_cep, end_cidade, end_estado, end_pais, end_observacao)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO enderecos (end_cli_usr_id, end_tp, end_apelido, end_tp_logradouro, end_logradouro," +
+                    " end_num, end_bairro, end_cep, end_cidade, end_estado, end_pais, end_observacao, end_tp_residencia)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstm.setLong(1,endereco.getCliente().getId());
+            pstm.setLong(1,endereco.getCliente().getUsuario().getId());
             pstm.setString(2, endereco.getTipoEndereco().name());
             pstm.setString(3, endereco.getApelido());
             pstm.setString(4, endereco.getTipoLogradouro());
@@ -34,6 +37,7 @@ public class EnderecoDAO implements IDAO{
             pstm.setString(10, endereco.getEstado());
             pstm.setString(11, endereco.getPais());
             pstm.setString(12, endereco.getObservacoes());
+            pstm.setString(13, endereco.getTipoResidencia());
 
             pstm.execute();
 
@@ -58,16 +62,125 @@ public class EnderecoDAO implements IDAO{
 
     @Override
     public EntidadeDominio atualizar(EntidadeDominio entidade) {
-        return null;
+        Endereco endereco = (Endereco) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "UPDATE enderecos SET end_tp = ?, end_apelido = ?, end_tp_logradouro = ?, end_logradouro = ?," +
+                    " end_num = ?, end_bairro = ?, end_cep = ?, end_cidade = ?, end_estado = ?, end_pais = ?, " +
+                    " end_observacao = ?, end_tp_residencia = ? WHERE end_id = ?";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setString(1,endereco.getTipoEndereco().name());
+            pstm.setString(2, endereco.getApelido());
+            pstm.setString(3, endereco.getTipoLogradouro());
+            pstm.setString(4, endereco.getLogradouro());
+            pstm.setInt(5, endereco.getNumero());
+            pstm.setString(6, endereco.getBairro());
+            pstm.setString(7, endereco.getCep());
+            pstm.setString(8, endereco.getCidade());
+            pstm.setString( 9, endereco.getEstado());
+            pstm.setString(10, endereco.getPais());
+            pstm.setString(11, endereco.getObservacoes());
+            pstm.setString(12, endereco.getTipoResidencia());
+            pstm.setLong(13, endereco.getId());
+
+            pstm.execute();
+
+            return endereco;
+        }catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }finally {
+            conexao.fecharConexao(conn);
+        }
     }
 
     @Override
     public EntidadeDominio deletar(EntidadeDominio entidade) {
+        Endereco endereco = (Endereco) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "DELETE FROM enderecos where end_id = ?";
+            PreparedStatement pstm = conn.prepareStatement(sql);;
+            pstm.setLong(1, endereco.getId());
+
+            pstm.execute();
+
+            return endereco;
+        }catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }finally {
+            conexao.fecharConexao(conn);
+        }
+
         return null;
     }
 
     @Override
     public List<EntidadeDominio> listar(EntidadeDominio entidade, String operacao) {
+        Endereco endereco = (Endereco) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+        try {
+            conn = conexao.getConexao();
+
+            String sql;
+            PreparedStatement pstm = null;
+
+            if(operacao.equals("listar")) {
+                sql = "SELECT * FROM enderecos where end_cli_usr_id = ?";
+
+                pstm = conn.prepareStatement(sql);
+                pstm.setLong(1,endereco.getCliente().getUsuario().getId());
+            } else if(operacao.equals("listarUnico")) {
+                sql = "SELECT * FROM enderecos where end_cli_usr_id = ? AND end_id = ?";
+
+                pstm = conn.prepareStatement(sql);
+                pstm.setLong(1, endereco.getCliente().getUsuario().getId());
+                pstm.setLong(2, endereco.getId());
+            }
+
+            ResultSet rs = pstm.executeQuery();
+
+            List<EntidadeDominio> enderecos = new ArrayList<>();
+            while (rs.next()) {
+                Endereco enderecoConsulta = new Endereco();
+                enderecoConsulta.setId(rs.getLong(1));
+                enderecoConsulta.setCliente(endereco.getCliente());
+                enderecoConsulta.setTipoEndereco(EnderecoType.valueOf(rs.getString(3)));
+                enderecoConsulta.setApelido(rs.getString(4));
+                enderecoConsulta.setTipoLogradouro(rs.getString(5));
+                enderecoConsulta.setLogradouro(rs.getString(6));
+                enderecoConsulta.setNumero(rs.getInt(7));
+                enderecoConsulta.setBairro(rs.getString(8));
+                enderecoConsulta.setCep(rs.getString(9));
+                enderecoConsulta.setCidade(rs.getString(10));
+                enderecoConsulta.setEstado(rs.getString(11));
+                enderecoConsulta.setPais(rs.getString(12));
+                enderecoConsulta.setObservacoes(rs.getString(13));
+                enderecoConsulta.setTipoResidencia(rs.getString(14));
+
+                enderecos.add(enderecoConsulta);
+            }
+
+            return enderecos;
+        }catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }finally {
+            conexao.fecharConexao(conn);
+        }
+
         return null;
     }
 }

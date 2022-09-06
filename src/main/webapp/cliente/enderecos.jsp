@@ -43,53 +43,71 @@
                                 <th>Estado</th>
                                 <th>País</th>
                                 <th>CEP</th>
-                                <th></th>
+                                <th>Editar</th>
+                                <th>Remover</th>
                             </tr>
                         </thead>
                         <tbody>
-    
-                            <tr>
-                                <td>Nome</td>
-                                <td>Logradouro</td>
-                                <td>Bairro</td>
-                                <td>Cidade</td>
-                                <td>Número</td>
-                                <td>Estado</td>
-                                <td>País</td>
-                                <td>CEP</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEndereco"><span class="material-icons">edit</span></button>
-                                </td>
-                            </tr>
-    
-                            <tr>
-                                <td>Nome</td>
-                                <td>Logradouro</td>
-                                <td>Bairro</td>
-                                <td>Cidade</td>
-                                <td>Número</td>
-                                <td>Estado</td>
-                                <td>País</td>
-                                <td>CEP</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEndereco"><span class="material-icons">edit</span></button>
-                                </td>
-                            </tr>
+
+                            <c:forEach var="endereco" items="${enderecos}">
+                                <tr>
+                                    <td>${endereco.apelido}</td>
+                                    <td>${endereco.logradouro}</td>
+                                    <td>${endereco.bairro}</td>
+                                    <td>${endereco.cidade}</td>
+                                    <td>${endereco.numero}</td>
+                                    <td>${endereco.estado}</td>
+                                    <td>${endereco.pais}</td>
+                                    <td>${endereco.cep}</td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/clientes/enderecos?operacao=listarUnico&id=${endereco.id}">
+                                            <span class="material-icons text-primary">edit</span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span class="material-icons text-danger" onclick="abrirModal(${endereco.id})">delete</span>
+                                    </td>
+                                </tr>
+                            </c:forEach>
             
                         </tbody>
                     </table>
     
-                    <a type="button" class="w-100 btn btn-primary btn-sm" href="/emug/formularios/formEndereco.jsp">Adicionar endereço</a>
-
+                    <a type="button" class="w-100 btn btn-primary btn-sm" href="${pageContext.request.contextPath}/formularios/formEndereco.jsp?operacao=salvar">
+                        Adicionar endereço
+                    </a>
                 </div>
             </div>
-
         </div>
-    </main>
 
-    <br/>
+        <!-- Modal Remover endereço -->
+        <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="removeModalTitle">Remover registro</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Deseja realmente remover o registro?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                        <form action="/emug/clientes/enderecos" method="POST">
+                            <input type="hidden" name="operacao" value="excluir">
+                            <input type="hidden" id="idRemover" name="id" value="">
+                            <input type="submit" class="btn btn-danger" value="Remover">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+    </main>
 
     <jsp:include page="../include/footer.jsp"/>
 </body>
 <script src="<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js" />"></script>
+<script src='<c:url value="/assets/js/geral.js"/>'></script>
 </html>

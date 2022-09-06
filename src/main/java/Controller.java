@@ -4,6 +4,7 @@ import business.viewHelper.impl.model.adm.ClienteAdmViewHelper;
 import business.viewHelper.impl.model.cliente.ClienteViewHelper;
 import business.viewHelper.impl.LoginViewHelper;
 import business.viewHelper.impl.model.UsuarioViewHelper;
+import business.viewHelper.impl.model.cliente.EnderecoViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 
@@ -40,12 +41,14 @@ public class Controller extends HttpServlet{
         commandMap.put("listar", new ListarCommand());
         commandMap.put("login", new ListarCommand());
         commandMap.put("listarTodos", new ListarCommand());
+        commandMap.put("listarUnico", new ListarCommand());
 
         viewHelperMap = new HashMap<>();
         viewHelperMap.put("/emug/cadastro", new ClienteViewHelper());
         viewHelperMap.put("/emug/login", new LoginViewHelper());
         viewHelperMap.put("/emug/clientes", new ClienteViewHelper());
         viewHelperMap.put("/emug/clientes/atualizarSenha", new UsuarioViewHelper());
+        viewHelperMap.put("/emug/clientes/enderecos", new EnderecoViewHelper());
 
         viewHelperMap.put("/emug/adm/clientes", new ClienteAdmViewHelper());
     }

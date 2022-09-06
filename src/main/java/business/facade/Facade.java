@@ -3,14 +3,15 @@ package business.facade;
 import business.strategy.IStrategy;
 import business.strategy.impl.cliente.*;
 import dao.ClienteDAO;
+import dao.EnderecoDAO;
 import dao.IDAO;
 import dao.UsuarioDAO;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.cliente.Cliente;
+import model.cliente.endereco.Endereco;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class Facade implements IFacade {
         daosMap = new HashMap<>();
         daosMap.put(Usuario.class.getName(), new UsuarioDAO());
         daosMap.put(Cliente.class.getName(), new ClienteDAO());
+        daosMap.put(Endereco.class.getName(), new EnderecoDAO());
 
         regrasDeNegocioMap = new HashMap<>();
 
@@ -100,7 +102,22 @@ public class Facade implements IFacade {
 
     @Override
     public Result deletar(EntidadeDominio entidade) {
-        return null;
+        Result result = new Result();
+
+        String nomeClasse = entidade.getClass().getName();
+
+        String resultado = executarRegras(entidade, "remover", nomeClasse);
+
+        if(resultado == null) {
+            IDAO dao = daosMap.get(nomeClasse);
+
+            entidade = dao.deletar(entidade);
+        }
+
+        result.setMsg(resultado);
+        result.setEntidades(List.of(entidade));
+
+        return result;
     }
 
     @Override
