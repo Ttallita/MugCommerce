@@ -2,13 +2,11 @@ package business.facade;
 
 import business.strategy.IStrategy;
 import business.strategy.impl.cliente.*;
-import dao.ClienteDAO;
-import dao.EnderecoDAO;
-import dao.IDAO;
-import dao.UsuarioDAO;
+import dao.*;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
+import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 
@@ -27,6 +25,7 @@ public class Facade implements IFacade {
         daosMap.put(Usuario.class.getName(), new UsuarioDAO());
         daosMap.put(Cliente.class.getName(), new ClienteDAO());
         daosMap.put(Endereco.class.getName(), new EnderecoDAO());
+        daosMap.put(CartaoDeCredito.class.getName(), new CartaoDeCreditoDAO());
 
         regrasDeNegocioMap = new HashMap<>();
 

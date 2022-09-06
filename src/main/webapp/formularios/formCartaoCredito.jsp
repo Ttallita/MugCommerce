@@ -10,9 +10,9 @@
 
     <title>Cadastro</title>
 
-    <link rel="stylesheet" href="/emug/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/emug/webjars/material-design-icons/4.0.0/material-icons.css"/>
-    <link rel="stylesheet" href="/emug/assets/css/style.css"/>
+    <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" />"/>
+    <link rel="stylesheet" href="<c:url value="/webjars/material-design-icons/4.0.0/material-icons.css" />"/>
+    <link rel="stylesheet" href="<c:url value="/assets/css/style.css" />"/>
 </head>
 
 <body>
@@ -24,48 +24,51 @@
         
             <h3 class="text-center mb-4">Cadastro</h3>
 
-            <form action="" method="POST">
+            <form action="/emug/clientes/cartoes" method="POST">
 
                 <div class="row g-3 mb-3">
                     
                     <div class="col-md-6">
                         <label for="numCartao"><small>Número do cartão</small></label>
-                        <input type="text" class="form-control" id="numCartao" name="numCartao" value="">
+                        <input type="text" class="form-control" id="numCartao" name="numCartao" value="${cartao.numCartao}">
                     </div>
 
                     <div class="col-md-6">
                         <label for="nomeCartao"><small>Nome impresso no cartão</small></label>
-                        <input type="text" class="form-control" id="nomeCartao" name="nomeCartao" value="">
+                        <input type="text" class="form-control" id="nomeCartao" name="nomeCartao" value="${cartao.nomeImpressoCartao}">
                     </div>
 
                     <div class="col-md-5">
-                        <label><small>Bandeira</small></label>    
+                        <label for="bandeira"><small>Bandeira</small></label>
                         <select class="form-select" id="bandeira" name="bandeira">
                             <option value="">Selecione</option>
-                            <option>Visa</option>
-                            <option>Mastercard</option>
+                            <option ${cartao.bandeira == 'Visa' ? 'selected' : ''}>Visa</option>
+                            <option ${cartao.bandeira == 'Mastercard' ? 'selected' : ''}>Mastercard</option>
                         </select>
                     </div>
 
                     <div class="col-md-3">
-                        <label for="nomeCartao"><small>Código</small></label>
-                        <input type="text" class="form-control" id="codigoCartao" name="codigoCartao" value="">
+                        <label for="codigoCartao"><small>Código</small></label>
+                        <input type="text" class="form-control" id="codigoCartao" name="codigoCartao" value="${cartao.codigo}">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="nomeCartao"><small>Data de Validade</small></label>
-                        <input type="text" class="form-control" id="dtValidade" name="dtValidade" value="">
+                        <label for="dtValidade"><small>Data de Validade</small></label>
+                        <input type="date" class="form-control" id="dtValidade" name="dtValidade" value="01/${cartao.mesValidade}/${cartao.anoValidade}">
                     </div>
 
                     <div class="col-md-4">
-                        <input class="form-check-input" type="checkbox" value="" id="nomeCartao">
-                        <label for="nomeCartao" class="form-check-label"><small>Cartão preferencial</small></label>
+                        <input class="form-check-input" type="checkbox" value="" id="preferencial">
+                        <label for="preferencial" class="form-check-label"><small>Cartão preferencial</small></label>
                     </div>
 
+                    <input type="hidden" name="id" value="${cartao.id}">
+                    <input type="hidden" name="operacao" value="${isEditar ? 'atualizar' : 'salvar'}">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit" name="botaoCadastro">
+                        ${isEditar ? 'Atualizar' : 'Cadastrar'}
+                    </button>
                 </div>
-
             </form>
-
         </div>
     </div>
 
@@ -81,6 +84,7 @@
     aplicaMascaraTelefone()
     $('#cpf').mask("000.000.000-00")
     $('.money').mask('000.000.000.000.000,00', {reverse: true});
+    $('#numCartao').mask("0000 0000 0000 0000")
 </script>
 
 </html>

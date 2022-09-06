@@ -21,6 +21,18 @@ CREATE TABLE clientes (
     cli_rank         int
 );
 
+DROP TABLE IF EXISTS "cartoes" CASCADE;
+CREATE TABLE cartoes(
+    crt_id            serial       NOT NULL,
+    crt_cli_usr_id    int          NOT NULL,
+    crt_numero        varchar(19)  NOT NULL,
+    crt_bandeira      varchar(255) NOT NULL,
+    crt_nome_impresso varchar(255) NOT NULL,
+    crt_mes_validade  numeric(2)   NOT NULL,
+    crt_ano_validade  numeric(4)   NOT NULL,
+    crt_cod_seg       varchar(3)   NOT NULL
+);
+
 DROP TABLE IF EXISTS "enderecos" CASCADE;
 CREATE TABLE enderecos (
     end_id            serial       NOT NULL,

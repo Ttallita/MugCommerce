@@ -10,7 +10,7 @@ public class CartaoDeCredito extends EntidadeDominio {
     private String bandeira;
     private int mesValidade;
     private int anoValidade;
-    private int codigo;
+    private Integer codigo;
     private Cliente cliente;
 
     public String getNumCartao() {
@@ -53,11 +53,11 @@ public class CartaoDeCredito extends EntidadeDominio {
         this.anoValidade = anoValidade;
     }
 
-    public int getCodigo() {
+    public Integer getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(Integer codigo) {
         this.codigo = codigo;
     }
 

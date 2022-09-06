@@ -27,7 +27,7 @@
                     <span class="material-icons inline-icon">local_shipping</span> Endereços
                 </a>
                 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'cartoes') ? 'active-navbar' : ''}" id="paginaVendas" type="button" href="/emug/cliente/cartoes.jsp">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'cartoes') ? 'active-navbar' : ''}" id="paginaVendas" type="button" href="/emug/clientes/cartoes?operacao=listar">
                     <span class="material-icons inline-icon">credit_card</span> Cartões
                 </a>
 
