@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
 import selenium.pageModels.VOs.UsuarioVO;
+import selenium.pageModels.components.HeaderClienteComponent;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,32 +16,18 @@ public class TesteLogin extends TesteAbstract{
 
     @Test
     public void testeLoginClienteValido(){
-        driver.get("http://localhost:8080/emug/login.jsp");
+        driver.get(LINK_LOGIN);
 
         LoginPage loginPage = new LoginPage(driver);
-        HomePage home = loginPage.logar(UsuarioVO.createUsuarioPadrao());
+        HomePage home = loginPage.logar(UsuarioVO.createUsuarioClientePadrao());
 
-        assertTrue(home.isHomeCliente());
-    }
-
-    private static Object[][] usuariosInvalidos() {
-        UsuarioVO usuario1 = UsuarioVO.createUsuarioPadrao();
-        usuario1.setSenha("Senha123456");
-        usuario1.setSenhaConfirmacao("Senha123456");
-
-        UsuarioVO usuario2 = UsuarioVO.createUsuarioPadrao();
-        usuario2.setEmail("emailNaoCadastrado@email.com");
-
-        return new Object[][]{
-                {usuario1},
-                {usuario2}
-        };
+        assertTrue(home.getHeader() instanceof HeaderClienteComponent);
     }
 
     @ParameterizedTest
-    @MethodSource("usuariosInvalidos")
+    @MethodSource("selenium.pageModels.dataHelpers.UsuarioDataHelper#usuariosInvalidos")
     public void testeLoginClienteInvalido(UsuarioVO usuario){
-        driver.get("http://localhost:8080/emug/login.jsp");
+        driver.get(LINK_LOGIN);
 
         LoginPage loginPage = new LoginPage(driver);
 

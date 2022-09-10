@@ -6,7 +6,7 @@ public class UsuarioVO {
     private String senha;
     private String senhaConfirmacao;
 
-    public static UsuarioVO createUsuarioPadrao(){
+    public static UsuarioVO createUsuarioClientePadrao(){
         UsuarioVO usuario = new UsuarioVO();
 
         usuario.setEmail("clienteTeste@teste.com");

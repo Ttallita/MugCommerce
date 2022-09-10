@@ -5,10 +5,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import selenium.pageModels.HomePage;
+import selenium.pageModels.LoginPage;
+import selenium.pageModels.VOs.UsuarioVO;
 
 public abstract class TesteAbstract {
 
     protected WebDriver driver;
+
+    protected static final String LINK_LOGIN = "http://localhost:8080/emug/login.jsp";
 
     @BeforeEach
     public void setup(){
@@ -20,6 +25,13 @@ public abstract class TesteAbstract {
     @AfterEach
     public void tearDown(){
         driver.quit();
+    }
+
+    public HomePage realizarLoginCliente(){
+        driver.get(LINK_LOGIN);
+        LoginPage loginPage = new LoginPage(driver);
+
+        return loginPage.logar(UsuarioVO.createUsuarioClientePadrao());
     }
 
 }

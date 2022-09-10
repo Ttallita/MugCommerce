@@ -21,7 +21,7 @@ public class ClienteVO {
         cliente.setGenero("F");
         cliente.setDtNascimento("12/12/2001");
         cliente.setTelefone("11944506708");
-        cliente.setUsuarioVO(UsuarioVO.createUsuarioPadrao());
+        cliente.setUsuarioVO(UsuarioVO.createUsuarioClientePadrao());
         cliente.setEnderecoVO(EnderecoVO.createEnderecoPadrao());
 
         return cliente;

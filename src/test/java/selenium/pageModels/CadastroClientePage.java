@@ -113,13 +113,12 @@ public class CadastroClientePage extends PageAbstract{
         return String.join("\n", mensagens);
     }
 
-    public void selecionarData(String dataNascimento) throws InterruptedException {
+    public void selecionarData(String dataNascimento) {
         campoDtNascimento.sendKeys("");
         Actions acoes = new Actions(driver);
 
-        for(String a : dataNascimento.split("/")){
+        for(String a : dataNascimento.split("/"))
             acoes.sendKeys(Keys.chord(a));
-        }
 
         acoes.perform();
     }
