@@ -4,9 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import selenium.pageModels.CadastroClientePage;
-import selenium.pageModels.ClienteVO;
-import selenium.pageModels.EnderecoVO;
 import selenium.pageModels.LoginPage;
+import selenium.pageModels.VOs.ClienteVO;
+import selenium.pageModels.VOs.EnderecoVO;
+import selenium.pageModels.VOs.UsuarioVO;
 import utils.Utils;
 
 import java.time.LocalDate;
@@ -31,12 +32,19 @@ public class TesteCadastroCliente extends TesteAbstract{
     private static Object[][] clientesInvalidos() {
         String dataAtual = Utils.formataLocalDateBR(LocalDate.now());
 
+        UsuarioVO usuarioInvalida = UsuarioVO.createUsuarioPadrao();
+        usuarioInvalida.setSenha("Senha123456");
+        usuarioInvalida.setSenhaConfirmacao("Senha123456");
+
+        UsuarioVO usuarioSenhaDiferente = UsuarioVO.createUsuarioPadrao();
+        usuarioSenhaDiferente.setSenhaConfirmacao("SenhaDiferente@123");
+
+
         ClienteVO cliente1 = ClienteVO.createClienteVOPadrao();
-        cliente1.setSenha("Senha123456");
-        cliente1.setSenhaConfirmacao("Senha123456");
+        cliente1.setUsuarioVO(usuarioInvalida);
 
         ClienteVO cliente2 = ClienteVO.createClienteVOPadrao();
-        cliente2.setSenhaConfirmacao("senhaDiferente123@");
+        cliente2.setUsuarioVO(usuarioSenhaDiferente);
 
         ClienteVO cliente3 = ClienteVO.createClienteVOPadrao();
         cliente3.setCpf("123.456.789-10");

@@ -3,6 +3,7 @@ package selenium.pageModels;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import selenium.pageModels.VOs.UsuarioVO;
 
 public class LoginPage extends PageAbstract{
 
@@ -24,7 +25,7 @@ public class LoginPage extends PageAbstract{
         botaoLogin = driver.findElement(By.name("botaoLogin"));
     }
 
-    public HomePage logar(ClienteVO cliente){
+    public HomePage logar(UsuarioVO cliente){
         campoEmail.sendKeys(cliente.getEmail());
         campoSenha.sendKeys(cliente.getSenha());
 
@@ -36,6 +37,10 @@ public class LoginPage extends PageAbstract{
     public CadastroClientePage acessarCadastro(){
         linkCadastro.click();
         return new CadastroClientePage(driver);
+    }
+
+    public String getMensagemAlert(){
+        return driver.findElement(By.className("alert")).findElement(By.tagName("li")).getText();
     }
 
 }
