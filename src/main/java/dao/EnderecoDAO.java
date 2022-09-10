@@ -21,8 +21,8 @@ public class EnderecoDAO implements IDAO{
             conn = conexao.getConexao();
 
             String sql = "INSERT INTO enderecos (end_cli_usr_id, end_tp, end_apelido, end_tp_logradouro, end_logradouro," +
-                    " end_num, end_bairro, end_cep, end_cidade, end_estado, end_pais, end_observacao, end_tp_residencia)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    " end_num, end_bairro, end_cep, end_cidade, end_estado, end_observacao, end_tp_residencia)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1,endereco.getCliente().getUsuario().getId());
@@ -35,9 +35,8 @@ public class EnderecoDAO implements IDAO{
             pstm.setString(8, endereco.getCep());
             pstm.setString(9, endereco.getCidade());
             pstm.setString(10, endereco.getEstado());
-            pstm.setString(11, endereco.getPais());
-            pstm.setString(12, endereco.getObservacoes());
-            pstm.setString(13, endereco.getTipoResidencia());
+            pstm.setString(11, endereco.getObservacoes());
+            pstm.setString(12, endereco.getTipoResidencia());
 
             pstm.execute();
 
@@ -70,7 +69,7 @@ public class EnderecoDAO implements IDAO{
             conn = conexao.getConexao();
 
             String sql = "UPDATE enderecos SET end_tp = ?, end_apelido = ?, end_tp_logradouro = ?, end_logradouro = ?," +
-                    " end_num = ?, end_bairro = ?, end_cep = ?, end_cidade = ?, end_estado = ?, end_pais = ?, " +
+                    " end_num = ?, end_bairro = ?, end_cep = ?, end_cidade = ?, end_estado = ?, " +
                     " end_observacao = ?, end_tp_residencia = ? WHERE end_id = ?";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
@@ -83,10 +82,9 @@ public class EnderecoDAO implements IDAO{
             pstm.setString(7, endereco.getCep());
             pstm.setString(8, endereco.getCidade());
             pstm.setString( 9, endereco.getEstado());
-            pstm.setString(10, endereco.getPais());
-            pstm.setString(11, endereco.getObservacoes());
-            pstm.setString(12, endereco.getTipoResidencia());
-            pstm.setLong(13, endereco.getId());
+            pstm.setString(10, endereco.getObservacoes());
+            pstm.setString(11, endereco.getTipoResidencia());
+            pstm.setLong(12, endereco.getId());
 
             pstm.execute();
 
@@ -109,7 +107,7 @@ public class EnderecoDAO implements IDAO{
             conn = conexao.getConexao();
 
             String sql = "DELETE FROM enderecos where end_id = ?";
-            PreparedStatement pstm = conn.prepareStatement(sql);;
+            PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setLong(1, endereco.getId());
 
             pstm.execute();
@@ -166,9 +164,8 @@ public class EnderecoDAO implements IDAO{
                 enderecoConsulta.setCep(rs.getString(9));
                 enderecoConsulta.setCidade(rs.getString(10));
                 enderecoConsulta.setEstado(rs.getString(11));
-                enderecoConsulta.setPais(rs.getString(12));
-                enderecoConsulta.setObservacoes(rs.getString(13));
-                enderecoConsulta.setTipoResidencia(rs.getString(14));
+                enderecoConsulta.setObservacoes(rs.getString(12));
+                enderecoConsulta.setTipoResidencia(rs.getString(13));
 
                 enderecos.add(enderecoConsulta);
             }

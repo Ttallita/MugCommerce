@@ -2,9 +2,13 @@ package selenium.pageModels;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.event.KeyEvent;
+import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CadastroClientePage extends PageAbstract{
 
@@ -24,7 +28,6 @@ public class CadastroClientePage extends PageAbstract{
     private final WebElement campoBairro;
     private final WebElement campoNumeroEndereco;
     private final WebElement campoCep;
-    private final WebElement campoPais;
     private final WebElement campoEstado;
     private final WebElement campoCidade;
     private final WebElement campoApelidoEndereco;
@@ -52,7 +55,6 @@ public class CadastroClientePage extends PageAbstract{
         campoBairro = driver.findElement(By.name("bairro"));
         campoNumeroEndereco = driver.findElement(By.name("numeroEndereco"));
         campoCep = driver.findElement(By.name("cep"));
-        campoPais = driver.findElement(By.name("pais"));
         campoEstado = driver.findElement(By.name("estado"));
         campoCidade = driver.findElement(By.name("cidade"));
         campoApelidoEndereco = driver.findElement(By.name("apelidoEndereco"));
@@ -80,9 +82,14 @@ public class CadastroClientePage extends PageAbstract{
         campoBairro.sendKeys(endereco.getBairro());
         campoNumeroEndereco.sendKeys(endereco.getNumeroEndereco());
         campoCep.sendKeys(endereco.getCep());
-        campoPais.sendKeys(endereco.getPais());
         campoEstado.sendKeys(endereco.getEstado());
-        campoCidade.sendKeys(endereco.getCidade());
+
+        if(!endereco.getEstado().isBlank()) {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("cidade"), "Mogi das Cruzes"));
+            campoCidade.sendKeys(endereco.getCidade());
+        }
+
         campoApelidoEndereco.sendKeys(endereco.getApelidoEndereco());
         campoObservacaoEndereco.sendKeys(endereco.getObservacaoEndereco());
 
@@ -92,7 +99,13 @@ public class CadastroClientePage extends PageAbstract{
     }
 
     public String getMensagemAlert(){
-         return driver.findElement(By.className("alert")).findElement(By.tagName("li")).getText();
+        List<WebElement> elements = driver.findElement(By.className("alert")).findElements(By.tagName("li"));
+
+        List<String> mensagens = elements.stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+
+        return String.join("\n", mensagens);
     }
 
     public void selecionarData(String dataNascimento) throws InterruptedException {
