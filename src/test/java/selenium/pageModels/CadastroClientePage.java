@@ -5,10 +5,12 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
+import selenium.pageModels.VOs.ClienteVO;
+import selenium.pageModels.VOs.EnderecoVO;
+import selenium.pageModels.VOs.UsuarioVO;
 
 public class CadastroClientePage extends PageAbstract{
 
@@ -64,9 +66,12 @@ public class CadastroClientePage extends PageAbstract{
     }
 
     public void cadastrar(ClienteVO cliente) throws InterruptedException {
-        campoEmail.sendKeys(cliente.getEmail());
-        campoSenha.sendKeys(cliente.getSenha());
-        campoSenhaConfirmacao.sendKeys(cliente.getSenhaConfirmacao());
+
+        UsuarioVO usuario = cliente.getUsuarioVO();
+        campoEmail.sendKeys(usuario.getEmail());
+        campoSenha.sendKeys(usuario.getSenha());
+        campoSenhaConfirmacao.sendKeys(usuario.getSenhaConfirmacao());
+
         campoNome.sendKeys(cliente.getNome());
         campoSobrenome.sendKeys(cliente.getSobrenome());
         campoCpf.sendKeys(cliente.getCpf());
@@ -75,7 +80,6 @@ public class CadastroClientePage extends PageAbstract{
         campoTelefone.sendKeys(cliente.getTelefone());
 
         EnderecoVO endereco = cliente.getEnderecoVO();
-
         campoTpResidencia.sendKeys(endereco.getTpResidencia());
         campoTpLogradouro.sendKeys(endereco.getTpLogradouro());
         campoLogradouro.sendKeys(endereco.getLogradouro());

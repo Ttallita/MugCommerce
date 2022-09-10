@@ -19,7 +19,7 @@ public abstract class TesteAbstract {
 
     @AfterEach
     public void tearDown(){
-//        driver.quit();
+        driver.quit();
     }
 
 }
