@@ -5,7 +5,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,7 +65,7 @@ public class CadastroClientePage extends PageAbstract{
         botaoCadastro = driver.findElement(By.name("botaoCadastro"));
     }
 
-    public CadastroClientePage cadastrar(ClienteVO cliente) throws InterruptedException {
+    public void cadastrar(ClienteVO cliente) throws InterruptedException {
 
         UsuarioVO usuario = cliente.getUsuarioVO();
         campoEmail.sendKeys(usuario.getEmail());
@@ -99,8 +98,6 @@ public class CadastroClientePage extends PageAbstract{
         campoObservacaoEndereco.sendKeys(endereco.getObservacaoEndereco());
 
         botaoCadastro.click();
-
-        return this;
     }
 
     public String getMensagemAlert(){

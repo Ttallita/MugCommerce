@@ -11,6 +11,7 @@ public class CartaoDeCredito extends EntidadeDominio {
     private int mesValidade;
     private int anoValidade;
     private Integer codigo;
+    private boolean preferencial;
     private Cliente cliente;
 
     public String getNumCartao() {
@@ -61,7 +62,14 @@ public class CartaoDeCredito extends EntidadeDominio {
         this.codigo = codigo;
     }
 
-    
+    public boolean isPreferencial() {
+        return preferencial;
+    }
+
+    public void setPreferencial(boolean preferencial) {
+        this.preferencial = preferencial;
+    }
+
     public Cliente getCliente() {
         return this.cliente;
     }
@@ -69,5 +77,4 @@ public class CartaoDeCredito extends EntidadeDominio {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
 }

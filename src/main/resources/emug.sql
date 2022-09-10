@@ -47,6 +47,5 @@ CREATE TABLE enderecos (
     end_cep           varchar(9)   NOT NULL,
     end_cidade        varchar(255) NOT NULL,
     end_estado        varchar(255) NOT NULL,
-    end_pais          varchar(255) NOT NULL,
     end_observacao    varchar(255)
 );

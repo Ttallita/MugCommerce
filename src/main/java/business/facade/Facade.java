@@ -155,12 +155,13 @@ public class Facade implements IFacade {
     }
 
     private Map<String, List<IStrategy>> getRegrasNegocioEndereco() {
-        List<IStrategy> regrasSalvarEndereco = List.of(
+        List<IStrategy> regrasGeraisEndereco = List.of(
                 new VerificarEnderecoStrategy()
         );
 
         Map<String, List<IStrategy>> mapStrategyEndereco = new HashMap<>();
-        mapStrategyEndereco.put("salvar", regrasSalvarEndereco);
+        mapStrategyEndereco.put("salvar", regrasGeraisEndereco);
+        mapStrategyEndereco.put("atualizar", regrasGeraisEndereco);
 
         return mapStrategyEndereco;
     }

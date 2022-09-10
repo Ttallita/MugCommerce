@@ -41,7 +41,6 @@
                                 <th>Cidade</th>
                                 <th>Número</th>
                                 <th>Estado</th>
-                                <th>País</th>
                                 <th>CEP</th>
                                 <th>Editar</th>
                                 <th>Remover</th>
@@ -57,7 +56,6 @@
                                     <td>${endereco.cidade}</td>
                                     <td>${endereco.numero}</td>
                                     <td>${endereco.estado}</td>
-                                    <td>${endereco.pais}</td>
                                     <td>${endereco.cep}</td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/clientes/enderecos?operacao=listarUnico&id=${endereco.id}">
