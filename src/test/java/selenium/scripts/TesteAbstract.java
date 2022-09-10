@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
-import selenium.pageModels.VOs.UsuarioVO;
+import selenium.dataHelpers.VOs.UsuarioVO;
 
 public abstract class TesteAbstract {
 

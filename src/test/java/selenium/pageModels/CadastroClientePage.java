@@ -8,9 +8,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
-import selenium.pageModels.VOs.ClienteVO;
-import selenium.pageModels.VOs.EnderecoVO;
-import selenium.pageModels.VOs.UsuarioVO;
+import selenium.dataHelpers.VOs.ClienteVO;
+import selenium.dataHelpers.VOs.EnderecoVO;
+import selenium.dataHelpers.VOs.UsuarioVO;
 
 public class CadastroClientePage extends PageAbstract{
 
@@ -51,6 +51,7 @@ public class CadastroClientePage extends PageAbstract{
         campoGenero = driver.findElement(By.name("genero"));
         campoDtNascimento = driver.findElement(By.name("dtNascimento"));
         campoTelefone = driver.findElement(By.name("telefone"));
+
         campoTpResidencia = driver.findElement(By.name("tpResidencia"));
         campoTpLogradouro = driver.findElement(By.name("tpLogradouro"));
         campoLogradouro = driver.findElement(By.name("logradouro"));

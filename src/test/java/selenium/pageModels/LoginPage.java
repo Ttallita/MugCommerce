@@ -3,7 +3,7 @@ package selenium.pageModels;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import selenium.pageModels.VOs.UsuarioVO;
+import selenium.dataHelpers.VOs.UsuarioVO;
 
 public class LoginPage extends PageAbstract{
 

@@ -1,8 +1,8 @@
-package selenium.pageModels.dataHelpers;
+package selenium.dataHelpers;
 
-import selenium.pageModels.VOs.ClienteVO;
-import selenium.pageModels.VOs.EnderecoVO;
-import selenium.pageModels.VOs.UsuarioVO;
+import selenium.dataHelpers.VOs.ClienteVO;
+import selenium.dataHelpers.VOs.EnderecoVO;
+import selenium.dataHelpers.VOs.UsuarioVO;
 import utils.Utils;
 
 import java.time.LocalDate;
