@@ -1,24 +1,11 @@
 package selenium.scripts;
 
-import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import selenium.pageModels.ClienteVO;
 import selenium.pageModels.LoginPage;
 
 
-public class TesteLogin {
-
-    private WebDriver driver;
-
-    @BeforeEach
-    public void setup(){
-        ChromeDriverManager.getInstance().setup();
-        driver = new ChromeDriver();
-    }
+public class TesteLogin extends TesteAbstract{
 
     @Test
     public void testeLoginCliente(){
@@ -28,11 +15,6 @@ public class TesteLogin {
         LoginPage loginPage = new LoginPage(driver);
 
         loginPage.logar(cliente);
-    }
-
-    @AfterEach
-    public void tearDown(){
-        driver.quit();
     }
 
 }

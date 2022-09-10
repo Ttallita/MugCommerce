@@ -32,6 +32,24 @@ public class EnderecoVO {
         return enderecoVO;
     }
 
+    public static EnderecoVO createEnderecoVazio() {
+        EnderecoVO enderecoVO = new EnderecoVO();
+
+        enderecoVO.setTpResidencia("");
+        enderecoVO.setTpLogradouro("");
+        enderecoVO.setLogradouro("");
+        enderecoVO.setBairro("");
+        enderecoVO.setNumeroEndereco("");
+        enderecoVO.setCep("");
+        enderecoVO.setPais("");
+        enderecoVO.setEstado("");
+        enderecoVO.setCidade("");
+        enderecoVO.setApelidoEndereco("");
+        enderecoVO.setObservacaoEndereco("");
+
+        return enderecoVO;
+    }
+
     public String getTpResidencia() {
         return tpResidencia;
     }
