@@ -1,3 +1,4 @@
+
 function aplicaMascaraTelefone() {
     let behavior = function (val) {
             return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
@@ -26,18 +27,19 @@ function preencheSelectEstado() {
     fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/')
         .then(result => result.json())
         .then(result => {
+            let estados = document.getElementById("estado")
 
             result.sort((a, b) => a.nome.localeCompare(b.nome))
 
             result.forEach(estado => {
-                let estados = document.getElementById("estado")
-
                 let option = document.createElement("option");
                 option.value = estado.nome;
                 option.innerHTML = estado.nome;
                 option.setAttribute("id-estado", estado.id)
 
-                if("${endereco.estado}" === estado.nome) {
+                let estadoAtual = $('#estadoAtual').val()
+
+                if(estadoAtual === estado.nome) {
                     $(option).prop('selected', true)
                     $("#cidade").prop("disabled", false);
                     carregaCidades(estado.id);
@@ -82,6 +84,11 @@ function carregaCidades(idEstado) {
                 let option = document.createElement("option");
                 option.value = cidade.nome;
                 option.innerHTML = cidade.nome;
+
+                let cidadeAtual = $('#cidadeAtual').val()
+
+                if(cidadeAtual === cidade.nome)
+                    $(option).prop('selected', true)
 
                 cidades.append(option)
             })

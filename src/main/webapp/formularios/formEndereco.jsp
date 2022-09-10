@@ -52,9 +52,9 @@
                         <label for="tpEndereco"><small>Tipo de Endereço</small></label>
                         <select class="form-select" id="tpEndereco" name="tpEndereco">
                             <option value="">Selecione</option>
-                            <option value="ENTREGA">Entrega</option>
-                            <option value="COBRANCA">Cobrança</option>
-                            <option value="COBRANCA_ENTREGA">Entrega e cobrança</option>
+                            <option ${endereco.tipoEndereco == 'ENTREGA' ? 'selected' : ''} value="ENTREGA">Entrega</option>
+                            <option ${endereco.tipoEndereco == 'COBRANCA' ? 'selected' : ''} value="COBRANCA">Cobrança</option>
+                            <option ${endereco.tipoEndereco == 'COBRANCA_ENTREGA' ? 'selected' : ''} value="COBRANCA_ENTREGA">Entrega e cobrança</option>
                         </select>
                     </div>
 
@@ -78,31 +78,19 @@
                         <input type="text" class="form-control" id="cep" name="cep" value="${endereco.cep}">
                     </div>
 
-                    <div class="col-md-4">
-                        <label for="pais"><small>País</small></label>
-                        <select class="form-select" id="pais" name="pais">
-                            <option value="">Selecione</option>
-                            <option>Brasil</option>
-                            <option>Uruguai</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="estado"><small>Estado</small></label>
+                        <input type="hidden" value="${endereco.estado}" id="estadoAtual">
                         <select class="form-select" id="estado" name="estado">
                             <option value="">Selecione</option>
-                            <option>São Paulo</option>
-                            <option>Rio de Janeiro</option>
-                            <option>Minas gerais</option>
                         </select>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="cidade"><small>Cidade</small></label>
+                        <input type="hidden" value="${endereco.cidade}" id="cidadeAtual">
                         <select class="form-select" id="cidade" name="cidade">
                             <option value="">Selecione</option>
-                            <option>Cidade</option>
-                            <option>Cidade</option>
                         </select>
                     </div>
 
@@ -138,6 +126,7 @@
 <script src='<c:url value="/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js"/>'></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
 <script>
+    preencheSelectEstado()
     aplicaMascaraTelefone()
     $('#cpf').mask("000.000.000-00")
     $('#cep').mask("00000-000")

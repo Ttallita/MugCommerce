@@ -44,6 +44,9 @@
                             <option value="">Selecione</option>
                             <option ${cartao.bandeira == 'Visa' ? 'selected' : ''}>Visa</option>
                             <option ${cartao.bandeira == 'Mastercard' ? 'selected' : ''}>Mastercard</option>
+                            <option ${cartao.bandeira == 'Elo' ? 'selected' : ''}>Elo</option>
+                            <option ${cartao.bandeira == 'American Express' ? 'selected' : ''}>American Express</option>
+                            <option ${cartao.bandeira == 'Hipercard' ? 'selected' : ''}>Hipercard</option>
                         </select>
                     </div>
 

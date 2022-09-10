@@ -63,7 +63,7 @@ public class CadastroClientePage extends PageAbstract{
         botaoCadastro = driver.findElement(By.name("botaoCadastro"));
     }
 
-    public CadastroClientePage cadastrar(ClienteVO cliente) throws InterruptedException {
+    public void cadastrar(ClienteVO cliente) throws InterruptedException {
         campoEmail.sendKeys(cliente.getEmail());
         campoSenha.sendKeys(cliente.getSenha());
         campoSenhaConfirmacao.sendKeys(cliente.getSenhaConfirmacao());
@@ -94,8 +94,6 @@ public class CadastroClientePage extends PageAbstract{
         campoObservacaoEndereco.sendKeys(endereco.getObservacaoEndereco());
 
         botaoCadastro.click();
-
-        return this;
     }
 
     public String getMensagemAlert(){

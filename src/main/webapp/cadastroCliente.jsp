@@ -58,10 +58,10 @@
                     <label for="genero"><small>Gênero</small></label>
                     <select class="form-select" id="genero" name="genero">
                         <option value="">Selecione</option>
-                        <option ${cliente.genero == 'Masculino' ? 'active' : ''}>Masculino</option>
-                        <option ${cliente.genero == 'Feminino' ? 'active' : ''}>Feminino</option>
-                        <option ${cliente.genero == 'Outro' ? 'active' : ''}>Outro</option>
-                        <option ${cliente.genero == '>Prefiro não informar' ? 'active' : ''}>Prefiro não informar</option>
+                        <option ${cliente.genero == 'Masculino' ? 'selected' : ''}>Masculino</option>
+                        <option ${cliente.genero == 'Feminino' ? 'selected' : ''}>Feminino</option>
+                        <option ${cliente.genero == 'Outro' ? 'selected' : ''}>Outro</option>
+                        <option ${cliente.genero == 'Prefiro não informar' ? 'selected' : ''}>Prefiro não informar</option>
                     </select>
                 </div>
 
@@ -79,36 +79,37 @@
                 <h5>Endereço</h5>
                 <div class="col-sm-4">
                     <label for="tpResidencia"><small>Tipo de residência</small></label>
-                    <input type="text" class="form-control" id="tpResidencia" name="tpResidencia" value="${cliente.enderecos[0].tipoResidencia}">
+                    <input type="text" class="form-control" id="tpResidencia" name="tpResidencia" value="${endereco.tipoResidencia}">
                 </div>
 
                 <div class="col-sm-4">
                     <label for="tpLogradouro"><small>Tipo de logradouro</small></label>
-                    <input type="text" class="form-control" id="tpLogradouro" name="tpLogradouro" value="${cliente.enderecos[0].tipoLogradouro}">
+                    <input type="text" class="form-control" id="tpLogradouro" name="tpLogradouro" value="${endereco.tipoLogradouro}">
                 </div>
 
                 <div class="col-sm-4">
                     <label for="logradouro"><small>Logradouro</small></label>
-                    <input type="text" class="form-control" id="logradouro" name="logradouro" value="${cliente.enderecos[0].logradouro}">
+                    <input type="text" class="form-control" id="logradouro" name="logradouro" value="${endereco.logradouro}">
                 </div>
 
                 <div class="col-sm-6">
                     <label for="bairro"><small>Bairro</small></label>
-                    <input type="text" class="form-control" id="bairro" name="bairro" value="${cliente.enderecos[0].bairro}">
+                    <input type="text" class="form-control" id="bairro" name="bairro" value="${endereco.bairro}">
                 </div>
 
                 <div class="col-sm-2">
                     <label for="numeroEndereco"><small>Número</small></label>
-                    <input type="text" class="form-control" id="numeroEndereco" name="numeroEndereco" value="${cliente.enderecos[0].numero}">
+                    <input type="text" class="form-control" id="numeroEndereco" name="numeroEndereco" value="${endereco.numero}">
                 </div>
 
                 <div class="col-sm-4">
                     <label for="cep"><small>CEP</small></label>
-                    <input type="text" class="form-control" id="cep" name="cep" value="${cliente.enderecos[0].cep}">
+                    <input type="text" class="form-control" id="cep" name="cep" value="${endereco.cep}">
                 </div>
 
                 <div class="col-md-4">
                     <label for="estado"><small>Estado</small></label>
+                    <input type="hidden" value="${endereco.estado}" id="estadoAtual">
                     <select class="form-select" id="estado" name="estado">
                         <option value="">Selecione</option>
                     </select>
@@ -116,6 +117,7 @@
 
                 <div class="col-md-4">
                     <label for="cidade"><small>Cidade</small></label>
+                    <input type="hidden" value="${endereco.cidade}" id="cidadeAtual">
                     <select class="form-select" id="cidade" name="cidade" disabled >
                         <option value="">Selecione</option>
                     </select>
@@ -123,14 +125,14 @@
 
                 <div class="col-md-4">
                     <label for="apelidoEndereco"><small>Apelido endereço</small></label>
-                    <input type="text" class="form-control" id="apelidoEndereco" name="apelidoEndereco" value="${cliente.enderecos[0].apelido}">
+                    <input type="text" class="form-control" id="apelidoEndereco" name="apelidoEndereco" value="${endereco.apelido}">
                 </div>
 
                 <div class="col-sm-12">
                     <label for="observacaoEndereco">
                         <small>Observação<small class="text-muted">(Opcional)</small></small>
                     </label>
-                    <input type="text" class="form-control" id="observacaoEndereco" name="observacaoEndereco" value="${cliente.enderecos[0].observacoes}">
+                    <input type="text" class="form-control" id="observacaoEndereco" name="observacaoEndereco" value="${endereco.observacoes}">
                 </div>
 
                 <hr>

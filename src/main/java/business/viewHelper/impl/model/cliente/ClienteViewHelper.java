@@ -109,6 +109,8 @@ public class ClienteViewHelper implements IViewHelper {
                     mensagens = msgTela.split("\n");
 
                     Cliente cliente = (Cliente) result.getEntidades().get(0);
+
+                    request.setAttribute("endereco", cliente.getEnderecos().get(0));
                     request.setAttribute("cliente", cliente);
                 } else
                     mensagens = new String[]{"Cadastrado com sucesso. <a href=\"login.jsp\">Clique aqui para logar</a>"};
