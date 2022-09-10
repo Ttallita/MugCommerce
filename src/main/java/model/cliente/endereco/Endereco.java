@@ -13,7 +13,6 @@ public class Endereco extends EntidadeDominio {
     private String cep;
     private String cidade;
     private String estado;
-    private String pais;
     private String observacoes;
     private EnderecoType tipoEndereco;
     private String apelido;
@@ -73,14 +72,6 @@ public class Endereco extends EntidadeDominio {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
     }
 
     public String getObservacoes() {

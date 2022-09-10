@@ -72,7 +72,7 @@
 
                 <div class="col-sm-4">
                     <label for="telefone"><small>Telefone</small></label>
-                    <input type="text" class="form-control" id="telefone" name="telefone" value="${cliente.telefone.ddd} ${cliente.telefone.numero}">
+                    <input type="text" class="form-control" id="telefone" name="telefone" value="${cliente.telefone.ddd}${cliente.telefone.numero}">
                 </div>
 
                 <hr>
@@ -108,34 +108,20 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label for="pais"><small>País</small></label>
-                    <select class="form-select" id="pais" name="pais">
-                        <option value="">Selecione</option>
-                        <option>Brasil</option>
-                        <option>Uruguai</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4">
                     <label for="estado"><small>Estado</small></label>
                     <select class="form-select" id="estado" name="estado">
                         <option value="">Selecione</option>
-                        <option>São Paulo</option>
-                        <option>Rio de Janeiro</option>
-                        <option>Minas gerais</option>
                     </select>
                 </div>
 
                 <div class="col-md-4">
                     <label for="cidade"><small>Cidade</small></label>
-                    <select class="form-select" id="cidade" name="cidade">
+                    <select class="form-select" id="cidade" name="cidade" disabled >
                         <option value="">Selecione</option>
-                        <option>Cidade</option>
-                        <option>Cidade</option>
                     </select>
                 </div>
 
-                <div class="col-sm-12">
+                <div class="col-md-4">
                     <label for="apelidoEndereco"><small>Apelido endereço</small></label>
                     <input type="text" class="form-control" id="apelidoEndereco" name="apelidoEndereco" value="${cliente.enderecos[0].apelido}">
                 </div>
@@ -164,11 +150,12 @@
     
 </body>
 
-<script src="assets/js/geral.js"></script>
 <script src='<c:url value="webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"/>'></script>
 <script src='<c:url value="webjars/jquery/3.6.0/jquery.min.js"/>'></script>
 <script src='<c:url value="webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js"/>'></script>
+<script src="assets/js/geral.js"></script>
 <script>
+    preencheSelectEstado()
     aplicaMascaraTelefone()
     $('#cpf').mask("000.000.000-00")
     $('#cep').mask("00000-000")

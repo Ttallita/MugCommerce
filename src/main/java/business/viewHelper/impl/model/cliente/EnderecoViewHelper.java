@@ -97,7 +97,6 @@ public class EnderecoViewHelper implements IViewHelper {
         endereco.setBairro(request.getParameter("bairro"));
         endereco.setNumero(getNumeroEndereco(request.getParameter("numeroEndereco")));
         endereco.setCep(request.getParameter("cep"));
-        endereco.setPais(request.getParameter("pais"));
         endereco.setEstado(request.getParameter("estado"));
         endereco.setCidade(request.getParameter("cidade"));
         endereco.setApelido(request.getParameter("apelidoEndereco"));

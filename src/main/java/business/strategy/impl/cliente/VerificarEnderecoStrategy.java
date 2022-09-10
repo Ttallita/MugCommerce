@@ -42,9 +42,6 @@ public class VerificarEnderecoStrategy implements IStrategy{
             if(endereco.getEstado().trim().isEmpty())
                 return "O campo estado é obrigatório";
 
-            if(endereco.getPais().trim().isEmpty())
-                return "O campo país é obrigatório";
-
             if(endereco.getApelido().trim().isEmpty())
                 return "O campo apelido é obrigatório";
 

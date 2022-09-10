@@ -8,7 +8,6 @@ public class EnderecoVO {
     private String bairro;
     private String numeroEndereco;
     private String cep;
-    private String pais;
     private String estado;
     private String cidade;
     private String apelidoEndereco;
@@ -23,9 +22,8 @@ public class EnderecoVO {
         enderecoVO.setBairro("Fernandes");
         enderecoVO.setNumeroEndereco("586");
         enderecoVO.setCep("95044-120");
-        enderecoVO.setPais("Brasil");
-        enderecoVO.setEstado("RS");
-        enderecoVO.setCidade("Caxias do Sul");
+        enderecoVO.setEstado("São Paulo");
+        enderecoVO.setCidade("Mogi das Cruzes");
         enderecoVO.setApelidoEndereco("Minha casa");
         enderecoVO.setObservacaoEndereco("");
 
@@ -41,7 +39,6 @@ public class EnderecoVO {
         enderecoVO.setBairro("");
         enderecoVO.setNumeroEndereco("");
         enderecoVO.setCep("");
-        enderecoVO.setPais("");
         enderecoVO.setEstado("");
         enderecoVO.setCidade("");
         enderecoVO.setApelidoEndereco("");
@@ -96,14 +93,6 @@ public class EnderecoVO {
 
     public void setCep(String cep) {
         this.cep = cep;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
     }
 
     public String getEstado() {
