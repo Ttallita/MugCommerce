@@ -8,6 +8,12 @@ import java.time.format.DateTimeFormatter;
 
 public class Utils {
 
+    private static final DateTimeFormatter formatterBR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    public static String formataLocalDateBR(LocalDate data){
+        return data != null ? formatterBR.format(data) : null;
+    }
+
     public static LocalDate converteStringLocalDate(String data) {
        if(data == null || data.isBlank())
            return null;

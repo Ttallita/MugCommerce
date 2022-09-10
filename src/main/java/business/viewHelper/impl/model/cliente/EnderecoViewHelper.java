@@ -26,7 +26,7 @@ public class EnderecoViewHelper implements IViewHelper {
                 Endereco endereco = criaEndereco(request);
 
                 String id = request.getParameter("id");
-                if(!id.isBlank())
+                if(id != null && !id.isBlank())
                     endereco.setId(Long.parseLong(id));
 
                 endereco.setCliente(new Cliente(usuarioLogado));

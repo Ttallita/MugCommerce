@@ -29,34 +29,9 @@ public class Facade implements IFacade {
 
         regrasDeNegocioMap = new HashMap<>();
 
-        List<IStrategy> regrasSalvarCliente = List.of(
-                new VerificarClienteStrategy(),
-                new VerificaCPFStrategy(),
-                new VerificarDataStrategy(),
-                new VerificarEmailStrategy(),
-                new VerificarSenhaStrategy()
-        );
-
-        List<IStrategy> regrasAtualizarCliente = List.of(
-                new VerificarClienteStrategy(),
-                new VerificaCPFStrategy(),
-                new VerificarDataStrategy()
-        );
-
-
-        Map<String, List<IStrategy>> mapStrategyCliente = new HashMap<>();
-        mapStrategyCliente.put("salvar", regrasSalvarCliente);
-        mapStrategyCliente.put("atualizar", regrasAtualizarCliente);
-
-        List<IStrategy> regrasAtualizarUsuario = List.of(
-                new VerificarSenhaStrategy()
-        );
-
-        Map<String, List<IStrategy>> mapaStrategyUsuario = new HashMap<>();
-        mapaStrategyUsuario.put("atualizar", regrasAtualizarUsuario);
-
-        regrasDeNegocioMap.put(Cliente.class.getName(), mapStrategyCliente);
-        regrasDeNegocioMap.put(Usuario.class.getName(), mapaStrategyUsuario);
+        regrasDeNegocioMap.put(Cliente.class.getName(), getRegrasNegocioCliente());
+        regrasDeNegocioMap.put(Usuario.class.getName(), getRegrasNegocioUsuario());
+        regrasDeNegocioMap.put(Endereco.class.getName(), getRegrasNegocioEndereco());
     }
 
     @Override
@@ -166,5 +141,49 @@ public class Facade implements IFacade {
             return builder.toString();
 
         return null;
+    }
+
+    private Map<String, List<IStrategy>> getRegrasNegocioUsuario() {
+        List<IStrategy> regrasAtualizarUsuario = List.of(
+                new VerificarSenhaStrategy()
+        );
+
+        Map<String, List<IStrategy>> mapaStrategyUsuario = new HashMap<>();
+        mapaStrategyUsuario.put("atualizar", regrasAtualizarUsuario);
+
+        return mapaStrategyUsuario;
+    }
+
+    private Map<String, List<IStrategy>> getRegrasNegocioEndereco() {
+        List<IStrategy> regrasSalvarEndereco = List.of(
+                new VerificarEnderecoStrategy()
+        );
+
+        Map<String, List<IStrategy>> mapStrategyEndereco = new HashMap<>();
+        mapStrategyEndereco.put("salvar", regrasSalvarEndereco);
+
+        return mapStrategyEndereco;
+    }
+
+    private Map<String, List<IStrategy>> getRegrasNegocioCliente() {
+        List<IStrategy> regrasSalvarCliente = List.of(
+                new VerificarClienteStrategy(),
+                new VerificarCPFStrategy(),
+                new VerificarDataStrategy(),
+                new VerificarEmailStrategy(),
+                new VerificarSenhaStrategy(),
+                new VerificarEnderecoStrategy()
+        );
+
+        List<IStrategy> regrasAtualizarCliente = List.of(
+                new VerificarClienteStrategy(),
+                new VerificarCPFStrategy(),
+                new VerificarDataStrategy()
+        );
+
+        Map<String, List<IStrategy>> mapStrategyCliente = new HashMap<>();
+        mapStrategyCliente.put("salvar", regrasSalvarCliente);
+        mapStrategyCliente.put("atualizar", regrasAtualizarCliente);
+        return mapStrategyCliente;
     }
 }
