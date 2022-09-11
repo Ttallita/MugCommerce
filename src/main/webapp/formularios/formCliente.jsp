@@ -35,7 +35,7 @@
                     <div class="col-sm-6">
                         <label for="senha"><small>Senha</small></label>
                         <input type="password" class="form-control" id="senha" name="senha" value="${cliente.usuario.senha}">
-                        <small>A senha deve conter pelo menos 8 caracteres, incluir caracteres maiúsculos, minúsculos e especiais.</small>
+                        <div id="senhaHelp" class="form-text">A senha deve conter pelo menos 8 caracteres, incluir caracteres maiúsculos, minúsculos e especiais.</div>
                     </div>
 
                     <div class="col-sm-6">

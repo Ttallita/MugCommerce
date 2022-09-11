@@ -2,6 +2,7 @@ package business.facade;
 
 import business.strategy.IStrategy;
 import business.strategy.impl.cliente.*;
+import business.strategy.impl.cliente.cartao.VerificarCartaoStrategy;
 import dao.*;
 import model.EntidadeDominio;
 import model.Result;
@@ -32,7 +33,9 @@ public class Facade implements IFacade {
         regrasDeNegocioMap.put(Cliente.class.getName(), getRegrasNegocioCliente());
         regrasDeNegocioMap.put(Usuario.class.getName(), getRegrasNegocioUsuario());
         regrasDeNegocioMap.put(Endereco.class.getName(), getRegrasNegocioEndereco());
+        regrasDeNegocioMap.put(CartaoDeCredito.class.getName(), getRegrasNegocioCartao());
     }
+
 
     @Override
     public Result salvar(EntidadeDominio entidade) {
@@ -186,5 +189,17 @@ public class Facade implements IFacade {
         mapStrategyCliente.put("salvar", regrasSalvarCliente);
         mapStrategyCliente.put("atualizar", regrasAtualizarCliente);
         return mapStrategyCliente;
+    }
+
+    private Map<String, List<IStrategy>> getRegrasNegocioCartao() {
+        List<IStrategy> regraCartaoGeral = List.of(
+                new VerificarCartaoStrategy()
+        );
+
+        Map<String, List<IStrategy>> mapStrategyCartao = new HashMap<>();
+        mapStrategyCartao.put("salvar", regraCartaoGeral);
+        mapStrategyCartao.put("atualizar", regraCartaoGeral);
+
+        return mapStrategyCartao;
     }
 }

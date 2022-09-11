@@ -21,7 +21,7 @@ public class LoginPage extends PageAbstract{
         campoEmail = driver.findElement(By.name("email"));
         campoSenha = driver.findElement(By.name("senha"));
 
-        linkCadastro = driver.findElement(By.name("linkCadastro"));
+        linkCadastro = driver.findElement(By.id("linkCadastro"));
         botaoLogin = driver.findElement(By.name("botaoLogin"));
     }
 

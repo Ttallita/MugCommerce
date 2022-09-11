@@ -57,7 +57,7 @@
 
                     <div class="col-md-4">
                         <label for="dtValidade"><small>Data de Validade</small></label>
-                        <input type="date" class="form-control" id="dtValidade" name="dtValidade" value="01/${cartao.mesValidade}/${cartao.anoValidade}">
+                        <input type="text" class="form-control" id="dtValidade" name="dtValidade" value="${cartao.mesValidade}${cartao.anoValidade}">
                     </div>
 
                     <div class="col-md-4">
@@ -86,8 +86,8 @@
 <script>
     aplicaMascaraTelefone()
     $('#cpf').mask("000.000.000-00")
-    $('.money').mask('000.000.000.000.000,00', {reverse: true});
     $('#numCartao').mask("0000 0000 0000 0000")
+    $('#dtValidade').mask('00/0000')
 </script>
 
 </html>

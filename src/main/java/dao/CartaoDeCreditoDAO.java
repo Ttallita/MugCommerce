@@ -21,17 +21,18 @@ public class CartaoDeCreditoDAO implements IDAO{
             conn = conexao.getConexao();
 
             String sql = "INSERT INTO cartoes (crt_cli_usr_id, crt_numero, crt_bandeira, crt_nome_impresso, crt_mes_validade," +
-                    " crt_ano_validade, crt_cod_seg)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    " crt_ano_validade, crt_cod_seg, crt_preferencial)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstm.setLong(1,cartao.getCliente().getUsuario().getId());
+            pstm.setLong(1, cartao.getCliente().getUsuario().getId());
             pstm.setString(2, cartao.getNumCartao());
             pstm.setString(3, cartao.getBandeira());
             pstm.setString(4, cartao.getNomeImpressoCartao());
             pstm.setInt(5, cartao.getMesValidade());
             pstm.setInt(6, cartao.getAnoValidade());
             pstm.setInt(7, cartao.getCodigo());
+            pstm.setBoolean(8, cartao.isPreferencial());
             pstm.execute();
 
             ResultSet rs = pstm.getGeneratedKeys();

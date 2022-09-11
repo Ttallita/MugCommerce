@@ -32,8 +32,9 @@
                                 <div class="d-grid gap-2 col-12 mx-auto align-middle">
                                     <input class="btn btn-primary" type="submit" value="Fazer Login" name="botaoLogin"/>
                                 </div>
+                                <br/>
+                                Não possui conta? <a href="cadastroCliente.jsp" id="linkCadastro">Cadastre-se</a>
                             </form>
-                            Não possui conta? <a href="cadastroCliente.jsp" name="linkCadastro">Cadastre-se</a>
                         </div>
                     </div>
                 </div>
@@ -43,6 +44,5 @@
         <jsp:include page="include/footer.jsp"/>
 
     </body>
-    
     <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 </html>

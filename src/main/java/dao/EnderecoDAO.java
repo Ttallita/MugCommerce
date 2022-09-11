@@ -153,20 +153,20 @@ public class EnderecoDAO implements IDAO{
             List<EntidadeDominio> enderecos = new ArrayList<>();
             while (rs.next()) {
                 Endereco enderecoConsulta = new Endereco();
-                enderecoConsulta.setId(rs.getLong(1));
+                enderecoConsulta.setId(rs.getLong("end_id"));
                 enderecoConsulta.setCliente(endereco.getCliente());
-                enderecoConsulta.setTipoEndereco(EnderecoType.valueOf(rs.getString(3)));
-                enderecoConsulta.setTipoResidencia(rs.getString(5));
-                enderecoConsulta.setApelido(rs.getString(4));
-                enderecoConsulta.setTipoResidencia(rs.getString(5));
-                enderecoConsulta.setTipoLogradouro(rs.getString(6));
-                enderecoConsulta.setLogradouro(rs.getString(7));
-                enderecoConsulta.setNumero(rs.getInt(8));
-                enderecoConsulta.setBairro(rs.getString(9));
-                enderecoConsulta.setCep(rs.getString(10));
-                enderecoConsulta.setCidade(rs.getString(11));
-                enderecoConsulta.setEstado(rs.getString(12));
-                enderecoConsulta.setObservacoes(rs.getString(13));
+                enderecoConsulta.setTipoEndereco(EnderecoType.valueOf(rs.getString("end_tp")));
+                enderecoConsulta.setTipoResidencia(rs.getString("end_tp_residencia"));
+                enderecoConsulta.setApelido(rs.getString("end_apelido"));
+                enderecoConsulta.setTipoResidencia(rs.getString("end_tp_residencia"));
+                enderecoConsulta.setTipoLogradouro(rs.getString("end_tp_logradouro"));
+                enderecoConsulta.setLogradouro(rs.getString("end_logradouro"));
+                enderecoConsulta.setNumero(rs.getInt("end_num"));
+                enderecoConsulta.setBairro(rs.getString("end_bairro"));
+                enderecoConsulta.setCep(rs.getString("end_cep"));
+                enderecoConsulta.setCidade(rs.getString("end_cidade"));
+                enderecoConsulta.setEstado(rs.getString("end_estado"));
+                enderecoConsulta.setObservacoes(rs.getString("end_observacao"));
 
                 enderecos.add(enderecoConsulta);
             }

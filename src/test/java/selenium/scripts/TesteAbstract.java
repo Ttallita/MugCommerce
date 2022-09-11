@@ -9,6 +9,9 @@ import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
 import selenium.dataHelpers.VOs.UsuarioVO;
 
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
 public abstract class TesteAbstract {
 
     protected WebDriver driver;
@@ -20,7 +23,7 @@ public abstract class TesteAbstract {
         ChromeDriverManager.getInstance().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-    }
+        }
 
     @AfterEach
     public void tearDown(){

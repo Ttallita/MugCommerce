@@ -30,7 +30,8 @@ CREATE TABLE cartoes(
     crt_nome_impresso varchar(255) NOT NULL,
     crt_mes_validade  numeric(2)   NOT NULL,
     crt_ano_validade  numeric(4)   NOT NULL,
-    crt_cod_seg       varchar(3)   NOT NULL
+    crt_cod_seg       varchar(3)   NOT NULL,
+    crt_preferencial  boolean      NOT NULL
 );
 
 DROP TABLE IF EXISTS "enderecos" CASCADE;

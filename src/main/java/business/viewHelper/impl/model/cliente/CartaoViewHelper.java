@@ -59,10 +59,12 @@ public class CartaoViewHelper implements IViewHelper {
         String dtValidade = request.getParameter("dtValidade");
 
         if(dtValidade != null && !dtValidade.isBlank()) {
-            String[] data = dtValidade.split("-");
+            String[] data = dtValidade.split("/");
 
-            cartaoDeCredito.setMesValidade(Integer.parseInt(data[1]));
-            cartaoDeCredito.setAnoValidade(Integer.parseInt(data[0]));
+            if(data.length > 1) {
+                cartaoDeCredito.setMesValidade(Integer.parseInt(data[0]));
+                cartaoDeCredito.setAnoValidade(Integer.parseInt(data[1]));
+            }
         }
 
         String codigoCartao = request.getParameter("codigoCartao");
