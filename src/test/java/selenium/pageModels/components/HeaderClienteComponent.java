@@ -1,8 +1,8 @@
 package selenium.pageModels.components;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import selenium.utils.UtilsTeste;
 
 public class HeaderClienteComponent extends HeaderComponentAbstract {
 
@@ -13,7 +13,7 @@ public class HeaderClienteComponent extends HeaderComponentAbstract {
     public HeaderClienteComponent(WebDriver driver) {
         super(driver);
 
-        botaoPerfilCliente = driver.findElement(By.cssSelector("a[href*='" + LINK_PERFIL_CLIENTE+ "']"));
+        botaoPerfilCliente = UtilsTeste.getBotaoByLink(LINK_PERFIL_CLIENTE, driver);
     }
 
     public void acessarPerfil(){

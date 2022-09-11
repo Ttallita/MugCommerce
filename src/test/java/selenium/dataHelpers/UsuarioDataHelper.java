@@ -1,6 +1,6 @@
-package selenium.pageModels.dataHelpers;
+package selenium.dataHelpers;
 
-import selenium.pageModels.VOs.UsuarioVO;
+import selenium.dataHelpers.VOs.UsuarioVO;
 
 public class UsuarioDataHelper {
 

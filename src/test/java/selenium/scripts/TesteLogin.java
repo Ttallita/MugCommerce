@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
-import selenium.pageModels.VOs.UsuarioVO;
+import selenium.dataHelpers.VOs.UsuarioVO;
 import selenium.pageModels.components.HeaderClienteComponent;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,7 +25,7 @@ public class TesteLogin extends TesteAbstract{
     }
 
     @ParameterizedTest
-    @MethodSource("selenium.pageModels.dataHelpers.UsuarioDataHelper#usuariosInvalidos")
+    @MethodSource("selenium.dataHelpers.UsuarioDataHelper#usuariosInvalidos")
     public void testeLoginClienteInvalido(UsuarioVO usuario){
         driver.get(LINK_LOGIN);
 

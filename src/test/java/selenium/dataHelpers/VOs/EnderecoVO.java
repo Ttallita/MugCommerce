@@ -1,4 +1,4 @@
-package selenium.pageModels.VOs;
+package selenium.dataHelpers.VOs;
 
 public class EnderecoVO {
 

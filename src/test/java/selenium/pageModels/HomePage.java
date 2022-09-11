@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
 import selenium.pageModels.components.HeaderComponentAbstract;
+import selenium.pageModels.perfilCliente.PerfilPrincipalPage;
 
 public class HomePage extends PageAbstract{
 
@@ -18,7 +19,7 @@ public class HomePage extends PageAbstract{
         header = getHeader(driver);
     }
 
-    public PerfilClientePage acessarPerfilCliente(){
+    public PerfilPrincipalPage acessarPerfilCliente(){
 
         try {
             ((HeaderClienteComponent) header).acessarPerfil();
@@ -27,7 +28,7 @@ public class HomePage extends PageAbstract{
             throw new IllegalStateException("Esta não é a Home de cliente!");
         }
 
-        return new PerfilClientePage(driver);
+        return new PerfilPrincipalPage(driver);
     }
 
     private HeaderComponentAbstract getHeader(WebDriver driver) {

@@ -19,7 +19,7 @@
                     <span class="material-icons inline-icon">lock</span> Atualizar senha
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'compras') ? 'active-navbar' : ''}" id="paginaEstoque" type="button" href="/emug/cliente/compras.jsp">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'compras') ? 'active-navbar' : ''}" id="paginaCompras" type="button" href="/emug/cliente/compras.jsp">
                     <span class="material-icons inline-icon">shopping_bag</span> Compras
                 </a>
 
@@ -27,7 +27,7 @@
                     <span class="material-icons inline-icon">local_shipping</span> Endereços
                 </a>
                 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'cartoes') ? 'active-navbar' : ''}" id="paginaVendas" type="button" href="/emug/clientes/cartoes?operacao=listar">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'cartoes') ? 'active-navbar' : ''}" id="paginaCartoes" type="button" href="/emug/clientes/cartoes?operacao=listar">
                     <span class="material-icons inline-icon">credit_card</span> Cartões
                 </a>
 

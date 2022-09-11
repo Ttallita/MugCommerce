@@ -156,16 +156,17 @@ public class EnderecoDAO implements IDAO{
                 enderecoConsulta.setId(rs.getLong(1));
                 enderecoConsulta.setCliente(endereco.getCliente());
                 enderecoConsulta.setTipoEndereco(EnderecoType.valueOf(rs.getString(3)));
+                enderecoConsulta.setTipoResidencia(rs.getString(5));
                 enderecoConsulta.setApelido(rs.getString(4));
-                enderecoConsulta.setTipoLogradouro(rs.getString(5));
-                enderecoConsulta.setLogradouro(rs.getString(6));
-                enderecoConsulta.setNumero(rs.getInt(7));
-                enderecoConsulta.setBairro(rs.getString(8));
-                enderecoConsulta.setCep(rs.getString(9));
-                enderecoConsulta.setCidade(rs.getString(10));
-                enderecoConsulta.setEstado(rs.getString(11));
-                enderecoConsulta.setObservacoes(rs.getString(12));
-                enderecoConsulta.setTipoResidencia(rs.getString(13));
+                enderecoConsulta.setTipoResidencia(rs.getString(5));
+                enderecoConsulta.setTipoLogradouro(rs.getString(6));
+                enderecoConsulta.setLogradouro(rs.getString(7));
+                enderecoConsulta.setNumero(rs.getInt(8));
+                enderecoConsulta.setBairro(rs.getString(9));
+                enderecoConsulta.setCep(rs.getString(10));
+                enderecoConsulta.setCidade(rs.getString(11));
+                enderecoConsulta.setEstado(rs.getString(12));
+                enderecoConsulta.setObservacoes(rs.getString(13));
 
                 enderecos.add(enderecoConsulta);
             }
