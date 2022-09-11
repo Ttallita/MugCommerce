@@ -61,6 +61,5 @@ public class FormEnderecoComponent {
         campoApelidoEndereco.sendKeys(endereco.getApelidoEndereco());
         campoObservacaoEndereco.sendKeys(endereco.getObservacaoEndereco());
 
-        botaoCadastro.click();
     }
 }

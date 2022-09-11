@@ -4,20 +4,27 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import selenium.utils.UtilsTeste;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HeaderClienteComponent extends HeaderComponentAbstract {
 
-    private final WebElement botaoPerfilCliente;
+    private final Map<String, Runnable> mapPaginaBotao;
 
     private static final String LINK_PERFIL_CLIENTE = "/emug/clientes?operacao=listar";
 
     public HeaderClienteComponent(WebDriver driver) {
         super(driver);
 
-        botaoPerfilCliente = UtilsTeste.getBotaoByLink(LINK_PERFIL_CLIENTE, driver);
+        WebElement botaoPerfilCliente = UtilsTeste.getBotaoByLink(LINK_PERFIL_CLIENTE, driver);
+
+        mapPaginaBotao = new HashMap<>();
+        mapPaginaBotao.put("perfil", botaoPerfilCliente::click);
     }
 
-    public void acessarPerfil(){
-        botaoPerfilCliente.click();
+    @Override
+    public void acessarPagina(String pagina) {
+        mapPaginaBotao.get(pagina).run();
     }
 
 }

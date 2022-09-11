@@ -22,7 +22,7 @@ public class HomePage extends PageAbstract{
     public PerfilPrincipalPage acessarPerfilCliente(){
 
         try {
-            ((HeaderClienteComponent) header).acessarPerfil();
+             header.acessarPagina("perfil");
         } catch (Exception e){
             e.printStackTrace();
             throw new IllegalStateException("Esta não é a Home de cliente!");
@@ -33,11 +33,8 @@ public class HomePage extends PageAbstract{
 
     private HeaderComponentAbstract getHeader(WebDriver driver) {
         String tipoHeader = driver.findElement(By.tagName("header")).getAttribute("name");
-
-        if(tipoHeader != null && !tipoHeader.isEmpty())
-            header = tipoHeader.equals("CLIENTE") ? new HeaderClienteComponent(driver) : new HeaderAdmComponent(driver);
-        else
-            header = new HeaderComponentAbstract(driver);
+        
+        header = tipoHeader.equals("CLIENTE") ? new HeaderClienteComponent(driver) : new HeaderAdmComponent(driver);
 
         return header;
     }
@@ -45,9 +42,4 @@ public class HomePage extends PageAbstract{
     public HeaderComponentAbstract getHeader() {
         return header;
     }
-
-    public void setHeader(HeaderComponentAbstract header) {
-        this.header = header;
-    }
-
 }

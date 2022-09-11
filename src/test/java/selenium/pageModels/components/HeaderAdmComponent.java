@@ -8,4 +8,8 @@ public class HeaderAdmComponent extends HeaderComponentAbstract{
         super(driver);
     }
 
+    @Override
+    public void acessarPagina(String pagina) {
+
+    }
 }
