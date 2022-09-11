@@ -54,7 +54,7 @@ public class CartaoViewHelper implements IViewHelper {
         cartaoDeCredito.setNumCartao(request.getParameter("numCartao"));
         cartaoDeCredito.setNomeImpressoCartao(request.getParameter("nomeCartao"));
         cartaoDeCredito.setBandeira(request.getParameter("bandeira"));
-
+        cartaoDeCredito.setPreferencial(request.getParameter("preferencial") != null);
 
         String dtValidade = request.getParameter("dtValidade");
 

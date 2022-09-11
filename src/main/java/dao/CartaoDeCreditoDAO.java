@@ -2,7 +2,6 @@ package dao;
 
 import model.EntidadeDominio;
 import model.cliente.CartaoDeCredito;
-import model.cliente.endereco.Endereco;
 import utils.Conexao;
 
 import java.sql.*;
@@ -66,7 +65,7 @@ public class CartaoDeCreditoDAO implements IDAO{
             conn = conexao.getConexao();
 
             String sql = "UPDATE cartoes SET crt_numero = ?, crt_bandeira = ?, crt_nome_impresso = ?, crt_mes_validade = ?," +
-                    " crt_ano_validade = ?, crt_cod_seg = ? WHERE crt_id = ?";
+                    " crt_ano_validade = ?, crt_cod_seg = ?, crt_preferencial = ? WHERE crt_id = ?";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, cartao.getNumCartao());
@@ -75,7 +74,8 @@ public class CartaoDeCreditoDAO implements IDAO{
             pstm.setInt(4, cartao.getMesValidade());
             pstm.setInt(5, cartao.getAnoValidade());
             pstm.setInt(6, cartao.getCodigo());
-            pstm.setLong(7, cartao.getId());
+            pstm.setBoolean(7, cartao.isPreferencial());
+            pstm.setLong(8, cartao.getId());
 
             pstm.execute();
 
@@ -145,14 +145,15 @@ public class CartaoDeCreditoDAO implements IDAO{
             List<EntidadeDominio> cartoes = new ArrayList<>();
             while (rs.next()) {
                 CartaoDeCredito cartaoConsulta = new CartaoDeCredito();
-                cartaoConsulta.setId(rs.getLong(1));
+                cartaoConsulta.setId(rs.getLong("crt_id"));
                 cartaoConsulta.setCliente(cartao.getCliente());
-                cartaoConsulta.setNumCartao(rs.getString(3));
-                cartaoConsulta.setBandeira( rs.getString(4));
-                cartaoConsulta.setNomeImpressoCartao(rs.getString(5));
-                cartaoConsulta.setMesValidade(rs.getInt(6));
-                cartaoConsulta.setAnoValidade(rs.getInt(7));
-                cartaoConsulta.setCodigo(rs.getInt(8));
+                cartaoConsulta.setNumCartao(rs.getString("crt_numero"));
+                cartaoConsulta.setBandeira( rs.getString("crt_bandeira"));
+                cartaoConsulta.setNomeImpressoCartao(rs.getString("crt_nome_impresso"));
+                cartaoConsulta.setMesValidade(rs.getInt("crt_mes_validade"));
+                cartaoConsulta.setAnoValidade(rs.getInt("crt_ano_validade"));
+                cartaoConsulta.setCodigo(rs.getInt("crt_cod_seg"));
+                cartaoConsulta.setPreferencial(rs.getBoolean("crt_preferencial"));
 
                 cartoes.add(cartaoConsulta);
             }

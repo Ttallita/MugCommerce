@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <input class="form-check-input" type="checkbox" value="" id="preferencial">
+                        <input class="form-check-input" type="checkbox" name="preferencial" id="preferencial">
                         <label for="preferencial" class="form-check-label"><small>Cartão preferencial</small></label>
                     </div>
 
@@ -76,7 +76,6 @@
     </div>
 
     <jsp:include page="../include/footer.jsp"/>
-
 </body>
 
 <script src='<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"/>'></script>
