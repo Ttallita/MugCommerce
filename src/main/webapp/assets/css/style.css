@@ -19,10 +19,9 @@ html, body {
 }
 
 footer {
-  left: 0;
   bottom: 0;
   width: 100%;
-  padding: 10px;
+  position: static;
 }
 
 a {
@@ -46,9 +45,8 @@ a {
 }
 
 .paragraph-no-space {
-    margin: 0px;
+    margin: 0;
 }
-
 
 /** Sidebar **/
 .l-navbar {

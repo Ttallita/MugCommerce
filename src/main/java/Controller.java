@@ -51,6 +51,7 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/clientes/atualizarSenha", new UsuarioViewHelper());
         viewHelperMap.put("/emug/clientes/enderecos", new EnderecoViewHelper());
         viewHelperMap.put("/emug/clientes/cartoes", new CartaoViewHelper());
+        viewHelperMap.put("/emug/clientes/desativarConta", new UsuarioViewHelper());
 
         viewHelperMap.put("/emug/adm/clientes", new ClienteAdmViewHelper());
     }

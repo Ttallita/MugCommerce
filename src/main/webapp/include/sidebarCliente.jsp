@@ -23,7 +23,7 @@
                     <span class="material-icons inline-icon">shopping_bag</span> Compras
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'enderecos') ? 'active-navbar' : ''}" id="paginaClientes" type="button" href="/emug/clientes/enderecos?operacao=listar">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'enderecos') ? 'active-navbar' : ''}" id="paginaEnderecos" type="button" href="/emug/clientes/enderecos?operacao=listar">
                     <span class="material-icons inline-icon">local_shipping</span> Endereços
                 </a>
                 
@@ -33,6 +33,10 @@
 
                 <a class="nav_link ${ fn:contains(paginaCorrente, 'cupons') ? 'active-navbar' : ''}" id="paginaCupons" type="button" href="/emug/cliente/cupons.jsp">
                     <span class="material-icons inline-icon">local_play</span> Cupons
+                </a>
+
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'desativarConta') ? 'active-navbar' : ''}" id="paginaDesativar" type="button" href="/emug/cliente/desativarConta.jsp">
+                    <span class="material-icons inline-icon">highlight_off</span> Desativar Conta
                 </a>
 
                 <a class="nav_link" id="" href="">

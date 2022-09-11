@@ -33,29 +33,39 @@ public class UsuarioViewHelper implements IViewHelper {
             usuario.setSenhaAntiga(request.getParameter("senhaAntiga"));
 
             return usuario;
-        }
+        } else if (operacao.equals("excluir"))
+            return (Usuario) request.getSession().getAttribute("usuarioLogado");
+
 
         return null;
     }
 
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        List<EntidadeDominio> entidades = result.getEntidades();
+        String operacao = request.getParameter("operacao");
 
-        if(entidades.isEmpty())
-            result.setMsg("Usuario/Senha incorreto.");
+        if(operacao.equals("atualizar")) {
+            List<EntidadeDominio> entidades = result.getEntidades();
 
-        String[] mensagens;
+            if(entidades.isEmpty())
+                result.setMsg("Usuario/Senha incorreto.");
 
-        if(result.getMsg() == null) {
-            mensagens = new String[] { "Senha Atualizada com sucesso." };
-            request.getSession().setAttribute("usuarioLogado", entidades.get(0));
-        } else
-            mensagens = result.getMsg().split("\n");
+            String[] mensagens;
 
-        request.setAttribute("erro", result.getMsg() != null);
-        request.setAttribute("mensagens", mensagens);
-        request.getRequestDispatcher("/cliente/atualizarSenha.jsp").forward(request, response);
+            if(result.getMsg() == null) {
+                mensagens = new String[] { "Senha Atualizada com sucesso." };
+                request.getSession().setAttribute("usuarioLogado", entidades.get(0));
+            } else
+                mensagens = result.getMsg().split("\n");
+
+            request.setAttribute("erro", result.getMsg() != null);
+            request.setAttribute("mensagens", mensagens);
+            request.getRequestDispatcher("/cliente/atualizarSenha.jsp").forward(request, response);
+        } else {
+            request.getSession().removeAttribute("usuarioLogado");
+            response.sendRedirect("/emug/index.jsp");
+        }
+
     }
 
 }

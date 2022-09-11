@@ -82,6 +82,30 @@ public class UsuarioDAO implements IDAO {
 
     @Override
     public EntidadeDominio deletar(EntidadeDominio entidade) {
+        Usuario usuario = (Usuario) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "UPDATE usuarios SET usr_ativo = ? WHERE usr_id = ?;";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setBoolean(1, false);
+            pstm.setLong(2, usuario.getId());
+
+            pstm.execute();
+
+            return usuario;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(conn);
+        }
+
         return null;
     }
 
@@ -97,7 +121,7 @@ public class UsuarioDAO implements IDAO {
 
             PreparedStatement pstm = null;
             if(operacao.equals("login")) {
-                String sql = "SELECT * FROM usuarios WHERE usr_email = ? AND usr_senha = ?";
+                String sql = "SELECT * FROM usuarios WHERE usr_email = ? AND usr_senha = ? AND usr_ativo = TRUE";
                 pstm = conn.prepareStatement(sql);
                 pstm.setString(1, usuario.getEmail());
                 pstm.setString(2, Utils.getSha512(usuario.getSenha()));
