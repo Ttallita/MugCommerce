@@ -109,7 +109,7 @@
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
 <script>
     async function preencherCampos(id) {
-        const response = await fetch("/emug/clientes/enderecos?operacao=listarUnico&id=${endereco.id}");
+        const response = await fetch("/emug/clientes/enderecos?operacao=listarUnico&id="+id+"");
         const json =  await response.json()
 
         // Lembrar de mudar para ids do form
