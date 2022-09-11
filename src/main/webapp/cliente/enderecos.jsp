@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="modal" %>
 
 <html lang="en">
 
@@ -59,7 +60,7 @@
                                     <td>${endereco.cep}</td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/clientes/enderecos?operacao=listarUnico&id=${endereco.id}">
-                                            <span class="material-icons text-primary">edit</span>
+                                            <span class="material-icons text-primary" onclick="preencherCampos(${endereco.id})">edit</span>
                                         </a>
                                     </td>
                                     <td>
@@ -100,14 +101,22 @@
                 </div>
             </div>
         </div>
-        <br/>
-        <br/>
-
-
     </main>
 
     <jsp:include page="../include/footer.jsp"/>
 </body>
 <script src="<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js" />"></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
+<script>
+    async function preencherCampos(id) {
+        const response = await fetch("/emug/clientes/enderecos?operacao=listarUnico&id=${endereco.id}");
+        const json =  await response.json()
+
+        // Lembrar de mudar para ids do form
+        $("#enderecoNomeAtualizar").val(json.nome)
+
+        // function que abre modal
+        // openModal()
+    }
+</script>
 </html>
