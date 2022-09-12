@@ -76,14 +76,9 @@ public class EnderecoViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/cliente/enderecos.jsp").forward(request, response);
                 break;
             case "listarUnico":
-                Endereco endereco = (Endereco) result.getEntidades().get(0);
-
-                PrintWriter out = response.getWriter();
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                out.print(new Gson().toJson(endereco));
-                out.flush();
-
+                request.setAttribute("isEditar", true);
+                request.setAttribute("endereco", result.getEntidades().get(0));
+                request.getRequestDispatcher("/formularios/formEndereco.jsp").forward(request, response);
                 break;
         }
     }

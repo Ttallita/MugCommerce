@@ -55,6 +55,8 @@ public class TesteCadastroCliente extends TesteAbstract {
         EnderecoVO endereco = EnderecoVO.createEnderecoPadrao();
 
         formEnderecoPage.salvarNovoEndereco(endereco);
+
+        assertEquals("Perfil - Endereços", driver.getTitle());
     }
 
     @Test
@@ -68,6 +70,8 @@ public class TesteCadastroCliente extends TesteAbstract {
         CartaoVO cartao = CartaoVO.createCartaoPadrao();
 
         formCartaoPage.salvarNovoCartao(cartao);
+
+        assertEquals("Perfil - Cartões", driver.getTitle());
     }
 
 }

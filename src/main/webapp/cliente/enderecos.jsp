@@ -105,18 +105,6 @@
 
     <jsp:include page="../include/footer.jsp"/>
 </body>
-<script src="<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js" />"></script>
+<script src='<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js" />'></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
-<script>
-    async function preencherCampos(id) {
-        const response = await fetch("/emug/clientes/enderecos?operacao=listarUnico&id="+id+"");
-        const json =  await response.json()
-
-        // Lembrar de mudar para ids do form
-        $("#enderecoNomeAtualizar").val(json.nome)
-
-        // function que abre modal
-        // openModal()
-    }
-</script>
 </html>
