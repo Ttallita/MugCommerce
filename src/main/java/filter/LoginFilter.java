@@ -17,7 +17,7 @@ public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
-        HttpServletResponse res = (HttpServletResponse) servletRequest;
+        HttpServletResponse res = (HttpServletResponse) servletResponse;
 
         Usuario usuarioLogado = (Usuario) req.getSession().getAttribute("usuarioLogado");
 
