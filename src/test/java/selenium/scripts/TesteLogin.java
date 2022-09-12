@@ -14,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TesteLogin extends TesteAbstract{
 
+    /*
+        Existe um bug faz o teste falhar caso não exista o cliente padrão no banco
+     */
     @Test
     public void testeLoginClienteValido(){
         driver.get(LINK_LOGIN);
@@ -31,9 +34,7 @@ public class TesteLogin extends TesteAbstract{
 
         LoginPage loginPage = new LoginPage(driver);
 
-        Assertions.assertThrowsExactly(IllegalStateException.class, () -> {
-            loginPage.logar(usuario);
-        });
+        Assertions.assertThrowsExactly(IllegalStateException.class, () -> loginPage.logar(usuario));
 
         assertEquals("Usuario/Senha incorreto.", loginPage.getMensagemAlert());
     }

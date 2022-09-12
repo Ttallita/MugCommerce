@@ -66,7 +66,7 @@ public class CadastroClientePage extends PageAbstract{
         botaoCadastro = driver.findElement(By.name("botaoCadastro"));
     }
 
-    public void cadastrar(ClienteVO cliente) throws InterruptedException {
+    public void cadastrar(ClienteVO cliente) {
 
         UsuarioVO usuario = cliente.getUsuarioVO();
         campoEmail.sendKeys(usuario.getEmail());

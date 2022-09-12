@@ -16,7 +16,7 @@ public class CartaoVO {
         cartaoVO.setNomeCartao("João Inácio");
         cartaoVO.setBandeira("Elo");
         cartaoVO.setCodigoCartao("123");
-        cartaoVO.setDtValidade("00/0000");
+        cartaoVO.setDtValidade("08/2032");
 
         return cartaoVO;
     }
