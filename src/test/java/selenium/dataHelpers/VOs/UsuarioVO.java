@@ -16,6 +16,15 @@ public class UsuarioVO {
         return usuario;
     }
 
+    public static UsuarioVO createUsuarioLoginPadrao(){
+        UsuarioVO usuario = new UsuarioVO();
+
+        usuario.setEmail("login@teste.com");
+        usuario.setSenha("Teste@123");
+
+        return usuario;
+    }
+
     public String getEmail() {
         return email;
     }

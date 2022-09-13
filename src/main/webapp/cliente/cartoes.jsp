@@ -22,7 +22,7 @@
         <jsp:include page="../include/sidebarCliente.jsp" />
 
         <div class="w-75 bg-white rounded p-5">
-            <h5>Endereços</h5>
+            <h5>Cartões</h5>
 
             <hr>
 

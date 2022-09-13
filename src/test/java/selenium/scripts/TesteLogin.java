@@ -22,7 +22,7 @@ public class TesteLogin extends TesteAbstract{
         driver.get(LINK_LOGIN);
 
         LoginPage loginPage = new LoginPage(driver);
-        HomePage home = loginPage.logar(UsuarioVO.createUsuarioClientePadrao());
+        HomePage home = loginPage.logar(UsuarioVO.createUsuarioLoginPadrao());
 
         assertTrue(home.getHeader() instanceof HeaderClienteComponent);
     }

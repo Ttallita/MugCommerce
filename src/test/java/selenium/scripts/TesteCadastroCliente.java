@@ -34,7 +34,7 @@ public class TesteCadastroCliente extends TesteAbstract {
 
     @ParameterizedTest
     @MethodSource("selenium.dataHelpers.ClienteDataHelper#clientesInvalidos")
-    public void testeCadastroClienteInvalido(ClienteVO cliente, String msgEsperada) throws InterruptedException {
+    public void testeCadastroClienteInvalido(ClienteVO cliente, String msgEsperada) {
         driver.get(LINK_LOGIN);
         LoginPage loginPage = new LoginPage(driver);
 
