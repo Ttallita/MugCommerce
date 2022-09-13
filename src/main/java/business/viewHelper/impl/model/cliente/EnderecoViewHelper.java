@@ -91,7 +91,8 @@ public class EnderecoViewHelper implements IViewHelper {
         }
     }
 
-    public Endereco criaEndereco(HttpServletRequest request) {
+    public Endereco
+    criaEndereco(HttpServletRequest request) {
         Endereco endereco = new Endereco();
         endereco.setTipoResidencia(request.getParameter("tpResidencia"));
         endereco.setTipoLogradouro(request.getParameter("tpLogradouro"));
@@ -106,8 +107,12 @@ public class EnderecoViewHelper implements IViewHelper {
 
         String tpEndereco = request.getParameter("tpEndereco");
 
-        boolean naoSetaEndereco = tpEndereco == null || tpEndereco.isBlank();
-        endereco.setTipoEndereco(naoSetaEndereco ? EnderecoType.COBRANCA_ENTREGA : EnderecoType.valueOf(tpEndereco));
+        if(tpEndereco == null)
+            endereco.setTipoEndereco(EnderecoType.COBRANCA_ENTREGA);
+        else if (tpEndereco.isBlank())
+            endereco.setTipoEndereco(null);
+        else
+            endereco.setTipoEndereco(EnderecoType.valueOf(tpEndereco));
 
         return endereco;
     }

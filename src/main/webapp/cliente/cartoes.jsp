@@ -56,7 +56,9 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <span class="material-icons text-danger" onclick="abrirModal(${cartao.id})">delete</span>
+                                        <c:if test="${!cartao.preferencial}">
+                                            <span class="material-icons text-danger" onclick="abrirModal(${cartao.id})">delete</span>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>

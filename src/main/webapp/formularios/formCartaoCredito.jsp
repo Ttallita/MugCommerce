@@ -61,10 +61,10 @@
                         <input type="text" class="form-control" id="dtValidade" name="dtValidade" value="${cartao.mesValidade}${cartao.anoValidade}">
                     </div>
 
-                    <c:if test="${!isEsconder}">
-                        <div class="col-md-4">
+                    <c:if test="${empty isMostrar || isMostrar}">
+                        <div class="col-md-12">
                             <input class="form-check-input" type="checkbox" name="preferencial" id="preferencial">
-                            <label for="preferencial" class="form-check-label"><small>Cartão preferencial</small></label>
+                            <label for="preferencial" class="form-check-label"><small>Cartão preferencial(Se for o primeiro cartão cadastrado será automaticamente marcado como preferencial)</small></label>
                         </div>
                     </c:if>
 

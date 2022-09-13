@@ -34,7 +34,7 @@ public class CartaoDeCreditoDAO implements IDAO{
             pstm.setInt(5, cartao.getMesValidade());
             pstm.setInt(6, cartao.getAnoValidade());
             pstm.setInt(7, cartao.getCodigo());
-            pstm.setBoolean(8, cartao.isPreferencial());
+            pstm.setBoolean(8, !existeCartaoPreferencial() || cartao.isPreferencial());
             pstm.execute();
 
             ResultSet rs = pstm.getGeneratedKeys();
@@ -80,6 +80,7 @@ public class CartaoDeCreditoDAO implements IDAO{
             pstm.setInt(4, cartao.getMesValidade());
             pstm.setInt(5, cartao.getAnoValidade());
             pstm.setInt(6, cartao.getCodigo());
+
             pstm.setBoolean(7, cartao.isPreferencial());
             pstm.setLong(8, cartao.getId());
 
@@ -199,5 +200,9 @@ public class CartaoDeCreditoDAO implements IDAO{
             conexao.fecharConexao(conn);
         }
 
+    }
+
+    public boolean existeCartaoPreferencial() {
+        return listar(new CartaoDeCredito(), "findCartaoPreferencial").size() > 0;
     }
 }
