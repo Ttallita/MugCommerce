@@ -51,12 +51,14 @@
                                     <td>${cartao.nomeImpressoCartao}</td>
                                     <td>${cartao.mesValidade}/${cartao.anoValidade}</td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/clientes/cartoes?operacao=listarUnico&id=${cartao.id}">
-                                            <span class="material-icons text-primary">edit</span>
+                                        <a href="${pageContext.request.contextPath}/clientes/cartoes?operacao=listarUnico&id=${cartao.id}" class="btn btn-primary btn-sm">
+                                            <span class="material-icons">edit</span>
                                         </a>
                                     </td>
                                     <td>
-                                        <span class="material-icons text-danger" onclick="abrirModal(${cartao.id})">delete</span>
+                                        <button name="botaoModalDeletar" type="button" class="btn btn-danger btn-sm" onclick="abrirModal(${cartao.id})">
+                                            <span class="material-icons">delete</span>
+                                        </button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -84,7 +86,7 @@
                         <form action="/emug/clientes/cartoes" method="POST">
                             <input type="hidden" name="operacao" value="excluir">
                             <input type="hidden" id="idRemover" name="id" value="">
-                            <input type="submit" class="btn btn-danger" value="Remover">
+                            <input type="submit" class="btn btn-danger" value="Remover" id="botaoRemoverCartao">
                         </form>
                     </div>
                 </div>

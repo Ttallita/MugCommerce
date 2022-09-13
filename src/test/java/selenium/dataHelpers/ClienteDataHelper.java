@@ -50,15 +50,13 @@ public class ClienteDataHelper {
 
     private static Object[][] enderecosInvalidos(){
         EnderecoVO endereco1 = EnderecoVO.createEnderecoPadrao();
-        EnderecoVO endereco2 = EnderecoVO.createEnderecoPadrao();
-        EnderecoVO endereco3 = EnderecoVO.createEnderecoPadrao();
-        EnderecoVO endereco4 = EnderecoVO.createEnderecoPadrao();
+        EnderecoVO endereco2 = EnderecoVO.createEnderecoVazio();
 
-
-
+        endereco1.setNumeroEndereco("");
 
         return new Object[][]{
-
+                {endereco1, "O campo número é obrigatório"},
+                {endereco2, "O campo tipo de residência é obrigatório"}
         };
     }
 

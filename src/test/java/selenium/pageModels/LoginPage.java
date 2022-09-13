@@ -39,8 +39,4 @@ public class LoginPage extends PageAbstract{
         return new CadastroClientePage(driver);
     }
 
-    public String getMensagemAlert(){
-        return driver.findElement(By.className("alert")).findElement(By.tagName("li")).getText();
-    }
-
 }

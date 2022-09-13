@@ -8,6 +8,7 @@ import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
 import selenium.dataHelpers.VOs.UsuarioVO;
 import selenium.pageModels.components.HeaderClienteComponent;
+import selenium.utils.UtilsTeste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TesteLogin extends TesteAbstract{
 
     /*
-        Existe um bug faz o teste falhar caso não exista o cliente padrão no banco
+        Lembrar de inserir o cliente padrão de login do arquivo emug.sql
      */
     @Test
     public void testeLoginClienteValido(){
@@ -36,7 +37,7 @@ public class TesteLogin extends TesteAbstract{
 
         Assertions.assertThrowsExactly(IllegalStateException.class, () -> loginPage.logar(usuario));
 
-        assertEquals("Usuario/Senha incorreto.", loginPage.getMensagemAlert());
+        assertEquals("Usuario/Senha incorreto.", UtilsTeste.getMensagemAlert(driver));
     }
 
 }

@@ -39,6 +39,9 @@ public class EnderecosPage extends PerfilPage {
             }
         }
 
+        if(botaoDeletarEndereco == null)
+            throw new RuntimeException("Não existem cartões para serem deletados!");
+
         botaoDeletarEndereco.click();
 
         driver.findElement(By.id("botaoRemoverEndereco")).click();

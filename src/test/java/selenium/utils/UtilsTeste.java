@@ -10,4 +10,8 @@ public class UtilsTeste {
         return driver.findElement(By.cssSelector("a[href*='" + link + "']"));
     }
 
+    public static String getMensagemAlert(WebDriver driver){
+        return driver.findElement(By.className("alert")).findElement(By.tagName("li")).getText();
+    }
+
 }
