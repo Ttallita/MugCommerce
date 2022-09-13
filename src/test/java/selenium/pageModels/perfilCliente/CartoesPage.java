@@ -8,6 +8,8 @@ import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.formularios.FormCartaoPage;
 import selenium.utils.UtilsTeste;
 
+import java.util.List;
+
 public class CartoesPage extends PerfilPage {
 
     public static final String TITULO_PAGINA = "Perfil - Cartões";
@@ -25,16 +27,17 @@ public class CartoesPage extends PerfilPage {
     }
 
     public void removerCartao(CartaoVO cartaoVO){
-        WebElement botaoDeletarCartao = null;
 
-        for(WebElement cartao: driver.findElements(By.tagName("tr"))){
-            String textoCartao = cartao.getText();
+        WebElement trCartaoRemover = driver.findElements(By.tagName("tr"))
+                .stream()
+                .filter(tr -> tr.getText().contains(cartaoVO.getNumCartao()))
+                .findFirst()
+                .orElse(null);
 
-            if(textoCartao.contains(cartaoVO.getCodigoCartao()) && textoCartao.contains(cartaoVO.getCodigoCartao())) {
-                botaoDeletarCartao = cartao.findElement(By.name("botaoModalDeletar"));
-                break;
-            }
-        }
+        if(trCartaoRemover == null)
+            throw new RuntimeException("Erro ao encontrar cartão na tabela");
+
+        WebElement botaoDeletarCartao = trCartaoRemover.findElement(By.name("botaoModalDeletar"));
 
         if(botaoDeletarCartao == null)
             throw new RuntimeException("Não existem cartões para serem deletados!");
