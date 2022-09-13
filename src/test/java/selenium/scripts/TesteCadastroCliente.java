@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TesteCadastroCliente extends TesteAbstract {
 
     @Test
-    public void testeCadastroClienteValido() throws InterruptedException {
+    public void testeCadastroClienteValido() {
         driver.get(LINK_LOGIN);
 
         ClienteVO cliente = ClienteVO.createClienteVOPadrao();
@@ -55,6 +55,19 @@ public class TesteCadastroCliente extends TesteAbstract {
         EnderecoVO endereco = EnderecoVO.createEnderecoPadrao();
 
         formEnderecoPage.salvarNovoEndereco(endereco);
+
+        assertEquals("Perfil - Endereços", driver.getTitle());
+    }
+
+    @Test
+    public void testeCadastroDeleteEndereco(){
+        EnderecoVO endereco = EnderecoVO.createEnderecoPadrao();
+        HomePage homeCliente = this.realizarLoginCliente();
+
+        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
+        EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
+
+        enderecosPage.removerEndereco(endereco);
 
         assertEquals("Perfil - Endereços", driver.getTitle());
     }

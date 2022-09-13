@@ -59,12 +59,14 @@
                                     <td>${endereco.estado}</td>
                                     <td>${endereco.cep}</td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/clientes/enderecos?operacao=listarUnico&id=${endereco.id}">
-                                            <span class="material-icons text-primary" onclick="preencherCampos(${endereco.id})">edit</span>
+                                        <a href="${pageContext.request.contextPath}/clientes/enderecos?operacao=listarUnico&id=${endereco.id}" class="btn btn-primary btn-sm">
+                                            <span class="material-icons" onclick="preencherCampos(${endereco.id})">edit</span>
                                         </a>
                                     </td>
                                     <td>
-                                        <span class="material-icons text-danger" onclick="abrirModal(${endereco.id})">delete</span>
+                                        <button name="botaoModalDeletar" type="button" class="btn btn-danger btn-sm" onclick="abrirModal(${endereco.id})">
+                                            <span class="material-icons">delete</span>
+                                        </button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -95,7 +97,7 @@
                         <form action="/emug/clientes/enderecos" method="POST">
                             <input type="hidden" name="operacao" value="excluir">
                             <input type="hidden" id="idRemover" name="id" value="">
-                            <input type="submit" class="btn btn-danger" value="Remover">
+                            <input type="submit" class="btn btn-danger" value="Remover" id="botaoRemoverEndereco">
                         </form>
                     </div>
                 </div>
