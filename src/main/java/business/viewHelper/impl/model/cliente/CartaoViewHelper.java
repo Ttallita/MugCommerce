@@ -116,13 +116,9 @@ public class CartaoViewHelper implements IViewHelper {
 
                 CartaoDeCredito cartao = (CartaoDeCredito) result.getEntidades().get(0);
 
-                boolean isEsconder;
-                if(cartaoPreferencial.isPreferencial()) {
-                    isEsconder = Objects.equals(cartaoPreferencial.getId(), cartao.getId());
-                } else
-                    isEsconder = false;
+                boolean isMostrar = !Objects.equals(cartaoPreferencial.getId(), cartao.getId());
 
-                request.setAttribute("isEsconder", isEsconder);
+                request.setAttribute("isMostrar", isMostrar);
                 request.setAttribute("isEditar", true);
                 request.setAttribute("cartao", cartao);
                 request.getRequestDispatcher("/formularios/formCartaoCredito.jsp").forward(request, response);

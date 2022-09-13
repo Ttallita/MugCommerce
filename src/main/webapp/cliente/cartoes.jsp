@@ -56,9 +56,11 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <button name="botaoModalDeletar" type="button" class="btn btn-danger btn-sm" onclick="abrirModal(${cartao.id})">
-                                            <span class="material-icons">delete</span>
-                                        </button>
+                                        <c:if test="${!cartao.preferencial}">
+                                            <button name="botaoModalDeletar" type="button" class="btn btn-danger btn-sm" onclick="abrirModal(${cartao.id})">
+                                                <span class="material-icons">delete</span>
+                                            </button>
+                                        </c:if>
                                     </td>
                                 </tr>
                             </c:forEach>

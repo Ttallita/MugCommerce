@@ -21,6 +21,9 @@ public class VerificarCartaoStrategy implements IStrategy {
         if(cartao.getCodigo() == null)
             return "Insira um código válido";
 
+        if(cartao.getCodigo().toString().length() > 3)
+            return "Codigo maior que o esperado";
+
         if(cartao.getNomeImpressoCartao().isBlank())
             return "Insira um nome para o cartão válido";
 

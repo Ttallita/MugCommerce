@@ -13,11 +13,13 @@ public class VerificarEnderecoStrategy implements IStrategy{
 
         if(entidade instanceof Cliente) // Salvando endereço pela primeira vez...
             endereco = ((Cliente) entidade).getEnderecos().get(0);
-        else
+        else {
             endereco = (Endereco) entidade;
+            if(endereco.getTipoEndereco() == null)
+                return "Selecione um tipo de endereço valido";
+        }
 
         try {
-
             if(endereco.getTipoResidencia().trim().isEmpty())
                 return "O campo tipo de residência é obrigatório";
 
