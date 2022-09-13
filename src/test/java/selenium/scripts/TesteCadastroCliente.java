@@ -45,9 +45,22 @@ public class TesteCadastroCliente extends TesteAbstract {
         assertEquals(msgEsperada, cadastroPage.getMensagemAlert());
     }
 
+    @Test
+    public void testeCadastroEndereco(){
+        HomePage homeCliente = this.realizarLoginCliente();
+
+        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
+        EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
+        FormEnderecoPage formEnderecoPage = enderecosPage.adicionarEndereco();
+
+        formEnderecoPage.salvarNovoEndereco(EnderecoVO.createEnderecoPadrao());
+
+        assertEquals("Perfil - Endereços", driver.getTitle());
+    }
+
     @ParameterizedTest
     @MethodSource("selenium.dataHelpers.ClienteDataHelper#enderecosInvalidos")
-    public void testeCadastroNovoEnderecosInvalidos(EnderecoVO endereco, String msgEsperada){
+    public void testeCadastroEnderecosInvalidos(EnderecoVO endereco, String msgEsperada){
         HomePage homeCliente = this.realizarLoginCliente();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
@@ -75,32 +88,52 @@ public class TesteCadastroCliente extends TesteAbstract {
     }
 
     @Test
-    public void testeCadastroNovoCartao(CartaoVO cartao, String msgEsperada){
+    public void testeAlterarEndereco(){
+        EnderecoVO endereco = EnderecoVO.createEnderecoPadrao();
+
         HomePage homeCliente = this.realizarLoginCliente();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
-        CartoesPage cartoesPage = perfilCliente.acessarCartoes();
-        FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
+        EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
 
-        formCartaoPage.salvarNovoCartao(cartao);
+        FormEnderecoPage formEnderecoPage = enderecosPage.adicionarEndereco();
+        formEnderecoPage.salvarNovoEndereco(endereco);
 
-        assertEquals("Perfil - Cartões", driver.getTitle());
-        assertEquals(msgEsperada, UtilsTeste.getMensagemAlert(driver));
+
+        formEnderecoPage = enderecosPage.editarEndereco(endereco);
+
+        endereco.setCep("95044-000");
+        formEnderecoPage.editarEndereco(endereco);
+
+        assertEquals("Perfil - Endereços", driver.getTitle());
     }
 
     @Test
-    public void testeCadastroCartoesInvalidos(){
+    public void testeCadastroNovoCartao(){
         HomePage homeCliente = this.realizarLoginCliente();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         CartoesPage cartoesPage = perfilCliente.acessarCartoes();
         FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
 
-        CartaoVO cartao = CartaoVO.createCartaoPadrao();
+        formCartaoPage.salvarNovoCartao(CartaoVO.createCartaoPadrao());
+
+        assertEquals("Perfil - Cartões", driver.getTitle());
+    }
+
+    @ParameterizedTest
+    @MethodSource("selenium.dataHelpers.ClienteDataHelper#cartoesInvalidos")
+    public void testeCadastroCartoesInvalidos(CartaoVO cartao, String msgEsperada){
+        HomePage homeCliente = this.realizarLoginCliente();
+
+        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
+        CartoesPage cartoesPage = perfilCliente.acessarCartoes();
+        FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
 
         formCartaoPage.salvarNovoCartao(cartao);
 
-        assertEquals("Perfil - Cartões", driver.getTitle());
+        assertEquals("Cadastro cartão", driver.getTitle());
+        assertEquals(msgEsperada, UtilsTeste.getMensagemAlert(driver));
     }
 
     @Test
@@ -122,6 +155,27 @@ public class TesteCadastroCliente extends TesteAbstract {
         formCartaoPage.salvarNovoCartao(cartao);
 
         cartoesPage.removerCartao(cartao);
+
+        assertEquals("Perfil - Cartões", driver.getTitle());
+    }
+
+    @Test
+    public void testeAlterarCartao(){
+        CartaoVO cartao = CartaoVO.createCartaoPadrao();
+
+        HomePage homeCliente = this.realizarLoginCliente();
+
+        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
+        CartoesPage cartoesPage = perfilCliente.acessarCartoes();
+
+        FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
+        formCartaoPage.salvarNovoCartao(cartao);
+
+
+        formCartaoPage = cartoesPage.editarCartao(cartao);
+
+        cartao.setNumCartao("1111 2222 3333 4444");
+        formCartaoPage.editarCartao(cartao);
 
         assertEquals("Perfil - Cartões", driver.getTitle());
     }

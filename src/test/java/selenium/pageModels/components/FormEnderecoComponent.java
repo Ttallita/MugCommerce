@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 
 import java.time.Duration;
@@ -13,6 +14,7 @@ public class FormEnderecoComponent {
 
     private final WebElement campoTpResidencia;
     private final WebElement campoTpLogradouro;
+    private final WebElement campoTpEndereco;
     private final WebElement campoLogradouro;
     private final WebElement campoBairro;
     private final WebElement campoNumeroEndereco;
@@ -31,6 +33,7 @@ public class FormEnderecoComponent {
         campoTpLogradouro = driver.findElement(By.name("tpLogradouro"));
         campoLogradouro = driver.findElement(By.name("logradouro"));
         campoBairro = driver.findElement(By.name("bairro"));
+        campoTpEndereco = driver.findElement(By.name("tpEndereco"));
         campoNumeroEndereco = driver.findElement(By.name("numeroEndereco"));
         campoCep = driver.findElement(By.name("cep"));
         campoEstado = driver.findElement(By.name("estado"));
@@ -44,8 +47,18 @@ public class FormEnderecoComponent {
     }
 
     public void salvarNovoEndereco(EnderecoVO endereco){
+        campoTpResidencia.clear();
+        campoTpLogradouro.clear();
+        campoLogradouro.clear();
+        campoBairro.clear();
+        campoNumeroEndereco.clear();
+        campoCep.clear();
+        campoApelidoEndereco.clear();
+        campoObservacaoEndereco.clear();
+
         campoTpResidencia.sendKeys(endereco.getTpResidencia());
         campoTpLogradouro.sendKeys(endereco.getTpLogradouro());
+        campoTpEndereco.sendKeys(endereco.getTpEndereco());
         campoLogradouro.sendKeys(endereco.getLogradouro());
         campoBairro.sendKeys(endereco.getBairro());
         campoNumeroEndereco.sendKeys(endereco.getNumeroEndereco());
@@ -63,4 +76,9 @@ public class FormEnderecoComponent {
 
         botaoCadastro.click();
     }
+
+    public void editarEndereco(EnderecoVO endereco){
+        salvarNovoEndereco(endereco);
+    }
+
 }

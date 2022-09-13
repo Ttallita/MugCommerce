@@ -16,6 +16,7 @@ public class EnderecosPage extends PerfilPage {
     public static final String TITULO_PAGINA = "Perfil - Endereços";
 
     public static final String LINK_ADICIONAR_ENDERECO = "/emug/formularios/formEndereco.jsp?operacao=salvar";
+    public static final String LINK_EDITAR_ENDERECO = "/emug/clientes/enderecos?operacao=listarUnico";
 
     public EnderecosPage(WebDriver driver) {
         super(driver, TITULO_PAGINA);
@@ -23,6 +24,27 @@ public class EnderecosPage extends PerfilPage {
 
     public FormEnderecoPage adicionarEndereco(){
         UtilsTeste.getBotaoByLink(LINK_ADICIONAR_ENDERECO, driver).click();
+
+        return new FormEnderecoPage(driver);
+    }
+
+    public FormEnderecoPage editarEndereco(EnderecoVO enderecoVO){
+
+        WebElement trEnderecoEditar = driver.findElements(By.tagName("tr"))
+                .stream()
+                .filter(tr -> tr.getText().contains(enderecoVO.getCep()))
+                .findFirst()
+                .orElse(null);
+
+        if(trEnderecoEditar == null)
+            throw new RuntimeException("Erro ao encontrar endereço na tabela");
+
+        WebElement botaoEditar = trEnderecoEditar.findElement(By.cssSelector("a[href*='" + LINK_EDITAR_ENDERECO + "']"));
+
+        if(botaoEditar == null)
+            throw new RuntimeException("Não existem endereços para serem editados!");
+
+        botaoEditar.click();
 
         return new FormEnderecoPage(driver);
     }

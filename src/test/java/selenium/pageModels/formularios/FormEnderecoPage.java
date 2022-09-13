@@ -1,9 +1,7 @@
 package selenium.pageModels.formularios;
 
-import model.cliente.endereco.Endereco;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.PageAbstract;
 import selenium.pageModels.components.FormEnderecoComponent;
@@ -21,6 +19,11 @@ public class FormEnderecoPage extends PageAbstract {
 
     public FormEnderecoPage salvarNovoEndereco(EnderecoVO endereco){
         formEndereco.salvarNovoEndereco(endereco);
+        return this;
+    }
+
+    public FormEnderecoPage editarEndereco(EnderecoVO endereco){
+        formEndereco.editarEndereco(endereco);
         return this;
     }
 

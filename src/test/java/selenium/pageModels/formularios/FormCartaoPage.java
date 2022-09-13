@@ -27,4 +27,10 @@ public class FormCartaoPage extends PageAbstract{
         formCartao.salvarNovoCartao(cartao);
         return this;
     }
+
+    public FormCartaoPage editarCartao(CartaoVO cartao){
+        formCartao.editarCartao(cartao);
+        return this;
+    }
+
 }

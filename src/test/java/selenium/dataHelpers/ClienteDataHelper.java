@@ -1,5 +1,6 @@
 package selenium.dataHelpers;
 
+import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.ClienteVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.dataHelpers.VOs.UsuarioVO;
@@ -56,7 +57,23 @@ public class ClienteDataHelper {
 
         return new Object[][]{
                 {endereco1, "O campo número é obrigatório"},
-                {endereco2, "O campo tipo de residência é obrigatório"}
+                {endereco2, "Selecione um tipo de endereço valido"}
+        };
+    }
+
+    private static Object[][] cartoesInvalidos(){
+        CartaoVO cartao1 = CartaoVO.createCartaoPadrao();
+        CartaoVO cartao2 = CartaoVO.createCartaoPadrao();
+        CartaoVO cartao3 = CartaoVO.createCartaoPadrao();
+
+        cartao1.setNumCartao("");
+        cartao2.setDtValidade("10/2000");
+        cartao3.setDtValidade("33/2030");
+
+        return new Object[][]{
+                {cartao1, "Insira um número de cartão de crédito válido"},
+                {cartao2, "Ano de validade menor que o ano atual"},
+                {cartao3, "Mês de validade inválido"}
         };
     }
 

@@ -15,6 +15,7 @@ public class CartoesPage extends PerfilPage {
     public static final String TITULO_PAGINA = "Perfil - Cartões";
 
     public static final String LINK_ADICIONAR_CARTAO = "/emug/formularios/formCartaoCredito.jsp";
+    public static final String LINK_EDITAR_CARTAO = "/emug/clientes/cartoes?operacao=listarUnico";
 
     public CartoesPage(WebDriver driver) {
         super(driver, TITULO_PAGINA);
@@ -22,6 +23,27 @@ public class CartoesPage extends PerfilPage {
 
     public FormCartaoPage adicionarCartao(){
         UtilsTeste.getBotaoByLink(LINK_ADICIONAR_CARTAO, driver).click();
+
+        return new FormCartaoPage(driver);
+    }
+
+    public FormCartaoPage editarCartao(CartaoVO cartaoVO){
+
+        WebElement trCartaoEditar = driver.findElements(By.tagName("tr"))
+                .stream()
+                .filter(tr -> tr.getText().contains(cartaoVO.getNumCartao()))
+                .findFirst()
+                .orElse(null);
+
+        if(trCartaoEditar == null)
+            throw new RuntimeException("Erro ao encontrar cartão na tabela");
+
+        WebElement botaoEditar = trCartaoEditar.findElement(By.cssSelector("a[href*='" + LINK_EDITAR_CARTAO + "']"));
+
+        if(botaoEditar == null)
+            throw new RuntimeException("Não existem cartões para serem editados!");
+
+        botaoEditar.click();
 
         return new FormCartaoPage(driver);
     }

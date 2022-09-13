@@ -4,6 +4,7 @@ public class EnderecoVO {
 
     private String tpResidencia;
     private String tpLogradouro;
+    private String tpEndereco;
     private String logradouro;
     private String bairro;
     private String numeroEndereco;
@@ -18,6 +19,7 @@ public class EnderecoVO {
 
         enderecoVO.setTpResidencia("Sobrado");
         enderecoVO.setTpLogradouro("Avenida");
+        enderecoVO.setTpEndereco("Entrega");
         enderecoVO.setLogradouro("Pingo d'água");
         enderecoVO.setBairro("Fernandes");
         enderecoVO.setNumeroEndereco("586");
@@ -35,6 +37,7 @@ public class EnderecoVO {
 
         enderecoVO.setTpResidencia("");
         enderecoVO.setTpLogradouro("");
+        enderecoVO.setTpEndereco("");
         enderecoVO.setLogradouro("");
         enderecoVO.setBairro("");
         enderecoVO.setNumeroEndereco("");
@@ -61,6 +64,14 @@ public class EnderecoVO {
 
     public void setTpLogradouro(String tpLogradouro) {
         this.tpLogradouro = tpLogradouro;
+    }
+
+    public String getTpEndereco() {
+        return tpEndereco;
+    }
+
+    public void setTpEndereco(String tpEndereco) {
+        this.tpEndereco = tpEndereco;
     }
 
     public String getLogradouro() {

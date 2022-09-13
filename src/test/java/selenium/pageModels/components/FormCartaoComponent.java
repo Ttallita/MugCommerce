@@ -35,6 +35,11 @@ public class FormCartaoComponent {
     }
 
     public void salvarNovoCartao(CartaoVO cartao){
+        campoNumCartao.clear();
+        campoNomeCartao.clear();
+        campoCodigoCartao.clear();
+        campoDtValidade.clear();
+
         campoNumCartao.sendKeys(cartao.getNumCartao());
         campoNomeCartao.sendKeys(cartao.getNomeCartao());
         campoBandeira.sendKeys(cartao.getBandeira());
@@ -43,4 +48,9 @@ public class FormCartaoComponent {
 
         botaoCadastro.click();
     }
+
+    public void editarCartao(CartaoVO cartao){
+        salvarNovoCartao(cartao);
+    }
+
 }
