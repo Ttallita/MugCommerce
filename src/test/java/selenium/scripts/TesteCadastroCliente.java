@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TesteCadastroCliente extends TesteAbstract {
 
     @Test
-    public void testeCadastroClienteValido() throws InterruptedException {
+    public void testeCadastroClienteValido() {
         driver.get(LINK_LOGIN);
 
         ClienteVO cliente = ClienteVO.createClienteVOPadrao();

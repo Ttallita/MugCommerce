@@ -21,6 +21,7 @@ import java.io.Serial;
 
 @WebServlet(urlPatterns = {
         "/login",
+        "/logout",
         "/cadastro",
         "/clientes/*",
         "/adm/*"
@@ -59,9 +60,8 @@ public class Controller extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         if(req.getRequestURI().equals("/emug/logout")) {
-            if(req.getSession().getAttribute("usuarioLogado") != null) {
+            if(req.getSession().getAttribute("usuarioLogado") != null)
                 req.getSession().invalidate();
-            }
 
             resp.sendRedirect("index.jsp");
             return;

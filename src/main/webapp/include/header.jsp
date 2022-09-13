@@ -33,6 +33,13 @@
                                 <span class="material-icons">shopping_cart</span>
                             </button>
                         </a>
+
+                        <a href="/emug/logout">
+                            <button class="btn btn-light" type="button">
+                                <span class="material-icons inline-icon">logout</span>
+                            </button>
+                        </a>
+
                     </div>
                 </c:when>
                 <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'ADMINISTRADOR'}">

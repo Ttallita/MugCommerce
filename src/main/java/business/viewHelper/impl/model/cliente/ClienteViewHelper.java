@@ -1,10 +1,12 @@
 package business.viewHelper.impl.model.cliente;
 
+import business.facade.Facade;
 import business.viewHelper.IViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.UsuarioType;
+import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.Telefone;
 import model.cliente.endereco.Endereco;

@@ -43,7 +43,9 @@
                         </thead>
                         <tbody>
                             <c:forEach var="cartao" items="${cartoes}">
-                                <tr>
+                                <tr
+                                        class="${cartao.preferencial ? 'cartao-preferencial' : ''}"
+                                        ${cartao.preferencial ? 'data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cartão preferencial"' : '' }>
                                     <td>${cartao.bandeira}</td>
                                     <td>${cartao.numCartao}</td>
                                     <td>${cartao.nomeImpressoCartao}</td>
@@ -98,4 +100,8 @@
 </body>
 <script src="<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js" />"></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
 </html>

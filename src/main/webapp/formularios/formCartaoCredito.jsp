@@ -61,10 +61,12 @@
                         <input type="text" class="form-control" id="dtValidade" name="dtValidade" value="${cartao.mesValidade}${cartao.anoValidade}">
                     </div>
 
-                    <div class="col-md-4">
-                        <input class="form-check-input" type="checkbox" name="preferencial" id="preferencial">
-                        <label for="preferencial" class="form-check-label"><small>Cartão preferencial</small></label>
-                    </div>
+                    <c:if test="${!isEsconder}">
+                        <div class="col-md-4">
+                            <input class="form-check-input" type="checkbox" name="preferencial" id="preferencial">
+                            <label for="preferencial" class="form-check-label"><small>Cartão preferencial</small></label>
+                        </div>
+                    </c:if>
 
                     <input type="hidden" name="id" value="${cartao.id}">
                     <input type="hidden" name="operacao" value="${isEditar ? 'atualizar' : 'salvar'}">

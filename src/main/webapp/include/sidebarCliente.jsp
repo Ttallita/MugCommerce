@@ -39,7 +39,7 @@
                     <span class="material-icons inline-icon">highlight_off</span> Desativar Conta
                 </a>
 
-                <a class="nav_link" id="" href="">
+                <a class="nav_link" id="deslogar" href="/emug/logout">
                     <span class="material-icons inline-icon">logout</span>Sair
                 </a>
 
