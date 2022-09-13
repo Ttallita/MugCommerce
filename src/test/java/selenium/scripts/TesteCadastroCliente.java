@@ -105,14 +105,22 @@ public class TesteCadastroCliente extends TesteAbstract {
 
     @Test
     public void testeDeleteCartao(){
+        CartaoVO cartaoPreferencial = CartaoVO.createCartaoPadrao();
+
         CartaoVO cartao = CartaoVO.createCartaoPadrao();
+        cartao.setNumCartao("1234 4567 8910 0000");
+
         HomePage homeCliente = this.realizarLoginCliente();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         CartoesPage cartoesPage = perfilCliente.acessarCartoes();
-        FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
 
+        FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
+        formCartaoPage.salvarNovoCartao(cartaoPreferencial);
+
+        formCartaoPage = cartoesPage.adicionarCartao();
         formCartaoPage.salvarNovoCartao(cartao);
+
         cartoesPage.removerCartao(cartao);
 
         assertEquals("Perfil - Cartões", driver.getTitle());
