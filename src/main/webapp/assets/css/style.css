@@ -71,3 +71,7 @@ a {
 .active-navbar {
   color: var(--first-color-light);
 }
+
+.cartao-preferencial {
+  color: #73B7FF;
+}

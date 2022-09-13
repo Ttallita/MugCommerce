@@ -9,6 +9,8 @@ import selenium.dataHelpers.VOs.UsuarioVO;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
 
+import java.time.Duration;
+
 public abstract class TesteAbstract {
 
     protected WebDriver driver;
@@ -20,6 +22,7 @@ public abstract class TesteAbstract {
         ChromeDriverManager.getInstance().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @AfterEach

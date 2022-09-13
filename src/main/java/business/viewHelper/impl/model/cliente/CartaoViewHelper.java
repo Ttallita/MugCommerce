@@ -1,5 +1,6 @@
 package business.viewHelper.impl.model.cliente;
 
+import business.facade.Facade;
 import business.viewHelper.IViewHelper;
 import model.EntidadeDominio;
 import model.Result;
@@ -11,6 +12,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class CartaoViewHelper implements IViewHelper {
     @Override
@@ -83,7 +88,14 @@ public class CartaoViewHelper implements IViewHelper {
         String msgTela = result.getMsg();
         switch (operacao) {
             case "listar":
-                request.setAttribute("cartoes", result.getEntidades());
+
+                List<CartaoDeCredito> cartaoOrdenado = result.getEntidades()
+                        .stream()
+                        .map(entidade -> (CartaoDeCredito) entidade)
+                        .sorted(Comparator.comparing(CartaoDeCredito::isPreferencial).reversed())
+                        .toList();
+
+                request.setAttribute("cartoes", cartaoOrdenado);
                 request.getRequestDispatcher("/cliente/cartoes.jsp").forward(request, response);
                 break;
             case "salvar", "atualizar", "excluir":
@@ -98,8 +110,21 @@ public class CartaoViewHelper implements IViewHelper {
                 }
                 break;
             case "listarUnico":
+                CartaoDeCredito cartaoPreferencial = (CartaoDeCredito) new Facade().listar(new CartaoDeCredito(), "findCartaoPreferencial")
+                        .getEntidades()
+                        .get(0);
+
+                CartaoDeCredito cartao = (CartaoDeCredito) result.getEntidades().get(0);
+
+                boolean isEsconder;
+                if(cartaoPreferencial.isPreferencial()) {
+                    isEsconder = Objects.equals(cartaoPreferencial.getId(), cartao.getId());
+                } else
+                    isEsconder = false;
+
+                request.setAttribute("isEsconder", isEsconder);
                 request.setAttribute("isEditar", true);
-                request.setAttribute("cartao", result.getEntidades().get(0));
+                request.setAttribute("cartao", cartao);
                 request.getRequestDispatcher("/formularios/formCartaoCredito.jsp").forward(request, response);
                 break;
         }

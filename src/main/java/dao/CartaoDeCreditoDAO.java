@@ -19,6 +19,9 @@ public class CartaoDeCreditoDAO implements IDAO{
         try {
             conn = conexao.getConexao();
 
+            if(cartao.isPreferencial())
+                atualizaCartaoPreferencial();
+
             String sql = "INSERT INTO cartoes (crt_cli_usr_id, crt_numero, crt_bandeira, crt_nome_impresso, crt_mes_validade," +
                     " crt_ano_validade, crt_cod_seg, crt_preferencial)" +
                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -63,6 +66,9 @@ public class CartaoDeCreditoDAO implements IDAO{
         Connection conn = null;
         try {
             conn = conexao.getConexao();
+
+            if(cartao.isPreferencial())
+                atualizaCartaoPreferencial();
 
             String sql = "UPDATE cartoes SET crt_numero = ?, crt_bandeira = ?, crt_nome_impresso = ?, crt_mes_validade = ?," +
                     " crt_ano_validade = ?, crt_cod_seg = ?, crt_preferencial = ? WHERE crt_id = ?";
@@ -138,6 +144,11 @@ public class CartaoDeCreditoDAO implements IDAO{
                 pstm = conn.prepareStatement(sql);
                 pstm.setLong(1, cartao.getCliente().getUsuario().getId());
                 pstm.setLong(2, cartao.getId());
+            } else if(operacao.equals("findCartaoPreferencial")) {
+                sql = "SELECT * FROM cartoes where crt_preferencial = ?";
+
+                pstm = conn.prepareStatement(sql);
+                pstm.setBoolean(1, true);
             }
 
             ResultSet rs = pstm.executeQuery();
@@ -167,5 +178,26 @@ public class CartaoDeCreditoDAO implements IDAO{
         }
 
         return null;
+    }
+
+    public void atualizaCartaoPreferencial() {
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "UPDATE cartoes SET crt_preferencial = ? WHERE crt_preferencial = ?";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setBoolean(1, false);
+            pstm.setBoolean(2, true);
+
+            pstm.execute();
+        }catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        }finally {
+            conexao.fecharConexao(conn);
+        }
+
     }
 }
