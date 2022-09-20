@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -19,6 +19,7 @@
 <body>
 
     <jsp:include page="../include/header.jsp" />
+    
     <main class="d-flex flex-nowrap mt-5">
         <jsp:include page="../include/sidebarCliente.jsp" />
 

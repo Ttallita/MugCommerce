@@ -1,4 +1,6 @@
-<!doctype html>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -10,65 +12,8 @@
     <link rel="stylesheet" href="../assets/css/style.css"/>
 </head>
 <body>
-    <header>
-        <div class="navbar bg-dark navbar-dark">
-            <div class="container-fluid">
 
-                <a href="/emug/index.html">
-                    <img src="\emug\assets\img\logo_branco.png" alt="logo" class="logo w-50">
-                </a>
-
-                <form class="d-flex" action="pesquisa.html">
-                    <input class="form-control me-2" type="search" aria-label="Search">
-                    <button class="btn btn-primary" type="submit">
-                        <span class="material-icons">search</span>
-                    </button>
-                </form>
-
-                <div class="d-flex align-items-center gap-3">
-                    <button class="btn btn-light" type="submit">
-                        <a href="cliente/perfil.html">
-                            <span class="material-icons">account_circle</span>
-                        </a>
-                    </button>
-                    <button class="btn btn-light" type="submit">
-                        <a href="cliente/carrinho.html">
-                            <span class="material-icons">shopping_cart</span>
-                        </a>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark ">
-            <div class="container-fluid">
-
-                <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Produtos</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </nav>
-
-    </header>
+    <jsp:include page="../include/header.jsp" />
 
     <main class="wrapper container mt-3">
         <div class="row mt-3 mb-3 bg-white rounded p-4">
@@ -128,7 +73,7 @@
                                 <strong class="text-muted">Total:</strong>
                                 <h5 class="font-weight-bold">R$ 400,00</h5>
                             </li>
-                            <a href="finalizarCompra.html" class="btn btn-primary rounded-pill py-2 ">
+                            <a href="finalizarCompra.jsp" class="btn btn-primary rounded-pill py-2 ">
                                 Finalizar compra
                             </a>
                         </ul>
@@ -139,7 +84,7 @@
         </div>
     </main>
 
-    <jsp:include page="include/footer.jsp"/>
+    <jsp:include page="../include/footer.jsp"/>
     
 </body>
 

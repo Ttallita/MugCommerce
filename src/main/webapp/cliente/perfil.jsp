@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,14 +10,14 @@
 
     <title>Perfil - Principal</title>
 
-    <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/webjars/material-design-icons/4.0.0/material-icons.css"/>"/>
-    <link rel="stylesheet" href="<c:url value="/assets/css/style.css"/>"/>
+    <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/style.css'/>"/>
 </head>
 
 <body>
     <jsp:include page="../include/header.jsp" />
-    <main class="d-flex flex-nowrap mt-3">
+    <main class="d-flex flex-nowrap mt-5">
         <!--Sidebar-->
         <jsp:include page="../include/sidebarCliente.jsp"/>
         <div class="w-75 bg-white rounded p-5">
