@@ -19,7 +19,6 @@
                 </form>
             </div>
 
-
             <c:choose>
                 <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'CLIENTE'}">
                     <div class="d-flex align-items-center gap-3">
@@ -43,7 +42,20 @@
                     </div>
                 </c:when>
                 <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'ADMINISTRADOR'}">
-                    <!-- TODO criar menus de administrador -->
+                    <div class="d-flex align-items-center gap-3">
+                        <a href="<c:url value="/adm/clientes?operacao=listarTodos" />">
+                            <button class="btn btn-light pr-2" type="button">
+                                <span class="material-icons">dashboard</span>
+                            </button>
+                        </a>
+
+                        <a href="/emug/logout">
+                            <button class="btn btn-light" type="button">
+                                <span class="material-icons inline-icon">logout</span>
+                            </button>
+                        </a>
+
+                    </div>
                 </c:when>
                 <c:otherwise>
                     <div class="d-flex align-items-center gap-3">
