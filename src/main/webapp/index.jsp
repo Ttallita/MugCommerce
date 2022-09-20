@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="assets/css/style.css"/>
 </head>
 <body>
-    <jsp:include page="include/header.jsp" />
+    <jsp:include page="/include/header.jsp" />
 
     <!-- banner-->
     <div class="container-fluid">

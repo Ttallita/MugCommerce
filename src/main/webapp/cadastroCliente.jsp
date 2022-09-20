@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
 <html lang=pt-br>
 <head>
     <meta charset="UTF-8">
@@ -14,6 +16,9 @@
 </head>
 
 <body>
+
+    <jsp:include page="/include/header.jsp" />
+
     <div class="container card w-50 mt-5 mb-5">
         <jsp:include page="include/alert.jsp" />
         <h3 class="text-center mt-5">Cadastro</h3>

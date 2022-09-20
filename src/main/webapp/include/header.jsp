@@ -9,7 +9,7 @@
             </a>
 
             <div class="col-6">
-                <form action="<c:url value="/pesquisa.html"/>">
+                <form action="<c:url value="/pesquisa.jsp"/>">
                     <div class="input-group">
                         <input class="form-control" type="search" aria-label="Search">
                         <button class="btn btn-primary" type="submit">
@@ -28,7 +28,7 @@
                                  <span class="material-icons">account_circle</span>
                             </button>
                         </a>
-                        <a href="<c:url value="/cliente/carrinho.html"/> ">
+                        <a href="<c:url value="/cliente/carrinho.jsp"/> ">
                             <button class="btn btn-light" type="button">
                                 <span class="material-icons">shopping_cart</span>
                             </button>
