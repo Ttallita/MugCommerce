@@ -6,10 +6,12 @@ import business.viewHelper.impl.model.cliente.ClienteViewHelper;
 import business.viewHelper.impl.LoginViewHelper;
 import business.viewHelper.impl.model.UsuarioViewHelper;
 import business.viewHelper.impl.model.cliente.EnderecoViewHelper;
+import business.viewHelper.impl.model.produto.ProdutoViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +26,10 @@ import java.io.Serial;
         "/logout",
         "/cadastro",
         "/clientes/*",
+        "/produtos/*",
         "/adm/*"
 })
+@MultipartConfig
 public class Controller extends HttpServlet{
 
     @Serial
@@ -55,6 +59,7 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/clientes/desativarConta", new UsuarioViewHelper());
 
         viewHelperMap.put("/emug/adm/clientes", new ClienteAdmViewHelper());
+        viewHelperMap.put("/emug/adm/produtos", new ProdutoViewHelper());
     }
 
     @Override

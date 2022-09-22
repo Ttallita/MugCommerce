@@ -12,15 +12,11 @@ public class Produto extends EntidadeDominio {
     private String descricao;
     private String material;
     private GrupoPrecificacao grupoPrecificacao;
-    private int limiteVenda;
-    private int quantEstoque;
     private Fabricante fabricante;
     private String codBarras;
-    private LocalDate dtEntradaEstoque;
     private List<Categoria> categorias;
-    private boolean limitado;
-    private Status status;
     private String link;
+    private String imagem;
 
     public String getNome() {
         return nome;
@@ -70,44 +66,12 @@ public class Produto extends EntidadeDominio {
         this.grupoPrecificacao = grupoPrecificacao;
     }
 
-    public int getLimiteVenda() {
-        return limiteVenda;
-    }
-
-    public void setLimiteVenda(int limiteVenda) {
-        this.limiteVenda = limiteVenda;
-    }
-
-    public int getQuantEstoque() {
-        return quantEstoque;
-    }
-
-    public void setQuantEstoque(int quantEstoque) {
-        this.quantEstoque = quantEstoque;
-    }
-
     public List<Categoria> getCategorias() {
         return categorias;
     }
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
-    }
-
-    public boolean getLimitado(){
-        return limitado;
-    }
-
-    public void setLimitado(boolean limitado){
-        this.limitado = limitado;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
     
     public Fabricante getFabricante() {
@@ -126,14 +90,6 @@ public class Produto extends EntidadeDominio {
         this.codBarras = codBarras;
     }
 
-    public LocalDate getDtEntradaEstoque() {
-        return dtEntradaEstoque;
-    }
-
-    public void setDtEntradaEstoque(LocalDate dtEntradaEstoque) {
-        this.dtEntradaEstoque = dtEntradaEstoque;
-    }
-
     public String getLink() {
         return link;
     }
@@ -142,4 +98,11 @@ public class Produto extends EntidadeDominio {
         this.link = link;
     }
 
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
 }

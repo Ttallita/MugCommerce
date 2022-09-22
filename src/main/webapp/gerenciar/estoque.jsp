@@ -98,7 +98,6 @@
                                 <span class="material-icons">edit</span>
                             </td>
                         </tr>
-        
                     </tbody>
                 </table>
 
