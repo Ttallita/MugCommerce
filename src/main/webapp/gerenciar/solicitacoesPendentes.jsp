@@ -118,6 +118,7 @@
                                     <th>Data compra</th>
                                     <th>Data entrega</th>
                                     <th>Status</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -131,7 +132,11 @@
                                     <td>00/00/0000</td>
                                     <td>
                                         Aprovado
-                                        <span class="material-icons">edit</span>
+                                    </td>
+                                    <td>
+                                        <a href="/emug/gerenciar/listarSolicitacao.jsp" name="botaoListarVenda" type="button" class="btn btn-primary btn-sm">
+                                            <span class="material-icons">edit</span>
+                                        </a>
                                     </td>
                                 </tr>
 
@@ -144,7 +149,11 @@
                                     <td>00/00/0000</td>
                                     <td>
                                         Aprovado
-                                        <span class="material-icons">edit</span>
+                                    </td>
+                                    <td>
+                                        <a href="/emug/gerenciar/listarSolicitacao.jsp" name="botaoListarVenda" type="button" class="btn btn-primary btn-sm">
+                                            <span class="material-icons">edit</span>
+                                        </a>
                                     </td>
                                 </tr>
                 
