@@ -28,30 +28,30 @@
                 <c:choose>
                     <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'CLIENTE'}">
                         
-                        <div class="col-auto p-0">
+                        <div class="col-auto">
                             <a href="<c:url value='/clientes?operacao=listar' />" class="btn btn-light pr-2" type="button">
                                 <span class="material-icons">account_circle</span>
                             </a>
                         </div>
-                        <div class="col-auto p-0">
+                        <div class="col-auto">
                             <a href="<c:url value='/cliente/carrinho.jsp' />" class="btn btn-light" type="button">
                                 <span class="material-icons">shopping_cart</span>
                             </a>
                         </div>
-                        <div class="col-auto p-0">
+                        <div class="col-auto">
                             <a href="<c:url value='/logout'/>" class="btn btn-light" type="button">
                                 <span class="material-icons inline-icon">logout</span>
                             </a>
                         </div>
                     </c:when>
                     <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'ADMINISTRADOR'}">
-                        <div class="col-auto p-0">
+                        <div class="col-auto">
                             <a href="<c:url value='/adm/clientes?operacao=listarTodos' />" class="btn btn-light">
                                 <span class="material-icons">dashboard</span>
                             </a>
                         </div>
 
-                        <div class="col-auto p-0">
+                        <div class="col-auto">
                             <a href="<c:url value='/logout'/>" class="btn btn-light">
                                 <span class="material-icons inline-icon">logout</span>
                             </a>

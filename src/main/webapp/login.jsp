@@ -16,7 +16,7 @@
 
         <jsp:include page="/include/header.jsp" />
 
-        <div class="container-fluid d-flex h-100 align-items-center justify-content-center">
+        <div class="container-fluid d-flex align-items-center justify-content-center login-container">
             <div class="row">
                 <div class="col-sm-12">
                     <jsp:include page="include/alert.jsp" />

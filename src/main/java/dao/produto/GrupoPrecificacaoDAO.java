@@ -30,22 +30,34 @@ public class GrupoPrecificacaoDAO implements IDAO {
 
     @Override
     public List<EntidadeDominio> listar(EntidadeDominio entidade, String operacao) {
+        GrupoPrecificacao grupo = (GrupoPrecificacao) entidade;
+
         Conexao conexao = new Conexao();
         Connection connection = null;
         try {
             connection = conexao.getConexao();
 
-            String sql = "SELECT * FROM grupos_precificacao";
-            PreparedStatement pstm = connection.prepareStatement(sql);
+            String sql = null;
+            PreparedStatement pstm = null;
+
+            if(operacao.equals("listar")) {
+                sql = "SELECT * FROM grupos_precificacao";
+                pstm = connection.prepareStatement(sql);
+            } else if(operacao.equals("listarUnico")) {
+                sql = "SELECT * FROM grupos_precificacao WHERE grp_id = ?";
+                pstm = connection.prepareStatement(sql);
+                pstm.setLong(1, grupo.getId());
+            }
 
             ResultSet rs = pstm.executeQuery();
 
             List<EntidadeDominio> grupos = new ArrayList<>();
             while (rs.next()) {
-                GrupoPrecificacao grupo = new GrupoPrecificacao();
-                grupo.setNome(rs.getString("grp_nome"));
-                grupo.setMargemLucro(rs.getDouble("grp_margem_lucro"));
-                grupos.add(grupo);
+                GrupoPrecificacao grupoConsulta = new GrupoPrecificacao();
+                grupoConsulta.setId(rs.getLong("grp_id"));
+                grupoConsulta.setNome(rs.getString("grp_nome"));
+                grupoConsulta.setMargemLucro(rs.getDouble("grp_margem_lucro"));
+                grupos.add(grupoConsulta);
             }
 
             return grupos;

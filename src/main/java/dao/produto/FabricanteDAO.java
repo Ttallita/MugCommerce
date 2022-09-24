@@ -44,6 +44,7 @@ public class FabricanteDAO implements IDAO {
             List<EntidadeDominio> fabricantes = new ArrayList<>();
             while (rs.next()) {
                 Fabricante fabricante = new Fabricante();
+                fabricante.setId(rs.getLong("fab_id"));
                 fabricante.setNome(rs.getString("fab_nome"));
                 fabricantes.add(fabricante);
             }
