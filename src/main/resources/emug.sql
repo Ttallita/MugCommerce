@@ -82,7 +82,8 @@ CREATE TABLE produtos (
     pro_valor_venda        numeric(8, 2) NOT NULL,
     pro_descricao          varchar(255)  NOT NULL,
     pro_material           varchar(255)  NOT NULL,
-    pro_cod_barras         varchar(255)  NOT NULL
+    pro_cod_barras         varchar(255)  NOT NULL,
+    pro_imagem             varchar(255)  NOT NULL
 );
 
 DROP TABLE IF EXISTS "categorias_produtos" CASCADE;

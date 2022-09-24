@@ -15,7 +15,6 @@ public class Produto extends EntidadeDominio {
     private Fabricante fabricante;
     private String codBarras;
     private List<Categoria> categorias;
-    private String link;
     private String imagem;
 
     public String getNome() {
@@ -88,14 +87,6 @@ public class Produto extends EntidadeDominio {
 
     public void setCodBarras(String codBarras) {
         this.codBarras = codBarras;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public String getImagem() {
