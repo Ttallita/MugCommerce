@@ -10,9 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar - Estoque</title>
 
-    <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" />"/>
-    <link rel="stylesheet" href="<c:url value="/webjars/material-design-icons/4.0.0/material-icons.css" />"/>
-    <link rel="stylesheet" href="<c:url value="/assets/css/style.css" />"/>
+    <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/style.css' />"/>
 </head>
 
 <body>
@@ -114,9 +114,9 @@
     
     <jsp:include page="../include/footer.jsp"/>
 
-    <script src="<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js" />"></script>
-    <script src="<c:url value="/webjars/jquery/3.6.1/jquery.min.js" />"></script>
-    <script src="<c:url value="/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js" />"></script>
+    <script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js' />"></script>
+    <script src="<c:url value='/webjars/jquery/3.6.1/jquery.min.js' />"></script>
+    <script src="<c:url value='/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js' />"></script>
 
     <script>
         $('#minVenda').mask("#.##0,00", {reverse: true});

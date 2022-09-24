@@ -45,7 +45,7 @@
                                 <h4>R$ 100,00</h4>
                                 <div class="d-flex col-12 justify-content-between">
                                     <a class="text-decoration-none">Excluir</a>
-                                    <a class="text-decoration-none" href="/LootCommerce/cliente/confirmarPedido.jsp">Comprar agora</a>
+                                    <a class="text-decoration-none" href="/emug/cliente/confirmarPedido.jsp">Comprar agora</a>
                                 </div>
                             </div>
                         </div>

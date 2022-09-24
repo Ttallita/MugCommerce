@@ -8,10 +8,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
-        <link rel="stylesheet" href="webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="assets/css/style.css"/>
+        <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css'/>"/>
+        <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css'/>"/>
+        <link rel="stylesheet" href="<c:url value='/assets/css/style.css'/>"/>
     </head>
     <body>
+
+        <jsp:include page="/include/header.jsp" />
+
         <div class="container-fluid d-flex h-100 align-items-center justify-content-center">
             <div class="row">
                 <div class="col-sm-12">
@@ -19,7 +23,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h3 class="text-center">Login</h3>
-                            <form action="<c:url value="/login"/>" method="POST">
+                            <form action="<c:url value='/login'/>" method="POST">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
                                     <input id="email" type="email" class="form-control" name="email" aria-describedby="emailHelp">
@@ -33,7 +37,7 @@
                                     <input class="btn btn-primary" type="submit" value="Fazer Login" name="botaoLogin"/>
                                 </div>
                                 <br/>
-                                Não possui conta? <a href="cadastroCliente.jsp" id="linkCadastro">Cadastre-se</a>
+                                Não possui conta? <a href="<c:url value='cadastroCliente.jsp'/>" id="linkCadastro">Cadastre-se</a>
                             </form>
                         </div>
                     </div>

@@ -124,7 +124,7 @@
                                 <strong class="text-muted">Total do pedido:</strong>
                                 <h5 class="font-weight-bold">R$ 400,00</h5>
                             </li>
-                            <a href="/LootCommerce/cliente/pedidoConfirmado.jsp" class="btn btn-primary  rounded-pill py-2 ">Confirmar pedido</a>
+                            <a href="/emug/cliente/pedidoConfirmado.jsp" class="btn btn-primary  rounded-pill py-2 ">Confirmar pedido</a>
                         </ul>
                     </div>
                 </div>
