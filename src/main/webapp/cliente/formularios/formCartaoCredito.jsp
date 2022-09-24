@@ -18,13 +18,13 @@
 
 <body>
 
-    <jsp:include page="../include/headerMinimalista.jsp"/>
+    <jsp:include page="../../include/headerMinimalista.jsp"/>
 
     <div class="container align-items-center justify-content-center w-50 p-4">
         <div class="card p-3">
 
-            <jsp:include page="../include/alert.jsp"/>
-            <h3 class="text-center mb-4">Cadastro</h3>
+            <jsp:include page="../../include/alert.jsp"/>
+            <h3 class="text-center mb-4">${isEditar ? 'Atualizar Dados' : 'Cadastro'}</h3>
 
             <form action="/emug/clientes/cartoes" method="POST">
 
@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <jsp:include page="../include/footer.jsp"/>
+    <jsp:include page="../../include/footer.jsp"/>
 </body>
 
 <script src='<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"/>'></script>

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class CartaoViewHelper implements IViewHelper {
     @Override
@@ -104,9 +103,10 @@ public class CartaoViewHelper implements IViewHelper {
                 else {
                     String[] mensagens = msgTela.split("\n");
 
+                    request.setAttribute("cartao", result.getEntidades().get(0));
                     request.setAttribute("mensagens", mensagens);
                     request.setAttribute("erro", true);
-                    request.getRequestDispatcher("/formularios/formCartaoCredito.jsp").forward(request, response);
+                    request.getRequestDispatcher("/cliente/formularios/formCartaoCredito.jsp").forward(request, response);
                 }
                 break;
             case "listarUnico":
@@ -121,7 +121,7 @@ public class CartaoViewHelper implements IViewHelper {
                 request.setAttribute("isMostrar", isMostrar);
                 request.setAttribute("isEditar", true);
                 request.setAttribute("cartao", cartao);
-                request.getRequestDispatcher("/formularios/formCartaoCredito.jsp").forward(request, response);
+                request.getRequestDispatcher("/cliente/formularios/formCartaoCredito.jsp").forward(request, response);
                 break;
         }
     }

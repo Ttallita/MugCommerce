@@ -1,7 +1,6 @@
 package business.viewHelper.impl.model.cliente;
 
 import business.viewHelper.IViewHelper;
-import com.google.gson.Gson;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
@@ -13,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class EnderecoViewHelper implements IViewHelper {
 
@@ -68,7 +66,7 @@ public class EnderecoViewHelper implements IViewHelper {
 
                     request.setAttribute("mensagens", mensagens);
                     request.setAttribute("erro", true);
-                    request.getRequestDispatcher("/formularios/formEndereco.jsp").forward(request, response);
+                    request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);
                 }
                 break;
             case "listar":
@@ -78,7 +76,7 @@ public class EnderecoViewHelper implements IViewHelper {
             case "listarUnico":
                 request.setAttribute("isEditar", true);
                 request.setAttribute("endereco", result.getEntidades().get(0));
-                request.getRequestDispatcher("/formularios/formEndereco.jsp").forward(request, response);
+                request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);
                 break;
         }
     }

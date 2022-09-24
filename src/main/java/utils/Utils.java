@@ -1,5 +1,12 @@
 package utils;
 
+import com.google.gson.Gson;
+import model.Result;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -36,5 +43,20 @@ public class Utils {
         }
 
         return criptografada;
+    }
+
+    public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String operacao = request.getParameter("operacao");
+
+        if(operacao.equals("listar")) {
+
+            response.setContentType("application/json");
+
+            Gson gson = new Gson();
+
+            PrintWriter writer = response.getWriter();
+            writer.write(gson.toJson(result.getEntidades()));
+            writer.flush();
+        }
     }
 }

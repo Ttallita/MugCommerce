@@ -4,12 +4,21 @@ import business.strategy.IStrategy;
 import business.strategy.impl.cliente.*;
 import business.strategy.impl.cliente.cartao.VerificarCartaoStrategy;
 import dao.*;
+import dao.cliente.CartaoDeCreditoDAO;
+import dao.cliente.ClienteDAO;
+import dao.cliente.EnderecoDAO;
+import dao.produto.CategoriaDAO;
+import dao.produto.FabricanteDAO;
+import dao.produto.GrupoPrecificacaoDAO;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
+import model.produto.Categoria;
+import model.produto.Fabricante;
+import model.produto.GrupoPrecificacao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +36,9 @@ public class Facade implements IFacade {
         daosMap.put(Cliente.class.getName(), new ClienteDAO());
         daosMap.put(Endereco.class.getName(), new EnderecoDAO());
         daosMap.put(CartaoDeCredito.class.getName(), new CartaoDeCreditoDAO());
+        daosMap.put(Fabricante.class.getName(), new FabricanteDAO());
+        daosMap.put(Categoria.class.getName(), new CategoriaDAO());
+        daosMap.put(GrupoPrecificacao.class.getName(), new GrupoPrecificacaoDAO());
 
         regrasDeNegocioMap = new HashMap<>();
 

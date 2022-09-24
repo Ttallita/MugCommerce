@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="modal" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -76,7 +75,7 @@
                         </tbody>
                     </table>
     
-                    <a type="button" class="w-100 btn btn-primary btn-sm" href="${pageContext.request.contextPath}/formularios/formEndereco.jsp?operacao=salvar">
+                    <a type="button" class="w-100 btn btn-primary btn-sm" href="formularios/formEndereco.jsp?operacao=salvar">
                         Adicionar endereço
                     </a>
                 </div>

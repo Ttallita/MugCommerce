@@ -1,5 +1,7 @@
-package dao;
+package dao.cliente;
 
+import dao.IDAO;
+import dao.UsuarioDAO;
 import model.EntidadeDominio;
 import model.Usuario;
 import model.cliente.Cliente;
@@ -61,7 +63,7 @@ public class ClienteDAO implements IDAO {
 
         } catch (SQLException | ClassNotFoundException e) {
 
-            /**
+            /*
              * TODO melhorar comportamentos em caso de exceção
              */
 
@@ -132,8 +134,6 @@ public class ClienteDAO implements IDAO {
                 sql = "SELECT * FROM clientes";
                 pstm = connection.prepareStatement(sql);
             }
-
-            pstm.execute();
 
             ResultSet rs = pstm.executeQuery();
 

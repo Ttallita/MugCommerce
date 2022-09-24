@@ -4,7 +4,7 @@ import model.EntidadeDominio;
 
 public class Categoria extends EntidadeDominio{
 
-    String nome;
+    private String nome;
 
     public String getNome() {
         return nome;

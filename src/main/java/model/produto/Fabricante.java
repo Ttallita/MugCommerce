@@ -3,7 +3,9 @@ package model.produto;
 import model.EntidadeDominio;
 
 public class Fabricante extends EntidadeDominio {
-    String nome;
+    private String nome;
+
+    public Fabricante() {}
 
     public Fabricante(Long id, String nome) {
         super(id);

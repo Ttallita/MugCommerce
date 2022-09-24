@@ -1,7 +1,6 @@
 package business.strategy.impl.cliente;
 
 import business.strategy.IStrategy;
-import dao.ClienteDAO;
 import dao.UsuarioDAO;
 import model.EntidadeDominio;
 import model.Usuario;

@@ -6,6 +6,9 @@ import business.viewHelper.impl.model.cliente.ClienteViewHelper;
 import business.viewHelper.impl.LoginViewHelper;
 import business.viewHelper.impl.model.UsuarioViewHelper;
 import business.viewHelper.impl.model.cliente.EnderecoViewHelper;
+import business.viewHelper.impl.model.produto.CategoriaViewHelper;
+import business.viewHelper.impl.model.produto.FabricanteViewHelper;
+import business.viewHelper.impl.model.produto.GrupoPrecificacaoViewHelper;
 import business.viewHelper.impl.model.produto.ProdutoViewHelper;
 import model.EntidadeDominio;
 import model.Result;
@@ -60,6 +63,9 @@ public class Controller extends HttpServlet{
 
         viewHelperMap.put("/emug/adm/clientes", new ClienteAdmViewHelper());
         viewHelperMap.put("/emug/adm/produtos", new ProdutoViewHelper());
+        viewHelperMap.put("/emug/adm/fabricantes", new FabricanteViewHelper());
+        viewHelperMap.put("/emug/adm/categorias", new CategoriaViewHelper());
+        viewHelperMap.put("/emug/adm/grupos", new GrupoPrecificacaoViewHelper());
     }
 
     @Override

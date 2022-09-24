@@ -61,7 +61,7 @@
             <hr>
 
             <div class="table-responsive p-3 rounded mb-4">
-                <table class="table table-hover" width="100%">
+                <table class="table table-hover w-100">
                     <thead>
                         <tr>
                             <th>Nome</th>
@@ -101,7 +101,7 @@
                     </tbody>
                 </table>
 
-                <a href="../formularios/formProduto.jsp">
+                <a href="formularios/formProduto.jsp">
                     <button type="button" class="w-100 btn btn-primary btn-sm" >
                         Adicionar produto
                     </button>

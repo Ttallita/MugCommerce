@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="<c:url value="/assets/css/style.css" />"/></head>
 <body>
 
-    <jsp:include page="../include/headerMinimalista.jsp"/>
+    <jsp:include page="../../include/headerMinimalista.jsp"/>
 
     <div class="container align-items-center justify-content-center w-50 p-4">
         <div class="card p-3">
@@ -41,10 +41,11 @@
 
                     <div class="col-sm-4">
                         <label for="material"><small>Material</small></label>
-                        <select class="form-select" id="material" name="grupoPrecificacao">
+                        <select class="form-select" id="material" name="material">
                             <option value="">Selecione</option>
                             <option>Porcelana</option>
                             <option>Plastico</option>
+                            <option>Metal</option>
                         </select>
                     </div>
 
@@ -52,8 +53,7 @@
                         <label for="fabricante"><small>Fabricante</small></label>
                         <select class="form-select" id="fabricante" name="fabricante">
                             <option value="">Selecione</option>
-                            <option>Emug</option>
-                            <option>Tiazinha da esquina</option>
+
                         </select>
                     </div>
 
@@ -61,8 +61,7 @@
                         <label for="grupoPrecificacao"><small>Grupo de precificação</small></label>
                         <select class="form-select" id="grupoPrecificacao" name="grupoPrecificacao">
                             <option value="">Selecione</option>
-                            <option>Grupo A</option>
-                            <option>Grupo B</option>
+
                         </select>
                     </div>
 
@@ -105,7 +104,7 @@
         </div>
     </div>
 
-    <jsp:include page="../include/footer.jsp"/>
+    <jsp:include page="../../include/footer.jsp"/>
 </body>
 
 <script src='<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"/>'></script>
@@ -117,6 +116,8 @@
 
     $('#imgProduto').on('change', async () => {
         let imagem = $('<img>')
+        imagem.attr("alt", "Imagem do produto")
+
         let imagemBase64 = await toBase64($('#imgProduto').prop('files')[0])
 
         imagem.prop("src", imagemBase64)
@@ -126,6 +127,40 @@
         $('#imagem-produto').html(imagem)
         $('#imagemBase64').val(imagemBase64)
     })
+
+    function montaUrl(baseUrl, path, params) {
+        let url = new URL(baseUrl + "/" +path)
+        url.search = new URLSearchParams(params).toString()
+
+        return url;
+    }
+
+    async function montaSelect(url, id) {
+        let response = await fetch(url)
+        const json = await response.json();
+
+        json.forEach(valor => {
+            let option = $('<option/>');
+            option.attr("value", valor.id)
+            option.text(valor.nome)
+
+            $(id).append(option)
+        })
+    }
+
+    $(document).ready(() => {
+        const baseUrl = 'http://localhost:8080/emug/adm';
+        let params = { operacao: 'listar'}
+
+        let urlGrupos = montaUrl(baseUrl, 'grupos', params)
+        let urlFabricantes = montaUrl(baseUrl, 'fabricantes', params)
+        let urlCategorias = montaUrl(baseUrl, 'categorias', params)
+
+        montaSelect(urlFabricantes, '#fabricante')
+        montaSelect(urlGrupos, '#grupoPrecificacao')
+        montaSelect(urlCategorias, '#categorias')
+    })
+
 </script>
 
 </html>

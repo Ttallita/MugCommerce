@@ -1,5 +1,6 @@
-package dao;
+package dao.cliente;
 
+import dao.IDAO;
 import model.EntidadeDominio;
 import model.cliente.endereco.Endereco;
 import model.cliente.endereco.EnderecoType;
@@ -9,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnderecoDAO implements IDAO{
+public class EnderecoDAO implements IDAO {
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {

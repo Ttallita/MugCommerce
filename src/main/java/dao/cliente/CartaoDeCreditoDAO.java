@@ -1,5 +1,6 @@
-package dao;
+package dao.cliente;
 
+import dao.IDAO;
 import model.EntidadeDominio;
 import model.cliente.CartaoDeCredito;
 import utils.Conexao;
@@ -8,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartaoDeCreditoDAO implements IDAO{
+public class CartaoDeCreditoDAO implements IDAO {
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
@@ -106,7 +107,7 @@ public class CartaoDeCreditoDAO implements IDAO{
             conn = conexao.getConexao();
 
             String sql = "DELETE FROM cartoes where crt_id = ?";
-            PreparedStatement pstm = conn.prepareStatement(sql);;
+            PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setLong(1, cartao.getId());
 
             pstm.execute();
@@ -134,22 +135,23 @@ public class CartaoDeCreditoDAO implements IDAO{
             String sql;
             PreparedStatement pstm = null;
 
-            if(operacao.equals("listar")) {
-                sql = "SELECT * FROM cartoes where crt_cli_usr_id = ?";
-
-                pstm = conn.prepareStatement(sql);
-                pstm.setLong(1,cartao.getCliente().getUsuario().getId());
-            } else if(operacao.equals("listarUnico")) {
-                sql = "SELECT * FROM cartoes where crt_cli_usr_id = ? AND crt_id = ?";
-
-                pstm = conn.prepareStatement(sql);
-                pstm.setLong(1, cartao.getCliente().getUsuario().getId());
-                pstm.setLong(2, cartao.getId());
-            } else if(operacao.equals("findCartaoPreferencial")) {
-                sql = "SELECT * FROM cartoes where crt_preferencial = ?";
-
-                pstm = conn.prepareStatement(sql);
-                pstm.setBoolean(1, true);
+            switch (operacao) {
+                case "listar" -> {
+                    sql = "SELECT * FROM cartoes where crt_cli_usr_id = ?";
+                    pstm = conn.prepareStatement(sql);
+                    pstm.setLong(1, cartao.getCliente().getUsuario().getId());
+                }
+                case "listarUnico" -> {
+                    sql = "SELECT * FROM cartoes where crt_cli_usr_id = ? AND crt_id = ?";
+                    pstm = conn.prepareStatement(sql);
+                    pstm.setLong(1, cartao.getCliente().getUsuario().getId());
+                    pstm.setLong(2, cartao.getId());
+                }
+                case "findCartaoPreferencial" -> {
+                    sql = "SELECT * FROM cartoes where crt_preferencial = ?";
+                    pstm = conn.prepareStatement(sql);
+                    pstm.setBoolean(1, true);
+                }
             }
 
             ResultSet rs = pstm.executeQuery();

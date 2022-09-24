@@ -32,7 +32,7 @@
 
                 <div class="table-responsive p-3 rounded mb-4">
 
-                    <table class="table table-hover" width="100%">
+                    <table class="table table-hover w-100" >
                         <thead>
                             <tr>
                                 <th>Bandeira</th>
@@ -69,7 +69,7 @@
                         </tbody>
                     </table>
     
-                    <a type="button" class="w-100 btn btn-primary btn-sm" href="${pageContext.request.contextPath}/formularios/formCartaoCredito.jsp">Adicionar cartão</a>
+                    <a type="button" class="w-100 btn btn-primary btn-sm" href="formularios/formCartaoCredito.jsp">Adicionar cartão</a>
                 </div>
             </div>
         </div>

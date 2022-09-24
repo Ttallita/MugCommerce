@@ -7,6 +7,8 @@ public class GrupoPrecificacao extends EntidadeDominio{
     private String nome;
     private Double margemLucro;
 
+    public GrupoPrecificacao() {}
+
     public GrupoPrecificacao(Long id, String nome) {
         super(id);
         this.nome = nome;

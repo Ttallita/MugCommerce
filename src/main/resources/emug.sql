@@ -51,18 +51,44 @@ CREATE TABLE enderecos (
     end_observacao    varchar(255)
 );
 
+DROP TABLE IF EXISTS "categorias" CASCADE;
+CREATE TABLE categorias (
+    ctg_id   serial       NOT NULL,
+    ctg_nome varchar(255) NOT NULL
+);
 
---- CONFIGURAÇÃO DO BANCO DE TESTES
+DROP TABLE IF EXISTS "fabricantes" CASCADE;
+CREATE TABLE fabricantes (
+    fab_id   serial       NOT NULL,
+    fab_nome varchar(255) NOT NULL
+);
 
---- Login
+DROP TABLE IF EXISTS "grupos_precificacao" CASCADE;
+CREATE TABLE grupos_precificacao (
+    grp_id           serial        NOT NULL,
+    grp_nome         varchar(255)  NOT NULL,
+    grp_margem_lucro numeric(8, 2) NOT NULL
+);
 
--- Cliente
--- Senha = "Senha@123"
-INSERT into usuarios (usr_email, usr_senha, usr_tipo, usr_ativo)
-values ('login@teste.com', 'bf16fadfbdf1f8450d143857c08a8acb70033cc48d18b22037e18a8ca7081f636a0b805e5241e5e30959a21ee773c3293251a34923a8e77925dd140116f25293', 'CLIENTE', true);
 
--- Administrador
--- Senha = "SenhaADM@123"
-INSERT into usuarios (usr_email, usr_senha, usr_tipo, usr_ativo)
-values ('loginADM@teste.com', '1c12fe70e92c3544d88dec0381f6e2e1e245e201078e6c6cf23ee2c5e6523e57d6005dbd7b229beba03c373639bb2f7a316664c85e8bc8a73c397e546522779d', 'ADMINISTRADOR', true);
+DROP TABLE IF EXISTS "produtos" CASCADE;
+CREATE TABLE produtos (
+    pro_id                 serial        NOT NULL,
+    pro_fab_id             int           NOT NULL,
+    pro_grp_id             int           NOT NULL,
+    pro_nome               varchar(255)  NOT NULL,
+    pro_valor_compra       numeric(8, 2) NOT NULL,
+    pro_valor_venda        numeric(8, 2) NOT NULL,
+    pro_descricao          varchar(255)  NOT NULL,
+    pro_material           varchar(255)  NOT NULL,
+    pro_cod_barras         varchar(255)  NOT NULL
+);
+
+DROP TABLE IF EXISTS "categorias_produtos" CASCADE;
+CREATE TABLE categorias_produtos(
+    ctp_pro_id int NOT NULL,
+    ctp_ctg_id int NOT NULL
+);
+
+
 

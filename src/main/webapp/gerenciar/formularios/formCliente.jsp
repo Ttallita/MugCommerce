@@ -11,14 +11,14 @@
 
     <title>Cadastro</title>
 
-    <link rel="stylesheet" href="/emug/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/emug/webjars/material-design-icons/4.0.0/material-icons.css"/>
-    <link rel="stylesheet" href="/emug/assets/css/style.css"/>
+    <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" />"/>
+    <link rel="stylesheet" href="<c:url value="/webjars/material-design-icons/4.0.0/material-icons.css" />"/>
+    <link rel="stylesheet" href="<c:url value="/assets/css/style.css" />"/>
 </head>
 
 <body>
 
-    <jsp:include page="../include/headerMinimalista.jsp"/>
+    <jsp:include page="../../include/headerMinimalista.jsp"/>
 
     <div class="container align-items-center justify-content-center w-50 p-4">
         <div class="card p-3">
@@ -166,7 +166,7 @@
         </div>
     </div>
 
-    <jsp:include page="../include/footer.jsp"/>
+    <jsp:include page="../../include/footer.jsp"/>
 
 </body>
 
