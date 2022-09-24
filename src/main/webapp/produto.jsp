@@ -51,23 +51,6 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="dropdown mb-3">
-                            <a type="button" id="alterarEndereco" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#alterarEnderecoModal">
-                                Envio para casa de Nattan Silva
-                                <span class="material-icons inline-icon">keyboard_arrow_down</span>
-                            </a>
-                            <ul aria-labelledby="navbarDropdown" class="dropdown-menu">
-                                <li>
-                                    <a href="" class="dropdown-item">
-                                        Envio para casa de Nathan Silva
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="dropdown-item">Adicionar endereço</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <p>Frete: R$ 00,00</p>
                         <div class="row g-2 m-2 align-items-center">
                             <div class="col-auto">
                                 <label class="col-form-label">Quantidade:</label>
