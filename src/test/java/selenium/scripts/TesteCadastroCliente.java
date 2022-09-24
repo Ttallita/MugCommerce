@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
+import selenium.dataHelpers.VOs.UsuarioVO;
 import selenium.pageModels.CadastroClientePage;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
@@ -24,11 +25,38 @@ public class TesteCadastroCliente extends TesteAbstract {
     public void testeCadastroClienteValido() {
         driver.get(LINK_LOGIN);
 
-        ClienteVO cliente = ClienteVO.createClienteVOPadrao();
+        UsuarioVO usuario = new UsuarioVO();
+        usuario.setEmail("login@teste.com");
+        usuario.setSenha("Senha@123");
+        usuario.setSenhaConfirmacao("Senha@123");
+
+        EnderecoVO endereco = new EnderecoVO();
+        endereco.setTpResidencia("Apartamento");
+        endereco.setTpLogradouro("Avenida");
+        endereco.setTpEndereco("Entrega");
+        endereco.setLogradouro("Coronel da Cachoeira");
+        endereco.setBairro("Santo José Bento");
+        endereco.setNumeroEndereco("352");
+        endereco.setCep("00412-536");
+        endereco.setEstado("Alagoas");
+        endereco.setCidade("Belém");
+        endereco.setApelidoEndereco("Minha casa");
+        endereco.setObservacaoEndereco("Próximo ao parque Pedreiro Verde");
+
+        ClienteVO clienteCadastro = new ClienteVO();
+        clienteCadastro.setNome("Joana");
+        clienteCadastro.setSobrenome("das Dores");
+        clienteCadastro.setCpf("966.673.660-89");
+        clienteCadastro.setGenero("F");
+        clienteCadastro.setDtNascimento("14/07/1985");
+        clienteCadastro.setTelefone("1195627012");
+        clienteCadastro.setUsuarioVO(usuario);
+        clienteCadastro.setEnderecoVO(endereco);
+
         LoginPage loginPage = new LoginPage(driver);
 
         CadastroClientePage cadastroPage = loginPage.acessarCadastro();
-        cadastroPage.cadastrar(cliente);
+        cadastroPage.cadastrar(clienteCadastro);
 
         assertEquals("Cadastrado com sucesso. Clique aqui para logar", cadastroPage.getMensagemAlert());
     }
@@ -47,7 +75,7 @@ public class TesteCadastroCliente extends TesteAbstract {
 
     @Test
     public void testeCadastroEndereco(){
-        HomePage homeCliente = this.realizarLoginCliente();
+        HomePage homeCliente = this.realizarLoginClientePadrao();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
@@ -61,7 +89,7 @@ public class TesteCadastroCliente extends TesteAbstract {
     @ParameterizedTest
     @MethodSource("selenium.dataHelpers.ClienteDataHelper#enderecosInvalidos")
     public void testeCadastroEnderecosInvalidos(EnderecoVO endereco, String msgEsperada){
-        HomePage homeCliente = this.realizarLoginCliente();
+        HomePage homeCliente = this.realizarLoginClientePadrao();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
@@ -75,7 +103,7 @@ public class TesteCadastroCliente extends TesteAbstract {
     @Test
     public void testeDeleteEndereco(){
         EnderecoVO endereco = EnderecoVO.createEnderecoPadrao();
-        HomePage homeCliente = this.realizarLoginCliente();
+        HomePage homeCliente = this.realizarLoginClientePadrao();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
@@ -91,7 +119,7 @@ public class TesteCadastroCliente extends TesteAbstract {
     public void testeAlterarEndereco(){
         EnderecoVO endereco = EnderecoVO.createEnderecoPadrao();
 
-        HomePage homeCliente = this.realizarLoginCliente();
+        HomePage homeCliente = this.realizarLoginClientePadrao();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
@@ -110,7 +138,7 @@ public class TesteCadastroCliente extends TesteAbstract {
 
     @Test
     public void testeCadastroNovoCartao(){
-        HomePage homeCliente = this.realizarLoginCliente();
+        HomePage homeCliente = this.realizarLoginClientePadrao();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         CartoesPage cartoesPage = perfilCliente.acessarCartoes();
@@ -124,7 +152,7 @@ public class TesteCadastroCliente extends TesteAbstract {
     @ParameterizedTest
     @MethodSource("selenium.dataHelpers.ClienteDataHelper#cartoesInvalidos")
     public void testeCadastroCartoesInvalidos(CartaoVO cartao, String msgEsperada){
-        HomePage homeCliente = this.realizarLoginCliente();
+        HomePage homeCliente = this.realizarLoginClientePadrao();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         CartoesPage cartoesPage = perfilCliente.acessarCartoes();
@@ -143,7 +171,7 @@ public class TesteCadastroCliente extends TesteAbstract {
         CartaoVO cartao = CartaoVO.createCartaoPadrao();
         cartao.setNumCartao("1234 4567 8910 0000");
 
-        HomePage homeCliente = this.realizarLoginCliente();
+        HomePage homeCliente = this.realizarLoginClientePadrao();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         CartoesPage cartoesPage = perfilCliente.acessarCartoes();
@@ -163,7 +191,7 @@ public class TesteCadastroCliente extends TesteAbstract {
     public void testeAlterarCartao(){
         CartaoVO cartao = CartaoVO.createCartaoPadrao();
 
-        HomePage homeCliente = this.realizarLoginCliente();
+        HomePage homeCliente = this.realizarLoginClientePadrao();
 
         PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
         CartoesPage cartoesPage = perfilCliente.acessarCartoes();

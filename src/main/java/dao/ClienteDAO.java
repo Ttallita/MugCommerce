@@ -157,6 +157,8 @@ public class ClienteDAO implements IDAO {
                 clientes.add(clienteConsulta);
             }
 
+            System.err.printf("Listando %d cliente(s)/n", clientes.size());
+
             return clientes;
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println(e.getMessage());

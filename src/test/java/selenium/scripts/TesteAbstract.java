@@ -30,7 +30,7 @@ public abstract class TesteAbstract {
         driver.quit();
     }
 
-    public HomePage realizarLoginCliente(){
+    public HomePage realizarLoginClientePadrao(){
         driver.get(LINK_LOGIN);
         LoginPage loginPage = new LoginPage(driver);
 
