@@ -70,6 +70,7 @@ CREATE TABLE grupos_precificacao (
     grp_margem_lucro numeric(8, 2) NOT NULL
 );
 
+--- Login
 
 DROP TABLE IF EXISTS "produtos" CASCADE;
 CREATE TABLE produtos (

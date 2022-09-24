@@ -40,8 +40,8 @@ a {
 }
 
 .logo {
-  height: 10%;
-  width: 10%;
+  max-width: 35%;
+  height: auto;
 }
 
 .paragraph-no-space {

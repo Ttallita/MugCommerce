@@ -33,7 +33,7 @@
                     <span class="material-icons inline-icon">all_inbox</span> Estoque
                 </a>
 
-                <a href="#" class="nav_link">
+                <a class="nav_link" id="deslogar" href="/emug/logout">
                     <span class="material-icons inline-icon">logout</span>Sair
                 </a>
                 

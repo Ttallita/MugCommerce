@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
 import selenium.dataHelpers.VOs.UsuarioVO;
+import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
 import selenium.utils.UtilsTeste;
 
@@ -23,9 +24,19 @@ public class TesteLogin extends TesteAbstract{
         driver.get(LINK_LOGIN);
 
         LoginPage loginPage = new LoginPage(driver);
-        HomePage home = loginPage.logar(UsuarioVO.createUsuarioLoginPadrao());
+        HomePage home = loginPage.logar(UsuarioVO.createUsuarioClientePadrao());
 
         assertTrue(home.getHeader() instanceof HeaderClienteComponent);
+    }
+
+    @Test
+    public void testeLoginAdmValido(){
+        driver.get(LINK_LOGIN);
+
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage home = loginPage.logar(UsuarioVO.createUsuarioAdmPadrao());
+
+        assertTrue(home.getHeader() instanceof HeaderAdmComponent);
     }
 
     @ParameterizedTest

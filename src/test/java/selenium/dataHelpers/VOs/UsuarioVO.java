@@ -6,21 +6,30 @@ public class UsuarioVO {
     private String senha;
     private String senhaConfirmacao;
 
+    /**
+     * Cliente padrão de configuração do banco de testes
+     * @return
+     */
     public static UsuarioVO createUsuarioClientePadrao(){
-        UsuarioVO usuario = new UsuarioVO();
-
-        usuario.setEmail("clienteTeste@teste.com");
-        usuario.setSenha("Senha@123");
-        usuario.setSenhaConfirmacao("Senha@123");
-
-        return usuario;
-    }
-
-    public static UsuarioVO createUsuarioLoginPadrao(){
         UsuarioVO usuario = new UsuarioVO();
 
         usuario.setEmail("login@teste.com");
         usuario.setSenha("Teste@123");
+        usuario.setSenhaConfirmacao("Teste@123");
+
+        return usuario;
+    }
+
+    /**
+     * Administrador padrão de configuração do banco de testes
+     * @return
+     */
+    public static UsuarioVO createUsuarioAdmPadrao(){
+        UsuarioVO usuario = new UsuarioVO();
+
+        usuario.setEmail("loginADM@teste.com");
+        usuario.setSenha("SenhaADM@123");
+        usuario.setSenhaConfirmacao("SenhaADM@123");
 
         return usuario;
     }

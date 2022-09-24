@@ -23,9 +23,9 @@ public class PerfilFilter implements Filter {
 
         if(usuario != null) {
             if(usuario.getTipoUsuario().equals(UsuarioType.ADMINISTRADOR))
-                response.sendRedirect("/LootCommerce/adm/principal.jsp");
+                response.sendRedirect("/emug/adm/principal.jsp");
         } else
-            response.sendRedirect("/LootCommerce/index.jsp");
+            response.sendRedirect("/emug/index.jsp");
 
         filterChain.doFilter(request, response);
     }
