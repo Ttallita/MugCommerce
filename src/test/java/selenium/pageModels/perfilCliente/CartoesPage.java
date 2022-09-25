@@ -14,7 +14,7 @@ public class CartoesPage extends PerfilPage {
 
     public static final String TITULO_PAGINA = "Perfil - Cartões";
 
-    public static final String LINK_ADICIONAR_CARTAO = "/emug/formularios/formCartaoCredito.jsp";
+    public static final String LINK_ADICIONAR_CARTAO = "/emug/cliente/formularios/formCartaoCredito.jsp";
     public static final String LINK_EDITAR_CARTAO = "/emug/clientes/cartoes?operacao=listarUnico";
 
     public CartoesPage(WebDriver driver) {

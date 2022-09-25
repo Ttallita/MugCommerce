@@ -68,8 +68,12 @@
                             </c:forEach>
                         </tbody>
                     </table>
-    
-                    <a type="button" class="w-100 btn btn-primary btn-sm" href="formularios/formCartaoCredito.jsp">Adicionar cartão</a>
+
+                    <a href="/emug/cliente/formularios/formCartaoCredito.jsp">
+                        <button type="button" class="w-100 btn btn-primary btn-sm">
+                            Adicionar cartão
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
