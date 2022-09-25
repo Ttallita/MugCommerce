@@ -74,9 +74,11 @@
             
                         </tbody>
                     </table>
-    
-                    <a type="button" class="w-100 btn btn-primary btn-sm" href="formularios/formEndereco.jsp?operacao=salvar">
-                        Adicionar endereço
+
+                    <a href="/emug/cliente/formularios/formEndereco.jsp">
+                        <button type="button" class="w-100 btn btn-primary btn-sm">
+                            Adicionar endereço
+                        </button>
                     </a>
                 </div>
             </div>

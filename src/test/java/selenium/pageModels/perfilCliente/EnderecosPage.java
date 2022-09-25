@@ -15,7 +15,7 @@ public class EnderecosPage extends PerfilPage {
 
     public static final String TITULO_PAGINA = "Perfil - Endereços";
 
-    public static final String LINK_ADICIONAR_ENDERECO = "/emug/formularios/formEndereco.jsp?operacao=salvar";
+    public static final String LINK_ADICIONAR_ENDERECO = "/emug/cliente/formularios/formEndereco.jsp";
     public static final String LINK_EDITAR_ENDERECO = "/emug/clientes/enderecos?operacao=listarUnico";
 
     public EnderecosPage(WebDriver driver) {
