@@ -3,6 +3,7 @@ package dao.produto;
 import dao.IDAO;
 import model.EntidadeDominio;
 import model.produto.Categoria;
+import model.produto.Produto;
 import utils.Conexao;
 
 import java.sql.Connection;
@@ -43,6 +44,7 @@ public class CategoriaDAO implements IDAO {
             List<EntidadeDominio> categorias = new ArrayList<>();
             while (rs.next()) {
                 Categoria categoria = new Categoria();
+                categoria.setId(rs.getLong("ctg_id"));
                 categoria.setNome(rs.getString("ctg_nome"));
                 categorias.add(categoria);
             }
@@ -56,5 +58,10 @@ public class CategoriaDAO implements IDAO {
         }
 
         return null;
+    }
+
+    public void salvarAssociacaoCategoriaProduto(long idProduto, long idCategoria) {
+
+
     }
 }

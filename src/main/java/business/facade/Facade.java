@@ -10,6 +10,7 @@ import dao.cliente.EnderecoDAO;
 import dao.produto.CategoriaDAO;
 import dao.produto.FabricanteDAO;
 import dao.produto.GrupoPrecificacaoDAO;
+import dao.produto.ProdutoDAO;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
@@ -19,6 +20,7 @@ import model.cliente.endereco.Endereco;
 import model.produto.Categoria;
 import model.produto.Fabricante;
 import model.produto.GrupoPrecificacao;
+import model.produto.Produto;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +41,7 @@ public class Facade implements IFacade {
         daosMap.put(Fabricante.class.getName(), new FabricanteDAO());
         daosMap.put(Categoria.class.getName(), new CategoriaDAO());
         daosMap.put(GrupoPrecificacao.class.getName(), new GrupoPrecificacaoDAO());
+        daosMap.put(Produto.class.getName(), new ProdutoDAO());
 
         regrasDeNegocioMap = new HashMap<>();
 
