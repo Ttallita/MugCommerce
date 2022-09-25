@@ -15,61 +15,66 @@
                     <img src="<c:url value='/assets/img/logo_preto_branco.png' />" alt="logo" class="logo">
                 </a>
             </div>
-            <div class="col-lg-5 p-0 row gap-2">
-                <form action="<c:url value='/pesquisa.jsp'/>" class="col-md-auto justify-content-center mb-md-0">
-                    <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Pesquisar...">
-                        <button class="btn btn-primary" type="submit">
-                            <span class="material-icons">search</span>
-                        </button>
+            <div class="col-lg-5">
+                <div class="container row text-center gap-3">
+                    <div class="col-sm-6 col-md-7">
+                        <form action="<c:url value='/pesquisa.jsp'/>" class="col-md-auto justify-content-center mb-md-0">
+                            <div class="input-group">
+                                <input class="form-control" type="search" placeholder="Pesquisar...">
+                                <button class="btn btn-primary" type="submit">
+                                    <span class="material-icons">search</span>
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
 
-                <c:choose>
-                    <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'CLIENTE'}">
-                        
-                        <div class="col-auto">
-                            <a href="<c:url value='/clientes?operacao=listar' />" class="btn btn-light pr-2" type="button">
-                                <span class="material-icons">account_circle</span>
-                            </a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="<c:url value='/cliente/carrinho.jsp' />" class="btn btn-light" type="button">
-                                <span class="material-icons">shopping_cart</span>
-                            </a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="<c:url value='/logout'/>" class="btn btn-light" type="button">
-                                <span class="material-icons inline-icon">logout</span>
-                            </a>
-                        </div>
-                    </c:when>
-                    <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'ADMINISTRADOR'}">
-                        <div class="col-auto">
-                            <a href="<c:url value='/adm/clientes?operacao=listarTodos' />" class="btn btn-light">
-                                <span class="material-icons">dashboard</span>
-                            </a>
-                        </div>
+                    <c:choose>
+                        <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'CLIENTE'}">
+                            
+                            <div class="col-md-1">
+                                <a href="<c:url value='/clientes?operacao=listar' />" class="btn btn-light pr-2" type="button">
+                                    <span class="material-icons">account_circle</span>
+                                </a>
+                            </div>
+                            <div class="col-md-1">
+                                <a href="<c:url value='/cliente/carrinho.jsp' />" class="btn btn-light" type="button">
+                                    <span class="material-icons">shopping_cart</span>
+                                </a>
+                            </div>
+                            <div class="col-md-1">
+                                <a href="<c:url value='/logout'/>" class="btn btn-light" type="button">
+                                    <span class="material-icons inline-icon">logout</span>
+                                </a>
+                            </div>
+                        </c:when>
+                        <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'ADMINISTRADOR'}">
+                            <div class="col-md-1">
+                                <a href="<c:url value='/adm/clientes?operacao=listarTodos' />" class="btn btn-light">
+                                    <span class="material-icons">dashboard</span>
+                                </a>
+                            </div>
 
-                        <div class="col-auto">
-                            <a href="<c:url value='/logout'/>" class="btn btn-light">
-                                <span class="material-icons inline-icon">logout</span>
-                            </a>
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="col-auto pt-1">
-                            <a href="<c:url value='/login.jsp'/> " type="button" class="btn btn-light">
-                                Entrar
-                            </a>
-                        </div>
-                        <div class="col-auto pt-1">
-                            <a href="<c:url value='/cadastroCliente.jsp' />" type="button" class="btn btn-light">
-                                Registrar
-                            </a>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
+                            <div class="col-md-1">
+                                <a href="<c:url value='/logout'/>" class="btn btn-light">
+                                    <span class="material-icons inline-icon">logout</span>
+                                </a>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="col-md-2 pt-1">
+                                <a href="<c:url value='/login.jsp'/> " type="button" class="btn btn-light">
+                                    Entrar
+                                </a>
+                            </div>
+                            <div class="col-md-2 pt-1">
+                                <a href="<c:url value='/cadastroCliente.jsp' />" type="button" class="btn btn-light">
+                                    Registrar
+                                </a>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+
             </div>
         </div>
     </div>
