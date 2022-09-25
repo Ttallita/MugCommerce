@@ -110,10 +110,11 @@
                     </tbody>
                 </table>
 
-                <a href='<c:url value="/cadastroCliente.jsp"/>' type="button" class="w-100 btn btn-primary btn-sm">
-                    Adicionar cliente
+                <a href='<c:url value="/cadastroCliente.jsp"/>'>
+                    <button type="button" class="w-100 btn btn-primary btn-sm">
+                        Adicionar cliente
+                    </button>
                 </a>
-
             </div>
             
         </div>

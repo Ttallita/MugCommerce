@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter({ "/gerenciar/*" })
+@WebFilter({ "/gerenciar/*", "/adm/*" })
 public class AdmFilter implements Filter {
 
     @Override

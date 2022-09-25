@@ -2,6 +2,7 @@ package dao.produto;
 
 import dao.IDAO;
 import model.EntidadeDominio;
+import model.produto.GrupoPrecificacao;
 import model.produto.Produto;
 import utils.Conexao;
 
@@ -19,24 +20,40 @@ public class ProdutoDAO implements IDAO {
         try {
             connection = conexao.getConexao();
 
-            String sql = "INSERT INTO produto (cli_usr_id, cli_nome, cli_sobrenome, cli_cpf, cli_dt_nasc, cli_genero, cli_telefone_num, cli_telefone_ddd, cli_telefone_tp)" +
+            String sql = "INSERT INTO produtos (pro_fab_id, pro_grp_id, pro_nome, pro_valor_compra, pro_valor_venda, pro_descricao, pro_material, pro_cod_barras, pro_imagem)" +
                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+            GrupoPrecificacao grupo  = (GrupoPrecificacao) new GrupoPrecificacaoDAO().listar(produto.getGrupoPrecificacao(), "listarUnico")
+                    .get(0);
+
+            double valorVenda = produto.getValorCompra() + (produto.getValorCompra() + (grupo.getMargemLucro() / 100));
 
             PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
+            pstm.setLong(1, produto.getFabricante().getId());
+            pstm.setLong(2, grupo.getId());
+            pstm.setString(3, produto.getNome());
+            pstm.setDouble(4, produto.getValorCompra());
+            pstm.setDouble(5, valorVenda);
+            pstm.setString(6, produto.getDescricao());
+            pstm.setString(7, produto.getMaterial());
+            pstm.setString(8, produto.getCodBarras());
+            pstm.setString(9, produto.getImagem());
 
             pstm.execute();
 
             ResultSet rs = pstm.getGeneratedKeys();
 
-            long idCliente = 0L;
+            long idProduto = 0L;
 
             while (rs.next()) {
-                idCliente = rs.getLong(1);
+                idProduto = rs.getLong(1);
             }
 
-            return null;
+
+
+            produto.setId(idProduto);
+
+            return produto;
         } catch (SQLException | ClassNotFoundException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();

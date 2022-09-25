@@ -21,7 +21,7 @@
         
             <h3 class="text-center mb-4">Cadastro</h3>
 
-            <form action="/emug/produtos/" enctype="multipart/form-data" method="POST">
+            <form action="/emug/adm/produtos" enctype="multipart/form-data" method="POST">
                 <div class="row g-3 p-4">
 
                     <div class="col-sm-12">
@@ -67,11 +67,8 @@
 
                     <div class="col-sm-3">
                         <label for="categorias"><small>Categorias</small></label>
-                        <select class="form-select" id="categorias" multiple aria-label="Categorias">
+                        <select class="form-select" name="categorias" id="categorias" multiple aria-label="Categorias">
                             <option selected>Selecione...</option>
-                            <option>Animes</option>
-                            <option>Filmes</option>
-                            <option>Geek</option>
                         </select>
                     </div>
 
@@ -82,7 +79,6 @@
 
                     <div class="col-sm-12 h-25">
                         <label for="imgProduto" class="form-label">Imagem produto</label>
-
                         <div id="imagem-produto"></div>
                         <br/>
                         <input class="form-control form-control-sm" id="imgProduto" type="file">
@@ -141,6 +137,7 @@
 
         json.forEach(valor => {
             let option = $('<option/>');
+            console.log(valor)
             option.attr("value", valor.id)
             option.text(valor.nome)
 

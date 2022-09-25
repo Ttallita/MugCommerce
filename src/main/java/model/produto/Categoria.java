@@ -6,6 +6,13 @@ public class Categoria extends EntidadeDominio{
 
     private String nome;
 
+    public Categoria() {}
+
+    public Categoria(Long id, String nome) {
+        super(id);
+        this.nome = nome;
+    }
+
     public String getNome() {
         return nome;
     }
