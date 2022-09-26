@@ -89,8 +89,7 @@ public class EnderecoViewHelper implements IViewHelper {
         }
     }
 
-    public Endereco
-    criaEndereco(HttpServletRequest request) {
+    public Endereco criaEndereco(HttpServletRequest request) {
         Endereco endereco = new Endereco();
         endereco.setTipoResidencia(request.getParameter("tpResidencia"));
         endereco.setTipoLogradouro(request.getParameter("tpLogradouro"));

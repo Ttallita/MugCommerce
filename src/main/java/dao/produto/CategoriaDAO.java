@@ -3,7 +3,6 @@ package dao.produto;
 import dao.IDAO;
 import model.EntidadeDominio;
 import model.produto.Categoria;
-import model.produto.Produto;
 import utils.Conexao;
 
 import java.sql.Connection;
@@ -36,8 +35,20 @@ public class CategoriaDAO implements IDAO {
         try {
             connection = conexao.getConexao();
 
-            String sql = "SELECT * FROM categorias";
-            PreparedStatement pstm = connection.prepareStatement(sql);
+            String sql;
+            PreparedStatement pstm = null;
+
+            if("listar".equals(operacao)) {
+                sql = "SELECT * FROM categorias";
+                pstm = connection.prepareStatement(sql);
+            } else if("findByProduto".equals(operacao)) {
+                sql = "select * from categorias c " +
+                        "inner join categorias_produtos cp " +
+                        "on c.ctg_id = cp.ctp_ctg_id " +
+                        "where cp.ctp_pro_id = ?;";
+                pstm = connection.prepareStatement(sql);
+                pstm.setLong(1, entidade.getId());
+            }
 
             ResultSet rs = pstm.executeQuery();
 
@@ -61,7 +72,23 @@ public class CategoriaDAO implements IDAO {
     }
 
     public void salvarAssociacaoCategoriaProduto(long idProduto, long idCategoria) {
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+        try {
+            connection = conexao.getConexao();
 
+            String sql = "INSERT INTO categorias_produtos (ctp_pro_id, ctp_ctg_id) values (?, ?)";
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setLong(1, idProduto);
+            pstm.setLong(2, idCategoria);
+            pstm.execute();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
+        }
 
     }
 }

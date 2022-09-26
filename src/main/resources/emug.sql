@@ -83,7 +83,8 @@ CREATE TABLE produtos (
     pro_descricao          varchar(255)  NOT NULL,
     pro_material           varchar(255)  NOT NULL,
     pro_cod_barras         varchar(255)  NOT NULL,
-    pro_imagem             varchar       NOT NULL
+    pro_imagem             varchar       NOT NULL,
+    pro_ativo              boolean       NOT NULL
 );
 
 DROP TABLE IF EXISTS "categorias_produtos" CASCADE;
@@ -91,6 +92,8 @@ CREATE TABLE categorias_produtos(
     ctp_pro_id int NOT NULL,
     ctp_ctg_id int NOT NULL
 );
+        
 
-
-
+/**
+  8949461894984
+*/

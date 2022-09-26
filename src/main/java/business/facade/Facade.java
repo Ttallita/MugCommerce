@@ -3,6 +3,7 @@ package business.facade;
 import business.strategy.IStrategy;
 import business.strategy.impl.cliente.*;
 import business.strategy.impl.cliente.cartao.VerificarCartaoStrategy;
+import business.strategy.impl.produto.VerificaProdutoStrategy;
 import dao.*;
 import dao.cliente.CartaoDeCreditoDAO;
 import dao.cliente.ClienteDAO;
@@ -49,6 +50,7 @@ public class Facade implements IFacade {
         regrasDeNegocioMap.put(Usuario.class.getName(), getRegrasNegocioUsuario());
         regrasDeNegocioMap.put(Endereco.class.getName(), getRegrasNegocioEndereco());
         regrasDeNegocioMap.put(CartaoDeCredito.class.getName(), getRegrasNegocioCartao());
+        regrasDeNegocioMap.put(Produto.class.getName(), getRegrasNegocioProduto());
     }
 
 
@@ -217,4 +219,17 @@ public class Facade implements IFacade {
 
         return mapStrategyCartao;
     }
+
+    private Map<String, List<IStrategy>> getRegrasNegocioProduto() {
+        List<IStrategy> regraProdutoGeral = List.of(
+                new VerificaProdutoStrategy()
+        );
+
+        Map<String, List<IStrategy>> mapStrategy = new HashMap<>();
+        mapStrategy.put("salvar", regraProdutoGeral);
+        mapStrategy.put("atualizar", regraProdutoGeral);
+
+        return mapStrategy;
+    }
 }
+

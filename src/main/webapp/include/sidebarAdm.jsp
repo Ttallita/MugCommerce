@@ -21,6 +21,10 @@
                     <span class="material-icons inline-icon">people</span> Clientes
                 </a>
 
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'produtos') ? 'active-navbar' : ''}" id="paginaProdutos" type="button" href="/emug/adm/produtos?operacao=listar">
+                    <span class="material-icons inline-icon">free_breakfast</span> Produtos
+                </a>
+
                 <a class="nav_link ${ fn:contains(paginaCorrente, 'vendas') ? 'active-navbar' : ''}" id="paginaVendas" type="button" href="/emug/gerenciar/vendas.jsp">
                     <span class="material-icons inline-icon">show_chart</span> Vendas
                 </a>

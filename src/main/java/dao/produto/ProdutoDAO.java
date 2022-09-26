@@ -2,12 +2,16 @@ package dao.produto;
 
 import dao.IDAO;
 import model.EntidadeDominio;
+import model.produto.Categoria;
+import model.produto.Fabricante;
 import model.produto.GrupoPrecificacao;
 import model.produto.Produto;
 import utils.Conexao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ProdutoDAO implements IDAO {
 
@@ -49,9 +53,11 @@ public class ProdutoDAO implements IDAO {
                 idProduto = rs.getLong(1);
             }
 
-
-
             produto.setId(idProduto);
+
+            long finalIdProduto = idProduto;
+            Consumer<Categoria> consumer = (categoria) -> new CategoriaDAO().salvarAssociacaoCategoriaProduto(finalIdProduto, categoria.getId());
+            produto.getCategorias().forEach(consumer);
 
             return produto;
         } catch (SQLException | ClassNotFoundException e) {
@@ -71,11 +77,104 @@ public class ProdutoDAO implements IDAO {
 
     @Override
     public EntidadeDominio deletar(EntidadeDominio entidade) {
+        Produto produto = (Produto) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "UPDATE produtos SET pro_ativo = ? WHERE pro_id = ?;";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setBoolean(1, produto.isAtivo());
+            pstm.setLong(2, produto.getId());
+
+            pstm.execute();
+
+            return produto;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(conn);
+        }
+
         return null;
     }
 
+
     @Override
     public List<EntidadeDominio> listar(EntidadeDominio entidade, String operacao) {
+        Produto produto = (Produto) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+        try {
+            connection = conexao.getConexao();
+
+            String sql;
+            PreparedStatement pstm = null;
+            if(operacao.equals("listar")) {
+                sql = "SELECT * FROM produtos";
+
+                pstm = connection.prepareStatement(sql);
+            } else if(operacao.equals("listarUnico")) {
+                sql = "SELECT * FROM produtos where pro_id = ?";
+
+                pstm = connection.prepareStatement(sql);
+                pstm.setLong(1, produto.getId());
+            }
+
+            ResultSet rs = pstm.executeQuery();
+
+            List<EntidadeDominio> produtos = new ArrayList<>();
+            while (rs.next()) {
+                Produto produtoConsulta = new Produto();
+                produtoConsulta.setId(rs.getLong("pro_id"));
+
+                Fabricante fabricante = (Fabricante) new FabricanteDAO()
+                        .listar(new Fabricante(rs.getLong("pro_fab_id"), ""), "listarUnico")
+                        .get(0);
+
+                produtoConsulta.setFabricante(fabricante);
+
+                GrupoPrecificacao grupo = (GrupoPrecificacao) new GrupoPrecificacaoDAO()
+                        .listar(new GrupoPrecificacao(rs.getLong("pro_grp_id"), ""), "listarUnico")
+                        .get(0);
+
+                produtoConsulta.setGrupoPrecificacao(grupo);
+
+                produtoConsulta.setId(rs.getLong("pro_id"));
+                produtoConsulta.setNome(rs.getString("pro_nome"));
+                produtoConsulta.setValorCompra(rs.getDouble("pro_valor_compra"));
+                produtoConsulta.setValorVenda(rs.getDouble("pro_valor_venda"));
+                produtoConsulta.setDescricao(rs.getString("pro_descricao"));
+                produtoConsulta.setMaterial(rs.getString("pro_material"));
+                produtoConsulta.setCodBarras(rs.getString("pro_cod_barras"));
+                produtoConsulta.setImagem(rs.getString("pro_imagem"));
+
+                List<Categoria> categorias = new CategoriaDAO()
+                        .listar(produtoConsulta, "findByProduto")
+                        .stream()
+                        .map(categoria -> (Categoria) categoria)
+                        .toList();
+
+                produtoConsulta.setCategorias(categorias);
+                produtos.add(produtoConsulta);
+            }
+
+            System.err.println("Listando " + produtos.size() + " produto(s)");
+
+            return produtos;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
+        }
+
         return null;
     }
 }

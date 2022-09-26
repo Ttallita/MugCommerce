@@ -2,7 +2,6 @@ package model.produto;
 
 import model.EntidadeDominio;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public class Produto extends EntidadeDominio {

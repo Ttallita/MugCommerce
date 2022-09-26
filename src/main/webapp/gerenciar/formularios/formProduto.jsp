@@ -7,11 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Cadastro</title>
+    <title>${not empty produto ? 'Edição' : 'Cadastro'}</title>
 
     <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css' />"/>
     <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css' />"/>
-    <link rel="stylesheet" href="<c:url value='/assets/css/style.css' />"/></head>
+    <link rel="stylesheet" href="<c:url value='/assets/css/style.css' />"/>
+</head>
 <body>
 
     <jsp:include page="../../include/headerMinimalista.jsp"/>
@@ -19,33 +20,35 @@
     <div class="container align-items-center justify-content-center w-50 p-4">
         <div class="card p-3">
         
-            <h3 class="text-center mb-4">Cadastro</h3>
+            <h3 class="text-center mb-4">
+                ${not empty produto ? 'Atualizar' : 'Cadastrar'}
+            </h3>
 
             <form action="/emug/adm/produtos" enctype="multipart/form-data" method="POST">
                 <div class="row g-3 p-4">
 
                     <div class="col-sm-12">
                         <label for="nomeProduto"><small>Nome</small></label>
-                        <input type="text" class="form-control" id="nomeProduto" name="nomeProduto" value="">
+                        <input type="text" class="form-control" id="nomeProduto" name="nomeProduto" value="${produto.nome}">
                     </div>
                     
                     <div class="col-sm-3">
                         <label for="valorCompra"><small>Valor de compra</small></label>
-                        <input type="text" class="form-control money" id="valorCompra" name="valorCompra" value="">
+                        <input type="text" class="form-control money" id="valorCompra" name="valorCompra" value="${produto.valorCompra}">
                     </div>
 
                     <div class="col-sm-5">
                         <label for="codBarras"><small>Cod. barras</small></label>
-                        <input type="text" class="form-control" id="codBarras" name="codBarras" value="">
+                        <input type="text" class="form-control" id="codBarras" name="codBarras" value="${produto.codBarras}">
                     </div>
 
                     <div class="col-sm-4">
                         <label for="material"><small>Material</small></label>
                         <select class="form-select" id="material" name="material">
                             <option value="">Selecione</option>
-                            <option>Porcelana</option>
-                            <option>Plastico</option>
-                            <option>Metal</option>
+                            <option ${produto.material == 'Porcelana' ? 'selected' : ''}>Porcelana</option>
+                            <option ${produto.material == 'Plastico' ? 'selected' : ''}>Plastico</option>
+                            <option ${produto.material == 'Metal' ? 'selected' : ''}>Metal</option>
                         </select>
                     </div>
 
@@ -53,48 +56,51 @@
                         <label for="fabricante"><small>Fabricante</small></label>
                         <select class="form-select" id="fabricante" name="fabricante">
                             <option value="">Selecione</option>
-
                         </select>
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <label for="grupoPrecificacao"><small>Grupo de precificação</small></label>
                         <select class="form-select" id="grupoPrecificacao" name="grupoPrecificacao">
                             <option value="">Selecione</option>
-
                         </select>
                     </div>
 
                     <div class="col-sm-3">
                         <label for="categorias"><small>Categorias</small></label>
                         <select class="form-select" name="categorias" id="categorias" multiple aria-label="Categorias">
-                            <option selected>Selecione...</option>
+                            <option>Selecione...</option>
                         </select>
                     </div>
 
                     <div class="col-sm-12">
                         <label for="descricao"><small>Descrição</small></label>
-                        <textarea class="form-control" id="descricao" name="descricao" rows="3"></textarea>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="3">${produto.descricao}</textarea>
                     </div>
 
                     <div class="col-sm-12 h-25">
                         <label for="imgProduto" class="form-label">Imagem produto</label>
-                        <div id="imagem-produto"></div>
+                        <div id="imagem-produto">
+                            <c:if test="${not empty produto}">
+                                <img src="${produto.imagem}" class="w-50 h-50" alt="Imagem do Produto"/>
+                            </c:if>
+                        </div>
                         <br/>
                         <input class="form-control form-control-sm" id="imgProduto" type="file">
-                        <input type="hidden" name="imagemBase64" id="imagemBase64"/>
+                        <input type="hidden" name="imagemBase64" id="imagemBase64" value="${produto.imagem}"/>
                     </div>
 
                     <div class="col-sm-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="isAtivo" name="isAtivo" checked>
+                            <input class="form-check-input" type="checkbox" role="switch" id="isAtivo" name="isAtivo" ${produto.ativo ? 'checked' : ''}>
                             <label class="form-check-label" for="isAtivo">Ativo</label>
                         </div>
                     </div>
 
+                    ${produto.categorias}
                     <hr>
-                    <input type="hidden" name="operacao" value="salvar">
-                    <input type="submit" class="w-100 btn btn-primary btn-lg" name="botaoCadastro" value="Cadastrar">
+                    <input type="hidden" name="operacao" value="${not empty produto ? 'atualizar' : 'salvar'}">
+                    <input type="submit" class="w-100 btn btn-primary btn-lg" name="botaoCadastro" value="${not empty produto ? 'Atualizar' : 'Cadastrar'}">
                 </div>
             </form>
         </div>
@@ -107,7 +113,10 @@
 <script src='<c:url value="/webjars/jquery/3.6.1/jquery.min.js"/>'></script>
 <script src='<c:url value="/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js"/>'></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
+<script src='<c:url value="/assets/js/JsBarcode.all.min.js"/>'></script>
 <script>
+    const categorias = JSON.parse('${categorias}')
+
     $('.money').mask('000.000.000.000.000,00', {reverse: true});
 
     $('#imgProduto').on('change', async () => {
@@ -131,15 +140,29 @@
         return url;
     }
 
-    async function montaSelect(url, id) {
+    async function montaSelect(url, id, tipo) {
         let response = await fetch(url)
         const json = await response.json();
 
         json.forEach(valor => {
             let option = $('<option/>');
-            console.log(valor)
-            option.attr("value", valor.id)
-            option.text(valor.nome)
+            option.val(valor.id)
+            option.html(valor.nome)
+
+            if(tipo === 'FABRICANTE') {
+                if(valor.id == '${produto.fabricante.id}')
+                    option.prop('selected', true)
+            } else if(tipo === 'GRUPO') {
+                if(valor.id == '${produto.grupoPrecificacao.id}')
+                    option.prop('selected', true)
+            } else {
+                if(categorias.length > 0) {
+                    let categoria = categorias.find(categoria => categoria.id === valor.id)
+
+                    if(categoria)
+                        option.prop('selected', true)
+                }
+            }
 
             $(id).append(option)
         })
@@ -147,14 +170,14 @@
 
     $(document).ready(() => {
         const baseUrl = 'http://localhost:8080/emug/adm';
-        let params = { operacao: 'listar'}
+        let params = { operacao: 'listar' }
 
         let urlGrupos = montaUrl(baseUrl, 'grupos', params)
         let urlFabricantes = montaUrl(baseUrl, 'fabricantes', params)
         let urlCategorias = montaUrl(baseUrl, 'categorias', params)
 
-        montaSelect(urlFabricantes, '#fabricante')
-        montaSelect(urlGrupos, '#grupoPrecificacao')
+        montaSelect(urlFabricantes, '#fabricante', 'FABRICANTE')
+        montaSelect(urlGrupos, '#grupoPrecificacao', 'GRUPO')
         montaSelect(urlCategorias, '#categorias')
     })
 
