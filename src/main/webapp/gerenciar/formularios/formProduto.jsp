@@ -115,7 +115,7 @@
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
 <script src='<c:url value="/assets/js/JsBarcode.all.min.js"/>'></script>
 <script>
-    const categorias = JSON.parse('${categorias}')
+    const categoriasJSON = JSON.parse('${not empty categorias ? categorias : '{}'}')
 
     $('.money').mask('000.000.000.000.000,00', {reverse: true});
 
@@ -149,8 +149,8 @@
                 if(valor.id == '${produto.grupoPrecificacao.id}')
                     option.prop('selected', true)
             } else {
-                if(categorias.length > 0) {
-                    let categoria = categorias.find(categoria => categoria.id === valor.id)
+                if(categoriasJSON.length > 0) {
+                    let categoria = categoriasJSON.find(categoria => categoria.id === valor.id)
 
                     if(categoria)
                         option.prop('selected', true)

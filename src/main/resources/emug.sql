@@ -92,8 +92,12 @@ CREATE TABLE categorias_produtos(
     ctp_pro_id int NOT NULL,
     ctp_ctg_id int NOT NULL
 );
-        
 
-/**
-  8949461894984
-*/
+DROP TABLE IF EXISTS "produtos_status" CASCADE;
+CREATE TABLE produtos_status (
+    pst_id            serial       NOT NULL,
+    pst_categoria     varchar(255) NOT NULL,
+    pst_prod_id       int          NOT NULL,
+    pst_justificativa varchar(255) NOT NULL
+)
+
