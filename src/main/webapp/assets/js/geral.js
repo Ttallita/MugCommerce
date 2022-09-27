@@ -15,6 +15,15 @@ function aplicaMascaraTelefone() {
 function abrirModal(id) {
     document.getElementById("idRemover").value = id;
 
+    let form = $('#formInativar')
+    /*
+        Limpa campos caso exista o form de inativação
+     */
+    if(form != null) {
+        $('#categoriaInativacao').val("Selecione...");
+        $('#justificativa').val("");
+    }
+
     let modalRemover = new bootstrap.Modal(document.getElementById('removeModal'), {
         keyboard: false
     });

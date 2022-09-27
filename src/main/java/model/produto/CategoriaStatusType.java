@@ -16,11 +16,27 @@ public enum CategoriaStatusType {
     LIMITADO("Produto Limitado", StatusType.AMBOS),
     OUTRO("Outro...", StatusType.AMBOS);
 
-    final String nomeTela;
-    final StatusType type;
+    String nomeTela;
+    StatusType type;
 
     CategoriaStatusType(String nomeTela, StatusType type) {
         this.nomeTela = nomeTela;
+        this.type = type;
+    }
+
+    public String getNomeTela() {
+        return nomeTela;
+    }
+
+    public void setNomeTela(String nomeTela) {
+        this.nomeTela = nomeTela;
+    }
+
+    public StatusType getType() {
+        return type;
+    }
+
+    public void setType(StatusType type) {
         this.type = type;
     }
 }

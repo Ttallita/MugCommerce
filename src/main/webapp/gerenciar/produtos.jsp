@@ -119,15 +119,27 @@
                     <h5 class="modal-title" id="removeModalTitle">Inativar produto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/emug/adm/produtos" method="POST">
+                <form action="/emug/adm/produtos" method="POST" id="formInativar">
                     <div class="modal-body">
+                        <div class="alert alert-danger alert-dismissible fade show"
+                             role="alert"
+                             id="erroInativar"
+                             style="display: none">
+                            <ul id="lista-erros">
+
+                            </ul>
+                        </div>
+
                         Deseja realmente inativar o produto?
                         <br/><br/>
                         <label for="categoriaInativacao">
                             <small>Categoria de Inativação</small>
                         </label>
-                        <select class="form-select" id="categoriaInativacao" aria-label="Categorias de inativação">
+                        <select class="form-select" id="categoriaInativacao" name="categoriaInativacao" aria-label="Categorias de inativação">
                             <option selected>Selecione...</option>
+                            <c:forEach var="categoria" items="${categoriasInativacao}">
+                                <option value="${categoria}">${categoria.nomeTela}</option>
+                            </c:forEach>
                         </select>
                         <br/>
 
@@ -163,6 +175,37 @@
     $('#maxVenda').mask("#.##0,00", {reverse: true});
     $('#minCompra').mask("#.##0,00", {reverse: true});
     $('#maxCompra').mask("#.##0,00", {reverse: true});
+
+    $( "#formInativar" ).submit(function( event ) {
+        event.preventDefault();
+
+        let categorias = $('#categoriaInativacao').val();
+        let justificativa = $('#justificativa').val();
+
+        let erros = []
+
+        if(categorias === '' || categorias === 'Selecione...')
+            erros.push('Selecione uma categoria')
+
+        if(justificativa === '')
+            erros.push('Digite a justificativa')
+
+        if(erros.length > 0) {
+            erros.forEach(erro => {
+                let li = document.createElement('li')
+
+                li.innerHTML = erro
+
+                document.getElementById('lista-erros').appendChild(li)
+            })
+
+            document.getElementById('erroInativar').style.display = 'block'
+            return;
+        }
+
+        $('#formInativar')[0].submit()
+    });
+
 </script>
 </body>
 </html>

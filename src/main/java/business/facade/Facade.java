@@ -8,20 +8,14 @@ import dao.*;
 import dao.cliente.CartaoDeCreditoDAO;
 import dao.cliente.ClienteDAO;
 import dao.cliente.EnderecoDAO;
-import dao.produto.CategoriaDAO;
-import dao.produto.FabricanteDAO;
-import dao.produto.GrupoPrecificacaoDAO;
-import dao.produto.ProdutoDAO;
+import dao.produto.*;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
-import model.produto.Categoria;
-import model.produto.Fabricante;
-import model.produto.GrupoPrecificacao;
-import model.produto.Produto;
+import model.produto.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +37,7 @@ public class Facade implements IFacade {
         daosMap.put(Categoria.class.getName(), new CategoriaDAO());
         daosMap.put(GrupoPrecificacao.class.getName(), new GrupoPrecificacaoDAO());
         daosMap.put(Produto.class.getName(), new ProdutoDAO());
+        daosMap.put(ProdutoStatus.class.getName(), new ProdutoStatusDAO());
 
         regrasDeNegocioMap = new HashMap<>();
 
@@ -52,7 +47,6 @@ public class Facade implements IFacade {
         regrasDeNegocioMap.put(CartaoDeCredito.class.getName(), getRegrasNegocioCartao());
         regrasDeNegocioMap.put(Produto.class.getName(), getRegrasNegocioProduto());
     }
-
 
     @Override
     public Result salvar(EntidadeDominio entidade) {
