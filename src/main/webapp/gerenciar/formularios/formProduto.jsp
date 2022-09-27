@@ -133,13 +133,6 @@
         $('#imagemBase64').val(imagemBase64)
     })
 
-    function montaUrl(baseUrl, path, params) {
-        let url = new URL(baseUrl + "/" +path)
-        url.search = new URLSearchParams(params).toString()
-
-        return url;
-    }
-
     async function montaSelect(url, id, tipo) {
         let response = await fetch(url)
         const json = await response.json();

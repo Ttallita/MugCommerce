@@ -25,6 +25,7 @@ import java.util.Map;
 import java.io.Serial;
 
 @WebServlet(urlPatterns = {
+        "/index/*",
         "/login",
         "/logout",
         "/cadastro",
@@ -44,6 +45,7 @@ public class Controller extends HttpServlet{
 
     public Controller() {
         commandMap = new HashMap<>();
+        commandMap.put("listarIndex", new ListarCommand());
         commandMap.put("salvar", new SalvarCommand());
         commandMap.put("atualizar", new AtualizarCommand());
         commandMap.put("excluir", new ExcluirCommand());
@@ -53,8 +55,10 @@ public class Controller extends HttpServlet{
         commandMap.put("listarUnico", new ListarCommand());
 
         viewHelperMap = new HashMap<>();
-        viewHelperMap.put("/emug/cadastro", new ClienteViewHelper());
+        viewHelperMap.put("/emug/index/produtos", new ProdutoViewHelper());
         viewHelperMap.put("/emug/login", new LoginViewHelper());
+
+        viewHelperMap.put("/emug/cadastro", new ClienteViewHelper());
         viewHelperMap.put("/emug/clientes", new ClienteViewHelper());
         viewHelperMap.put("/emug/clientes/atualizarSenha", new UsuarioViewHelper());
         viewHelperMap.put("/emug/clientes/enderecos", new EnderecoViewHelper());

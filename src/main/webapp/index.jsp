@@ -37,49 +37,10 @@
     <!--Lançamentos-->
     <div class="container-sm p-5">
         <h4>Lançamentos</h4>
-        <div class="row row-cols-xl-4">
-
-            <!-- Produto -->
-            <div class="col ps-4 pe-4">
-                <div class="card text-center">
-                    <img class="img-fluid p-4" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="nome_produto">
-                    <div class="card-body">
-                        <em>Nome produto</em>
-                        <h6>R$ 00,00</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col ps-4 pe-4">
-                <div class="card text-center">
-                    <img class="img-fluid p-4" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="nome_produto">
-                    <div class="card-body">
-                        <em>Nome produto</em>
-                        <h6>R$ 00,00</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col ps-4 pe-4">
-                <div class="card text-center">
-                    <img class="img-fluid p-4" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="nome_produto">
-                    <div class="card-body">
-                        <em>Nome produto</em>
-                        <h6>R$ 00,00</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col ps-4 pe-4">
-                <div class="card text-center">
-                    <img class="img-fluid p-4" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="nome_produto">
-                    <div class="card-body">
-                        <em>Nome produto</em>
-                        <h6>R$ 00,00</h6>
-                    </div>
-                </div>
-            </div>
+        <div class="row row-cols-xl-5 gap-5" id="lancamentos">
+            <!-- Lista produtos -->
         </div>
+
     </div>
 
     <jsp:include page="include/footer.jsp"/>
@@ -87,5 +48,51 @@
 </body>
 
 <script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+<script src='<c:url value="/webjars/jquery/3.6.1/jquery.min.js"/>'></script>
+<script src='<c:url value="/assets/js/geral.js"/>'></script>
+
+<script>
+
+    async function listaProdutos(url, id) {
+        let response = await fetch(url)
+        const json = await response.json();
+
+        json.forEach(produto => {
+
+            var nome = $('<em />', { 
+                text: produto.nome
+            });
+
+            var valorCompra = $('<p />', {
+                text: produto.valorCompra
+            });
+
+            var image = $('<img />', { 
+                class: 'img-fluid p-4' ,
+                src: produto.imagem
+            });
+
+            var divProduto = $( '<produto>', {
+                class: 'col card text-center'
+            });
+
+            image.appendTo(divProduto);
+            nome.appendTo(divProduto);
+            valorCompra.appendTo(divProduto);
+
+            divProduto.appendTo(document.getElementById("lancamentos"));
+        })
+    }
+
+    $(document).ready(() => {
+        const baseUrl = 'http://localhost:8080/emug/index';
+        let params = { operacao: 'listarIndex'}
+
+        let urlProdutos = montaUrl(baseUrl, 'produtos', params)
+
+        listaProdutos(urlProdutos, '#produtos')
+    })
+
+</script>
 
 </html>

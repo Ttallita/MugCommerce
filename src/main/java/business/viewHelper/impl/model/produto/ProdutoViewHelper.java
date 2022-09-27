@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class ProdutoViewHelper implements IViewHelper {
             }
 
             return produto;
-        } else if(operacao.equals("listar")) {
+        } else if(operacao.equals("listar") || operacao.equals("listarIndex")) {
             return new Produto();
         } else if("excluir".equals(operacao) || operacao.equals("listarUnico")) {
             Produto produto = new Produto();
@@ -79,8 +80,22 @@ public class ProdutoViewHelper implements IViewHelper {
         String operacao = request.getParameter("operacao");
 
         String msgTela = result.getMsg();
+        List<Produto> produtos;
 
         switch (operacao) {
+            case "listarIndex":
+                produtos = result.getEntidades()
+                                                .stream()
+                                                .map(entidade -> (Produto) entidade)
+                                                .toList();
+
+                response.setContentType("application/json");
+                Gson gson = new Gson();
+                PrintWriter writer = response.getWriter();
+                writer.write(gson.toJson(produtos));
+                writer.flush();
+                break;
+
             case "listar":
                 request.setAttribute("produtos", result.getEntidades());
                 request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
@@ -98,7 +113,7 @@ public class ProdutoViewHelper implements IViewHelper {
                 }
                 break;
             case "listarUnico":
-                List<Produto> produtos = result.getEntidades()
+                produtos = result.getEntidades()
                         .stream()
                         .map(entidade -> (Produto) entidade)
                         .toList();
