@@ -97,7 +97,7 @@
                         </div>
                     </div>
 
-                    ${produto.categorias}
+
                     <hr>
                     <input type="hidden" name="operacao" value="${not empty produto ? 'atualizar' : 'salvar'}">
                     <input type="submit" class="w-100 btn btn-primary btn-lg" name="botaoCadastro" value="${not empty produto ? 'Atualizar' : 'Cadastrar'}">
@@ -113,7 +113,6 @@
 <script src='<c:url value="/webjars/jquery/3.6.1/jquery.min.js"/>'></script>
 <script src='<c:url value="/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js"/>'></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
-<script src='<c:url value="/assets/js/JsBarcode.all.min.js"/>'></script>
 <script>
     const categoriasJSON = JSON.parse('${not empty categorias ? categorias : '{}'}')
 

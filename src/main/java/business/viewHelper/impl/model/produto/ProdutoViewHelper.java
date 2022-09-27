@@ -9,12 +9,12 @@ import model.produto.Fabricante;
 import model.produto.GrupoPrecificacao;
 import model.produto.Produto;
 import utils.Utils;
+import model.produto.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -72,7 +72,17 @@ public class ProdutoViewHelper implements IViewHelper {
 
             return produto;
         } else if("excluir".equals(operacao)) {
+            ProdutoStatus status = new ProdutoStatus();
 
+            String id = request.getParameter("id");
+            Produto produto = new Produto();
+            produto.setId(Long.parseLong(id));
+
+            status.setProduto(produto);
+            status.setCategoriaStatus(CategoriaStatusType.valueOf(request.getParameter("categoriaInativacao")));
+            status.setJustificativa(request.getParameter("justificativa"));
+
+            return status;
         }
 
         return null;
@@ -95,6 +105,11 @@ public class ProdutoViewHelper implements IViewHelper {
                 break;
 
             case "listar":
+                List<CategoriaStatusType> categoriasInativacao = Arrays.stream(CategoriaStatusType.values())
+                        .filter(categoriaStatusType -> !categoriaStatusType.getType().equals(StatusType.ATIVO))
+                        .toList();
+
+                request.setAttribute("categoriasInativacao", categoriasInativacao);
                 request.setAttribute("produtos", result.getEntidades());
                 request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
                 break;
