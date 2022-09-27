@@ -30,7 +30,7 @@ import java.io.Serial;
         "/cadastro",
         "/clientes/*",
         "/produtos/*",
-        "/adm/*"
+        "/adm/*",
 })
 @MultipartConfig
 public class Controller extends HttpServlet{

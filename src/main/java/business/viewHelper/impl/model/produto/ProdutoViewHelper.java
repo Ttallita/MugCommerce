@@ -61,7 +61,7 @@ public class ProdutoViewHelper implements IViewHelper {
             return produto;
         } else if(operacao.equals("listar")) {
             return new Produto();
-        } else if("excluir".equals(operacao) || operacao.equals("listarUnico")) {
+        } else if(operacao.equals("listarUnico")) {
             Produto produto = new Produto();
 
             String id = request.getParameter("id");
@@ -69,6 +69,8 @@ public class ProdutoViewHelper implements IViewHelper {
             produto.setAtivo(false);
 
             return produto;
+        } else if("excluir".equals(operacao)) {
+
         }
 
         return null;

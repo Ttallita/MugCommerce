@@ -162,6 +162,7 @@ public class ProdutoDAO implements IDAO {
                         .toList();
 
                 produtoConsulta.setCategorias(categorias);
+                produtoConsulta.setAtivo(rs.getBoolean("pro_ativo"));
                 produtos.add(produtoConsulta);
             }
 

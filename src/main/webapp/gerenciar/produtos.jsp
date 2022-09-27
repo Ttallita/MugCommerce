@@ -119,17 +119,30 @@
                     <h5 class="modal-title" id="removeModalTitle">Inativar produto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    Deseja realmente inativar o produto?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                    <form action="/emug/adm/produtos" method="POST">
-                         <input type="hidden" name="operacao" value="excluir">
+                <form action="/emug/adm/produtos" method="POST">
+                    <div class="modal-body">
+                        Deseja realmente inativar o produto?
+                        <br/><br/>
+                        <label for="categoriaInativacao">
+                            <small>Categoria de Inativação</small>
+                        </label>
+                        <select class="form-select" id="categoriaInativacao" aria-label="Categorias de inativação">
+                            <option selected>Selecione...</option>
+                        </select>
+                        <br/>
+
+                        <label for="justificativa" class="form-label">
+                            <small>Justificativa</small>
+                        </label>
+                        <textarea class="form-control" name="justificativa" id="justificativa" rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="operacao" value="excluir">
                         <input type="hidden" id="idRemover" name="id" value="">
-                        <input type="submit" class="btn btn-danger" value="Remover" id="botaoRemoverEndereco">
-                    </form>
-                </div>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                        <input type="submit" class="btn btn-danger" value="Inativar" id="botaoRemoverEndereco">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
