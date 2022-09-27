@@ -37,7 +37,7 @@
     <!--Lançamentos-->
     <div class="container-sm p-5">
         <h4>Lançamentos</h4>
-        <div class="row row-cols-xl-5 gap-5" id="lancamentos">
+        <div class="row row-cols-xl-5 g-4" id="lancamentos">
             <!-- Lista produtos -->
         </div>
 
@@ -53,44 +53,49 @@
 
 <script>
 
-    async function listaProdutos(url, id) {
+    async function listaProdutos(url, tipoCampo) {
         let response = await fetch(url)
         const json = await response.json();
 
         json.forEach(produto => {
-
-            var nome = $('<em />', { 
+            
+            let nome = $('<em />', { 
                 text: produto.nome
             });
 
-            var valorCompra = $('<p />', {
+            let valorCompra = $('<p />', {
                 text: produto.valorCompra
             });
 
-            var image = $('<img />', { 
+            let image = $('<img />', { 
                 class: 'img-fluid p-4' ,
                 src: produto.imagem
             });
 
-            var divProduto = $( '<produto>', {
-                class: 'col card text-center'
+            let card = $( '<div>', {
+                class: 'card text-center'
             });
 
-            image.appendTo(divProduto);
-            nome.appendTo(divProduto);
-            valorCompra.appendTo(divProduto);
+            let divProduto = $( '<div>', {
+                class: 'col'
+            });
+            
+            image.appendTo(card);
+            nome.appendTo(card);
+            valorCompra.appendTo(card);
+            card.appendTo(divProduto);
 
-            divProduto.appendTo(document.getElementById("lancamentos"));
+            divProduto.appendTo(document.getElementById(tipoCampo));
         })
     }
 
     $(document).ready(() => {
-        const baseUrl = 'http://localhost:8080/emug/index';
-        let params = { operacao: 'listarIndex'}
+        const baseUrl = 'http://localhost:8080/emug';
+        let params = { operacao: 'listar'}
 
-        let urlProdutos = montaUrl(baseUrl, 'produtos', params)
+        let urlProdutos = montaUrl(baseUrl, 'produtos/index', params)
 
-        listaProdutos(urlProdutos, '#produtos')
+        listaProdutos(urlProdutos, "lancamentos")
     })
 
 </script>

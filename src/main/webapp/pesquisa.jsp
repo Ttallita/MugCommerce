@@ -69,134 +69,62 @@
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="btn-group float-end">
+
                             <button type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                    class="btn btn-primary dropdown-toggle" id="ordenarResultados">Ordenar por</button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                                    class="btn btn-primary dropdown-toggle" id="ordenarResultados">
+                                    Ordenar por
+                            </button>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" href="#">Mais relevantes</a></li>
                                 <li><a class="dropdown-item" href="#">Maior preço</a></li>
                                 <li><a class="dropdown-item" href="#">Menor preço</a></li>
                             </ul>
+
                         </div>
                     </div>
                 </div>
+
                 <hr>
-                <div class="row row-cols-xl-4">
-                    <div class="col mb-3 ">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
-                                 alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Caneca</h5>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
+
+
+                <div class="container">
+                    <div class="row row-cols-xl-4 g-4">
+                        <!-- Lista produtos -->
+
+                        <c:forEach var="produto" items="${produtos}">
+
+                            <div class="col mb-3 ">
+                                <div class="card produto">
+                                    <img class="p-3" src="${produto.imagem}" alt="imagem-produto">
+                                    <div class="card-body pt-0">
+                                        <h5 class="fw-bolder">${produto.nome}</h5>
+                                        <div class="row">
+                                            <div class="col-8">R$ ${produto.valorVenda}</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Caneca</h5>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
+
+                            <!-- <div class="col mb-3">
+                                <div class="card produto">
+                                    <img class="p-3" src="${produto.imagem}" alt="imagem-produto">
+                                    <div class="card-body">
+                                        <a href="produto.jsp">
+                                            <h5 class="fw-bolder">${produto.nome}</h5>
+                                        </a>
+                                        <p>${produto.valorVenda}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Canecas</h6>
-                                <a href="produto.jsp">
-                                    <h5 class="fw-bolder">Caneca</h5>
-                                </a>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
-                                 alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Caneca</h5>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
-                                 alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Caneca</h5>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
-                                 alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Caneca</h5>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Caneca</h5>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg"
-                                 alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Caneca</h5>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-3">
-                        <div class="card produto">
-                            <img class="p-3" src="\emug\assets\img\canecas\caneca_porco.jpeg" alt="...">
-                            <div class="card-body pt-0">
-                                <h6>Canecas</h6>
-                                <h5 class="fw-bolder">Caneca</h5>
-                                <div class="row">
-                                    <div class="col-8">R$40.00</div>
-                                </div>
-                            </div>
-                        </div>
+                            </div> -->
+                        </c:forEach>
+
                     </div>
                 </div>
+
+
+                    
+
                 <div class="row">
                     <div class="col-12">
                         <nav aria-label="Page navigation">

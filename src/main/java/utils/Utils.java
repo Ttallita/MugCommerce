@@ -48,7 +48,7 @@ public class Utils {
     public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String operacao = request.getParameter("operacao");
 
-        if(operacao.equals("listar")) {
+        if(operacao.contains("listar") || operacao.equals("pesquisar")) {
 
             response.setContentType("application/json");
 

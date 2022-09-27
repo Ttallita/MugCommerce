@@ -25,7 +25,6 @@ import java.util.Map;
 import java.io.Serial;
 
 @WebServlet(urlPatterns = {
-        "/index/*",
         "/login",
         "/logout",
         "/cadastro",
@@ -45,17 +44,16 @@ public class Controller extends HttpServlet{
 
     public Controller() {
         commandMap = new HashMap<>();
-        commandMap.put("listarIndex", new ListarCommand());
+        commandMap.put("login", new ListarCommand());
         commandMap.put("salvar", new SalvarCommand());
         commandMap.put("atualizar", new AtualizarCommand());
         commandMap.put("excluir", new ExcluirCommand());
+        commandMap.put("pesquisar", new ListarCommand());
         commandMap.put("listar", new ListarCommand());
-        commandMap.put("login", new ListarCommand());
         commandMap.put("listarTodos", new ListarCommand());
         commandMap.put("listarUnico", new ListarCommand());
 
         viewHelperMap = new HashMap<>();
-        viewHelperMap.put("/emug/index/produtos", new ProdutoViewHelper());
         viewHelperMap.put("/emug/login", new LoginViewHelper());
 
         viewHelperMap.put("/emug/cadastro", new ClienteViewHelper());
@@ -70,6 +68,9 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/adm/fabricantes", new FabricanteViewHelper());
         viewHelperMap.put("/emug/adm/categorias", new CategoriaViewHelper());
         viewHelperMap.put("/emug/adm/grupos", new GrupoPrecificacaoViewHelper());
+
+        viewHelperMap.put("/emug/produtos/index", new ProdutoViewHelper());
+        viewHelperMap.put("/emug/produtos", new ProdutoViewHelper());
     }
 
     @Override

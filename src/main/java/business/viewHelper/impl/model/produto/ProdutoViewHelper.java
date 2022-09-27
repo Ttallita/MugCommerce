@@ -8,6 +8,7 @@ import model.produto.Categoria;
 import model.produto.Fabricante;
 import model.produto.GrupoPrecificacao;
 import model.produto.Produto;
+import utils.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -60,7 +61,7 @@ public class ProdutoViewHelper implements IViewHelper {
             }
 
             return produto;
-        } else if(operacao.equals("listar") || operacao.equals("listarIndex")) {
+        } else if(operacao.equals("listar") || operacao.equals("pesquisar")) {
             return new Produto();
         } else if(operacao.equals("listarUnico")) {
             Produto produto = new Produto();
@@ -81,27 +82,28 @@ public class ProdutoViewHelper implements IViewHelper {
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
 
+        if (request.getRequestURI().contains("index"))
+            operacao = "listarIndex";
+
         String msgTela = result.getMsg();
         List<Produto> produtos;
 
         switch (operacao) {
             case "listarIndex":
-                produtos = result.getEntidades()
-                                                .stream()
-                                                .map(entidade -> (Produto) entidade)
-                                                .toList();
-
-                response.setContentType("application/json");
-                Gson gson = new Gson();
-                PrintWriter writer = response.getWriter();
-                writer.write(gson.toJson(produtos));
-                writer.flush();
+                result.setEntidades(result.getEntidades().subList(0,5));
+                Utils.montaRespostaJson(result, request, response);
                 break;
 
             case "listar":
                 request.setAttribute("produtos", result.getEntidades());
                 request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
                 break;
+
+            case "pesquisar":
+                request.setAttribute("produtos", result.getEntidades());
+                request.getRequestDispatcher("/pesquisa.jsp").forward(request, response);
+                break;
+
             case "salvar":
             case "excluir":
                 if (msgTela == null)
@@ -114,6 +116,7 @@ public class ProdutoViewHelper implements IViewHelper {
                     request.getRequestDispatcher("/adm/formularios/formProduto.jsp").forward(request, response);
                 }
                 break;
+
             case "listarUnico":
                 produtos = result.getEntidades()
                         .stream()

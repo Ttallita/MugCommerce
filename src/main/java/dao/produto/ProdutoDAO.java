@@ -24,8 +24,8 @@ public class ProdutoDAO implements IDAO {
         try {
             connection = conexao.getConexao();
 
-            String sql = "INSERT INTO produtos (pro_fab_id, pro_grp_id, pro_nome, pro_valor_compra, pro_valor_venda, pro_descricao, pro_material, pro_cod_barras, pro_imagem)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO produtos (pro_fab_id, pro_grp_id, pro_nome, pro_valor_compra, pro_valor_venda, pro_descricao, pro_material, pro_cod_barras, pro_imagem, pro_ativo)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             GrupoPrecificacao grupo  = (GrupoPrecificacao) new GrupoPrecificacaoDAO().listar(produto.getGrupoPrecificacao(), "listarUnico")
                     .get(0);
@@ -42,6 +42,7 @@ public class ProdutoDAO implements IDAO {
             pstm.setString(7, produto.getMaterial());
             pstm.setString(8, produto.getCodBarras());
             pstm.setString(9, produto.getImagem());
+            pstm.setBoolean(10, produto.isAtivo());
 
             pstm.execute();
 
@@ -116,7 +117,7 @@ public class ProdutoDAO implements IDAO {
 
             String sql;
             PreparedStatement pstm = null;
-            if(operacao.equals("listar") || operacao.equals("listarIndex")) {
+            if(operacao.equals("listar") || operacao.equals("pesquisar")) {
                 sql = "SELECT * FROM produtos";
 
                 pstm = connection.prepareStatement(sql);
