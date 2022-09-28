@@ -59,12 +59,14 @@
 
         json.forEach(produto => {
             
-            let nome = $('<em />', { 
+            let nome = $('<a />', {
+                class: 'fw-bolder nome-produto',
+                href: "<c:url value='/produtos?operacao=listarUnico&id='/>" + produto.id,
                 text: produto.nome
             });
 
             let valorCompra = $('<p />', {
-                text: produto.valorCompra
+                text: 'R$ ' + produto.valorVenda
             });
 
             let image = $('<img />', { 

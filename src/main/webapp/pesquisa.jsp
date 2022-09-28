@@ -20,9 +20,11 @@
     <main class="wrapper container">
 
         <div class="row mt-4 bg-white rounded p-4 mb-3">
+
             <div class="col-md-12 p-3 border rounded mb-5">
                 1-10 de 50 resultados para <strong class="text-muted">"palavra pesquisada"</strong>
             </div>
+            
             <div class="col-xl-3 col-lg-4 col-md-5">
                 <h5 class="fw-bolder">Categoria</h5>
                 <ul class="list-group mt-4">
@@ -87,44 +89,28 @@
 
                 <hr>
 
-
                 <div class="container">
                     <div class="row row-cols-xl-4 g-4">
                         <!-- Lista produtos -->
 
                         <c:forEach var="produto" items="${produtos}">
-
                             <div class="col mb-3 ">
                                 <div class="card produto">
                                     <img class="p-3" src="${produto.imagem}" alt="imagem-produto">
                                     <div class="card-body pt-0">
-                                        <h5 class="fw-bolder">${produto.nome}</h5>
+                                        <a href="<c:url value='/produtos?operacao=listarUnico&id=${produto.id}'/>" class="fw-bolder nome-produto">${produto.nome}</a>
                                         <div class="row">
                                             <div class="col-8">R$ ${produto.valorVenda}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- <div class="col mb-3">
-                                <div class="card produto">
-                                    <img class="p-3" src="${produto.imagem}" alt="imagem-produto">
-                                    <div class="card-body">
-                                        <a href="produto.jsp">
-                                            <h5 class="fw-bolder">${produto.nome}</h5>
-                                        </a>
-                                        <p>${produto.valorVenda}</p>
-                                    </div>
-                                </div>
-                            </div> -->
                         </c:forEach>
 
                     </div>
                 </div>
 
-
-                    
-
+                <!-- Paginação -->
                 <div class="row">
                     <div class="col-12">
                         <nav aria-label="Page navigation">
@@ -149,17 +135,6 @@
             </div>
         </div>
 
-        <div style="z-index: 11" class="position-fixed bottom-0 end-0 p-2">
-            <div id="liveToast" role="alert" aria-live="assertive" aria-atomic="true" class="toast fade hide">
-                <div class="toast-body">
-                    <img src="\emug\assets\img\pelucias\caneca_porco.jpeg" alt="..." class="rounded me-2 w-25">
-                </div>
-                <div class="toast-header">
-                    <strong class="me-auto">Hatsune</strong><small>adicionado ao carrinho</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
     </main>
 
     <jsp:include page="include/footer.jsp"/>

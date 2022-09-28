@@ -140,7 +140,12 @@ public class ProdutoViewHelper implements IViewHelper {
 
                 request.setAttribute("produto", produtos.get(0));
                 request.setAttribute("categorias", new Gson().toJson(produtos.get(0).getCategorias()));
-                request.getRequestDispatcher("/gerenciar/formularios/formProduto.jsp").forward(request, response);
+
+                if (request.getRequestURI().contains("adm"))
+                    request.getRequestDispatcher("/gerenciar/formularios/formProduto.jsp").forward(request, response);
+                else
+                    request.getRequestDispatcher("/produto.jsp").forward(request, response);
+
                 break;
         }
     }

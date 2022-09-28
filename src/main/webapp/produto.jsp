@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos</title>
+    <title>${produto.nome}</title>
 
     <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css'/>"/>
@@ -20,34 +20,40 @@
 
     <main class="container mt-3">
         <div class="row mt-4 bg-white rounded p-4 mb-3">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="card  mb-3">
-                    <img alt="produto" class="p-2" src="\emug\assets\img\canecas\caneca_exemplo.jpeg">
+                    <img alt="produto" class="p-2" src="${produto.imagem}">
                 </div>
             </div>
-            <div class="col-md-5 p-3">
+            <div class="col-md-4">
                 <div>
-                    <p class="text-muted">Caneca Personalizada</p>
-                    <h2 class="title">Caneca</h2>
-                    <p>Descrição</p>
-                    <ul class="list-group mt-4">
-                        <li class="d-flex  justify-content-between">
-                            <h6 class="fw-bolder">Material</h6>
+                    <h2 class="title">${produto.nome}</h2>
 
-                            <h6 class="text-muted align-middle">material</h6>
-                        </li>
-                        <li class="d-flex  justify-content-between">
-                            <h6 class="fw-bolder">Fabricante</h6>
-                            <h6 class="text-muted align-middle">fabricante</h6>
-                        </li>
-                    </ul>
+                    <dl class="row">
+                        <dt class="col-sm-3">Fabricante</dt>
+                        <dd class="col-sm-9">${produto.fabricante.nome}</dd>
+
+                        <dt class="col-sm-3">Material</dt>
+                        <dd class="col-sm-9">${produto.material}</dd>
+                      
+                        <dt class="col-sm-3">Categorias</dt>
+                        <dd class="col-sm-9">
+                            <c:forEach var="categoria" items="${produto.categorias}">
+                                <span class="badge text-bg-secondary">${categoria.nome}</span> 
+                            </c:forEach>
+                        </dd>
+                      
+                        <dt class="col-sm-3">Descrição</dt>
+                        <dd class="col-sm-9">${produto.descricao}</dd>
+                      
+                      </dl>
                 </div>
             </div>
             <div class="col-md-3 border p-3">
-                <div>
+                <div class="container">
                     <p class="text-muted">10 vendidos</p>
                     <div class="mb-3">
-                        <h2>R$ 100,00</h2>
+                        <h2>R$ ${produto.valorVenda}</h2>
                     </div>
                     <hr>
                     <div class="row">
