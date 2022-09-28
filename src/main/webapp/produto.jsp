@@ -30,23 +30,23 @@
                     <h2 class="title">${produto.nome}</h2>
 
                     <dl class="row">
-                        <dt class="col-sm-3">Fabricante</dt>
-                        <dd class="col-sm-9">${produto.fabricante.nome}</dd>
+                        <dt class="col-sm-12 pt-3">Fabricante</dt>
+                        <dd class="col-sm-12 ">${produto.fabricante.nome}</dd>
 
-                        <dt class="col-sm-3">Material</dt>
-                        <dd class="col-sm-9">${produto.material}</dd>
+                        <dt class="col-sm-12 pt-3">Material</dt>
+                        <dd class="col-sm-12">${produto.material}</dd>
                       
-                        <dt class="col-sm-3">Categorias</dt>
-                        <dd class="col-sm-9">
+                        <dt class="col-sm-12 pt-3">Categorias</dt>
+                        <dd class="col-sm-12">
                             <c:forEach var="categoria" items="${produto.categorias}">
                                 <span class="badge text-bg-secondary">${categoria.nome}</span> 
                             </c:forEach>
                         </dd>
                       
-                        <dt class="col-sm-3">Descrição</dt>
-                        <dd class="col-sm-9">${produto.descricao}</dd>
+                        <dt class="col-sm-12 pt-3">Descrição</dt>
+                        <dd class="col-sm-12">${produto.descricao}</dd>
                       
-                      </dl>
+                    </dl>
                 </div>
             </div>
             <div class="col-md-3 border p-3">

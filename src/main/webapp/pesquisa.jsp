@@ -25,7 +25,7 @@
                 1-10 de 50 resultados para <strong class="text-muted">"palavra pesquisada"</strong>
             </div>
             
-            <div class="col-xl-3 col-lg-4 col-md-5">
+            <div class="col-xl-2 col-lg-4 col-md-5">
                 <h5 class="fw-bolder">Categoria</h5>
                 <ul class="list-group mt-4">
                     <li class="d-flex justify-content-between">
@@ -67,7 +67,7 @@
                 </ul>
             </div>
 
-            <div class="col-lg-9">
+            <div class="col-lg-10">
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="btn-group float-end">
