@@ -98,7 +98,7 @@
                     <h5 class="modal-title" id="removeModalTitle">Inativar produto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/emug/adm/produtos" method="POST" id="formInativar">
+                <form action="/emug/adm/produtos" method="POST" id="formStatus">
                     <div class="modal-body">
                         <div class="alert alert-danger alert-dismissible fade show"
                              role="alert"
@@ -114,7 +114,7 @@
                         <label for="categoriaInativacao">
                             <small>Categoria de Inativação</small>
                         </label>
-                        <select class="form-select" id="categoriaInativacao" name="categoriaInativacao" aria-label="Categorias de inativação">
+                        <select class="form-select" id="categoriaStatus" name="categoriaInativacao" aria-label="Categorias de inativação">
                             <option selected>Selecione...</option>
                             <c:forEach var="categoria" items="${categoriasInativacao}">
                                 <option value="${categoria}">${categoria.nomeTela}</option>
@@ -161,37 +161,6 @@
     $(function() {
         $('#tableProduto').bootstrapTable()
     })
-
-    $( "#formStatus" ).submit(function( event ) {
-        event.preventDefault();
-
-        let categorias = $('#categoriaStatus').val();
-        let justificativa = $('#justificativa').val();
-
-        let erros = []
-
-        if(categorias === '' || categorias === 'Selecione...')
-            erros.push('Selecione uma categoria')
-
-        if(justificativa === '')
-            erros.push('Digite a justificativa')
-
-        if(erros.length > 0) {
-            erros.forEach(erro => {
-                let li = document.createElement('li')
-
-                li.innerHTML = erro
-
-                document.getElementById('lista-erros').appendChild(li)
-            })
-
-            document.getElementById('erroInativar').style.display = 'block'
-            return;
-        }
-
-        $('#formInativar')[0].submit()
-    });
-
 </script>
 </body>
 </html>

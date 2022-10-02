@@ -117,3 +117,33 @@ const toBase64 = arquivo => new Promise((resolve, reject) => {
     reader.onerror = reject
     reader.readAsDataURL(arquivo)
 })
+
+$( "#formStatus" ).submit(function( event ) {
+    event.preventDefault();
+
+    let categorias = $('#categoriaStatus').val();
+    let justificativa = $('#justificativa').val();
+
+    let erros = []
+
+    if(categorias === '' || categorias === 'Selecione...')
+        erros.push('Selecione uma categoria')
+
+    if(justificativa === '')
+        erros.push('Digite a justificativa')
+
+    if(erros.length > 0) {
+        erros.forEach(erro => {
+            let li = document.createElement('li')
+
+            li.innerHTML = erro
+
+            document.getElementById('lista-erros').appendChild(li)
+        })
+
+        document.getElementById('erroInativar').style.display = 'block'
+        return;
+    }
+
+    $('#formInativar')[0].submit()
+});
