@@ -20,93 +20,93 @@
             <div class="col-lg-8">
                 <h3 class="mb-3 fw-bold">Confira e confirme sua compra</h3>
                 <div class="row border rounded p-3 m-2">
+
                     <div class="col-6 p-3">
-                        <strong>Endereço de entrega</strong>
+                        <h6>Endereço de entrega</h6>
                         <!--Aciona modal alterar endereço entrega-->
-                        <a type="button" id="alterarEndereco" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <a type="button" id="alterarEndereco" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#alterarEnderecoModal">
                             Alterar
                         </a>
-                        <h6>Casa</h6>
-                        <h6>Rua Carlos Barattino, 908</h6>
-                        <h6>SP - Brasil</h6>
-                        <h6>CEP: 08773-600</h6>
-                        <h6>Observação</h6>
+                        <ul class="list-unstyled">
+                            <li>${enderecoEntrega.apelido} (${enderecoEntrega.tipoResidencia})</li>
+                            <li>${enderecoEntrega.tipoLogradouro} ${enderecoEntrega.logradouro}, ${enderecoEntrega.numero}</li>
+                            <li>${enderecoEntrega.cidade}, ${enderecoEntrega.estado} - Brasil</li>
+                            <li>CEP: ${enderecoEntrega.cep}</li>
+                            <li>${enderecoEntrega.observacoes}</li>
+                        </ul>
                     </div>
+                    
                     <div class="col-6">
                         <div class="col p-3">
-                            <strong>Forma de pagamento</strong>
+                            <h6>Forma de pagamento</h6>
                             <!--Aciona modal alterar forma de pagamento-->
                             <a type="button" id="alterarPagamento" class="text-decoration-none" data-bs-toggle="modal"
                                data-bs-target="#alterarFormaPagamentoModal">
                                 Alterar
                             </a>
-                            <h6>(Crédito) com final 0000</h6>
+                            <p>(Crédito) com final 0000</p>
                         </div>
                     </div>
+
                     <div class="col-6 p-3">
-                        <strong>Cupons aplicados:</strong>
-                        <div class="toast align-items-center text-white bg-primary border-0 fade show" aria-live="assertive" aria-atomic="true" role="alert">
-                            <div class="p-2">
-                                <button type="button" data-bs-dismiss="toast" aria-label="Close" class="btn-close btn-close-white me-2"></button>
+                        <h6>Cupons aplicados:</h6>
+
+                        <c:forEach var="cupom" items="${cupons}">
+                            <div class="toast align-items-center p-2 fade show" aria-live="assertive" aria-atomic="true" role="alert">
+
                                 <div class="d-flex justify-content-between">
-                                    <h6 class="fw-bold">PROMOCIONAL</h6>
-                                    <h7>Validade: 26/2023</h7>
+                                    <strong class="fw-bold">${cupom.tipo}</strong>
+                                    <small>Validade: ${cupom.dataValidade}</small>
+                                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                 </div>
+                                
                                 <div class="d-flex justify-content-between">
-                                    <h5>BLACK FRIDAY</h5>
-                                    <h5>R$ 50,00</h5>
+                                    <p class="lead">${cupom.nome}</p>
+                                    <strong class="lead fw-bold">R$ ${cupom.valor}</strong>
                                 </div>
                             </div>
-                        </div>
+                        </c:forEach>
+
                     </div>
-                    <div class="col-6 p-3"><strong>Adicionar cupom</strong>
+
+                    <div class="col-6 p-3">
+                        <h6>Adicionar cupom</h6>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" aria-label="Recipient's username"
                                    aria-describedby="button-addon2" placeholder="Nome cupom">
                             <button type="button" id="button-addon2" class="btn btn-outline-primary">Aplicar</button>
                         </div>
                     </div>
+
                 </div>
+
                 <div class="row border rounded p-3 m-2">
+
                     <h4 class="mb-3 fw-bold">Itens</h4>
-                    <div class="row border-top p-3">
-                        <h6 class="mb-3 text-primary fw-bold">Data de entrega: 00 mês 0000 </h6>
-                        <div class="col-3">
-                            <div class="card produto mb-3">
-                                <img alt="..." src="\emug\assets\img\canecas\caneca_exemplo.jpeg" class="p-2">
+                    <strong class="mb-3 text-primary fw-bold">Previsão de entrega: 00 mês 0000 </strong>
+
+                    <c:forEach var="produto" items="${produtos}">
+                        <div class="row border-top p-3">
+                            <div class="col-3">
+                                <div class="card produto mb-3">
+                                    <img alt="imagem_produto" src="\emug\assets\img\canecas\caneca_exemplo.jpeg" class="p-2">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4>R$ 100,00</h4>Quantidade: 1
                             </div>
                         </div>
-                        <div class="col">
-                            <h4 class="mb-3">
-                                <h6 class="text-muted">Categoria</h6>Nome
-                            </h4>
-                            <h4>R$ 100,00</h4>Quantidade: 1
-                            <a class="text-decoration-none">Alterar</a>
-                        </div>
-                    </div>
-                    <div class="row border-top p-3">
-                        <h6 class="mb-3 text-primary fw-bold">Data de entrega: 00 mês 0000 </h6>
-                        <div class="col-3">
-                            <div class="card produto mb-3">
-                                <img alt="produto" src="\emug\assets\img\canecas\caneca_porco.jpeg" class="p-2">
-                            </div>
-                        </div>
-                        <div class="col">
-                            <h4 class="mb-3">
-                                <h6 class="text-muted">Categoria</h6>Nome
-                            </h4>
-                            <h4>R$ 100,00</h4>Quantidade: 1
-                            <a class="text-decoration-none">Alterar</a>
-                        </div>
-                    </div>
+                    </c:forEach>
+
                 </div>
             </div>
+
             <div class="col-lg-4 order-md-last">
                 <div class="row vstack mt-5">
                     <div class="container border rounded py-4">
                         <ul class="list-group">
                             <li class="d-flex mb-4 justify-content-between">
-                                <h5 class="fw-bold ">Resumo do pedido</h5>
+                                <h5 class="fw-bold">Resumo do pedido</h5>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Itens:</strong>
@@ -129,14 +129,15 @@
                     </div>
                 </div>
             </div>
+            
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Modal endereco-->
+        <div class="modal fade" id="alterarEnderecoModal" tabindex="-1" aria-labelledby="alterarEnderecoModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Escolha o endereço</h5>
+                        <h5 class="modal-title" id="alterarEnderecoModalLabel">Escolha o endereço</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -167,7 +168,7 @@
         </div>
     </main>
 
-    <jsp:include page="include/footer.jsp"/>
+    <jsp:include page="../include/footer.jsp"/>
 
 </body>
 
