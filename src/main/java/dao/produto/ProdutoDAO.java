@@ -30,18 +30,12 @@ public class ProdutoDAO implements IDAO {
             GrupoPrecificacao grupo  = (GrupoPrecificacao) new GrupoPrecificacaoDAO().listar(produto.getGrupoPrecificacao(), "listarUnico")
                     .get(0);
 
-            double valorVenda = produto.getValorCompra() + (produto.getValorCompra() + (grupo.getMargemLucro() / 100));
+            double valorVenda = getValorVenda(produto, grupo);
 
             PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1, produto.getFabricante().getId());
             pstm.setLong(2, grupo.getId());
-            pstm.setString(3, produto.getNome());
-            pstm.setDouble(4, produto.getValorCompra());
-            pstm.setDouble(5, valorVenda);
-            pstm.setString(6, produto.getDescricao());
-            pstm.setString(7, produto.getMaterial());
-            pstm.setString(8, produto.getCodBarras());
-            pstm.setString(9, produto.getImagem());
+            setaValores(produto, valorVenda, pstm);
             pstm.setBoolean(10, produto.isAtivo());
 
             pstm.execute();
@@ -71,9 +65,55 @@ public class ProdutoDAO implements IDAO {
         return null;
     }
 
+    private static double getValorVenda(Produto produto, GrupoPrecificacao grupo) {
+        return produto.getValorCompra() + (produto.getValorCompra() + (grupo.getMargemLucro() / 100));
+    }
+
     @Override
     public EntidadeDominio atualizar(EntidadeDominio entidade) {
+        Produto produto = (Produto) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "UPDATE produtos SET pro_fab_id = ?, pro_grp_id = ?, pro_nome = ?, pro_valor_compra = ?" +
+                    ", pro_valor_venda = ?, pro_descricao = ?, pro_material = ?, pro_cod_barras = ?, pro_imagem = ?" +
+                    " WHERE pro_id = ?;";
+
+            GrupoPrecificacao grupo  = (GrupoPrecificacao) new GrupoPrecificacaoDAO().listar(produto.getGrupoPrecificacao(), "listarUnico")
+                    .get(0);
+
+            double valorVenda = getValorVenda(produto, grupo);
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setLong(1, produto.getFabricante().getId());
+            pstm.setLong(2, produto.getGrupoPrecificacao().getId());
+            setaValores(produto, valorVenda, pstm);
+            pstm.setLong(10, produto.getId());
+            pstm.execute();
+
+            return produto;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(conn);
+        }
+
         return null;
+    }
+
+    public void setaValores(Produto produto, double valorVenda, PreparedStatement pstm) throws SQLException {
+        pstm.setString(3, produto.getNome());
+        pstm.setDouble(4, produto.getValorCompra());
+        pstm.setDouble(5, valorVenda);
+        pstm.setString(6, produto.getDescricao());
+        pstm.setString(7, produto.getMaterial());
+        pstm.setString(8, produto.getCodBarras());
+        pstm.setString(9, produto.getImagem());
     }
 
     @Override

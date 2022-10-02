@@ -11,8 +11,12 @@
     <title>Gerenciar - Produtos</title>
 
     <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css' />"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css' />"/>
     <link rel="stylesheet" href="<c:url value='/assets/css/style.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/bootstrap-table.min.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/bootstrap-table-filter-control.min.css' />"/>
+
 </head>
 
 <body>
@@ -27,49 +31,24 @@
         <h5>Produtos</h5>
 
         <hr>
-
-        <!-- Filtro de Estoque-->
-        <div class="container">
-            <form>
-                <div class="row g-3">
-
-                    <div class="col-sm-4">
-                        <small>Valor compra</small>
-                        <div class="input-group">
-                            <input class="form-control" id="minCompra" placeholder="R$ min" type="text">
-                            <span class="input-group-text">-</span>
-                            <input type="text" class="form-control" id="maxCompra" placeholder="R$ max">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <small>Valor venda</small>
-                        <div class="input-group">
-                            <input class="form-control" id="minVenda" placeholder="R$ min" type="text">
-                            <span class="input-group-text">-</span>
-                            <input type="text" class="form-control" id="maxVenda" placeholder="R$ max">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-12">
-                        <button type="button" class="btn btn-primary btn-sm">Pesquisar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <hr>
-
         <div class="table-responsive p-3 rounded mb-4">
-            <table class="table table-hover w-100">
+            <table id="tableProduto"
+                   class="table table-hover w-100"
+                   data-toggle="table"
+                   data-pagination="true"
+                   data-search="true"
+                   data-page-size="25"
+                   data-locale="pt-BR"
+                   data-filter-control="true"
+                   data-show-search-clear-button="true">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Valor compra</th>
-                        <th>Valor venda</th>
-                        <th>Material</th>
-                        <th>Cod. Barras</th>
-                        <th>Editar</th>
+                        <th data-field="nome" data-filter-control="input">Nome</th>
+                        <th data-field="valorCompra" data-filter-control="input">Valor compra</th>
+                        <th data-field="valorVenda" data-filter-control="input">Valor venda</th>
+                        <th data-field="material" data-filter-control="select">Material</th>
+                        <th data-field="codBarras" data-filter-control="input">Cod. Barras</th>
+                        <th>${!produto.ativo ? 'Ativar Produto' : ''}</th>
                         <th>Inativar</th>
                     </tr>
                 </thead>
@@ -111,7 +90,7 @@
         </div>
     </div>
 
-    <!-- Modal Remover endereço -->
+    <!-- Modal Inativar Produto -->
     <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -119,7 +98,7 @@
                     <h5 class="modal-title" id="removeModalTitle">Inativar produto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/emug/adm/produtos" method="POST" id="formInativar">
+                <form action="/emug/adm/produtos" method="POST" id="formStatus">
                     <div class="modal-body">
                         <div class="alert alert-danger alert-dismissible fade show"
                              role="alert"
@@ -135,7 +114,7 @@
                         <label for="categoriaInativacao">
                             <small>Categoria de Inativação</small>
                         </label>
-                        <select class="form-select" id="categoriaInativacao" name="categoriaInativacao" aria-label="Categorias de inativação">
+                        <select class="form-select" id="categoriaStatus" name="categoriaInativacao" aria-label="Categorias de inativação">
                             <option selected>Selecione...</option>
                             <c:forEach var="categoria" items="${categoriasInativacao}">
                                 <option value="${categoria}">${categoria.nomeTela}</option>
@@ -165,47 +144,23 @@
 
 <jsp:include page="../include/footer.jsp"/>
 
-<script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js' />"></script>
 <script src="<c:url value='/webjars/jquery/3.6.1/jquery.min.js' />"></script>
+<script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js' />"></script>
+<script src='<c:url value="/assets/js/bootstrap-table.min.js"/>'></script>
+<script src='<c:url value="/assets/js/bootstrap-table-filter-control.min.js"/>'></script>
+<script src='<c:url value="/assets/js/bootstrap-table-pt-BR.min.js"/>'></script>
 <script src="<c:url value='/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js' />"></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
-
 <script>
     $('#minVenda').mask("#.##0,00", {reverse: true});
     $('#maxVenda').mask("#.##0,00", {reverse: true});
     $('#minCompra').mask("#.##0,00", {reverse: true});
     $('#maxCompra').mask("#.##0,00", {reverse: true});
 
-    $( "#formInativar" ).submit(function( event ) {
-        event.preventDefault();
 
-        let categorias = $('#categoriaInativacao').val();
-        let justificativa = $('#justificativa').val();
-
-        let erros = []
-
-        if(categorias === '' || categorias === 'Selecione...')
-            erros.push('Selecione uma categoria')
-
-        if(justificativa === '')
-            erros.push('Digite a justificativa')
-
-        if(erros.length > 0) {
-            erros.forEach(erro => {
-                let li = document.createElement('li')
-
-                li.innerHTML = erro
-
-                document.getElementById('lista-erros').appendChild(li)
-            })
-
-            document.getElementById('erroInativar').style.display = 'block'
-            return;
-        }
-
-        $('#formInativar')[0].submit()
-    });
-
+    $(function() {
+        $('#tableProduto').bootstrapTable()
+    })
 </script>
 </body>
 </html>
