@@ -157,8 +157,15 @@ public class ProdutoDAO implements IDAO {
 
             String sql;
             PreparedStatement pstm = null;
-            if(operacao.equals("listar") || operacao.equals("pesquisar")) {
+
+            if(operacao.equals("listar")) {
+
                 sql = "SELECT * FROM produtos";
+
+                pstm = connection.prepareStatement(sql);
+
+            } if(operacao.equals("pesquisar")) {
+                sql = "SELECT * FROM produtos WHERE pro_ativo = true";
 
                 pstm = connection.prepareStatement(sql);
             } else if(operacao.equals("listarUnico")) {

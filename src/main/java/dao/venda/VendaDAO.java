@@ -62,8 +62,6 @@ public class VendaDAO implements IDAO {
                 pstm = connection.prepareStatement(sql);
             }
 
-
-
             ResultSet rs = pstm.executeQuery();
 
             List<EntidadeDominio> vendas = new ArrayList<>();
