@@ -48,7 +48,7 @@
                         <th data-field="valorVenda" data-filter-control="input">Valor venda</th>
                         <th data-field="material" data-filter-control="select">Material</th>
                         <th data-field="codBarras" data-filter-control="input">Cod. Barras</th>
-                        <th>${!produto.ativo ? 'Ativar Produto' : ''}</th>
+                        <th>Editar</th>
                         <th>Inativar</th>
                     </tr>
                 </thead>
@@ -111,7 +111,7 @@
 
                         Deseja realmente inativar o produto?
                         <br/><br/>
-                        <label for="categoriaInativacao">
+                        <label for="categoriaStatus">
                             <small>Categoria de Inativação</small>
                         </label>
                         <select class="form-select" id="categoriaStatus" name="categoriaInativacao" aria-label="Categorias de inativação">
