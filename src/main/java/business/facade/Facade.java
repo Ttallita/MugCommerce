@@ -12,11 +12,15 @@ import dao.produto.*;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
+import model.carrinho.Carrinho;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.produto.*;
+import session.ISessionUtil;
+import session.carrinho.CarrinhoSessionUtil;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +28,7 @@ import java.util.Map;
 public class Facade implements IFacade {
 
     private final Map<String, IDAO> daosMap;
+    private final Map<String, ISessionUtil> sessionMap;
 
     private final Map<String, Map<String, List<IStrategy>>> regrasDeNegocioMap;
 
@@ -39,6 +44,9 @@ public class Facade implements IFacade {
         daosMap.put(Produto.class.getName(), new ProdutoDAO());
         daosMap.put(ProdutoStatus.class.getName(), new ProdutoStatusDAO());
 
+        sessionMap = new HashMap<>();
+        sessionMap.put(Carrinho.class.getName(), new CarrinhoSessionUtil());
+
         regrasDeNegocioMap = new HashMap<>();
 
         regrasDeNegocioMap.put(Cliente.class.getName(), getRegrasNegocioCliente());
@@ -49,7 +57,7 @@ public class Facade implements IFacade {
     }
 
     @Override
-    public Result salvar(EntidadeDominio entidade) {
+    public Result salvar(EntidadeDominio entidade, HttpSession session) {
         Result result = new Result();
 
         String nomeClasse = entidade.getClass().getName();
@@ -59,7 +67,12 @@ public class Facade implements IFacade {
         if(resultado == null) {
             IDAO dao = daosMap.get(nomeClasse);
 
-            entidade = dao.salvar(entidade);
+            if(dao != null) {
+                entidade = dao.salvar(entidade);
+            } else {
+                ISessionUtil sessionUtil = sessionMap.get(nomeClasse);
+                sessionUtil.salvar(entidade, session);
+            }
         }
 
         result.setMsg(resultado);
@@ -69,7 +82,7 @@ public class Facade implements IFacade {
     }
 
     @Override
-    public Result atualizar(EntidadeDominio entidade) {
+    public Result atualizar(EntidadeDominio entidade, HttpSession session) {
         Result result = new Result();
 
         String nomeClasse = entidade.getClass().getName();
@@ -89,7 +102,7 @@ public class Facade implements IFacade {
     }
 
     @Override
-    public Result deletar(EntidadeDominio entidade) {
+    public Result deletar(EntidadeDominio entidade, HttpSession session) {
         Result result = new Result();
 
         String nomeClasse = entidade.getClass().getName();
@@ -109,7 +122,7 @@ public class Facade implements IFacade {
     }
 
     @Override
-    public Result listar(EntidadeDominio entidade, String operacao) {
+    public Result listar(EntidadeDominio entidade, HttpSession session, String operacao) {
         Result result = new Result();
 
         String nomeClasse = entidade.getClass().getName();

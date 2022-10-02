@@ -149,14 +149,8 @@
 <script src='<c:url value="/assets/js/bootstrap-table.min.js"/>'></script>
 <script src='<c:url value="/assets/js/bootstrap-table-filter-control.min.js"/>'></script>
 <script src='<c:url value="/assets/js/bootstrap-table-pt-BR.min.js"/>'></script>
-<script src="<c:url value='/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js' />"></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
 <script>
-    $('#minVenda').mask("#.##0,00", {reverse: true});
-    $('#maxVenda').mask("#.##0,00", {reverse: true});
-    $('#minCompra').mask("#.##0,00", {reverse: true});
-    $('#maxCompra').mask("#.##0,00", {reverse: true});
-
 
     $(function() {
         $('#tableProduto').bootstrapTable()
