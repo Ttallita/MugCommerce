@@ -25,42 +25,7 @@ public class ProdutoViewHelper implements IViewHelper {
         String operacao = request.getParameter("operacao");
 
         if ("salvar".equals(operacao)) {
-            Produto produto = new Produto();
-            produto.setNome(request.getParameter("nomeProduto"));
-            produto.setImagem(request.getParameter("imagemBase64"));
-
-            String valorCompra = request.getParameter("valorCompra");
-
-            if(valorCompra != null) {
-                String valorCompraFormatado = valorCompra.replace(".", "")
-                        .replace(",", ".");
-                produto.setValorCompra(Double.parseDouble(valorCompraFormatado));
-            }
-
-            produto.setCodBarras(request.getParameter("codBarras"));
-            produto.setMaterial(request.getParameter("material"));
-
-            if(request.getParameter("fabricante") != null) {
-                long idFabricante = Long.parseLong(request.getParameter("fabricante"));
-                produto.setFabricante(new Fabricante(idFabricante, ""));
-            }
-
-            if(request.getParameter("grupoPrecificacao") != null) {
-                long idGrupoPrecificacao = Long.parseLong(request.getParameter("grupoPrecificacao"));
-                produto.setGrupoPrecificacao(new GrupoPrecificacao(idGrupoPrecificacao, ""));
-            }
-
-            produto.setDescricao(request.getParameter("descricao"));
-
-            if(request.getParameter("categorias") != null) {
-                List<Categoria> categorias = Arrays.stream(request.getParameterValues("categorias"))
-                        .map(categoria -> new Categoria(Long.parseLong(categoria), ""))
-                        .toList();
-
-                produto.setCategorias(categorias);
-            }
-
-            return produto;
+            return criaProdutoBasico(request);
         } else if(operacao.equals("listar") || operacao.equals("pesquisar")) {
             return new Produto();
         } else if(operacao.equals("listarUnico")) {
@@ -78,49 +43,93 @@ public class ProdutoViewHelper implements IViewHelper {
             Produto produto = new Produto();
             produto.setId(Long.parseLong(id));
 
+            String statusProduto = request.getParameter("status");
+            produto.setAtivo(statusProduto != null);
+
             status.setProduto(produto);
             status.setCategoriaStatus(CategoriaStatusType.valueOf(request.getParameter("categoriaInativacao")));
             status.setJustificativa(request.getParameter("justificativa"));
 
             return status;
+        } else if(operacao.equals("atualizar")) {
+            Produto produto = criaProdutoBasico(request);
+            produto.setId(Long.valueOf(request.getParameter("id")));
+
+            return produto;
         }
 
         return null;
     }
 
+    private static Produto criaProdutoBasico(HttpServletRequest request) {
+        Produto produto = new Produto();
+        produto.setNome(request.getParameter("nomeProduto"));
+        produto.setImagem(request.getParameter("imagemBase64"));
+
+        String valorCompra = request.getParameter("valorCompra");
+
+        if(valorCompra != null) {
+            String valorCompraFormatado = valorCompra.replace(".", "")
+                    .replace(",", ".");
+            produto.setValorCompra(Double.parseDouble(valorCompraFormatado));
+        }
+
+        produto.setCodBarras(request.getParameter("codBarras"));
+        produto.setMaterial(request.getParameter("material"));
+
+        if(request.getParameter("fabricante") != null) {
+            long idFabricante = Long.parseLong(request.getParameter("fabricante"));
+            produto.setFabricante(new Fabricante(idFabricante, ""));
+        }
+
+        if(request.getParameter("grupoPrecificacao") != null) {
+            long idGrupoPrecificacao = Long.parseLong(request.getParameter("grupoPrecificacao"));
+            produto.setGrupoPrecificacao(new GrupoPrecificacao(idGrupoPrecificacao, ""));
+        }
+
+        produto.setDescricao(request.getParameter("descricao"));
+
+        if(request.getParameter("categorias") != null) {
+            List<Categoria> categorias = Arrays.stream(request.getParameterValues("categorias"))
+                    .map(categoria -> new Categoria(Long.parseLong(categoria), ""))
+                    .toList();
+
+            produto.setCategorias(categorias);
+        }
+
+        return produto;
+    }
+
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
-
-        if (request.getRequestURI().contains("index"))
-            operacao = "listarIndex";
-
         String msgTela = result.getMsg();
-        List<Produto> produtos;
 
         switch (operacao) {
-            case "listarIndex":
-                result.setEntidades(result.getEntidades().subList(0,5));
-                Utils.montaRespostaJson(result, request, response);
-                break;
-
             case "listar":
-                List<CategoriaStatusType> categoriasInativacao = Arrays.stream(CategoriaStatusType.values())
-                        .filter(categoriaStatusType -> !categoriaStatusType.getType().equals(StatusType.ATIVO))
-                        .toList();
 
-                request.setAttribute("categoriasInativacao", categoriasInativacao);
-                request.setAttribute("produtos", result.getEntidades());
-                request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
+                if (request.getRequestURI().contains("index")) {
+                    result.setEntidades(result.getEntidades().size() >= 5 ? result.getEntidades().subList(0,5) : result.getEntidades());
+                    Utils.montaRespostaJson(result, request, response);
+                } else {
+
+                    List<CategoriaStatusType> categoriasInativacao = Arrays.stream(CategoriaStatusType.values())
+                            .filter(categoriaStatusType -> !categoriaStatusType.getType().equals(StatusType.ATIVO))
+                            .toList();
+
+                    request.setAttribute("categoriasInativacao", categoriasInativacao);
+                    request.setAttribute("produtos", result.getEntidades());
+                    request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
+                }
+
                 break;
-
             case "pesquisar":
                 request.setAttribute("produtos", result.getEntidades());
                 request.getRequestDispatcher("/pesquisa.jsp").forward(request, response);
                 break;
-
             case "salvar":
             case "excluir":
+            case "atualizar":
                 if (msgTela == null)
                     response.sendRedirect("/emug/adm/produtos?operacao=listar");
                 else {
@@ -131,13 +140,17 @@ public class ProdutoViewHelper implements IViewHelper {
                     request.getRequestDispatcher("/adm/formularios/formProduto.jsp").forward(request, response);
                 }
                 break;
-
             case "listarUnico":
-                produtos = result.getEntidades()
+                List<Produto> produtos = result.getEntidades()
                         .stream()
                         .map(entidade -> (Produto) entidade)
                         .toList();
 
+                List<CategoriaStatusType> categoriasAtivacao = Arrays.stream(CategoriaStatusType.values())
+                        .filter(categoriaStatusType -> !categoriaStatusType.getType().equals(StatusType.INATIVO))
+                        .toList();
+
+                request.setAttribute("categoriasAtivacao", categoriasAtivacao);
                 request.setAttribute("produto", produtos.get(0));
                 request.setAttribute("categorias", new Gson().toJson(produtos.get(0).getCategorias()));
                 request.getRequestDispatcher("/gerenciar/formularios/formProduto.jsp").forward(request, response);

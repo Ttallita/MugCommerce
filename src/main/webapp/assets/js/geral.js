@@ -22,12 +22,12 @@ function aplicaMascaraTelefone() {
 function abrirModal(id) {
     document.getElementById("idRemover").value = id;
 
-    let form = $('#formInativar')
+    let form = $('#formStatus')
     /*
         Limpa campos caso exista o form de inativação
      */
     if(form != null) {
-        $('#categoriaInativacao').val("Selecione...");
+        $('#categoriaStatus').val("Selecione...");
         $('#justificativa').val("");
     }
 
