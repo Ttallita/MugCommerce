@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -73,7 +74,7 @@
                                 <strong class="text-muted">Total:</strong>
                                 <h5 class="font-weight-bold">R$ 400,00</h5>
                             </li>
-                            <a href="finalizarCompra.jsp" class="btn btn-primary rounded-pill py-2 ">
+                            <a href="<c:url value='/clientes/carrinho/finalizarCompra?operacao=listar'/>" class="btn btn-primary rounded-pill py-2 ">
                                 Finalizar compra
                             </a>
                         </ul>

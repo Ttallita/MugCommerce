@@ -9,13 +9,18 @@ import dao.cliente.CartaoDeCreditoDAO;
 import dao.cliente.ClienteDAO;
 import dao.cliente.EnderecoDAO;
 import dao.produto.*;
+import dao.venda.VendaDAO;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
+import model.carrinho.Carrinho;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.produto.*;
+import model.venda.Venda;
+import session.ISession;
+import session.carrinho.CarrinhoSession;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +29,7 @@ import java.util.Map;
 public class Facade implements IFacade {
 
     private final Map<String, IDAO> daosMap;
+    private final Map<String, ISession> sessionsMap;
 
     private final Map<String, Map<String, List<IStrategy>>> regrasDeNegocioMap;
 
@@ -38,6 +44,10 @@ public class Facade implements IFacade {
         daosMap.put(GrupoPrecificacao.class.getName(), new GrupoPrecificacaoDAO());
         daosMap.put(Produto.class.getName(), new ProdutoDAO());
         daosMap.put(ProdutoStatus.class.getName(), new ProdutoStatusDAO());
+        daosMap.put(Venda.class.getName(), new VendaDAO());
+
+        sessionsMap = new HashMap<>();
+        sessionsMap.put(Carrinho.class.getName(), new CarrinhoSession());
 
         regrasDeNegocioMap = new HashMap<>();
 

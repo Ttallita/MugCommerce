@@ -3,18 +3,19 @@ package model.venda;
 import java.time.LocalDate;
 import java.util.List;
 
+import model.EntidadeDominio;
 import model.cliente.CartaoDeCredito;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
 import model.cliente.Cliente;
 import model.produto.Produto;
 
-public class Venda {
+public class Venda extends EntidadeDominio {
     private Cliente cliente;
     private Endereco enderecoEntrega;
     private List<Produto> produtos;
     private Double precoTotal;
-    private List<CartaoDeCredito> cartoesdeCreditos;
+    private List<CartaoDeCredito> cartoesdeCreditos; //// TODO verificar se pode usar mais de um cartão de crédito
     private List<Cupom> cupons;
     private Double frete;
     private LocalDate dataCompra;

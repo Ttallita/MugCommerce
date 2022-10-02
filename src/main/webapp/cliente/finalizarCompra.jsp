@@ -3,15 +3,19 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Finalizar compra</title>
-    <link rel="stylesheet" href="/emug/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/emug/webjars/material-design-icons/4.0.0/material-icons.css"/>
-    <link rel="stylesheet" href="../assets/css/style.css"/>
+
+    <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/style.css'/>"/>
 </head>
+
 <body>
     <jsp:include page="../include/header.jsp" />
 
@@ -44,14 +48,15 @@
                                data-bs-target="#alterarFormaPagamentoModal">
                                 Alterar
                             </a>
-                            <p>(Crédito) com final 0000</p>
+                            <p>(Crédito) com final 0000 ${cartaoCredito.nomeImpressoCartao}
+                            </p>
                         </div>
                     </div>
 
                     <div class="col-6 p-3">
                         <h6>Cupons aplicados:</h6>
 
-                        <c:forEach var="cupom" items="${cupons}">
+                        <c:forEach var="cupom" items="${cuponsAplicados}">
                             <div class="toast align-items-center p-2 fade show" aria-live="assertive" aria-atomic="true" role="alert">
 
                                 <div class="d-flex justify-content-between">

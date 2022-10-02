@@ -99,5 +99,19 @@ CREATE TABLE produtos_status (
     pst_categoria     varchar(255) NOT NULL,
     pst_prod_id       int          NOT NULL,
     pst_justificativa varchar(255) NOT NULL
-)
+);
+
+DROP TABLE IF EXISTS "vendas" CASCADE;
+CREATE TABLE vendas (
+	vnd_id serial NOT NULL,
+    vnd_cli_usr_id int NOT NULL,
+    vnd_end_entrega_id int NOT NULL,
+	vnd_preco_total numeric(8,2) NOT NULL,
+	vnd_frete numeric(8,2) NOT NULL,
+	vnd_dt_compra timestamp NOT NULL,
+    vnd_dt_envio timestamp,
+    vnd_dt_entrega timestamp,
+	vnd_pagamento_aprovado boolean NOT NULL,
+	vnd_status varchar(16) NOT NULL
+);
 
