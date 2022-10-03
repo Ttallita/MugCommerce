@@ -1,8 +1,9 @@
 package model.carrinho;
 
+import model.EntidadeDominio;
 import model.produto.Produto;
 
-public class ItemCarrinho {
+public class ItemCarrinho extends EntidadeDominio {
     private Produto produto;
     private int quant;
 

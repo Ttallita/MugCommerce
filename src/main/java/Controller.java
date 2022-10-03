@@ -1,6 +1,7 @@
 import business.command.*;
 import business.viewHelper.IViewHelper;
 import business.viewHelper.impl.model.adm.ClienteAdmViewHelper;
+import business.viewHelper.impl.model.carrinho.CarrinhoViewHelper;
 import business.viewHelper.impl.model.cliente.CartaoViewHelper;
 import business.viewHelper.impl.model.cliente.ClienteViewHelper;
 import business.viewHelper.impl.LoginViewHelper;
@@ -65,7 +66,7 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/clientes/enderecos", new EnderecoViewHelper());
         viewHelperMap.put("/emug/clientes/cartoes", new CartaoViewHelper());
         viewHelperMap.put("/emug/clientes/desativarConta", new UsuarioViewHelper());
-        viewHelperMap.put("/emug/clientes/desativarConta", new UsuarioViewHelper());
+        viewHelperMap.put("/emug/clientes/carrinho", new CarrinhoViewHelper());
 
         viewHelperMap.put("/emug/clientes/carrinho/endereco", new EnderecoViewHelper());
         viewHelperMap.put("/emug/clientes/carrinho/cartaoCredito", new CartaoViewHelper());

@@ -95,4 +95,20 @@ public class Produto extends EntidadeDominio {
     public void setImagem(String imagem) {
         this.imagem = imagem;
     }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "nome='" + nome + '\'' +
+                ", valorCompra=" + valorCompra +
+                ", valorVenda=" + valorVenda +
+                ", descricao='" + descricao + '\'' +
+                ", material='" + material + '\'' +
+                ", grupoPrecificacao=" + grupoPrecificacao +
+                ", fabricante=" + fabricante +
+                ", codBarras='" + codBarras + '\'' +
+                ", categorias=" + categorias +
+                ", imagem='" + imagem + '\'' +
+                '}';
+    }
 }

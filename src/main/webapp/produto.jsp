@@ -67,11 +67,9 @@
                         <a type="button" href="cliente/finalizarCompra.jsp" class="btn btn-primary rounded-pill">Comprar</a>
                         <form action="/emug/clientes/carrinho" method="POST">
                             <input type="hidden" name="id" value="${produto.id}">
-                            <input type="submit" class="btn btn-outline-primary rounded-pill" value="Adicionar ao carrinho">>
+                            <input type="hidden" name="operacao" value="salvar">
+                            <input type="submit" class="btn btn-outline-primary rounded-pill" value="Adicionar ao carrinho">
                         </form>
-                        <button>
-
-                        </button>
                     </div>
                 </div>
             </div>
