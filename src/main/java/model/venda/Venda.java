@@ -14,12 +14,16 @@ public class Venda extends EntidadeDominio {
     private Cliente cliente;
     private Endereco enderecoEntrega;
     private List<Produto> produtos;
-    private Double precoTotal;
     private List<CartaoDeCredito> cartoesdeCreditos; //// TODO verificar se pode usar mais de um cartão de crédito
     private List<Cupom> cupons;
+
+    private Double valorItens;
     private Double frete;
+    private Double precoTotal;
+
     private LocalDate dataCompra;
     private LocalDate dataEntrega;
+
     private boolean pagamentoAprovado;
     private VendaType vendaStatus;
 
@@ -69,6 +73,14 @@ public class Venda extends EntidadeDominio {
 
     public void setCupons(List<Cupom> cupons) {
         this.cupons = cupons;
+    }
+
+    public Double getValorItens() {
+        return valorItens;
+    }
+
+    public void setValorItens(Double valorItens) {
+        this.valorItens = valorItens;
     }
 
     public Double getFrete() {

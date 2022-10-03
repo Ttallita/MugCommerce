@@ -7,6 +7,7 @@ import model.Usuario;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cliente.endereco.EnderecoType;
+import utils.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class EnderecoViewHelper implements IViewHelper {
 
                 return endereco;
             }
-            case "listar" -> {
+            case "listar", "listarJson" -> {
                 Endereco endereco = new Endereco();
                 endereco.setCliente(new Cliente(usuarioLogado));
 
@@ -72,6 +73,9 @@ public class EnderecoViewHelper implements IViewHelper {
             case "listar":
                 request.setAttribute("enderecos", result.getEntidades());
                 request.getRequestDispatcher("/cliente/enderecos.jsp").forward(request, response);
+                break;
+            case "listarJson":
+                Utils.montaRespostaJson(result, request, response);
                 break;
             case "listarUnico":
                 request.setAttribute("isEditar", true);

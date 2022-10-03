@@ -2,10 +2,12 @@ package dao.venda;
 
 import dao.IDAO;
 import dao.cliente.CartaoDeCreditoDAO;
+import dao.cliente.EnderecoDAO;
 import model.EntidadeDominio;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.Telefone;
+import model.cliente.endereco.Endereco;
 import model.venda.Venda;
 import utils.Conexao;
 
@@ -44,11 +46,15 @@ public class VendaDAO implements IDAO {
             PreparedStatement pstm = null;
             if(operacao.equals("listar")) {
 
-                if (venda.getId() == null){
-                    CartaoDeCredito cartaoPreferencial =
-                            (CartaoDeCredito) new CartaoDeCreditoDAO().listar(new CartaoDeCredito(), "findCartaoPreferencial").get(0);
+                if (venda.getId() == null) {
+                    Endereco endereco = new Endereco();
+                    endereco.setCliente(venda.getCliente());
+
+                    Endereco enderecoEntrega = (Endereco) new EnderecoDAO().listar(endereco, "listar").get(0);
+                    CartaoDeCredito cartaoPreferencial = (CartaoDeCredito) new CartaoDeCreditoDAO().listar(new CartaoDeCredito(), "findCartaoPreferencial").get(0);
 
                     venda.setCartoesdeCreditos(List.of(cartaoPreferencial));
+                    venda.setEnderecoEntrega(enderecoEntrega);
 
                     return List.of(venda);
                 }

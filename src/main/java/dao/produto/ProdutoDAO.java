@@ -159,7 +159,6 @@ public class ProdutoDAO implements IDAO {
             PreparedStatement pstm = null;
 
             if(operacao.equals("listar")) {
-
                 sql = "SELECT * FROM produtos";
 
                 pstm = connection.prepareStatement(sql);

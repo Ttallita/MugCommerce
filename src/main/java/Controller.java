@@ -52,6 +52,7 @@ public class Controller extends HttpServlet{
         commandMap.put("excluir", new ExcluirCommand());
         commandMap.put("pesquisar", new ListarCommand());
         commandMap.put("listar", new ListarCommand());
+        commandMap.put("listarJson", new ListarCommand());
         commandMap.put("listarTodos", new ListarCommand());
         commandMap.put("listarUnico", new ListarCommand());
 

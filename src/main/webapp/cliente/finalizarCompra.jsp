@@ -28,7 +28,7 @@
                     <div class="col-6 p-3">
                         <h6>Endereço de entrega</h6>
                         <!--Aciona modal alterar endereço entrega-->
-                        <a type="button" id="alterarEndereco" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#alterarEnderecoModal">
+                        <a type="button" id="alterarEndereco" onclick="listarEnderecosEntrega()" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#alterarEnderecoModal">
                             Alterar
                         </a>
                         <ul class="list-unstyled">
@@ -48,7 +48,7 @@
                                data-bs-target="#alterarFormaPagamentoModal">
                                 Alterar
                             </a>
-                            <p>(Crédito) com final 0000 ${cartaoCredito.nomeImpressoCartao}
+                            <p>(Crédito) com final ${cartaoCredito.numCartao}
                             </p>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                         <div class="row border-top p-3">
                             <div class="col-3">
                                 <div class="card produto mb-3">
-                                    <img alt="imagem_produto" src="\emug\assets\img\canecas\caneca_exemplo.jpeg" class="p-2">
+                                    <img alt="imagem_produto" src="${produto.imagem}" class="p-2">
                                 </div>
                             </div>
                             <div class="col">
@@ -115,21 +115,21 @@
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Itens:</strong>
-                                <strong>$0.00</strong>
+                                <strong>R$ ${valorItens}</strong>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Frete:</strong>
-                                <strong>$0.00</strong>
+                                <strong>RS ${valorFrete}</strong>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Desconto:</strong>
-                                <strong>- R$ 0.00</strong>
+                                <strong>- R$ ${valorDesconto}</strong>
                             </li>
                             <li class="d-flex justify-content-between py-3">
                                 <strong class="text-muted">Total do pedido:</strong>
-                                <h5 class="font-weight-bold">R$ 400,00</h5>
+                                <h5 class="font-weight-bold">R$ ${valorTotal}</h5>
                             </li>
-                            <a href="/emug/cliente/pedidoConfirmado.jsp" class="btn btn-primary  rounded-pill py-2 ">Confirmar pedido</a>
+                            <a href="/emug/cliente/pedidoConfirmado.jsp" class="btn btn-primary  rounded-pill py-2">Confirmar pedido</a>
                         </ul>
                     </div>
                 </div>
@@ -146,22 +146,22 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
+                        <form id="checksEnderecosEntrega">
+                            <!-- <div class="form-check">
+                                <input class="form-check-input" type="radio" name="endereco" id="endereco1">
+                                <label class="form-check-label" for="endereco1">
                                     Rua Carlos Barattino, 908, Vila Nova - Vila Mogilar, Mogi das Cruzes - SP - CEP 08773-600
                                 </label>
                                 <small class="float-end"><a href="">Editar</a> </small>
                             </div>
                             <br/>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                <label class="form-check-label" for="flexRadioDefault2">
+                                <input class="form-check-input" type="radio" name="endereco" id="endereco2" checked>
+                                <label class="form-check-label" for="endereco2">
                                     Rua Carlos de Carvalho, 200, Jardim Sao Joao, Ferraz de Vasconcelos - SP - CEP 08545-130
                                 </label>
                                 <small class="float-end"><a href="">Editar</a> </small>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -177,6 +177,39 @@
 
 </body>
 
-<script src="/emug/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+<script src='<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"/>'></script>
+<script src='<c:url value="/webjars/jquery/3.6.1/jquery.min.js"/>'></script>
+<script src='<c:url value="/assets/js/geral.js"/>'></script>
+
+<script>
+
+async function listaProdutos(url) {
+        let response = await fetch(url)
+        const json = await response.json();
+
+        json.forEach(endereco => {
+
+            const checkEndereco =
+            `<div class="form-check">
+                <input class="form-check-input" type="radio" name="endereco" id="endereco1">
+                <label class="form-check-label" for="endereco1">
+                    Rua Carlos Barattino, 908, Vila Nova - Vila Mogilar, Mogi das Cruzes - SP - CEP 08773-600
+                </label>
+                <small class="float-end"><a href="">Editar</a> </small>
+            </div>`;
+            
+            checkEndereco.appendTo(document.getElementById("checksEnderecosEntrega"));
+        })
+    }
+
+    function listarEnderecosEntrega(){
+        const baseUrl = 'http://localhost:8080/emug';
+        let params = { operacao: 'listarJson'}
+
+        let urlProdutos = montaUrl(baseUrl, 'clientes/enderecos', params)
+
+        listaProdutos(urlProdutos)
+    }
+</script>
 
 </html>
