@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
@@ -24,31 +25,45 @@
                 </h3>
                 <div>
                     <div class="container">
-                        <div class="row  border-bottom">
-                            <div class="col-3">
-                                <div class="card produto mb-3">
-                                    <img alt="produto" src="\emug\assets\img\canecas\caneca_porco.jpeg" class="p-2">
+                        <c:choose>
+                            <c:when test="${empty sessionScope.carrinho}">
+                                <div class="row border-bottom">
+                                    <div class="col-12">
+                                        Sem itens no carrinho
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col">
-                                <h4 class="mb-3">
-                                    <h6 class="text-muted">Categoria</h6>
-                                    Caneca porco
-                                </h4>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="item" items="${sessionScope.carrinho.itensCarrinho}">
+                                    <div class="row border-bottom">
+                                        <div class="col-3">
+                                            <div class="card produto mb-3">
+                                                <img alt="${item.produto.nome}" src="${item.produto.imagem}" class="p-2">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h4 class="mb-3">
+                                                <h6 class="text-muted">Categoria</h6>
+                                                ${item.produto.nome}
+                                            </h4>
 
-                                <div class="float-end col-4">
-                                    <label>Quantidade:</label>
-                                    <input type="number" class="form-control">
-                                    <h6 class="text-muted small">10 disponíveis</h6>
-                                </div>
+                                            <div class="float-end col-4">
+                                                <label for="quantidade">Quantidade:</label>
+                                                <input type="number" id="quantidade" class="form-control" value="${item.quant}">
+                                                <h6 class="text-muted small">10 disponíveis</h6>
+                                            </div>
 
-                                <h4>R$ 100,00</h4>
-                                <div class="d-flex col-12 justify-content-between">
-                                    <a class="text-decoration-none">Excluir</a>
-                                    <a class="text-decoration-none" href="/emug/cliente/confirmarPedido.jsp">Comprar agora</a>
-                                </div>
-                            </div>
-                        </div>
+                                            <h4>${item.produto.valorVenda * item.quant}</h4>
+                                            <div class="d-flex col-12 justify-content-between">
+                                                <a class="text-decoration-none">Excluir</a>
+                                                <a class="text-decoration-none" href="/emug/cliente/confirmarPedido.jsp">Comprar agora</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+
                     </div>
                 </div>
             </div>
