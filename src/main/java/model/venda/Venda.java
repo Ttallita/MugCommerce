@@ -122,4 +122,22 @@ public class Venda extends EntidadeDominio {
     public void setVendaStatus(VendaType vendaStatus) {
         this.vendaStatus = vendaStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Venda{" +
+                "cliente=" + cliente +
+                ", enderecoEntrega=" + enderecoEntrega +
+                ", produtos=" + produtos +
+                ", cartoesdeCreditos=" + cartoesdeCreditos +
+                ", cupons=" + cupons +
+                ", valorItens=" + valorItens +
+                ", frete=" + frete +
+                ", precoTotal=" + precoTotal +
+                ", dataCompra=" + dataCompra +
+                ", dataEntrega=" + dataEntrega +
+                ", pagamentoAprovado=" + pagamentoAprovado +
+                ", vendaStatus=" + vendaStatus +
+                '}';
+    }
 }

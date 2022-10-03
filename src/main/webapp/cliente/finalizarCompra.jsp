@@ -147,21 +147,7 @@
                     </div>
                     <div class="modal-body">
                         <form id="checksEnderecosEntrega">
-                            <!-- <div class="form-check">
-                                <input class="form-check-input" type="radio" name="endereco" id="endereco1">
-                                <label class="form-check-label" for="endereco1">
-                                    Rua Carlos Barattino, 908, Vila Nova - Vila Mogilar, Mogi das Cruzes - SP - CEP 08773-600
-                                </label>
-                                <small class="float-end"><a href="">Editar</a> </small>
-                            </div>
-                            <br/>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="endereco" id="endereco2" checked>
-                                <label class="form-check-label" for="endereco2">
-                                    Rua Carlos de Carvalho, 200, Jardim Sao Joao, Ferraz de Vasconcelos - SP - CEP 08545-130
-                                </label>
-                                <small class="float-end"><a href="">Editar</a> </small>
-                            </div> -->
+                            <!-- Lista de endereços -->
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -185,19 +171,20 @@
 
 async function listaProdutos(url) {
         let response = await fetch(url)
-        const json = await response.json();
+        let json = await response.json();
 
         json.forEach(endereco => {
 
-            const checkEndereco =
-            `<div class="form-check">
+            let checkEndereco =
+            $(`<div class="form-check">
                 <input class="form-check-input" type="radio" name="endereco" id="endereco1">
                 <label class="form-check-label" for="endereco1">
-                    Rua Carlos Barattino, 908, Vila Nova - Vila Mogilar, Mogi das Cruzes - SP - CEP 08773-600
+                    "${endereco.apelido}"
                 </label>
                 <small class="float-end"><a href="">Editar</a> </small>
-            </div>`;
-            
+            </div>`);
+
+
             checkEndereco.appendTo(document.getElementById("checksEnderecosEntrega"));
         })
     }
