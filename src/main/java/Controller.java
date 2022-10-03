@@ -65,6 +65,7 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/clientes/enderecos", new EnderecoViewHelper());
         viewHelperMap.put("/emug/clientes/cartoes", new CartaoViewHelper());
         viewHelperMap.put("/emug/clientes/desativarConta", new UsuarioViewHelper());
+        viewHelperMap.put("/emug/clientes/desativarConta", new UsuarioViewHelper());
 
         viewHelperMap.put("/emug/clientes/carrinho/endereco", new EnderecoViewHelper());
         viewHelperMap.put("/emug/clientes/carrinho/cartaoCredito", new CartaoViewHelper());
@@ -110,7 +111,7 @@ public class Controller extends HttpServlet{
 
         EntidadeDominio entidade = viewHelper.getEntidade(req);
 
-        Result result = command.execute(entidade, operacao);
+        Result result = command.execute(entidade, req.getSession(), operacao);
 
         viewHelper.setView(result, req, res);
     }

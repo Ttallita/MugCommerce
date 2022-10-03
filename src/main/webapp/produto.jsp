@@ -59,19 +59,19 @@
                     <div class="row">
                         <div class="row g-2 m-2 align-items-center">
                             <div class="col-auto">
-                                <label class="col-form-label">Quantidade:</label>
-                            </div>
-                            <div class="col-4">
-                                <input class="form-control" type="number">
-                            </div>
-                            <div class="col-auto">
                                 <span class="form-text">(10 disponíveis)</span>
                             </div>
                         </div>
                     </div>
                     <div class="d-grid gap-1 col-10 mx-auto mt-3">
                         <a type="button" href="cliente/finalizarCompra.jsp" class="btn btn-primary rounded-pill">Comprar</a>
-                        <a type="button" href="cliente/carrinho.jsp" class="btn btn-outline-primary rounded-pill">Adicionar ao carrinho</a>
+                        <form action="/emug/clientes/carrinho" method="POST">
+                            <input type="hidden" name="id" value="${produto.id}">
+                            <input type="submit" class="btn btn-outline-primary rounded-pill" value="Adicionar ao carrinho">>
+                        </form>
+                        <button>
+
+                        </button>
                     </div>
                 </div>
             </div>

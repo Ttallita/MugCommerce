@@ -110,7 +110,7 @@ public class CartaoViewHelper implements IViewHelper {
                 }
                 break;
             case "listarUnico":
-                CartaoDeCredito cartaoPreferencial = (CartaoDeCredito) new Facade().listar(new CartaoDeCredito(), "findCartaoPreferencial")
+                CartaoDeCredito cartaoPreferencial = (CartaoDeCredito) new Facade().listar(new CartaoDeCredito(),null, "findCartaoPreferencial")
                         .getEntidades()
                         .get(0);
 
