@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProdutoViewHelper implements IViewHelper {
 
@@ -109,7 +110,12 @@ public class ProdutoViewHelper implements IViewHelper {
             case "listar":
 
                 if (request.getRequestURI().contains("index")) {
-                    result.setEntidades(result.getEntidades().size() >= 5 ? result.getEntidades().subList(0,5) : result.getEntidades());
+
+                    List<EntidadeDominio> produtos = result.getEntidades().stream()
+                            .filter(EntidadeDominio::isAtivo)
+                            .collect(Collectors.toList());
+
+                    result.setEntidades(produtos.size() >= 5 ? produtos.subList(0,5) : produtos);
                     Utils.montaRespostaJson(result, request, response);
                 } else {
 

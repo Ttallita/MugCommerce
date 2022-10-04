@@ -1,12 +1,13 @@
 package utils;
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 import model.Result;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -50,13 +51,26 @@ public class Utils {
 
         if(operacao.contains("listar") || operacao.equals("pesquisar")) {
 
+            response.setCharacterEncoding("UTF8");
             response.setContentType("application/json");
 
-            Gson gson = new Gson();
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+
+            Gson gson = gsonBuilder.setPrettyPrinting().create();
 
             PrintWriter writer = response.getWriter();
             writer.write(gson.toJson(result.getEntidades()));
             writer.flush();
         }
     }
+
+    public static class LocalDateSerializer implements JsonSerializer <LocalDate> {
+        @Override
+        public JsonElement serialize(LocalDate localDate, Type srcType, JsonSerializationContext context) {
+            return new JsonPrimitive(formatterBR.format(localDate));
+        }
+    }
+
+
 }

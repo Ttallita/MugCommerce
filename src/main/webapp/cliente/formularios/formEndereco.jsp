@@ -112,6 +112,7 @@
 
                     <input type="hidden" name="id" value="${endereco.id}">
                     <input type="hidden" name="operacao" value="${isEditar ? 'atualizar' : 'salvar'}">
+                    <input type="hidden" name="origemChamada" value="${origemChamada}">
                     <button class="w-100 btn btn-primary btn-lg" type="submit" name="botaoCadastro">
                         ${isEditar ? 'Atualizar' : 'Cadastrar'}
                     </button>

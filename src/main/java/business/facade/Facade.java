@@ -9,6 +9,7 @@ import dao.cliente.CartaoDeCreditoDAO;
 import dao.cliente.ClienteDAO;
 import dao.cliente.EnderecoDAO;
 import dao.produto.*;
+import dao.venda.VendaDAO;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
@@ -17,6 +18,7 @@ import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.produto.*;
+import model.venda.Venda;
 import session.ISessionUtil;
 import session.carrinho.CarrinhoSessionUtil;
 
@@ -43,6 +45,7 @@ public class Facade implements IFacade {
         daosMap.put(GrupoPrecificacao.class.getName(), new GrupoPrecificacaoDAO());
         daosMap.put(Produto.class.getName(), new ProdutoDAO());
         daosMap.put(ProdutoStatus.class.getName(), new ProdutoStatusDAO());
+        daosMap.put(Venda.class.getName(), new VendaDAO());
 
         sessionMap = new HashMap<>();
         sessionMap.put(ItemCarrinho.class.getName(), new CarrinhoSessionUtil());

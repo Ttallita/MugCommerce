@@ -3,22 +3,27 @@ package model.venda;
 import java.time.LocalDate;
 import java.util.List;
 
+import model.EntidadeDominio;
 import model.cliente.CartaoDeCredito;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
 import model.cliente.Cliente;
 import model.produto.Produto;
 
-public class Venda {
+public class Venda extends EntidadeDominio {
     private Cliente cliente;
     private Endereco enderecoEntrega;
     private List<Produto> produtos;
-    private Double precoTotal;
-    private List<CartaoDeCredito> cartoesdeCreditos;
+    private List<CartaoDeCredito> cartoesdeCreditos; //// TODO verificar se pode usar mais de um cartão de crédito
     private List<Cupom> cupons;
+
+    private Double valorItens;
     private Double frete;
+    private Double precoTotal;
+
     private LocalDate dataCompra;
     private LocalDate dataEntrega;
+
     private boolean pagamentoAprovado;
     private VendaType vendaStatus;
 
@@ -70,6 +75,14 @@ public class Venda {
         this.cupons = cupons;
     }
 
+    public Double getValorItens() {
+        return valorItens;
+    }
+
+    public void setValorItens(Double valorItens) {
+        this.valorItens = valorItens;
+    }
+
     public Double getFrete() {
         return frete;
     }
@@ -108,5 +121,23 @@ public class Venda {
 
     public void setVendaStatus(VendaType vendaStatus) {
         this.vendaStatus = vendaStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Venda{" +
+                "cliente=" + cliente +
+                ", enderecoEntrega=" + enderecoEntrega +
+                ", produtos=" + produtos +
+                ", cartoesdeCreditos=" + cartoesdeCreditos +
+                ", cupons=" + cupons +
+                ", valorItens=" + valorItens +
+                ", frete=" + frete +
+                ", precoTotal=" + precoTotal +
+                ", dataCompra=" + dataCompra +
+                ", dataEntrega=" + dataEntrega +
+                ", pagamentoAprovado=" + pagamentoAprovado +
+                ", vendaStatus=" + vendaStatus +
+                '}';
     }
 }

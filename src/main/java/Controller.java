@@ -11,6 +11,8 @@ import business.viewHelper.impl.model.produto.CategoriaViewHelper;
 import business.viewHelper.impl.model.produto.FabricanteViewHelper;
 import business.viewHelper.impl.model.produto.GrupoPrecificacaoViewHelper;
 import business.viewHelper.impl.model.produto.ProdutoViewHelper;
+import business.viewHelper.impl.model.venda.CupomViewHelper;
+import business.viewHelper.impl.model.venda.VendaViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 
@@ -51,6 +53,7 @@ public class Controller extends HttpServlet{
         commandMap.put("excluir", new ExcluirCommand());
         commandMap.put("pesquisar", new ListarCommand());
         commandMap.put("listar", new ListarCommand());
+        commandMap.put("listarJson", new ListarCommand());
         commandMap.put("listarTodos", new ListarCommand());
         commandMap.put("listarUnico", new ListarCommand());
 
@@ -64,6 +67,11 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/clientes/cartoes", new CartaoViewHelper());
         viewHelperMap.put("/emug/clientes/desativarConta", new UsuarioViewHelper());
         viewHelperMap.put("/emug/clientes/carrinho", new CarrinhoViewHelper());
+
+        viewHelperMap.put("/emug/clientes/carrinho/endereco", new EnderecoViewHelper());
+        viewHelperMap.put("/emug/clientes/carrinho/cartaoCredito", new CartaoViewHelper());
+        viewHelperMap.put("/emug/clientes/carrinho/cupom", new CupomViewHelper());
+        viewHelperMap.put("/emug/clientes/carrinho/finalizarCompra", new VendaViewHelper());
 
         viewHelperMap.put("/emug/adm/clientes", new ClienteAdmViewHelper());
         viewHelperMap.put("/emug/adm/produtos", new ProdutoViewHelper());

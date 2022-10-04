@@ -7,6 +7,7 @@ import model.Result;
 import model.Usuario;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
+import utils.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ public class CartaoViewHelper implements IViewHelper {
         Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
         switch (operacao) {
-            case "listar" -> {
+            case "listar", "listarJson" -> {
                 CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
                 cartaoDeCredito.setCliente(new Cliente(usuarioLogado));
                 return cartaoDeCredito;
@@ -83,11 +84,11 @@ public class CartaoViewHelper implements IViewHelper {
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
+        String origemChamada = request.getParameter("origemChamada");
 
         String msgTela = result.getMsg();
         switch (operacao) {
             case "listar":
-
                 List<CartaoDeCredito> cartaoOrdenado = result.getEntidades()
                         .stream()
                         .map(entidade -> (CartaoDeCredito) entidade)
@@ -97,10 +98,18 @@ public class CartaoViewHelper implements IViewHelper {
                 request.setAttribute("cartoes", cartaoOrdenado);
                 request.getRequestDispatcher("/cliente/cartoes.jsp").forward(request, response);
                 break;
+            case "listarJson":
+                Utils.montaRespostaJson(result, request, response);
+                break;
             case "salvar", "atualizar", "excluir":
-                if (msgTela == null)
-                    response.sendRedirect("/emug/clientes/cartoes?operacao=listar");
-                else {
+                if (msgTela == null) {
+
+                    if ("finalizarCompra".equals(origemChamada))
+                        response.sendRedirect("/emug/clientes/carrinho/finalizarCompra?operacao=listar");
+                    else
+                        response.sendRedirect("/emug/clientes/cartoes?operacao=listar");
+
+                } else {
                     String[] mensagens = msgTela.split("\n");
 
                     request.setAttribute("cartao", result.getEntidades().get(0));
@@ -121,6 +130,7 @@ public class CartaoViewHelper implements IViewHelper {
                 request.setAttribute("isMostrar", isMostrar);
                 request.setAttribute("isEditar", true);
                 request.setAttribute("cartao", cartao);
+                request.setAttribute("origemChamada", origemChamada != null ? origemChamada : "");
                 request.getRequestDispatcher("/cliente/formularios/formCartaoCredito.jsp").forward(request, response);
                 break;
         }

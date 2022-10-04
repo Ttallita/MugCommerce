@@ -7,6 +7,7 @@ import model.Usuario;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cliente.endereco.EnderecoType;
+import utils.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,7 @@ public class EnderecoViewHelper implements IViewHelper {
 
                 return endereco;
             }
-            case "listar" -> {
+            case "listar", "listarJson" -> {
                 Endereco endereco = new Endereco();
                 endereco.setCliente(new Cliente(usuarioLogado));
 
@@ -54,14 +55,20 @@ public class EnderecoViewHelper implements IViewHelper {
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
+        String origemChamada = request.getParameter("origemChamada");
 
         String msgTela = result.getMsg();
 
         switch (operacao) {
             case "salvar", "atualizar", "excluir" :
-                if (msgTela == null)
-                    response.sendRedirect("/emug/clientes/enderecos?operacao=listar");
-                else {
+                if (msgTela == null) {
+
+                    if("finalizarCompra".equals(origemChamada))
+                        response.sendRedirect("/emug/clientes/carrinho/finalizarCompra?operacao=listar");
+                    else
+                        response.sendRedirect("/emug/clientes/enderecos?operacao=listar");
+
+                } else {
                     String[] mensagens = msgTela.split("\n");
 
                     request.setAttribute("mensagens", mensagens);
@@ -73,9 +80,13 @@ public class EnderecoViewHelper implements IViewHelper {
                 request.setAttribute("enderecos", result.getEntidades());
                 request.getRequestDispatcher("/cliente/enderecos.jsp").forward(request, response);
                 break;
+            case "listarJson":
+                Utils.montaRespostaJson(result, request, response);
+                break;
             case "listarUnico":
                 request.setAttribute("isEditar", true);
                 request.setAttribute("endereco", result.getEntidades().get(0));
+                request.setAttribute("origemChamada", origemChamada != null ? origemChamada : "");
                 request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);
                 break;
         }

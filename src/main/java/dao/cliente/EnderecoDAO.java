@@ -136,7 +136,7 @@ public class EnderecoDAO implements IDAO {
             String sql;
             PreparedStatement pstm = null;
 
-            if(operacao.equals("listar")) {
+            if(operacao.equals("listar") || operacao.equals("listarJson")) {
                 sql = "SELECT * FROM enderecos where end_cli_usr_id = ?";
 
                 pstm = conn.prepareStatement(sql);

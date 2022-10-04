@@ -62,15 +62,16 @@
                         <input type="text" class="form-control" id="dtValidade" name="dtValidade" value="${cartao.mesValidade}${cartao.anoValidade}">
                     </div>
 
-                    <c:if test="${empty isMostrar || isMostrar}">
-                        <div class="col-md-12">
-                            <input class="form-check-input" type="checkbox" name="preferencial" id="preferencial">
+                    <div class="col-md-12">
+                        <input class="form-check-input" type="${empty isMostrar || isMostrar ? 'checkbox' : 'hidden'}" name="preferencial" id="preferencial">
+                        <c:if test="${empty isMostrar || isMostrar}">
                             <label for="preferencial" class="form-check-label"><small>Cartão preferencial(Se for o primeiro cartão cadastrado será automaticamente marcado como preferencial)</small></label>
-                        </div>
-                    </c:if>
+                        </c:if>
+                    </div>
 
                     <input type="hidden" name="id" value="${cartao.id}">
                     <input type="hidden" name="operacao" value="${isEditar ? 'atualizar' : 'salvar'}">
+                    <input type="hidden" name="origemChamada" value="${origemChamada}">
                     <button class="w-100 btn btn-primary btn-lg" type="submit" name="botaoCadastro">
                         ${isEditar ? 'Atualizar' : 'Cadastrar'}
                     </button>
