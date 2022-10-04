@@ -4,6 +4,7 @@ import business.viewHelper.IViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
+import model.carrinho.Carrinho;
 import model.cliente.Cliente;
 import model.produto.Produto;
 import model.venda.Venda;
@@ -17,13 +18,21 @@ public class VendaViewHelper implements IViewHelper {
 
     @Override
     public EntidadeDominio getEntidade(HttpServletRequest request) {
+        String operacao = request.getParameter("operacao");
         Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
-        Cliente cliente = new Cliente();
-        cliente.setUsuario(usuarioLogado);
+        Cliente cliente = new Cliente(usuarioLogado);
 
         Venda venda = new Venda();
-        venda.setCliente(cliente);
+
+        if ("salvar".equals(operacao)){
+            Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
+            venda.setCliente(cliente);
+
+            return venda;
+        }
+
+
 
 //        request.getParameter("carrinho");
 //        venda.setProdutos(produtos);

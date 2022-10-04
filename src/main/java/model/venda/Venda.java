@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import model.EntidadeDominio;
+import model.carrinho.Carrinho;
+import model.carrinho.ItemCompra;
 import model.cliente.CartaoDeCredito;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
@@ -13,7 +15,7 @@ import model.produto.Produto;
 public class Venda extends EntidadeDominio {
     private Cliente cliente;
     private Endereco enderecoEntrega;
-    private List<Produto> produtos;
+    private List<ItemCompra> itensCompra;
     private List<CartaoDeCredito> cartoesdeCreditos; //// TODO verificar se pode usar mais de um cartão de crédito
     private List<Cupom> cupons;
 
@@ -26,6 +28,13 @@ public class Venda extends EntidadeDominio {
 
     private boolean pagamentoAprovado;
     private VendaType vendaStatus;
+
+    public Venda (){ }
+
+    public Venda (Carrinho carrinho){
+        itensCompra = carrinho.getItensCarrinho();
+
+    }
 
     public Cliente getCliente() {
         return cliente;

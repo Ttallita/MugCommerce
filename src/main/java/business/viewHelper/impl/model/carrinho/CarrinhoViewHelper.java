@@ -3,18 +3,13 @@ package business.viewHelper.impl.model.carrinho;
 import business.viewHelper.IViewHelper;
 import model.EntidadeDominio;
 import model.Result;
-import model.Usuario;
-import model.carrinho.Carrinho;
-import model.carrinho.ItemCarrinho;
-import model.cliente.Cliente;
+import model.carrinho.ItemCompra;
 import model.produto.Produto;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CarrinhoViewHelper implements IViewHelper {
 
@@ -26,7 +21,7 @@ public class CarrinhoViewHelper implements IViewHelper {
             Produto produto = new Produto();
             produto.setId(Long.parseLong(request.getParameter("id")));
 
-            ItemCarrinho itemCarrinho = new ItemCarrinho();
+            ItemCompra itemCarrinho = new ItemCompra();
             itemCarrinho.setProduto(produto);
             itemCarrinho.setQuant(1);
 

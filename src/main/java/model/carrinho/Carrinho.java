@@ -8,7 +8,7 @@ import model.cliente.Cliente;
 
 public class Carrinho extends EntidadeDominio {
     private Cliente cliente;    
-    private List<ItemCarrinho> itensCarrinho;
+    private List<ItemCompra> itensCarrinho;
 
     public Carrinho() {
         super();
@@ -23,15 +23,15 @@ public class Carrinho extends EntidadeDominio {
         this.cliente = cliente;
     }
 
-    public List<ItemCarrinho> getItensCarrinho() {
+    public List<ItemCompra> getItensCarrinho() {
         return itensCarrinho;
     }
 
-    public void setItensCarrinho(List<ItemCarrinho> itensCarrinho) {
+    public void setItensCarrinho(List<ItemCompra> itensCarrinho) {
         this.itensCarrinho = itensCarrinho;
     }
 
-    public void addItem(ItemCarrinho item) {
+    public void addItem(ItemCompra item) {
         itensCarrinho.add(item);
     }
 }

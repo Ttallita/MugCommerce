@@ -67,10 +67,6 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/clientes/cartoes", new CartaoViewHelper());
         viewHelperMap.put("/emug/clientes/desativarConta", new UsuarioViewHelper());
         viewHelperMap.put("/emug/clientes/carrinho", new CarrinhoViewHelper());
-
-        viewHelperMap.put("/emug/clientes/carrinho/endereco", new EnderecoViewHelper());
-        viewHelperMap.put("/emug/clientes/carrinho/cartaoCredito", new CartaoViewHelper());
-        viewHelperMap.put("/emug/clientes/carrinho/cupom", new CupomViewHelper());
         viewHelperMap.put("/emug/clientes/carrinho/finalizarCompra", new VendaViewHelper());
 
         viewHelperMap.put("/emug/adm/clientes", new ClienteAdmViewHelper());
