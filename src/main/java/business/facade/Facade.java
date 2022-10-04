@@ -12,7 +12,6 @@ import dao.produto.*;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
-import model.carrinho.Carrinho;
 import model.carrinho.ItemCarrinho;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
@@ -93,7 +92,12 @@ public class Facade implements IFacade {
         if(resultado == null) {
             IDAO dao = daosMap.get(nomeClasse);
 
-            entidade = dao.atualizar(entidade);
+            if(dao != null) {
+                entidade = dao.atualizar(entidade);
+            } else {
+                ISessionUtil sessionUtil = sessionMap.get(nomeClasse);
+                sessionUtil.atualizar(entidade, session);
+            }
         }
 
         result.setMsg(resultado);
@@ -113,7 +117,12 @@ public class Facade implements IFacade {
         if(resultado == null) {
             IDAO dao = daosMap.get(nomeClasse);
 
-            entidade = dao.deletar(entidade);
+            if(dao != null) {
+                entidade = dao.deletar(entidade);
+            } else {
+                ISessionUtil sessionUtil = sessionMap.get(nomeClasse);
+                sessionUtil.remover(entidade, session);
+            }
         }
 
         result.setMsg(resultado);

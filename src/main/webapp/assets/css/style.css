@@ -86,3 +86,11 @@ a {
 .login-container {
   height: 68%;
 }
+
+.input-link{
+  background: none;
+  border: none;
+  color: #395b80;
+  text-decoration: none;
+  cursor: pointer;
+}
