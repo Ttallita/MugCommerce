@@ -82,7 +82,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             pstm.setInt(5, cartao.getAnoValidade());
             pstm.setInt(6, cartao.getCodigo());
 
-            pstm.setBoolean(7, cartao.isPreferencial());
+            pstm.setBoolean(7, !existeCartaoPreferencial() || cartao.isPreferencial());
             pstm.setLong(8, cartao.getId());
 
             pstm.execute();
@@ -136,7 +136,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             PreparedStatement pstm = null;
 
             switch (operacao) {
-                case "listar" -> {
+                case "listar", "listarJson" -> {
                     sql = "SELECT * FROM cartoes where crt_cli_usr_id = ?";
                     pstm = conn.prepareStatement(sql);
                     pstm.setLong(1, cartao.getCliente().getUsuario().getId());

@@ -28,7 +28,7 @@
                     <div class="col-6 p-3">
                         <h6>Endereço de entrega</h6>
                         <!--Aciona modal alterar endereço entrega-->
-                        <a type="button" id="alterarEndereco" onclick="listarEnderecosEntrega()" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#alterarEnderecoModal">
+                        <a type="button" id="alterarEndereco" onclick="montarModalCadastro('clientes/enderecos')" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalAlterar">
                             Alterar
                         </a>
                         <ul class="list-unstyled">
@@ -44,8 +44,7 @@
                         <div class="col p-3">
                             <h6>Forma de pagamento</h6>
                             <!--Aciona modal alterar forma de pagamento-->
-                            <a type="button" id="alterarPagamento" class="text-decoration-none" data-bs-toggle="modal"
-                               data-bs-target="#alterarFormaPagamentoModal">
+                            <a type="button" id="alterarPagamento" onclick="montarModalCadastro('clientes/cartoes')" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalAlterar">
                                 Alterar
                             </a>
                             <p>(Crédito) com final ${cartaoCredito.numCartao}
@@ -138,21 +137,21 @@
         </div>
 
         <!-- Modal endereco-->
-        <div class="modal fade" id="alterarEnderecoModal" tabindex="-1" aria-labelledby="alterarEnderecoModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalAlterar" tabindex="-1" aria-labelledby="modalAlterarLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="alterarEnderecoModalLabel">Escolha o endereço</h5>
+                        <h5 class="modal-title" id="modalAlterarLabel"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="checksEnderecosEntrega">
-                            <!-- Lista de endereços -->
+                        <form id="formModal">
+                            <!-- Lista de endereços-->
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Alterar</button>
-                        <button type="button" class="btn btn-secondary">Adicionar outro endereço</button>
+                        <button type="button" class="btn btn-primary" id="botaoAlterarModal">Alterar</button>
+                        <button type="button" class="btn btn-secondary" id="botaoAdicionarModal"></button>
                     </div>
                 </div>
             </div>
@@ -169,34 +168,62 @@
 
 <script>
 
-async function listaProdutos(url) {
+    async function listaItensModal(url, path) {
         let response = await fetch(url)
         let json = await response.json();
 
-        json.forEach(endereco => {
+        let formModal = document.getElementById("formModal");
 
-            let checkEndereco =
-            $(`<div class="form-check">
-                <input class="form-check-input" type="radio" name="endereco" id="endereco1">
-                <label class="form-check-label" for="endereco1">
-                    "${endereco.apelido}"
-                </label>
-                <small class="float-end"><a href="">Editar</a> </small>
-            </div>`);
+        // Limpa todos os campos de check
+        formModal.innerHTML = '';
 
+        if (path.includes("enderecos")) {
+            json.forEach(endereco => {
 
-            checkEndereco.appendTo(document.getElementById("checksEnderecosEntrega"));
-        })
+                let checkEndereco =
+                    $(`<div class="form-check">
+                        <input class="form-check-input" type="radio" name="endereco" id="endereco\${endereco.id}">
+                        <label class="form-check-label" for="endereco\${endereco.id}">
+                            <small class="float-end"><a href='<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}&origemChamada=finalizarCompra"/>'>Editar</a> </small>
+                            \${endereco.tipoLogradouro} \${endereco.logradouro}, \${endereco.numero}, \${endereco.bairro}, \${endereco.estado}, CEP \${endereco.cep}
+                        </label>
+                    </div>`);
+
+                checkEndereco.appendTo(formModal);
+            })
+
+            document.getElementById("modalAlterarLabel").innerText = "Escolha o endereço";
+            document.getElementById("botaoAdicionarModal").innerText = "Adicionar outro endereço";
+
+        } else if (path.includes("cartoes")) {
+            json.forEach(cartao => {
+
+                let checkCartao =
+                    $(`<div class="form-check">
+                        <input class="form-check-input" type="radio" name="cartao" id="cartao\${cartao.id}">
+                        <label class="form-check-label" for="cartao\${cartao.id}">
+                            <small class="float-end"><a href='<c:url value="/clientes/cartoes?operacao=listarUnico&id=\${cartao.id}&origemChamada=finalizarCompra"/>'>Editar</a> </small>
+                            \${cartao.nomeImpressoCartao} \${cartao.bandeira}, final \${cartao.numCartao}
+                        </label>
+                    </div>`);
+
+                checkCartao.appendTo(formModal);
+            })
+
+            document.getElementById("modalAlterarLabel").innerText = "Escolha o cartão";
+            document.getElementById("botaoAdicionarModal").innerText = "Adicionar outro cartão";
+        }
     }
 
-    function listarEnderecosEntrega(){
+    function montarModalCadastro(path){
         const baseUrl = 'http://localhost:8080/emug';
         let params = { operacao: 'listarJson'}
 
-        let urlProdutos = montaUrl(baseUrl, 'clientes/enderecos', params)
+        let urlItensModal = montaUrl(baseUrl, path, params);
 
-        listaProdutos(urlProdutos)
+        listaItensModal(urlItensModal, path);
     }
+
 </script>
 
 </html>

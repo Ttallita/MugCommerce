@@ -51,6 +51,7 @@ public class Utils {
 
         if(operacao.contains("listar") || operacao.equals("pesquisar")) {
 
+            response.setCharacterEncoding("UTF8");
             response.setContentType("application/json");
 
             GsonBuilder gsonBuilder = new GsonBuilder();
@@ -64,7 +65,7 @@ public class Utils {
         }
     }
 
-    static class LocalDateSerializer implements JsonSerializer <LocalDate> {
+    public static class LocalDateSerializer implements JsonSerializer <LocalDate> {
         @Override
         public JsonElement serialize(LocalDate localDate, Type srcType, JsonSerializationContext context) {
             return new JsonPrimitive(formatterBR.format(localDate));

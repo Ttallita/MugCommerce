@@ -55,14 +55,20 @@ public class EnderecoViewHelper implements IViewHelper {
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
+        String origemChamada = request.getParameter("origemChamada");
 
         String msgTela = result.getMsg();
 
         switch (operacao) {
             case "salvar", "atualizar", "excluir" :
-                if (msgTela == null)
-                    response.sendRedirect("/emug/clientes/enderecos?operacao=listar");
-                else {
+                if (msgTela == null) {
+
+                    if("finalizarCompra".equals(origemChamada))
+                        response.sendRedirect("/emug/clientes/carrinho/finalizarCompra?operacao=listar");
+                    else
+                        response.sendRedirect("/emug/clientes/enderecos?operacao=listar");
+
+                } else {
                     String[] mensagens = msgTela.split("\n");
 
                     request.setAttribute("mensagens", mensagens);
@@ -80,6 +86,7 @@ public class EnderecoViewHelper implements IViewHelper {
             case "listarUnico":
                 request.setAttribute("isEditar", true);
                 request.setAttribute("endereco", result.getEntidades().get(0));
+                request.setAttribute("origemChamada", origemChamada != null ? origemChamada : "");
                 request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);
                 break;
         }
