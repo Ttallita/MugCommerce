@@ -8,7 +8,7 @@ import model.cliente.Cliente;
 
 public class Carrinho extends EntidadeDominio {
     private Cliente cliente;    
-    private List<ItemCompra> itensCarrinho;
+    private List<ItemCarrinho> itensCarrinho;
 
     private double totalCarrinho;
 
@@ -25,19 +25,19 @@ public class Carrinho extends EntidadeDominio {
         this.cliente = cliente;
     }
 
-    public List<ItemCompra> getItensCarrinho() {
+    public List<ItemCarrinho> getItensCarrinho() {
         return itensCarrinho;
     }
 
-    public void setItensCarrinho(List<ItemCompra> itensCarrinho) {
+    public void setItensCarrinho(List<ItemCarrinho> itensCarrinho) {
         this.itensCarrinho = itensCarrinho;
     }
 
-    public void addItem(ItemCompra item) {
+    public void addItem(ItemCarrinho item) {
         itensCarrinho.add(item);
     }
 
-    public void removeItem(ItemCompra item) {
+    public void removeItem(ItemCarrinho item) {
         boolean removeu = itensCarrinho.removeIf(itemCarrinho -> item.getProduto().getId().equals(itemCarrinho.getProduto().getId()));
 
         if(!removeu)

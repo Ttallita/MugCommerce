@@ -13,7 +13,7 @@ import dao.venda.VendaDAO;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
-import model.carrinho.ItemCompra;
+import model.carrinho.ItemCarrinho;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
@@ -48,7 +48,7 @@ public class Facade implements IFacade {
         daosMap.put(Venda.class.getName(), new VendaDAO());
 
         sessionMap = new HashMap<>();
-        sessionMap.put(ItemCompra.class.getName(), new CarrinhoSessionUtil());
+        sessionMap.put(ItemCarrinho.class.getName(), new CarrinhoSessionUtil());
 
         regrasDeNegocioMap = new HashMap<>();
 

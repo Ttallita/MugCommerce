@@ -3,7 +3,7 @@ package business.viewHelper.impl.model.carrinho;
 import business.viewHelper.IViewHelper;
 import model.EntidadeDominio;
 import model.Result;
-import model.carrinho.ItemCompra;
+import model.carrinho.ItemCarrinho;
 import model.produto.Produto;
 
 import javax.servlet.ServletException;
@@ -22,14 +22,14 @@ public class CarrinhoViewHelper implements IViewHelper {
                 Produto produto = new Produto();
                 produto.setId(Long.parseLong(request.getParameter("id")));
 
-                ItemCompra itemCarrinho = new ItemCompra();
+                ItemCarrinho itemCarrinho = new ItemCarrinho();
                 itemCarrinho.setProduto(produto);
                 itemCarrinho.setQuant(1);
 
                 return itemCarrinho;
             }
             case "excluir" -> {
-                ItemCompra item = new ItemCompra();
+                ItemCarrinho item = new ItemCarrinho();
 
                 Produto produto = new Produto();
                 produto.setId(Long.parseLong(request.getParameter("id")));
@@ -52,7 +52,7 @@ public class CarrinhoViewHelper implements IViewHelper {
                     quantidade--;
 
 
-                ItemCompra itemCarrinho = new ItemCompra();
+                ItemCarrinho itemCarrinho = new ItemCarrinho();
                 itemCarrinho.setProduto(produto);
                 itemCarrinho.setQuant(quantidade);
 

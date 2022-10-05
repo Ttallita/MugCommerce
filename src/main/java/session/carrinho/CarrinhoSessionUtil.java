@@ -3,7 +3,7 @@ package session.carrinho;
 import dao.produto.ProdutoDAO;
 import model.EntidadeDominio;
 import model.carrinho.Carrinho;
-import model.carrinho.ItemCompra;
+import model.carrinho.ItemCarrinho;
 import model.produto.Produto;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +12,7 @@ public class CarrinhoSessionUtil implements session.ISessionUtil {
 
     @Override
     public void salvar(EntidadeDominio entidade, HttpSession session) {
-        ItemCompra item = (ItemCompra) entidade;
+        ItemCarrinho item = (ItemCarrinho) entidade;
 
         Produto produto = (Produto) new ProdutoDAO()
                 .listar(item.getProduto(), "listarUnico")
@@ -37,12 +37,12 @@ public class CarrinhoSessionUtil implements session.ISessionUtil {
 
     @Override
     public void atualizar(EntidadeDominio entidade, HttpSession session) {
-        ItemCompra item = (ItemCompra) entidade;
+        ItemCarrinho item = (ItemCarrinho) entidade;
 
 
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
 
-        for (ItemCompra itemCarrinho : carrinho.getItensCarrinho()) {
+        for (ItemCarrinho itemCarrinho : carrinho.getItensCarrinho()) {
             if(item.getProduto().getId().equals(itemCarrinho.getProduto().getId()))
                 itemCarrinho.setQuant(item.getQuant());
 
@@ -51,7 +51,7 @@ public class CarrinhoSessionUtil implements session.ISessionUtil {
 
     @Override
     public void remover(EntidadeDominio entidade, HttpSession session) {
-        ItemCompra item = (ItemCompra) entidade;
+        ItemCarrinho item = (ItemCarrinho) entidade;
 
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
 

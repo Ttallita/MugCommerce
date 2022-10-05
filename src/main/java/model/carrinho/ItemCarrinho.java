@@ -3,7 +3,7 @@ package model.carrinho;
 import model.EntidadeDominio;
 import model.produto.Produto;
 
-public class ItemCompra extends EntidadeDominio {
+public class ItemCarrinho extends EntidadeDominio {
     private Produto produto;
     private int quant;
 
