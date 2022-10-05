@@ -29,7 +29,7 @@ public class CarrinhoSessionUtil implements session.ISessionUtil {
 
         boolean existeProduto = carrinho.getItensCarrinho()
                 .stream()
-                .anyMatch(itemCarrinho -> itemCarrinho.getProduto().equals(item.getProduto()));
+                .anyMatch(itemCarrinho -> itemCarrinho.getProduto().getId().equals(item.getProduto().getId()));
 
         if(!existeProduto)
             carrinho.addItem(item);
@@ -39,13 +39,16 @@ public class CarrinhoSessionUtil implements session.ISessionUtil {
     public void atualizar(EntidadeDominio entidade, HttpSession session) {
         ItemCarrinho item = (ItemCarrinho) entidade;
 
-
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
+
+        if(item.getQuant() == 0) {
+            carrinho.removeItem(item);
+            return;
+        }
 
         for (ItemCarrinho itemCarrinho : carrinho.getItensCarrinho()) {
             if(item.getProduto().getId().equals(itemCarrinho.getProduto().getId()))
                 itemCarrinho.setQuant(item.getQuant());
-
         }
     }
 

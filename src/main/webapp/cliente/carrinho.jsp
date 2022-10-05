@@ -1,6 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -51,7 +51,9 @@
                                         <img alt="${item.produto.nome}" src="${item.produto.imagem}" class="img-fluid">
                                     </td>
                                     <td class="p-3">
-                                        <h6>${item.produto.nome}</h6>
+                                        <a href="<c:url value='/produtos?operacao=listarUnico&id=${item.produto.id}'/>">
+                                            <h6>${item.produto.nome}</h6>
+                                        </a>
                                     </td>
                                     <td style="width: 20%">
                                        <form action="/emug/clientes/carrinho" method="POST" id="formQuantidade${item.produto.id}">
@@ -62,7 +64,7 @@
                                                <input type="hidden" value="atualizar" name="operacao">
                                                <input type="hidden" value="" name="tipo" id="tipo${item.produto.id}">
                                                <input type="hidden" value="${item.produto.id}" name="id">
-                                               <input type="hidden" value="${item.quant}" name="quantidade">
+                                               <input type="hidden" value="${item.quant}" name="quantidade" id="quantidadeAtual${item.produto.id}">
                                                <input type="text" class="form-control" readonly value="${item.quant}">
                                                <button class="btn btn-outline-secondary btn-sm" type="button" id="addQuant" onclick="mudarQuantidade('adicionar', '${item.produto.id}')">
                                                    <span class="material-icons">add</span>
@@ -75,7 +77,9 @@
                                             <input type="submit" class="input-link" value="Excluir" />
                                         </form>
                                     </td>
-                                    <td class="p-3">R$ ${item.produto.valorVenda * item.quant}</td>
+                                    <td class="p-3">
+                                        <fmt:formatNumber value="${item.produto.valorVenda * item.quant}" type="currency"/>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -92,7 +96,7 @@
                         <ul class="list-group">
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Carrinho:</strong>
-                                <strong>R$ ${sessionScope.carrinho.totalCarrinho}</strong>
+                                <strong><fmt:formatNumber value="${sessionScope.carrinho.totalCarrinho}" type="currency"/></strong>
                             </li>
                             <!--
                                 <li class="d-flex justify-content-between">
@@ -107,7 +111,9 @@
                             -->
                             <li class="d-flex justify-content-between py-3">
                                 <strong class="text-muted">Total:</strong>
-                                <h5 class="font-weight-bold">R$ ${sessionScope.carrinho.totalCarrinho}</h5>
+                                <h5 class="font-weight-bold">
+                                    <fmt:formatNumber value="${sessionScope.carrinho.totalCarrinho}" type="currency"/>
+                                </h5>
                             </li>
                             <a href="<c:url value='/clientes/carrinho/finalizarCompra?operacao=listar'/>" class="btn btn-primary rounded-pill py-2 ">
                                 Finalizar compra
