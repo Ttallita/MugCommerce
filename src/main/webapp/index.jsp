@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -57,8 +58,14 @@
         let response = await fetch(url)
         const json = await response.json();
 
+        let formatter = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
+
         json.forEach(produto => {
-            
+
+
             let nome = $('<a />', {
                 class: 'fw-bolder nome-produto',
                 href: "<c:url value='/produtos?operacao=listarUnico&id='/>" + produto.id,
@@ -66,7 +73,7 @@
             });
 
             let valorCompra = $('<p />', {
-                text: 'R$ ' + produto.valorVenda
+                text: formatter.format(produto.valorVenda)
             });
 
             let image = $('<img />', { 

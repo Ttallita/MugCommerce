@@ -51,7 +51,6 @@ public class CarrinhoViewHelper implements IViewHelper {
                 else
                     quantidade--;
 
-
                 ItemCarrinho itemCarrinho = new ItemCarrinho();
                 itemCarrinho.setProduto(produto);
                 itemCarrinho.setQuant(quantidade);
