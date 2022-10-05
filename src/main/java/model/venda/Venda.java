@@ -5,18 +5,16 @@ import java.util.List;
 
 import model.EntidadeDominio;
 import model.carrinho.Carrinho;
-import model.carrinho.ItemCompra;
 import model.cliente.CartaoDeCredito;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
 import model.cliente.Cliente;
-import model.produto.Produto;
 
 public class Venda extends EntidadeDominio {
     private Cliente cliente;
     private Endereco enderecoEntrega;
-    private List<ItemCompra> itensCompra;
-    private List<CartaoDeCredito> cartoesdeCreditos; //// TODO verificar se pode usar mais de um cartão de crédito
+    private Carrinho carrinho;
+    private CartaoDeCredito cartao; //// TODO verificar se pode usar mais de um cartão de crédito
     private List<Cupom> cupons;
 
     private Double valorItens;
@@ -28,13 +26,6 @@ public class Venda extends EntidadeDominio {
 
     private boolean pagamentoAprovado;
     private VendaType vendaStatus;
-
-    public Venda (){ }
-
-    public Venda (Carrinho carrinho){
-        itensCompra = carrinho.getItensCarrinho();
-
-    }
 
     public Cliente getCliente() {
         return cliente;
@@ -52,14 +43,6 @@ public class Venda extends EntidadeDominio {
         this.enderecoEntrega = enderecoEntrega;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-
     public Double getPrecoTotal() {
         return precoTotal;
     }
@@ -68,12 +51,20 @@ public class Venda extends EntidadeDominio {
         this.precoTotal = precoTotal;
     }
 
-    public List<CartaoDeCredito> getCartoesdeCreditos() {
-        return cartoesdeCreditos;
+    public Carrinho getCarrinho() {
+        return carrinho;
     }
 
-    public void setCartoesdeCreditos(List<CartaoDeCredito> cartoesdeCreditos) {
-        this.cartoesdeCreditos = cartoesdeCreditos;
+    public void setCarrinho(Carrinho carrinho) {
+        this.carrinho = carrinho;
+    }
+
+    public CartaoDeCredito getCartao() {
+        return cartao;
+    }
+
+    public void setCartao(CartaoDeCredito cartao) {
+        this.cartao = cartao;
     }
 
     public List<Cupom> getCupons() {
@@ -137,8 +128,8 @@ public class Venda extends EntidadeDominio {
         return "Venda{" +
                 "cliente=" + cliente +
                 ", enderecoEntrega=" + enderecoEntrega +
-                ", produtos=" + produtos +
-                ", cartoesdeCreditos=" + cartoesdeCreditos +
+                ", carrinho=" + carrinho +
+                ", cartao=" + cartao +
                 ", cupons=" + cupons +
                 ", valorItens=" + valorItens +
                 ", frete=" + frete +
@@ -149,4 +140,5 @@ public class Venda extends EntidadeDominio {
                 ", vendaStatus=" + vendaStatus +
                 '}';
     }
+
 }

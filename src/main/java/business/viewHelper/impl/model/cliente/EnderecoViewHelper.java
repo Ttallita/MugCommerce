@@ -63,9 +63,14 @@ public class EnderecoViewHelper implements IViewHelper {
             case "salvar", "atualizar", "excluir" :
                 if (msgTela == null) {
 
-                    if("finalizarCompra".equals(origemChamada))
-                        response.sendRedirect("/emug/clientes/carrinho/finalizarCompra?operacao=listar");
-                    else
+                    if("finalizarCompra".equals(origemChamada)) {
+
+                        String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
+                        String idCartaoSelecionado = request.getParameter("idCartaoSelecionado");
+
+                        response.sendRedirect(String.format("/emug/clientes/carrinho/finalizarCompra?operacao=listar&origemChamada=finalizarCompra" +
+                                        "&idEnderecoEscolhido=%s&idCartaoSelecionado=%s", idEnderecoEscolhido, idCartaoSelecionado));
+                    } else
                         response.sendRedirect("/emug/clientes/enderecos?operacao=listar");
 
                 } else {
@@ -86,7 +91,13 @@ public class EnderecoViewHelper implements IViewHelper {
             case "listarUnico":
                 request.setAttribute("isEditar", true);
                 request.setAttribute("endereco", result.getEntidades().get(0));
-                request.setAttribute("origemChamada", origemChamada != null ? origemChamada : "");
+
+                if ("finalizarCompra".equals(origemChamada)){
+                    request.setAttribute("origemChamada", origemChamada);
+                    request.setAttribute("enderecoEntrega", request.getParameter("idEnderecoEscolhido"));
+                    request.setAttribute("cartaoSelecionado", request.getParameter("idCartaoSelecionado"));
+                }
+
                 request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);
                 break;
         }

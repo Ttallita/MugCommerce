@@ -37,12 +37,12 @@ public class CarrinhoSessionUtil implements session.ISessionUtil {
 
     @Override
     public void atualizar(EntidadeDominio entidade, HttpSession session) {
-        ItemCarrinho item = (ItemCarrinho) entidade;
+        ItemCompra item = (ItemCompra) entidade;
 
 
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
 
-        for (ItemCarrinho itemCarrinho : carrinho.getItensCarrinho()) {
+        for (ItemCompra itemCarrinho : carrinho.getItensCarrinho()) {
             if(item.getProduto().getId().equals(itemCarrinho.getProduto().getId()))
                 itemCarrinho.setQuant(item.getQuant());
 
@@ -51,7 +51,7 @@ public class CarrinhoSessionUtil implements session.ISessionUtil {
 
     @Override
     public void remover(EntidadeDominio entidade, HttpSession session) {
-        ItemCarrinho item = (ItemCarrinho) entidade;
+        ItemCompra item = (ItemCompra) entidade;
 
         Carrinho carrinho = (Carrinho) session.getAttribute("carrinho");
 

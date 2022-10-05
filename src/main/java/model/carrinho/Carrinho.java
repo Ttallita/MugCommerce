@@ -37,7 +37,7 @@ public class Carrinho extends EntidadeDominio {
         itensCarrinho.add(item);
     }
 
-    public void removeItem(ItemCarrinho item) {
+    public void removeItem(ItemCompra item) {
         boolean removeu = itensCarrinho.removeIf(itemCarrinho -> item.getProduto().getId().equals(itemCarrinho.getProduto().getId()));
 
         if(!removeu)

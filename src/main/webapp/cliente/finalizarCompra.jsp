@@ -39,7 +39,7 @@
                             <li>${enderecoEntrega.observacoes}</li>
                         </ul>
                     </div>
-                    
+                    ${not empty cartaoSelecionado && cartao.id == cartaoSelecionado ? 'checked' : ''}
                     <div class="col-6">
                         <div class="col p-3">
                             <h6>Forma de pagamento</h6>
@@ -128,7 +128,19 @@
                                 <strong class="text-muted">Total do pedido:</strong>
                                 <h5 class="font-weight-bold">R$ ${valorTotal}</h5>
                             </li>
-                            <a href="/emug/cliente/pedidoConfirmado.jsp" class="btn btn-primary  rounded-pill py-2">Confirmar pedido</a>
+
+                            <form action="/emug/clientes/finalizarCompra" >
+                                <input type="hidden" name="id" value="${enderecoEntrega.id}">
+                                <input type="hidden" name="id" value="${cartaoSelecionado.id}">
+                                <!-- <input type="hidden" name="id" value="${cupons.id}"> -->
+
+                                <!-- <input type="hidden" name="id" value="${produto.id}"> -->
+                                <!-- produtos são carrinhos carrinho na session -->
+
+                                <input type="hidden" name="operacao" value="salvar">
+                                <input type="submit" class="btn btn-primary rounded-pill py-2" value="Confirmar pedido">
+                            </form>
+
                         </ul>
                     </div>
                 </div>
@@ -180,11 +192,13 @@
         if (path.includes("enderecos")) {
             json.forEach(endereco => {
 
+                let href = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}&origemChamada=finalizarCompra&idEnderecoEscolhido=${enderecoEntrega.id}&idCartaoSelecionado=${cartaoSelecionado.id}"/>`
+
                 let checkEndereco =
                     $(`<div class="form-check">
                         <input class="form-check-input" type="radio" name="endereco" id="endereco\${endereco.id}">
                         <label class="form-check-label" for="endereco\${endereco.id}">
-                            <small class="float-end"><a href='<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}&origemChamada=finalizarCompra"/>'>Editar</a> </small>
+                            <small class="float-end"><a href='\${href}'>Editar</a> </small>
                             \${endereco.tipoLogradouro} \${endereco.logradouro}, \${endereco.numero}, \${endereco.bairro}, \${endereco.estado}, CEP \${endereco.cep}
                         </label>
                     </div>`);

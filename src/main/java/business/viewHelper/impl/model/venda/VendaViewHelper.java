@@ -5,8 +5,9 @@ import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.carrinho.Carrinho;
+import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
-import model.produto.Produto;
+import model.cliente.endereco.Endereco;
 import model.venda.Venda;
 
 import javax.servlet.ServletException;
@@ -24,18 +25,37 @@ public class VendaViewHelper implements IViewHelper {
         Cliente cliente = new Cliente(usuarioLogado);
 
         Venda venda = new Venda();
+        venda.setCliente(cliente);
 
-        if ("salvar".equals(operacao)){
-            Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
-            venda.setCliente(cliente);
+        switch (operacao) {
+            case "salvar" -> {
+                Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
 
-            return venda;
+                venda.setCarrinho(carrinho);
+
+                return venda;
+            }
+
+            case "listar" -> {
+//                String[] idsCupons = request.getParameter("idsCupons").split(",").;
+//                List<Long> ids = Arrays.stream(idsCupons).map(Long::parseLong).toList();
+
+                Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
+                String idCartaoSelecionado = request.getParameter("idCartaoSelecionado");
+                String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
+
+                Endereco enderecoEntrega = new Endereco();
+                CartaoDeCredito cartao = new CartaoDeCredito();
+
+                enderecoEntrega.setId(idEnderecoEscolhido != null ? Long.parseLong(idEnderecoEscolhido) : null);
+                cartao.setId(idCartaoSelecionado != null ? Long.parseLong(idCartaoSelecionado) : null);
+
+                venda.setEnderecoEntrega(enderecoEntrega);
+                venda.setCartao(cartao);
+                venda.setCarrinho(carrinho);
+            }
+
         }
-
-
-
-//        request.getParameter("carrinho");
-//        venda.setProdutos(produtos);
 
         return venda;
     }
@@ -44,17 +64,27 @@ public class VendaViewHelper implements IViewHelper {
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
 
-        if ("listar".equals(operacao)) {
-            Venda venda = (Venda) result.getEntidades().get(0);
+        switch (operacao){
 
-            request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
-            request.setAttribute("cartaoCredito", venda.getCartoesdeCreditos().get(0));
-            request.setAttribute("cupons", venda.getCupons());
-            request.setAttribute("produtos", venda.getProdutos());
-            request.setAttribute("valorItens", venda.getProdutos());
+            case "salvar" -> {
+                Venda venda = (Venda) result.getEntidades().get(0);
 
-            request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
+                request.setAttribute("venda", venda);
+                request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
+            }
+
+            case "listar" -> {
+                Venda venda = (Venda) result.getEntidades().get(0);
+
+                request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
+                request.setAttribute("cartaoSelecionado", venda.getCartao());
+//                request.setAttribute("cupons", venda.getCupons().stream().map(EntidadeDominio::getId).collect(Collectors.toList()) );
+
+                request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
+            }
+
         }
+
     }
 
 }
