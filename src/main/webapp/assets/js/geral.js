@@ -145,5 +145,5 @@ $( "#formStatus" ).submit(function( event ) {
         return;
     }
 
-    $('#formInativar')[0].submit()
+    $('#formStatus')[0].submit()
 });

@@ -107,8 +107,11 @@ public class VendaDAO implements IDAO {
                         CartaoDeCredito cartaoPreferencial;
                         if (cartao.getId() == null)
                             cartaoPreferencial = (CartaoDeCredito) cartaoDeCreditoDAO.listar(cartao, "findCartaoPreferencial").get(0);
-                        else
-                            cartaoPreferencial = (CartaoDeCredito) cartaoDeCreditoDAO.listar(cartao, "listarUnico").get(0);
+                        else {
+                            List<EntidadeDominio> lista = cartaoDeCreditoDAO.listar(cartao, "listarUnico");
+
+                            cartaoPreferencial = lista.size() > 0  ? (CartaoDeCredito) lista.get(0) : null;
+                        }
 
                         venda.setCartao(cartaoPreferencial);
                         venda.setEnderecoEntrega(enderecoEntrega);
