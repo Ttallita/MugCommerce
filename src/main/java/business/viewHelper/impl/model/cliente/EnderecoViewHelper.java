@@ -1,12 +1,15 @@
 package business.viewHelper.impl.model.cliente;
 
 import business.viewHelper.IViewHelper;
+import dao.AuditoriaDAO;
+import model.AuditoriaType;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cliente.endereco.EnderecoType;
+import model.produto.Produto;
 import utils.Utils;
 import utils.UtilsWeb;
 
@@ -65,7 +68,12 @@ public class EnderecoViewHelper implements IViewHelper {
 
         switch (operacao) {
             case "salvar", "atualizar", "excluir" -> {
+                Endereco endereco = (Endereco) result.getEntidades().get(0);
+
                 if (msgTela == null) {
+                    AuditoriaType tipo = operacao.equals("salvar") ? AuditoriaType.INSERCAO : AuditoriaType.ALTERACAO;
+
+                    new AuditoriaDAO().salvar(Utils.criaAuditoria(endereco, tipo, endereco.getCliente().getUsuario()));
 
                     if (origemChamada != null)
                         UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);

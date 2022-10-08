@@ -2,8 +2,11 @@ package business.viewHelper.impl.model.produto;
 
 import business.viewHelper.IViewHelper;
 import com.google.gson.Gson;
+import dao.AuditoriaDAO;
+import model.AuditoriaType;
 import model.EntidadeDominio;
 import model.Result;
+import model.Usuario;
 import model.produto.Categoria;
 import model.produto.Fabricante;
 import model.produto.GrupoPrecificacao;
@@ -137,9 +140,15 @@ public class ProdutoViewHelper implements IViewHelper {
             case "salvar":
             case "excluir":
             case "atualizar":
-                if (msgTela == null)
+                Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+                Produto produto = (Produto) result.getEntidades().get(0);
+
+                if (msgTela == null) {
+                    AuditoriaType tipo = operacao.equals("salvar") ? AuditoriaType.INSERCAO : AuditoriaType.ALTERACAO;
+
+                    new AuditoriaDAO().salvar(Utils.criaAuditoria(produto, tipo, usuarioLogado));
                     response.sendRedirect("/emug/adm/produtos?operacao=listar");
-                else {
+                } else {
                     String[] mensagens = msgTela.split("\n");
 
                     request.setAttribute("mensagens", mensagens);

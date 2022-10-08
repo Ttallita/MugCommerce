@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="banner-home row justify-content-center">
 
-            <div class="col-5 align-self-center">
+            <div class="col-5 align-self-center text-white">
                 <h1 class="mb-5">Canecas personalizadas</h1>
                 <p>
                     Escolha um dos nossos modelos prontos de canecas personalizadas com estampas especiais para diversos gostos.

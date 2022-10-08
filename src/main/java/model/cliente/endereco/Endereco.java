@@ -3,6 +3,8 @@ package model.cliente.endereco;
 import model.EntidadeDominio;
 import model.cliente.Cliente;
 
+import java.util.Objects;
+
 public class Endereco extends EntidadeDominio {
 
     private String tipoResidencia;
@@ -16,7 +18,7 @@ public class Endereco extends EntidadeDominio {
     private String observacoes;
     private EnderecoType tipoEndereco;
     private String apelido;
-    private Cliente cliente;
+    private transient Cliente cliente;
 
     public String getTipoResidencia() {
         return tipoResidencia;
@@ -112,5 +114,49 @@ public class Endereco extends EntidadeDominio {
 
     public void setNumero(Integer numero) {
         this.numero = numero;
+    }
+
+    protected boolean canEqual(Object obj) {
+        return (obj instanceof Endereco);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Endereco endereco)) return false;
+        return Objects.equals(tipoResidencia, endereco.tipoResidencia)
+                && Objects.equals(tipoLogradouro, endereco.tipoLogradouro)
+                && Objects.equals(logradouro, endereco.logradouro)
+                && Objects.equals(numero, endereco.numero)
+                && Objects.equals(bairro, endereco.bairro)
+                && Objects.equals(cep, endereco.cep)
+                && Objects.equals(cidade, endereco.cidade)
+                && Objects.equals(estado, endereco.estado)
+                && Objects.equals(observacoes, endereco.observacoes)
+                && tipoEndereco == endereco.tipoEndereco
+                && Objects.equals(apelido, endereco.apelido)
+                && endereco.canEqual(this);
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(tipoResidencia, tipoLogradouro, logradouro, numero, bairro, cep, cidade, estado, observacoes, tipoEndereco, apelido);
+    }
+
+    @Override
+    public String toString() {
+        return "Endereco{" +
+                "tipoResidencia='" + tipoResidencia + '\'' +
+                ", tipoLogradouro='" + tipoLogradouro + '\'' +
+                ", logradouro='" + logradouro + '\'' +
+                ", numero=" + numero +
+                ", bairro='" + bairro + '\'' +
+                ", cep='" + cep + '\'' +
+                ", cidade='" + cidade + '\'' +
+                ", estado='" + estado + '\'' +
+                ", observacoes='" + observacoes + '\'' +
+                ", tipoEndereco=" + tipoEndereco +
+                ", apelido='" + apelido + '\'' +
+                '}';
     }
 }

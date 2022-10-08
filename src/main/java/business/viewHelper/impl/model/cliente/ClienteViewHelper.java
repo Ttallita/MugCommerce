@@ -2,10 +2,8 @@ package business.viewHelper.impl.model.cliente;
 
 import business.facade.Facade;
 import business.viewHelper.IViewHelper;
-import model.EntidadeDominio;
-import model.Result;
-import model.Usuario;
-import model.UsuarioType;
+import dao.AuditoriaDAO;
+import model.*;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.Telefone;
@@ -105,17 +103,23 @@ public class ClienteViewHelper implements IViewHelper {
 
         String[] mensagens;
         String msgTela = result.getMsg();
+
+
         switch (operacao) {
             case "salvar" -> {
+                Cliente cliente = (Cliente) result.getEntidades().get(0);
+
                 if (msgTela != null) {
                     mensagens = msgTela.split("\n");
 
-                    Cliente cliente = (Cliente) result.getEntidades().get(0);
 
                     request.setAttribute("endereco", cliente.getEnderecos().get(0));
                     request.setAttribute("cliente", cliente);
-                } else
+                } else {
                     mensagens = new String[]{"Cadastrado com sucesso. <a href=\"login.jsp\">Clique aqui para logar</a>"};
+
+                    new AuditoriaDAO().salvar(Utils.criaAuditoria(cliente, AuditoriaType.INSERCAO, cliente.getUsuario()));
+                }
                 request.setAttribute("mensagens", mensagens);
                 request.setAttribute("erro", msgTela != null);
                 request.getRequestDispatcher("cadastroCliente.jsp").forward(request, response);
@@ -132,8 +136,10 @@ public class ClienteViewHelper implements IViewHelper {
 
                 if (msgTela != null)
                     mensagens = msgTela.split("\n");
-                else
+                else {
                     mensagens = new String[]{ "Atualizado com Sucesso" };
+                    new AuditoriaDAO().salvar(Utils.criaAuditoria(cliente, AuditoriaType.ALTERACAO, cliente.getUsuario()));
+                }
 
                 request.setAttribute("mensagens", mensagens);
                 request.setAttribute("erro", msgTela != null);

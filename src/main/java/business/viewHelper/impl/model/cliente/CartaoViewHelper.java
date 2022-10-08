@@ -2,6 +2,8 @@ package business.viewHelper.impl.model.cliente;
 
 import business.facade.Facade;
 import business.viewHelper.IViewHelper;
+import dao.AuditoriaDAO;
+import model.AuditoriaType;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
@@ -106,8 +108,12 @@ public class CartaoViewHelper implements IViewHelper {
                 UtilsWeb.montaRespostaJson(result, request, response);
             case "salvar", "atualizar", "excluir" -> {
                 if (msgTela == null) {
+                    CartaoDeCredito cartao = (CartaoDeCredito) result.getEntidades().get(0);
 
-                    if (origemChamada != null)
+                    AuditoriaType tipo = operacao.equals("salvar") ? AuditoriaType.INSERCAO : AuditoriaType.ALTERACAO;
+
+                    new AuditoriaDAO().salvar(Utils.criaAuditoria(cartao, tipo, cartao.getCliente().getUsuario()));
+                    if(origemChamada != null)
                         UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);
                     else
                         response.sendRedirect("/emug/clientes/cartoes?operacao=listar");

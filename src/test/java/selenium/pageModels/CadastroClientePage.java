@@ -90,13 +90,13 @@ public class CadastroClientePage extends PageAbstract{
 
         if(!endereco.getEstado().isBlank()) {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofMinutes(1));
-            wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("estado"), "São Paulo"));
+            wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("estado"), endereco.getEstado()));
             campoEstado.sendKeys(endereco.getEstado());
         }
 
-        if(!endereco.getEstado().isBlank()) {
+        if(!endereco.getCidade().isBlank()) {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofMinutes(1));
-            wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("cidade"), "Mogi das Cruzes"));
+            wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("cidade"), endereco.getCidade()));
             campoCidade.sendKeys(endereco.getCidade());
         }
 

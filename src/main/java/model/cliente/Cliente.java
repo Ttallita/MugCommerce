@@ -7,6 +7,7 @@ import model.cupom.Cupom;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class Cliente extends EntidadeDominio {
 
@@ -20,7 +21,6 @@ public class Cliente extends EntidadeDominio {
     private List<CartaoDeCredito> cartoesDeCredito;
     private List<Cupom> cupons;
     private int ranking;
-
     private Usuario usuario;
 
     public Cliente() {}
@@ -116,5 +116,48 @@ public class Cliente extends EntidadeDominio {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    protected boolean canEqual(Object obj) {
+        return (obj instanceof Cliente);
+    }
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cliente cliente)) return false;
+        return ranking == cliente.ranking
+                && Objects.equals(nome, cliente.nome)
+                && Objects.equals(sobrenome, cliente.sobrenome)
+                && Objects.equals(genero, cliente.genero)
+                && Objects.equals(dataNascimento, cliente.dataNascimento)
+                && Objects.equals(cpf, cliente.cpf)
+                && Objects.equals(telefone, cliente.telefone)
+                && Objects.equals(enderecos, cliente.enderecos)
+                && Objects.equals(cartoesDeCredito, cliente.cartoesDeCredito)
+                && Objects.equals(cupons, cliente.cupons)
+                && Objects.equals(usuario, cliente.usuario)
+                && cliente.canEqual(this);
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(nome, sobrenome, genero, dataNascimento, cpf, telefone, enderecos, cartoesDeCredito, cupons, ranking, usuario);
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                ", sobrenome='" + sobrenome + '\'' +
+                ", genero='" + genero + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", cpf='" + cpf + '\'' +
+                ", telefone=" + telefone +
+                ", enderecos=" + enderecos +
+                ", cartoesDeCredito=" + cartoesDeCredito +
+                ", cupons=" + cupons +
+                ", ranking=" + ranking +
+                ", usuario=" + usuario +
+                '}';
     }
 }

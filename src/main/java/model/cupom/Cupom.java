@@ -2,13 +2,15 @@ package model.cupom;
 
 import model.EntidadeDominio;
 import model.cliente.Cliente;
+import model.cliente.endereco.Endereco;
 import model.venda.Venda;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Cupom extends EntidadeDominio {
 
-    private Cliente cliente;
+    private transient Cliente cliente;
     private String nome;
     private Venda venda;
     private CupomType tipo;
@@ -72,4 +74,38 @@ public class Cupom extends EntidadeDominio {
         this.descricao = descricao;
     }
 
+    protected boolean canEqual(Object obj) {
+        return (obj instanceof Endereco);
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Cupom)) return false;
+        Cupom cupom = (Cupom) o;
+        return  Objects.equals(nome, cupom.nome)
+                && Objects.equals(venda, cupom.venda)
+                && tipo == cupom.tipo
+                && Objects.equals(valor, cupom.valor)
+                && Objects.equals(dataValidade, cupom.dataValidade)
+                && Objects.equals(descricao, cupom.descricao)
+                && cupom.canEqual(this);
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(nome, venda, tipo, valor, dataValidade, descricao);
+    }
+
+    @Override
+    public String toString() {
+        return "Cupom{" +
+                " nome='" + nome + '\'' +
+                ", venda=" + venda +
+                ", tipo=" + tipo +
+                ", valor=" + valor +
+                ", dataValidade=" + dataValidade +
+                ", descricao='" + descricao + '\'' +
+                '}';
+    }
 }

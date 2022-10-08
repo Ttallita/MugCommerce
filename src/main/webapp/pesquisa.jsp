@@ -18,14 +18,15 @@
 
     <jsp:include page="include/header.jsp" />
 
-    <main class="wrapper container">
+    <main class="wrapper bg-white rounded container mt-3 mb-3" style="min-height: 70vh">
 
-        <div class="row mt-4 bg-white rounded p-4 mb-3">
-
-            <div class="col-md-12 p-3 border rounded mb-5">
+        <div class="row mt-3 ms-3 me-3">
+            <div class="col-md-12 p-3 border rounded mt-3">
                 1-10 de 50 resultados para <strong class="text-muted">"palavra pesquisada"</strong>
             </div>
-            
+        </div>
+
+        <div class="row p-4 mb-3">
             <div class="col-xl-2 col-lg-4 col-md-5">
                 <h5 class="fw-bolder">Categoria</h5>
                 <ul class="list-group mt-4">
