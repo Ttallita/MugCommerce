@@ -30,22 +30,22 @@
 
                     <div class="col-sm-12">
                         <label for="nomeProduto"><small>Nome</small></label>
-                        <input type="text" ${produto.ativo ? '' : 'disabled'} class="form-control" id="nomeProduto" name="nomeProduto" value="${produto.nome}">
+                        <input type="text" ${not empty produto && produto.ativo ? 'disabled' : ''} class="form-control" id="nomeProduto" name="nomeProduto" value="${produto.nome}">
                     </div>
                     
                     <div class="col-sm-3">
                         <label for="valorCompra"><small>Valor de compra</small></label>
-                        <input type="text" ${produto.ativo ? '' : 'disabled'} class="form-control money" id="valorCompra" name="valorCompra" value="${produto.valorCompra}">
+                        <input type="text" ${not empty produto && produto.ativo ? 'disabled' : ''} class="form-control money" id="valorCompra" name="valorCompra" value="${produto.valorCompra}">
                     </div>
 
                     <div class="col-sm-5">
                         <label for="codBarras"><small>Cod. barras</small></label>
-                        <input type="text" ${produto.ativo ? '' : 'disabled'} class="form-control" id="codBarras" name="codBarras" value="${produto.codBarras}">
+                        <input type="text" ${not empty produto && produto.ativo ? 'disabled' : ''} class="form-control" id="codBarras" name="codBarras" value="${produto.codBarras}">
                     </div>
 
                     <div class="col-sm-4">
                         <label for="material"><small>Material</small></label>
-                        <select class="form-select" ${produto.ativo ? '' : 'disabled'} id="material" name="material">
+                        <select class="form-select" ${not empty produto && produto.ativo ? 'disabled' : ''} id="material" name="material">
                             <option value="">Selecione</option>
                             <option ${produto.material == 'Porcelana' ? 'selected' : ''}>Porcelana</option>
                             <option ${produto.material == 'Plastico' ? 'selected' : ''}>Plastico</option>
@@ -55,28 +55,28 @@
 
                     <div class="col-sm-4">
                         <label for="fabricante"><small>Fabricante</small></label>
-                        <select class="form-select" ${produto.ativo ? '' : 'disabled'} id="fabricante" name="fabricante">
+                        <select class="form-select" ${not empty produto && produto.ativo ? 'disabled' : ''} id="fabricante" name="fabricante">
                             <option value="">Selecione</option>
                         </select>
                     </div>
 
                     <div class="col-md-3">
                         <label for="grupoPrecificacao"><small>Grupo de precificação</small></label>
-                        <select class="form-select" ${produto.ativo ? '' : 'disabled'} id="grupoPrecificacao" name="grupoPrecificacao">
+                        <select class="form-select" ${not empty produto && produto.ativo ? 'disabled' : ''} id="grupoPrecificacao" name="grupoPrecificacao">
                             <option value="">Selecione</option>
                         </select>
                     </div>
 
                     <div class="col-sm-3">
                         <label for="categorias"><small>Categorias</small></label>
-                        <select class="form-select" ${produto.ativo ? '' : 'disabled'} name="categorias" id="categorias" multiple aria-label="Categorias">
+                        <select class="form-select" ${not empty produto && produto.ativo ? 'disabled' : ''} name="categorias" id="categorias" multiple aria-label="Categorias">
                             <option>Selecione...</option>
                         </select>
                     </div>
 
                     <div class="col-sm-12">
                         <label for="descricao"><small>Descrição</small></label>
-                        <textarea class="form-control" ${produto.ativo ? '' : 'disabled'} id="descricao" name="descricao" rows="3">${produto.descricao}</textarea>
+                        <textarea class="form-control" ${not empty produto && produto.ativo ? 'disabled' : ''} id="descricao" name="descricao" rows="3">${produto.descricao}</textarea>
                     </div>
 
                     <div class="col-sm-12 h-25">
@@ -87,7 +87,7 @@
                             </c:if>
                         </div>
                         <br/>
-                        <input class="form-control form-control-sm" ${produto.ativo ? '' : 'disabled'} id="imgProduto" type="file">
+                        <input class="form-control form-control-sm" ${not empty produto && produto.ativo ? 'disabled' : ''} id="imgProduto" type="file">
                         <input type="hidden" name="imagemBase64" id="imagemBase64" value="${produto.imagem}"/>
                     </div>
 
