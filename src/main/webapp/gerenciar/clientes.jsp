@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css' />"/>
     <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css' />"/>
     <link rel="stylesheet" href="<c:url value='/assets/css/style.css' />"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="<c:url value='/assets/css/bootstrap-table.min.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/bootstrap-table-filter-control.min.css' />"/>
 </head>
 
 <body>
@@ -23,71 +26,27 @@
         <div class="w-75 bg-white rounded p-5">
             <h5>Clientes</h5>
             <hr>
-
-            <!-- Filtro de cliente-->
-            <div class="container">
-                <form>
-                    <div class="row g-3">
-
-                        <div class="col-sm-12">
-                            <label for="pesquisa">
-                                <small>Pesquisa</small>
-                            </label>
-                            <input type="text" class="form-control" id="pesquisa" name="pesquisa" value="">
-                        </div>
-                        <div class="col-sm-4">
-                            <small>Gênero</small>
-                            <select class="form-select" aria-label="Select gênero">
-                                <option selected>Selecione</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Feminino">Feminino</option>
-                                <option value="Outro">Outro</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label for="pais"><small>País</small></label>
-                            <select class="form-select" id="pais" name="pais">
-                                <option value="">Selecione</option>
-                                <option>Brasil</option>
-                                <option>Uruguai</option>
-                            </select>
-                        </div>
-        
-                        <div class="col-md-4">
-                            <label for="estado">
-                                <small>Estado</small>
-                            </label>
-                            <select class="form-select" id="estado" name="estado">
-                                <option value="">Selecione</option>
-                                <option>São Paulo</option>
-                                <option>Rio de Janeiro</option>
-                                <option>Minas gerais</option>
-                            </select>
-                        </div>
-
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary btn-sm">Pesquisar</button>
-                        </div>
-
-                    </div>
-
-                </form>
-            </div>
-
-            <hr>
             <div class="table-responsive p-3 rounded mb-4">
-                <table class="table table-hover" width="100%">
+                <table id="tableClientes"
+                       class="table table-hover w-100"
+                       data-toggle="table"
+                       data-pagination="true"
+                       data-sortable="true"
+                       data-search="true"
+                       data-page-size="25"
+                       data-locale="pt-BR"
+                       data-filter-control="true"
+                       data-show-search-clear-button="true">
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Gênero</th>
-                            <th>Data de Nascimento</th>
-                            <th>Telefone</th>
-                            <th>Rank</th>
-                            <th>Editar</th>
-                            <th>Inativar</th>
+                            <th data-field="nome" data-filter-control="input">Nome</th>
+                            <th data-field="cpf" data-filter-control="input">CPF</th>
+                            <th data-field="genero" data-filter-control="select">Gênero</th>
+                            <th data-field="dtNasc" data-filter-control="input">Data de Nascimento</th>
+                            <th data-field="telefone" data-filter-control="input">Telefone</th>
+                            <th data-field="nome" data-filter-control="input">Rank</th>
+                            <!-- <th>Editar</th>
+                            <th>Inativar</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -103,18 +62,19 @@
                                 </td>
                                 <td>(${cliente.telefone.ddd}) ${cliente.telefone.numero}</td>
                                 <td>${cliente.ranking}</td>
+                                <!--
                                 <td><span class="material-icons text-primary">edit</span></td>
-                                <td><span class="material-icons text-danger">delete</span></td>
+                                <td><span class="material-icons text-danger">delete</span></td> -->
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
 
-                <a href='<c:url value="/cadastroCliente.jsp"/>'>
+                <!-- <a href='<c:url value="/gerenciar/formularios/formCliente.jsp"/>'>
                     <button type="button" class="w-100 btn btn-primary btn-sm">
                         Adicionar cliente
                     </button>
-                </a>
+                </a> -->
             </div>
             
         </div>
@@ -122,8 +82,10 @@
     <br/>
 
     <jsp:include page="../include/footer.jsp"/>
-
 </body>
-<script src="webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
-
+<script src="<c:url value='/webjars/jquery/3.6.1/jquery.min.js' />"></script>
+<script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js' />"></script>
+<script src='<c:url value="/assets/js/bootstrap-table.min.js"/>'></script>
+<script src='<c:url value="/assets/js/bootstrap-table-filter-control.min.js"/>'></script>
+<script src='<c:url value="/assets/js/bootstrap-table-pt-BR.min.js"/>'></script>
 </html>

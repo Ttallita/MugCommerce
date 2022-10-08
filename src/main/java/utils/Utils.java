@@ -1,7 +1,7 @@
 package utils;
 
 import com.google.gson.*;
-import model.Result;
+import model.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Utils {
@@ -65,12 +66,27 @@ public class Utils {
         }
     }
 
+    public static Auditoria criaAuditoria(EntidadeDominio entidade, AuditoriaType tipo, Usuario usuario) {
+        Auditoria auditoria = new Auditoria();
+        auditoria.setData(LocalDateTime.now());
+        auditoria.setTipo(tipo);
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+
+        auditoria.setJson(gsonBuilder.create().toJson(entidade));
+        auditoria.setUsuario(usuario);
+
+        return auditoria;
+    }
+
     public static class LocalDateSerializer implements JsonSerializer <LocalDate> {
         @Override
         public JsonElement serialize(LocalDate localDate, Type srcType, JsonSerializationContext context) {
             return new JsonPrimitive(formatterBR.format(localDate));
         }
     }
+
 
 
 }

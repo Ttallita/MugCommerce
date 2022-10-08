@@ -1,6 +1,7 @@
 package business.viewHelper.impl.model.adm;
 
 import business.viewHelper.IViewHelper;
+import business.viewHelper.impl.model.cliente.ClienteViewHelper;
 import model.EntidadeDominio;
 import model.Result;
 import model.cliente.Cliente;
@@ -16,6 +17,9 @@ public class ClienteAdmViewHelper implements IViewHelper {
     public EntidadeDominio getEntidade(HttpServletRequest request) {
         String operacao = request.getParameter("operacao");
 
+        if(operacao.equals("salvar"))
+            return new ClienteViewHelper().getEntidade(request);
+
         if(operacao.equals("listarTodos"))
             return new Cliente();
 
@@ -25,6 +29,21 @@ public class ClienteAdmViewHelper implements IViewHelper {
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
+
+        String msgTela = result.getMsg();
+
+        if(operacao.equals("salvar")) {
+
+            if (msgTela == null) {
+                response.sendRedirect("/emug/adm/clientes?operacao=listar");
+            } else {
+                String[] mensagens = msgTela.split("\n");
+
+                request.setAttribute("mensagens", mensagens);
+                request.setAttribute("erro", true);
+                request.getRequestDispatcher("/gerenciar/formularios/formCliente.jsp").forward(request, response);
+            }
+        }
 
         if ("listarTodos".equals(operacao)) {
             request.setAttribute("clientes", result.getEntidades());

@@ -2,11 +2,14 @@ package business.viewHelper.impl.model.cliente;
 
 import business.facade.Facade;
 import business.viewHelper.IViewHelper;
+import dao.AuditoriaDAO;
+import model.AuditoriaType;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
+import model.cliente.endereco.Endereco;
 import utils.Utils;
 
 import javax.servlet.ServletException;
@@ -103,7 +106,11 @@ public class CartaoViewHelper implements IViewHelper {
                 break;
             case "salvar", "atualizar", "excluir":
                 if (msgTela == null) {
+                    CartaoDeCredito cartao = (CartaoDeCredito) result.getEntidades().get(0);
 
+                    AuditoriaType tipo = operacao.equals("salvar") ? AuditoriaType.INSERCAO : AuditoriaType.ALTERACAO;
+
+                    new AuditoriaDAO().salvar(Utils.criaAuditoria(cartao, tipo, cartao.getCliente().getUsuario()));
                     if ("finalizarCompra".equals(origemChamada))
                         response.sendRedirect("/emug/clientes/carrinho/finalizarCompra?operacao=listar");
                     else

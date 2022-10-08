@@ -27,8 +27,7 @@ public class CarrinhoViewHelper implements IViewHelper {
                 itemCarrinho.setQuant(1);
 
                 return itemCarrinho;
-            }
-            case "excluir" -> {
+            } case "excluir" -> {
                 ItemCarrinho item = new ItemCarrinho();
 
                 Produto produto = new Produto();

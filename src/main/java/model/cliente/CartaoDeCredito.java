@@ -12,7 +12,7 @@ public class CartaoDeCredito extends EntidadeDominio {
     private Integer anoValidade;
     private Integer codigo;
     private boolean preferencial;
-    private Cliente cliente;
+    private transient Cliente cliente;
 
     public String getNumCartao() {
         return numCartao;
@@ -76,5 +76,41 @@ public class CartaoDeCredito extends EntidadeDominio {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    protected boolean canEqual(Object obj) {
+        return (obj instanceof CartaoDeCredito);
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartaoDeCredito that)) return false;
+        return preferencial == that.preferencial
+                && Objects.equals(numCartao, that.numCartao)
+                && Objects.equals(nomeImpressoCartao, that.nomeImpressoCartao)
+                && Objects.equals(bandeira, that.bandeira)
+                && Objects.equals(mesValidade, that.mesValidade)
+                && Objects.equals(anoValidade, that.anoValidade)
+                && Objects.equals(codigo, that.codigo)
+                && that.canEqual(this);
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(numCartao, nomeImpressoCartao, bandeira, mesValidade, anoValidade, codigo, preferencial);
+    }
+
+    @Override
+    public String toString() {
+        return "CartaoDeCredito{" +
+                "numCartao='" + numCartao + '\'' +
+                ", nomeImpressoCartao='" + nomeImpressoCartao + '\'' +
+                ", bandeira='" + bandeira + '\'' +
+                ", mesValidade=" + mesValidade +
+                ", anoValidade=" + anoValidade +
+                ", codigo=" + codigo +
+                ", preferencial=" + preferencial +
+                '}';
     }
 }

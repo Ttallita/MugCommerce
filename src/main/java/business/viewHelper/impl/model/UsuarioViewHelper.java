@@ -1,7 +1,9 @@
 package business.viewHelper.impl.model;
 
 import business.viewHelper.IViewHelper;
+import dao.AuditoriaDAO;
 import dao.UsuarioDAO;
+import model.AuditoriaType;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
@@ -55,6 +57,7 @@ public class UsuarioViewHelper implements IViewHelper {
             if(result.getMsg() == null) {
                 mensagens = new String[] { "Senha Atualizada com sucesso." };
                 request.getSession().setAttribute("usuarioLogado", entidades.get(0));
+                new AuditoriaDAO().salvar(Utils.criaAuditoria(entidades.get(0), AuditoriaType.ALTERACAO, (Usuario) entidades.get(0)));
             } else
                 mensagens = result.getMsg().split("\n");
 
