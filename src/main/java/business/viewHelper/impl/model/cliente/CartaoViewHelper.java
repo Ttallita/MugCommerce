@@ -11,6 +11,7 @@ import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import utils.Utils;
+import utils.UtilsWeb;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -87,7 +88,10 @@ public class CartaoViewHelper implements IViewHelper {
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
+
         String origemChamada = request.getParameter("origemChamada");
+        if(origemChamada != null)
+            UtilsWeb.adicionaParametrosRequestOrigemChamada(origemChamada, request);
 
         String msgTela = result.getMsg();
         switch (operacao) {
@@ -102,7 +106,7 @@ public class CartaoViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/cliente/cartoes.jsp").forward(request, response);
                 break;
             case "listarJson":
-                Utils.montaRespostaJson(result, request, response);
+                UtilsWeb.montaRespostaJson(result, request, response);
                 break;
             case "salvar", "atualizar", "excluir":
                 if (msgTela == null) {
@@ -111,8 +115,8 @@ public class CartaoViewHelper implements IViewHelper {
                     AuditoriaType tipo = operacao.equals("salvar") ? AuditoriaType.INSERCAO : AuditoriaType.ALTERACAO;
 
                     new AuditoriaDAO().salvar(Utils.criaAuditoria(cartao, tipo, cartao.getCliente().getUsuario()));
-                    if ("finalizarCompra".equals(origemChamada))
-                        response.sendRedirect("/emug/clientes/carrinho/finalizarCompra?operacao=listar");
+                    if(origemChamada != null)
+                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);
                     else
                         response.sendRedirect("/emug/clientes/cartoes?operacao=listar");
 

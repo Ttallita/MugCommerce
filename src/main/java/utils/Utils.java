@@ -47,25 +47,6 @@ public class Utils {
         return criptografada;
     }
 
-    public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String operacao = request.getParameter("operacao");
-
-        if(operacao.contains("listar") || operacao.equals("pesquisar")) {
-
-            response.setCharacterEncoding("UTF8");
-            response.setContentType("application/json");
-
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
-
-            Gson gson = gsonBuilder.setPrettyPrinting().create();
-
-            PrintWriter writer = response.getWriter();
-            writer.write(gson.toJson(result.getEntidades()));
-            writer.flush();
-        }
-    }
-
     public static Auditoria criaAuditoria(EntidadeDominio entidade, AuditoriaType tipo, Usuario usuario) {
         Auditoria auditoria = new Auditoria();
         auditoria.setData(LocalDateTime.now());
@@ -86,7 +67,5 @@ public class Utils {
             return new JsonPrimitive(formatterBR.format(localDate));
         }
     }
-
-
 
 }

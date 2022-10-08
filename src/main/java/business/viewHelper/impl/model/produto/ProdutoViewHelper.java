@@ -13,6 +13,7 @@ import model.produto.GrupoPrecificacao;
 import model.produto.Produto;
 import utils.Utils;
 import model.produto.*;
+import utils.UtilsWeb;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -119,7 +120,7 @@ public class ProdutoViewHelper implements IViewHelper {
                             .collect(Collectors.toList());
 
                     result.setEntidades(produtos.size() >= 5 ? produtos.subList(0,5) : produtos);
-                    Utils.montaRespostaJson(result, request, response);
+                    UtilsWeb.montaRespostaJson(result, request, response);
                 } else {
 
                     List<CategoriaStatusType> categoriasInativacao = Arrays.stream(CategoriaStatusType.values())

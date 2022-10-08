@@ -115,6 +115,14 @@ CREATE TABLE vendas (
     vnd_status             varchar(16)   NOT NULL
 );
 
+DROP TABLE IF EXISTS "produtos_em_venda" CASCADE;
+CREATE TABLE produtos_em_venda(
+    prv_pro_id int NOT NULL,
+    prv_vnd_id int NOT NULL,
+    prv_quant int NOT NULL,
+    prv_em_troca boolean
+);
+
 DROP TABLE IF EXISTS "auditoria" CASCADE;
 CREATE TABLE auditoria (
     aud_id     serial       NOT NULL,
