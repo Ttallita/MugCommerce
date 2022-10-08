@@ -92,7 +92,7 @@ public class CartaoViewHelper implements IViewHelper {
 
         String msgTela = result.getMsg();
         switch (operacao) {
-            case "listar":
+            case "listar" -> {
                 List<CartaoDeCredito> cartaoOrdenado = result.getEntidades()
                         .stream()
                         .map(entidade -> (CartaoDeCredito) entidade)
@@ -101,14 +101,13 @@ public class CartaoViewHelper implements IViewHelper {
 
                 request.setAttribute("cartoes", cartaoOrdenado);
                 request.getRequestDispatcher("/cliente/cartoes.jsp").forward(request, response);
-                break;
-            case "listarJson":
+            }
+            case "listarJson" ->
                 UtilsWeb.montaRespostaJson(result, request, response);
-                break;
-            case "salvar", "atualizar", "excluir":
+            case "salvar", "atualizar", "excluir" -> {
                 if (msgTela == null) {
 
-                    if(origemChamada != null)
+                    if (origemChamada != null)
                         UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);
                     else
                         response.sendRedirect("/emug/clientes/cartoes?operacao=listar");
@@ -121,9 +120,9 @@ public class CartaoViewHelper implements IViewHelper {
                     request.setAttribute("erro", true);
                     request.getRequestDispatcher("/cliente/formularios/formCartaoCredito.jsp").forward(request, response);
                 }
-                break;
-            case "listarUnico":
-                CartaoDeCredito cartaoPreferencial = (CartaoDeCredito) new Facade().listar(new CartaoDeCredito(),null, "findCartaoPreferencial")
+            }
+            case "listarUnico" -> {
+                CartaoDeCredito cartaoPreferencial = (CartaoDeCredito) new Facade().listar(new CartaoDeCredito(), null, "findCartaoPreferencial")
                         .getEntidades()
                         .get(0);
 
@@ -136,7 +135,9 @@ public class CartaoViewHelper implements IViewHelper {
                 request.setAttribute("cartao", cartao);
                 request.setAttribute("origemChamada", origemChamada != null ? origemChamada : "");
                 request.getRequestDispatcher("/cliente/formularios/formCartaoCredito.jsp").forward(request, response);
-                break;
+            }
+            case "adicionar" ->
+                request.getRequestDispatcher("/cliente/formularios/formCartaoCredito.jsp").forward(request, response);
         }
     }
 }

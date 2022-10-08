@@ -37,9 +37,6 @@ public class VendaViewHelper implements IViewHelper {
             }
 
             case "listar" -> {
-//                String[] idsCupons = request.getParameter("idsCupons").split(",").;
-//                List<Long> ids = Arrays.stream(idsCupons).map(Long::parseLong).toList();
-
                 Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
                 String idCartaoSelecionado = request.getParameter("idCartaoSelecionado");
                 String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
@@ -79,7 +76,6 @@ public class VendaViewHelper implements IViewHelper {
                 request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
                 request.setAttribute("cartaoSelecionado", venda.getCartao());
                 request.setAttribute("carrinho", venda.getCarrinho());
-//                request.setAttribute("cupons", venda.getCupons().stream().map(EntidadeDominio::getId).collect(Collectors.toList()) );
 
                 request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
             }

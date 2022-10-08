@@ -161,12 +161,8 @@
                             <!-- Lista de itens-->
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="atualizarInfoVenda()" id="botaoAlterarModal">Alterar</button>
-                        <!-- Botão alterar item selecionado -->
-                        <!-- Botão adicionar -->
-
-
+                    <div class="modal-footer" id="modalFooter">
+                        <!-- Botões -->
                     </div>
                 </div>
             </div>
@@ -201,7 +197,8 @@
         formModal.innerHTML = '';
 
         let tituloModal = document.getElementById("modalAlterarLabel");
-        let botaoAlterar = document.getElementById("botaoAlterarModal");
+
+        let urlAdicionar;
 
         if (path.includes("enderecos")) {
             json.forEach(endereco => {
@@ -223,6 +220,7 @@
             })
 
             tituloModal.innerText = "Escolha o endereço";
+            urlAdicionar = "<c:url value='/clientes/enderecos?operacao=adicionar'/>";
 
         } else if (path.includes("cartoes")) {
             json.forEach(cartao => {
@@ -244,7 +242,23 @@
             })
 
             tituloModal.innerText = "Escolha o cartão";
+            urlAdicionar = "<c:url value='/clientes/cartoes?operacao=adicionar'/>";
         }
+
+        let botaoAlterar =
+            $(`<button type="button" class="btn btn-primary" onclick="atualizarInfoVenda()" id="botaoAlterarModal">Alterar</button>`);
+        
+        let botaoAdicionar =
+            $(`<a href="\${urlAdicionar}\${parametroOrigemChamada}\${parametrosVendaHref}">
+                <button type="button" class="btn btn-primary" id="botaoAdicionarModal">Adicionar</button>
+            </a>`);
+
+        let modalFooter = document.getElementById("modalFooter");
+
+        modalFooter.innerHTML = '';
+
+        botaoAdicionar.appendTo(modalFooter);
+        botaoAlterar.appendTo(modalFooter);
     }
 
     function montarModalCadastro(path){

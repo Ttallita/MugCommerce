@@ -114,10 +114,10 @@ public class EnderecoDAO implements IDAO {
             pstm.execute();
 
             return endereco;
-        }catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
-        }finally {
+        } finally {
             conexao.fecharConexao(conn);
         }
 

@@ -110,8 +110,6 @@
                         <input type="text" class="form-control" id="observacaoEndereco" name="observacaoEndereco" value="${endereco.observacoes}">
                     </div>
 
-
-
                     <input type="hidden" name="id" value="${endereco.id}">
                     <input type="hidden" name="operacao" value="${isEditar ? 'atualizar' : 'salvar'}">
 

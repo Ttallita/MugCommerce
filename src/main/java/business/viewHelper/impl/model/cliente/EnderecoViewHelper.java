@@ -64,10 +64,10 @@ public class EnderecoViewHelper implements IViewHelper {
         String msgTela = result.getMsg();
 
         switch (operacao) {
-            case "salvar", "atualizar", "excluir" :
+            case "salvar", "atualizar", "excluir" -> {
                 if (msgTela == null) {
 
-                    if(origemChamada != null)
+                    if (origemChamada != null)
                         UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);
                     else
                         response.sendRedirect("/emug/clientes/enderecos?operacao=listar");
@@ -79,19 +79,22 @@ public class EnderecoViewHelper implements IViewHelper {
                     request.setAttribute("erro", true);
                     request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);
                 }
-                break;
-            case "listar":
+
+            }
+            case "listar" -> {
                 request.setAttribute("enderecos", result.getEntidades());
                 request.getRequestDispatcher("/cliente/enderecos.jsp").forward(request, response);
-                break;
-            case "listarJson":
+            }
+            case "listarJson" ->
                 UtilsWeb.montaRespostaJson(result, request, response);
-                break;
-            case "listarUnico":
+            case "listarUnico" -> {
                 request.setAttribute("isEditar", true);
                 request.setAttribute("endereco", result.getEntidades().get(0));
                 request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);
-                break;
+            }
+            case "adicionar" ->
+                request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);
+
         }
     }
 

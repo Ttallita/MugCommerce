@@ -56,6 +56,7 @@ public class Controller extends HttpServlet{
         commandMap.put("listarJson", new ListarCommand());
         commandMap.put("listarTodos", new ListarCommand());
         commandMap.put("listarUnico", new ListarCommand());
+        commandMap.put("adicionar", null);
 
         viewHelperMap = new HashMap<>();
         viewHelperMap.put("/emug/login", new LoginViewHelper());
@@ -106,9 +107,11 @@ public class Controller extends HttpServlet{
 
         IViewHelper viewHelper = viewHelperMap.get(req.getRequestURI());
 
-        EntidadeDominio entidade = viewHelper.getEntidade(req);
-
-        Result result = command.execute(entidade, req.getSession(), operacao);
+        Result result = new Result();
+        if (command != null ) {
+            EntidadeDominio entidade = viewHelper.getEntidade(req);
+            result = command.execute(entidade, req.getSession(), operacao);
+        }
 
         viewHelper.setView(result, req, res);
     }
