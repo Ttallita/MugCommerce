@@ -60,10 +60,11 @@
                     <div class="row">
                         <div class="row g-2 m-2 align-items-center">
                             <div class="col-auto">
-                                <span class="form-text">(10 disponíveis)</span>
+                                <span class="form-text">(10 disponíveis)</span> <!-- TODO definir quantidade de produtos-->
                             </div>
                         </div>
                     </div>
+                    <!-- TODO Caso o usuário não esteja logado e tente realizar alguma ação deve redirecionar para página de login-->
                     <div class="d-grid gap-1 col-10 mx-auto mt-3">
                         <a type="button" href="cliente/finalizarCompra.jsp" class="btn btn-primary rounded-pill">Comprar</a>
                         <form action="/emug/clientes/carrinho" method="POST">

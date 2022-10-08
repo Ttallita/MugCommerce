@@ -46,31 +46,4 @@ public class Utils {
         return criptografada;
     }
 
-    public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String operacao = request.getParameter("operacao");
-
-        if(operacao.contains("listar") || operacao.equals("pesquisar")) {
-
-            response.setCharacterEncoding("UTF8");
-            response.setContentType("application/json");
-
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
-
-            Gson gson = gsonBuilder.setPrettyPrinting().create();
-
-            PrintWriter writer = response.getWriter();
-            writer.write(gson.toJson(result.getEntidades()));
-            writer.flush();
-        }
-    }
-
-    public static class LocalDateSerializer implements JsonSerializer <LocalDate> {
-        @Override
-        public JsonElement serialize(LocalDate localDate, Type srcType, JsonSerializationContext context) {
-            return new JsonPrimitive(formatterBR.format(localDate));
-        }
-    }
-
-
 }

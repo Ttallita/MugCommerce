@@ -5,6 +5,7 @@ import model.EntidadeDominio;
 import model.Result;
 import model.produto.Fabricante;
 import utils.Utils;
+import utils.UtilsWeb;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,6 @@ public class FabricanteViewHelper implements IViewHelper {
 
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Utils.montaRespostaJson(result, request, response);
+        UtilsWeb.montaRespostaJson(result, request, response);
     }
 }

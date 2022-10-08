@@ -110,9 +110,17 @@
                         <input type="text" class="form-control" id="observacaoEndereco" name="observacaoEndereco" value="${endereco.observacoes}">
                     </div>
 
+
+
                     <input type="hidden" name="id" value="${endereco.id}">
                     <input type="hidden" name="operacao" value="${isEditar ? 'atualizar' : 'salvar'}">
-                    <input type="hidden" name="origemChamada" value="${origemChamada}">
+
+                    <c:if test="${origemChamada == 'finalizarCompra'}">
+                        <input type="hidden" name="origemChamada" value="${origemChamada}">
+                        <input type="hidden" name="idEnderecoEscolhido" value="${idEnderecoEscolhido}">
+                        <input type="hidden" name="idCartaoSelecionado" value="${idCartaoSelecionado}">
+                    </c:if>
+
                     <button class="w-100 btn btn-primary btn-lg" type="submit" name="botaoCadastro">
                         ${isEditar ? 'Atualizar' : 'Cadastrar'}
                     </button>

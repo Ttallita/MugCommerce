@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class CartaoDeCredito extends EntidadeDominio {
     private String numCartao;
+
+    private String finalCartao;
     private String nomeImpressoCartao;
     private String bandeira;
     private Integer mesValidade;
@@ -20,6 +22,15 @@ public class CartaoDeCredito extends EntidadeDominio {
 
     public void setNumCartao(String numCartao) {
         this.numCartao = numCartao;
+        setFinalCartao(numCartao.split(" ")[3]);
+    }
+
+    public String getFinalCartao() {
+        return finalCartao;
+    }
+
+    private void setFinalCartao(String finalCartao) {
+        this.finalCartao = finalCartao;
     }
 
     public String getNomeImpressoCartao() {

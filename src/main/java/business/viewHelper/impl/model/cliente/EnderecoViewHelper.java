@@ -8,6 +8,7 @@ import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cliente.endereco.EnderecoType;
 import utils.Utils;
+import utils.UtilsWeb;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +56,10 @@ public class EnderecoViewHelper implements IViewHelper {
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
+
         String origemChamada = request.getParameter("origemChamada");
+        if(origemChamada != null)
+            UtilsWeb.adicionaParametrosRequestOrigemChamada(origemChamada, request);
 
         String msgTela = result.getMsg();
 
@@ -63,14 +67,9 @@ public class EnderecoViewHelper implements IViewHelper {
             case "salvar", "atualizar", "excluir" :
                 if (msgTela == null) {
 
-                    if("finalizarCompra".equals(origemChamada)) {
-
-                        String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
-                        String idCartaoSelecionado = request.getParameter("idCartaoSelecionado");
-
-                        response.sendRedirect(String.format("/emug/clientes/carrinho/finalizarCompra?operacao=listar&origemChamada=finalizarCompra" +
-                                        "&idEnderecoEscolhido=%s&idCartaoSelecionado=%s", idEnderecoEscolhido, idCartaoSelecionado));
-                    } else
+                    if(origemChamada != null)
+                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);
+                    else
                         response.sendRedirect("/emug/clientes/enderecos?operacao=listar");
 
                 } else {
@@ -86,18 +85,11 @@ public class EnderecoViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/cliente/enderecos.jsp").forward(request, response);
                 break;
             case "listarJson":
-                Utils.montaRespostaJson(result, request, response);
+                UtilsWeb.montaRespostaJson(result, request, response);
                 break;
             case "listarUnico":
                 request.setAttribute("isEditar", true);
                 request.setAttribute("endereco", result.getEntidades().get(0));
-
-                if ("finalizarCompra".equals(origemChamada)){
-                    request.setAttribute("origemChamada", origemChamada);
-                    request.setAttribute("enderecoEntrega", request.getParameter("idEnderecoEscolhido"));
-                    request.setAttribute("cartaoSelecionado", request.getParameter("idCartaoSelecionado"));
-                }
-
                 request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);
                 break;
         }

@@ -47,8 +47,8 @@ public class VendaViewHelper implements IViewHelper {
                 Endereco enderecoEntrega = new Endereco();
                 CartaoDeCredito cartao = new CartaoDeCredito();
 
-                enderecoEntrega.setId(idEnderecoEscolhido != null ? Long.parseLong(idEnderecoEscolhido) : null);
-                cartao.setId(idCartaoSelecionado != null ? Long.parseLong(idCartaoSelecionado) : null);
+                enderecoEntrega.setId(idEnderecoEscolhido != null && !idEnderecoEscolhido.isEmpty() ? Long.parseLong(idEnderecoEscolhido) : null);
+                cartao.setId(idCartaoSelecionado != null && !idCartaoSelecionado.isEmpty()? Long.parseLong(idCartaoSelecionado) : null);
 
                 venda.setEnderecoEntrega(enderecoEntrega);
                 venda.setCartao(cartao);
@@ -78,6 +78,7 @@ public class VendaViewHelper implements IViewHelper {
 
                 request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
                 request.setAttribute("cartaoSelecionado", venda.getCartao());
+                request.setAttribute("carrinho", venda.getCarrinho());
 //                request.setAttribute("cupons", venda.getCupons().stream().map(EntidadeDominio::getId).collect(Collectors.toList()) );
 
                 request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
