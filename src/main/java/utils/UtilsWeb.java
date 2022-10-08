@@ -40,9 +40,12 @@ public class UtilsWeb {
         }
     }
 
-    public static void redirecionarParaOrigemChamada(String origemChamada, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public static void redirecionarParaOrigemChamada(String origemChamada, HttpServletRequest request, HttpServletResponse response, Result result) throws IOException {
 
         if("finalizarCompra".equals(origemChamada)) {
+
+            // TODO Mudar id de acordo se a operação for salvar, isso deve variar se for cartão ou endereço...
+
             String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
             String idCartaoSelecionado = request.getParameter("idCartaoSelecionado");
             idEnderecoEscolhido = idEnderecoEscolhido != null ? idEnderecoEscolhido : "";

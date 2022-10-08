@@ -114,7 +114,7 @@ public class CartaoViewHelper implements IViewHelper {
 
                     new AuditoriaDAO().salvar(Utils.criaAuditoria(cartao, tipo, cartao.getCliente().getUsuario()));
                     if(origemChamada != null)
-                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);
+                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response, result);
                     else
                         response.sendRedirect("/emug/clientes/cartoes?operacao=listar");
 

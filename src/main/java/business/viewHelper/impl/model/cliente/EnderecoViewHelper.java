@@ -76,7 +76,7 @@ public class EnderecoViewHelper implements IViewHelper {
                     new AuditoriaDAO().salvar(Utils.criaAuditoria(endereco, tipo, endereco.getCliente().getUsuario()));
 
                     if (origemChamada != null)
-                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);
+                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response, result);
                     else
                         response.sendRedirect("/emug/clientes/enderecos?operacao=listar");
 
