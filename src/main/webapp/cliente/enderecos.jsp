@@ -111,5 +111,6 @@
     <jsp:include page="../include/footer.jsp"/>
 </body>
 <script src='<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js" />'></script>
+<script src='<c:url value="/webjars/jquery/3.6.1/jquery.min.js" />'></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
 </html>

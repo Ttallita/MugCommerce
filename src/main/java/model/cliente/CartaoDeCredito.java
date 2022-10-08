@@ -22,7 +22,9 @@ public class CartaoDeCredito extends EntidadeDominio {
 
     public void setNumCartao(String numCartao) {
         this.numCartao = numCartao;
-        setFinalCartao(numCartao.split(" ")[3]);
+
+        if(numCartao != null && !numCartao.isBlank())
+            setFinalCartao(numCartao.split(" ")[3]);
     }
 
     public String getFinalCartao() {

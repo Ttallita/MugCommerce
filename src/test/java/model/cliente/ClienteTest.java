@@ -31,6 +31,7 @@ class ClienteTest {
 
         EqualsVerifier.forClass(Cliente.class)
                 .withPrefabValues(Endereco.class, endereco, endereco2)
+                .withPrefabValues(CartaoDeCredito.class, cartaoDeCredito, cartaoDeCredito2)
                 .withPrefabValues(Cupom.class, cupom, cupom2)
                 .suppress(Warning.NONFINAL_FIELDS)
                 .withIgnoredFields("id", "ativo")
