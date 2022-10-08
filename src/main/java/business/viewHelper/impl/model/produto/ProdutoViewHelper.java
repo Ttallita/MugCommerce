@@ -102,6 +102,7 @@ public class ProdutoViewHelper implements IViewHelper {
             produto.setCategorias(categorias);
         }
 
+        produto.setAtivo(request.getParameter("isAtivo").equals("on"));
         return produto;
     }
 
@@ -141,12 +142,11 @@ public class ProdutoViewHelper implements IViewHelper {
             case "excluir":
             case "atualizar":
                 Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
-                Produto produto = (Produto) result.getEntidades().get(0);
 
                 if (msgTela == null) {
                     AuditoriaType tipo = operacao.equals("salvar") ? AuditoriaType.INSERCAO : AuditoriaType.ALTERACAO;
 
-                    new AuditoriaDAO().salvar(Utils.criaAuditoria(produto, tipo, usuarioLogado));
+                    new AuditoriaDAO().salvar(Utils.criaAuditoria(result.getEntidades().get(0), tipo, usuarioLogado));
                     response.sendRedirect("/emug/adm/produtos?operacao=listar");
                 } else {
                     String[] mensagens = msgTela.split("\n");
