@@ -76,6 +76,7 @@ public class VendaViewHelper implements IViewHelper {
                 request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
                 request.setAttribute("cartaoSelecionado", venda.getCartao());
                 request.setAttribute("carrinho", venda.getCarrinho());
+                request.setAttribute("valorFrete", venda.getFrete());
 
                 request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
             }
