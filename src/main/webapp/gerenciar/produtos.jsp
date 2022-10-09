@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -56,8 +57,8 @@
                     <c:forEach items="${produtos}" var="produto">
                         <tr ${!produto.ativo ? 'class="table-secondary"' : ''}>
                             <td>${produto.nome}</td>
-                            <td>R$ ${produto.valorCompra}</td>
-                            <td>R$ ${produto.valorVenda}</td>
+                            <td><fmt:formatNumber value="${produto.valorCompra}" type="currency"/></td>
+                            <td><fmt:formatNumber value="${produto.valorVenda}" type="currency"/></td>
                             <td>${produto.material}</td>
                             <td>${produto.codBarras}</td>
                             <td>
@@ -73,7 +74,7 @@
                                         </button>
                                     </c:when>
                                     <c:otherwise>
-                                        Produto inativado
+                                        Produto inativo
                                     </c:otherwise>
                                 </c:choose>
                             </td>

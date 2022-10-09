@@ -9,7 +9,6 @@ import model.Usuario;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cliente.endereco.EnderecoType;
-import model.produto.Produto;
 import utils.Utils;
 import utils.UtilsWeb;
 
@@ -83,6 +82,8 @@ public class EnderecoViewHelper implements IViewHelper {
                 } else {
                     String[] mensagens = msgTela.split("\n");
 
+                    request.setAttribute("endereco", endereco);
+                    request.setAttribute("isEditar", operacao.equals("atualizar"));
                     request.setAttribute("mensagens", mensagens);
                     request.setAttribute("erro", true);
                     request.getRequestDispatcher("/cliente/formularios/formEndereco.jsp").forward(request, response);

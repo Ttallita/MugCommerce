@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>${not empty produto ? 'Edição' : 'Cadastro'}</title>
+    <title>${not empty produto && !isSalvar ? 'Edição' : 'Cadastro'}</title>
 
     <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css' />"/>
     <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css' />"/>
@@ -22,7 +22,7 @@
         <div class="card p-3">
         
             <h3 class="text-center mb-4">
-                ${not empty produto ? 'Atualizar' : 'Cadastrar'}
+                ${not empty produto && !isSalvar ? 'Atualizar' : 'Cadastrar'}
             </h3>
 
             <form action="/emug/adm/produtos" enctype="multipart/form-data" method="POST">
@@ -30,22 +30,22 @@
 
                     <div class="col-sm-12">
                         <label for="nomeProduto"><small>Nome</small></label>
-                        <input type="text" ${not empty produto && !produto.ativo ? 'disabled' : ''} class="form-control" id="nomeProduto" name="nomeProduto" value="${produto.nome}">
+                        <input type="text" ${not empty produto && !produto.ativo && !isSalvar ? 'disabled' : ''} class="form-control" id="nomeProduto" name="nomeProduto" value="${produto.nome}">
                     </div>
                     
                     <div class="col-sm-3">
                         <label for="valorCompra"><small>Valor de compra</small></label>
-                        <input type="text" ${not empty produto && !produto.ativo ? 'disabled' : ''} class="form-control money" id="valorCompra" name="valorCompra" value="${produto.valorCompra}">
+                        <input type="text" ${not empty produto && !produto.ativo && !isSalvar ? 'disabled' : ''} class="form-control money" id="valorCompra" name="valorCompra" value="${produto.valorCompra}">
                     </div>
 
                     <div class="col-sm-5">
                         <label for="codBarras"><small>Cod. barras</small></label>
-                        <input type="text" ${not empty produto && !produto.ativo ? 'disabled' : ''} class="form-control" id="codBarras" name="codBarras" value="${produto.codBarras}">
+                        <input type="text" ${not empty produto && !produto.ativo && !isSalvar ? 'disabled' : ''} class="form-control" id="codBarras" name="codBarras" value="${produto.codBarras}">
                     </div>
 
                     <div class="col-sm-4">
                         <label for="material"><small>Material</small></label>
-                        <select class="form-select" ${not empty produto && !produto.ativo ? 'disabled' : ''} id="material" name="material">
+                        <select class="form-select" ${not empty produto && !produto.ativo && !isSalvar ? 'disabled' : ''} id="material" name="material">
                             <option value="">Selecione</option>
                             <option ${produto.material == 'Porcelana' ? 'selected' : ''}>Porcelana</option>
                             <option ${produto.material == 'Plastico' ? 'selected' : ''}>Plastico</option>
@@ -55,56 +55,61 @@
 
                     <div class="col-sm-4">
                         <label for="fabricante"><small>Fabricante</small></label>
-                        <select class="form-select" ${not empty produto && !produto.ativo ? 'disabled' : ''} id="fabricante" name="fabricante">
+                        <select class="form-select" ${not empty produto && !produto.ativo && !isSalvar ? 'disabled' : ''} id="fabricante" name="fabricante">
                             <option value="">Selecione</option>
                         </select>
                     </div>
 
                     <div class="col-md-3">
                         <label for="grupoPrecificacao"><small>Grupo de precificação</small></label>
-                        <select class="form-select" ${not empty produto && !produto.ativo ? 'disabled' : ''} id="grupoPrecificacao" name="grupoPrecificacao">
+                        <select class="form-select" ${not empty produto && !produto.ativo && !isSalvar ? 'disabled' : ''} id="grupoPrecificacao" name="grupoPrecificacao">
                             <option value="">Selecione</option>
                         </select>
                     </div>
 
                     <div class="col-sm-3">
                         <label for="categorias"><small>Categorias</small></label>
-                        <select class="form-select" ${not empty produto && !produto.ativo ? 'disabled' : ''} name="categorias" id="categorias" multiple aria-label="Categorias">
+                        <select class="form-select" ${not empty produto && !produto.ativo && !isSalvar ? 'disabled' : ''} name="categorias" id="categorias" multiple aria-label="Categorias">
                             <option>Selecione...</option>
                         </select>
                     </div>
 
                     <div class="col-sm-12">
                         <label for="descricao"><small>Descrição</small></label>
-                        <textarea class="form-control" ${not empty produto && !produto.ativo ? 'disabled' : ''} id="descricao" name="descricao" rows="3">${produto.descricao}</textarea>
+                        <textarea class="form-control" ${not empty produto && !produto.ativo && !isSalvar ? 'disabled' : ''} id="descricao" name="descricao" rows="3">${produto.descricao}</textarea>
                     </div>
 
                     <div class="col-sm-12 h-25">
                         <label for="imgProduto" class="form-label">Imagem produto</label>
                         <div id="imagem-produto">
-                            <c:if test="${not empty produto}">
+                            <c:if test="${not empty produto && !isSalvar}">
                                 <img src="${produto.imagem}" class="w-50 h-50" alt="Imagem do Produto"/>
                             </c:if>
                         </div>
                         <br/>
-                        <input class="form-control form-control-sm" ${not empty produto && !produto.ativo ? 'disabled' : ''} id="imgProduto" type="file">
+                        <input class="form-control form-control-sm" ${not empty produto && !produto.ativo && !isSalvar ? 'disabled' : ''} id="imgProduto" type="file">
                         <input type="hidden" name="imagemBase64" id="imagemBase64" value="${produto.imagem}"/>
                     </div>
 
-                    <c:if test="${empty produto}">
+                    <c:if test="${empty produto || isSalvar}">
                         <div class="col-sm-3">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="isAtivo" name="isAtivo">
-                                <label class="form-check-label" for="isAtivo">Ativo</label>
+                                <input class="form-check-input" type="checkbox" role="switch" name="isAtivo">
+                                <label class="form-check-label">Ativo</label>
                             </div>
                         </div>
                     </c:if>
 
+                    <c:if test="${not empty produto && !isSalvar}">
+                        <input class="form-check-input" type="hidden" name="isAtivo" value="${produto.ativo ? 'on' : ''}">
+                    </c:if>
+
+
                     <hr>
                     <input type="hidden" name="id" value="${produto.id}">
-                    <input type="hidden" name="operacao" value="${not empty produto ? 'atualizar' : 'salvar'}">
+                    <input type="hidden" name="operacao" value="${not empty produto && !isSalvar ? 'atualizar' : 'salvar'}">
                     <c:choose>
-                        <c:when test="${not empty produto}">
+                        <c:when test="${not empty produto && !isSalvar}">
                             <c:if test="${produto.ativo}">
                                 <input type="submit" class="w-100 btn btn-primary btn-lg" name="botaoCadastro" value="Atualizar">
                             </c:if>
