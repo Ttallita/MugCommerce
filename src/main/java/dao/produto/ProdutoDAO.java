@@ -158,20 +158,32 @@ public class ProdutoDAO implements IDAO {
             String sql;
             PreparedStatement pstm = null;
 
-            if(operacao.equals("listar")) {
-                sql = "SELECT * FROM produtos";
+            switch (operacao) {
 
-                pstm = connection.prepareStatement(sql);
+                case "listar" -> {
+                    sql = "SELECT * FROM produtos";
 
-            } if(operacao.equals("pesquisar")) {
-                sql = "SELECT * FROM produtos WHERE pro_ativo = true";
+                    pstm = connection.prepareStatement(sql);
+                }
 
-                pstm = connection.prepareStatement(sql);
-            } else if(operacao.equals("listarUnico")) {
-                sql = "SELECT * FROM produtos where pro_id = ?";
+                case "listarIndex" -> {
+                    sql = "SELECT * FROM produtos p WHERE p.pro_ativo = true ORDER BY p.pro_id LIMIT 5";
 
-                pstm = connection.prepareStatement(sql);
-                pstm.setLong(1, produto.getId());
+                    pstm = connection.prepareStatement(sql);
+                }
+
+                case "pesquisar" -> {
+                    sql = "SELECT * FROM produtos WHERE pro_ativo = true";
+
+                    pstm = connection.prepareStatement(sql);
+                }
+
+                case "listarUnico" -> {
+                    sql = "SELECT * FROM produtos where pro_id = ?";
+
+                    pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, produto.getId());
+                }
             }
 
             ResultSet rs = pstm.executeQuery();

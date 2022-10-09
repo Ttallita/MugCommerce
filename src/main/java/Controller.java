@@ -76,7 +76,6 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/adm/categorias", new CategoriaViewHelper());
         viewHelperMap.put("/emug/adm/grupos", new GrupoPrecificacaoViewHelper());
 
-        viewHelperMap.put("/emug/produtos/index", new ProdutoViewHelper());
         viewHelperMap.put("/emug/produtos", new ProdutoViewHelper());
     }
 
