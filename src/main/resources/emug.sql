@@ -101,28 +101,6 @@ CREATE TABLE produtos_status (
     pst_justificativa varchar(255) NOT NULL
 );
 
-DROP TABLE IF EXISTS "vendas" CASCADE;
-CREATE TABLE vendas (
-    vnd_id                 serial        NOT NULL,
-    vnd_cli_usr_id         int           NOT NULL,
-    vnd_end_entrega_id     int           NOT NULL,
-    vnd_preco_total        numeric(8, 2) NOT NULL,
-    vnd_frete              numeric(8, 2) NOT NULL,
-    vnd_dt_compra          timestamp     NOT NULL,
-    vnd_dt_envio           timestamp,
-    vnd_dt_entrega         timestamp,
-    vnd_pagamento_aprovado boolean       NOT NULL,
-    vnd_status             varchar(16)   NOT NULL
-);
-
-DROP TABLE IF EXISTS "produtos_em_venda" CASCADE;
-CREATE TABLE produtos_em_venda(
-    prv_pro_id int NOT NULL,
-    prv_vnd_id int NOT NULL,
-    prv_quant int NOT NULL,
-    prv_em_troca boolean
-);
-
 DROP TABLE IF EXISTS "auditoria" CASCADE;
 CREATE TABLE auditoria (
     aud_id     serial       NOT NULL,
@@ -132,4 +110,74 @@ CREATE TABLE auditoria (
     aud_dados  jsonb        NOT NULL
 );
 
+-- Constraints de primary key
+ALTER TABLE usuarios
+    ADD CONSTRAINT pk_usr PRIMARY KEY (usr_id);
 
+ALTER TABLE clientes
+    ADD CONSTRAINT pk_cli PRIMARY KEY (cli_usr_id);
+
+ALTER TABLE cartoes
+    ADD CONSTRAINT pk_crt PRIMARY KEY (crt_id);
+
+ALTER TABLE enderecos
+    ADD CONSTRAINT pk_end PRIMARY KEY (end_id);
+
+ALTER TABLE categorias
+    ADD CONSTRAINT pk_ctg PRIMARY KEY (ctg_id);
+
+ALTER TABLE fabricantes
+    ADD CONSTRAINT pk_fab PRIMARY KEY (fab_id);
+
+ALTER TABLE grupos_precificacao
+    ADD CONSTRAINT pk_grp PRIMARY KEY(grp_id);
+
+ALTER TABLE produtos
+    ADD CONSTRAINT pk_pro PRIMARY KEY (pro_id);
+
+ALTER TABLE categorias_produtos
+    ADD CONSTRAINT pk_ctp PRIMARY KEY (ctp_pro_id, ctp_ctg_id);
+
+ALTER TABLE produtos_status
+    ADD CONSTRAINT pk_pst PRIMARY KEY (pst_id);
+
+-- Constraints de foreign key
+ALTER TABLE clientes
+    ADD CONSTRAINT fk_cli_usr FOREIGN KEY (cli_usr_id)
+        REFERENCES usuarios (usr_id);
+
+ALTER TABLE cartoes
+    ADD CONSTRAINT fk_crt_cli_usr FOREIGN KEY (crt_cli_usr_id)
+        REFERENCES clientes (cli_usr_id);
+
+ALTER TABLE cupons
+    ADD CONSTRAINT fk_cpm_cli_usr FOREIGN KEY (cpm_cli_usr_id)
+        REFERENCES clientes (cli_usr_id);
+
+ALTER TABLE enderecos
+    ADD CONSTRAINT fk_end_cli_usr FOREIGN KEY (end_cli_usr_id)
+        REFERENCES clientes (cli_usr_id);
+
+ALTER TABLE produtos
+    ADD CONSTRAINT fk_pro_fab FOREIGN KEY (pro_fab_id)
+        REFERENCES fabricantes (fab_id);
+
+ALTER TABLE produtos
+    ADD CONSTRAINT fk_pro_grp FOREIGN KEY (pro_grp_id)
+        REFERENCES grupos_precificacao (grp_id);
+
+ALTER TABLE produtos
+    ADD CONSTRAINT fk_pro_pst FOREIGN KEY (pro_pst_id)
+        REFERENCES produtos_status (pst_id);
+
+ALTER TABLE categorias_produtos
+    ADD CONSTRAINT fk_ctp_pro FOREIGN KEY (ctp_pro_id)
+        REFERENCES produtos (pro_id);
+
+ALTER TABLE categorias_produtos
+    ADD CONSTRAINT fk_ctp_ctg FOREIGN KEY (ctp_ctg_id)
+        REFERENCES categorias (ctg_id);
+
+ALTER TABLE produtos_status
+    ADD CONSTRAINT fk_prod_id FOREIGN KEY (pst_prod_id)
+        REFERENCES produtos (pro_id);
