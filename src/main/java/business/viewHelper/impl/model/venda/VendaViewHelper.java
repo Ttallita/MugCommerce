@@ -38,8 +38,8 @@ public class VendaViewHelper implements IViewHelper {
 
             case "listar" -> {
                 Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
-                String idCartaoSelecionado = request.getParameter("idCartaoSelecionado");
-                String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
+                String idCartaoSelecionado = request.getParameter("idCartaoDeCredito");
+                String idEnderecoEscolhido = request.getParameter("idEndereco");
 
                 Endereco enderecoEntrega = new Endereco();
                 CartaoDeCredito cartao = new CartaoDeCredito();

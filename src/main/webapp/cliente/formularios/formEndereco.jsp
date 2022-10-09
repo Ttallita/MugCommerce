@@ -115,8 +115,8 @@
 
                     <c:if test="${origemChamada == 'finalizarCompra'}">
                         <input type="hidden" name="origemChamada" value="${origemChamada}">
-                        <input type="hidden" name="idEnderecoEscolhido" value="${idEnderecoEscolhido}">
-                        <input type="hidden" name="idCartaoSelecionado" value="${idCartaoSelecionado}">
+                        <input type="hidden" name="idEndereco" value="${idEndereco}">
+                        <input type="hidden" name="idCartaoDeCredito" value="${idCartaoDeCredito}">
                     </c:if>
 
                     <button class="w-100 btn btn-primary btn-lg" type="submit" name="botaoCadastro">

@@ -105,10 +105,10 @@ public class VendaDAO implements IDAO {
                             enderecoEntrega = (Endereco) enderecoDAO.listar(endereco, "listarUnico").get(0);
 
                         CartaoDeCredito cartaoPreferencial;
-                        if (cartao.getId() == null)
-                            cartaoPreferencial = (CartaoDeCredito) cartaoDeCreditoDAO.listar(cartao, "findCartaoPreferencial").get(0);
+                        if (cartao.getId() != null)
+                            cartaoPreferencial = (CartaoDeCredito) cartaoDeCreditoDAO.listar(cartao, "listarUnico").get(0);
                         else {
-                            List<EntidadeDominio> lista = cartaoDeCreditoDAO.listar(cartao, "listarUnico");
+                            List<EntidadeDominio> lista = cartaoDeCreditoDAO.listar(cartao, "findCartaoPreferencial");
 
                             cartaoPreferencial = lista.size() > 0  ? (CartaoDeCredito) lista.get(0) : null;
                         }

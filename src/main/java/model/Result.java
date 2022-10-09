@@ -1,10 +1,11 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Result {
     private String msg;
-    private List<EntidadeDominio> entidades;
+    private List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
 
     public String getMsg() {
         return msg;

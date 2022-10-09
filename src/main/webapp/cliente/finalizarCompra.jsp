@@ -117,19 +117,19 @@
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Itens:</strong>
-                                <strong>R$ ${carrinho.totalCarrinho}</strong>
+                                <strong>R$ <fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></strong>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Frete:</strong>
-                                <strong>RS ${valorFrete}</strong>
+                                <strong>RS <fmt:formatNumber value="${valorFrete}" type="currency"/></strong>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Desconto:</strong>
-                                <strong>- R$ ${valorDesconto}</strong>
+                                <strong>- R$ <fmt:formatNumber value="${valorDesconto}" type="currency"/></strong>
                             </li>
                             <li class="d-flex justify-content-between py-3">
                                 <strong class="text-muted">Total do pedido:</strong>
-                                <h5 class="font-weight-bold">R$ ${carrinho.totalCarrinho}</h5>
+                                <h5 class="font-weight-bold">R$ <fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></h5>
                             </li>
 
                             <input type="hidden" name="id" value="${enderecoEntrega.id}">
@@ -181,11 +181,11 @@
 
     const baseUrl = 'http://localhost:8080/emug';
 
-    const idEnderecoEscolhido = '${enderecoEntrega.id}';
-    const idCartaoSelecionado = '${cartaoSelecionado.id}';
+    const idEndereco = '${enderecoEntrega.id}';
+    const idCartaoDeCredito = '${cartaoSelecionado.id}';
 
     const parametroOrigemChamada = "&origemChamada=finalizarCompra";
-    const parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idCartaoSelecionado=\${idCartaoSelecionado}`;
+    const parametrosVendaHref = `&idEndereco=\${idEndereco}&idCartaoDeCredito=\${idCartaoDeCredito}`;
 
     async function listaItensModal(url, path) {
         let response = await fetch(url)
@@ -203,7 +203,7 @@
         if (path.includes("enderecos")) {
             json.forEach(endereco => {
 
-                let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;
+                let isEnderecoSelecionado = idEndereco == endereco.id;
 
                 let hrefEditar = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`
                 
@@ -225,7 +225,7 @@
         } else if (path.includes("cartoes")) {
             json.forEach(cartao => {
 
-                let isCartaoSelecionado = idCartaoSelecionado == cartao.id;
+                let isCartaoSelecionado = idCartaoDeCredito == cartao.id;
 
                 let hrefEditar = `<c:url value="/clientes/cartoes?operacao=listarUnico&id=\${cartao.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`;
 
@@ -278,16 +278,16 @@
 
         let urlAtualizar;
         if (tipoInfo == 'endereco')
-            urlAtualizar = construirURL(id, idCartaoSelecionado)
+            urlAtualizar = construirURL(id, idCartaoDeCredito)
         else
-            urlAtualizar = construirURL(idEnderecoEscolhido, id)
+            urlAtualizar = construirURL(idEndereco, id)
 
         window.location.href = urlAtualizar;
     }
 
     function construirURL(idEndereco, idCartao){
         let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listar"/>`;
-        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEndereco}&idCartaoSelecionado=\${idCartao}`;
+        let parametrosVendaHref = `&idEndereco=\${idEndereco}&idCartaoDeCredito=\${idCartao}`;
         
         return urlBase + parametrosVendaHref;
     }
