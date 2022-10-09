@@ -2,6 +2,7 @@ package model.venda;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 import model.EntidadeDominio;
 import model.carrinho.Carrinho;
@@ -27,6 +28,13 @@ public class Venda extends EntidadeDominio {
     private boolean pagamentoAprovado;
     private VendaType vendaStatus;
 
+    public void atualizarFrete(){
+        int quantTotalItens = carrinho != null ? carrinho.getQuantTotalItens() : 1;
+        int distanciaEndereco = new Random(10L).nextInt(30);
+
+        frete = Math.max(1, quantTotalItens / 10) * 10.0 * distanciaEndereco;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -41,6 +49,7 @@ public class Venda extends EntidadeDominio {
 
     public void setEnderecoEntrega(Endereco enderecoEntrega) {
         this.enderecoEntrega = enderecoEntrega;
+        this.atualizarFrete();
     }
 
     public Double getPrecoTotal() {
@@ -57,6 +66,7 @@ public class Venda extends EntidadeDominio {
 
     public void setCarrinho(Carrinho carrinho) {
         this.carrinho = carrinho;
+        this.atualizarFrete();
     }
 
     public CartaoDeCredito getCartao() {

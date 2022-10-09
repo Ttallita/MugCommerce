@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -117,19 +118,19 @@
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Itens:</strong>
-                                <strong>R$ <fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></strong>
+                                <strong><fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></strong>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Frete:</strong>
-                                <strong>RS <fmt:formatNumber value="${valorFrete}" type="currency"/></strong>
+                                <strong><fmt:formatNumber value="${valorFrete}" type="currency"/></strong>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Desconto:</strong>
-                                <strong>- R$ <fmt:formatNumber value="${valorDesconto}" type="currency"/></strong>
+                                <strong>- <fmt:formatNumber value="${valorDesconto}" type="currency"/></strong>
                             </li>
                             <li class="d-flex justify-content-between py-3">
                                 <strong class="text-muted">Total do pedido:</strong>
-                                <h5 class="font-weight-bold">R$ <fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></h5>
+                                <h5 class="font-weight-bold"><fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></h5>
                             </li>
 
                             <input type="hidden" name="id" value="${enderecoEntrega.id}">
@@ -285,9 +286,9 @@
         window.location.href = urlAtualizar;
     }
 
-    function construirURL(idEnderecoEscolhido, idCartao){
+    function construirURL(idEnderecoEscolhido, idCartaoSelecionado){
         let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listar"/>`;
-        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idCartaoSelecionado=\${idCartao}`;
+        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idCartaoSelecionado=\${idCartaoSelecionado}`;
         
         return urlBase + parametrosVendaHref;
     }

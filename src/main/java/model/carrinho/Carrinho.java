@@ -2,6 +2,7 @@ package model.carrinho;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import model.EntidadeDominio;
 import model.cliente.Cliente;
@@ -49,5 +50,10 @@ public class Carrinho extends EntidadeDominio {
                 .map(item -> item.getProduto().getValorVenda() * item.getQuant())
                 .mapToDouble(Double::doubleValue)
                 .sum();
+    }
+
+    public int getQuantTotalItens(){
+        return itensCarrinho.stream()
+                .map(ItemCarrinho::getQuant).mapToInt(Integer::intValue).sum();
     }
 }
