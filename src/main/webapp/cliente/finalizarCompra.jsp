@@ -181,11 +181,11 @@
 
     const baseUrl = 'http://localhost:8080/emug';
 
-    const idEndereco = '${enderecoEntrega.id}';
-    const idCartaoDeCredito = '${cartaoSelecionado.id}';
+    const idEnderecoEscolhido = '${enderecoEntrega.id}';
+    const idCartaoSelecionado = '${cartaoSelecionado.id}';
 
     const parametroOrigemChamada = "&origemChamada=finalizarCompra";
-    const parametrosVendaHref = `&idEndereco=\${idEndereco}&idCartaoDeCredito=\${idCartaoDeCredito}`;
+    const parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idCartaoSelecionado=\${idCartaoSelecionado}`;
 
     async function listaItensModal(url, path) {
         let response = await fetch(url)
@@ -203,7 +203,7 @@
         if (path.includes("enderecos")) {
             json.forEach(endereco => {
 
-                let isEnderecoSelecionado = idEndereco == endereco.id;
+                let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;
 
                 let hrefEditar = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`
                 
@@ -225,7 +225,7 @@
         } else if (path.includes("cartoes")) {
             json.forEach(cartao => {
 
-                let isCartaoSelecionado = idCartaoDeCredito == cartao.id;
+                let isCartaoSelecionado = idCartaoSelecionado == cartao.id;
 
                 let hrefEditar = `<c:url value="/clientes/cartoes?operacao=listarUnico&id=\${cartao.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`;
 
@@ -278,16 +278,16 @@
 
         let urlAtualizar;
         if (tipoInfo == 'endereco')
-            urlAtualizar = construirURL(id, idCartaoDeCredito)
+            urlAtualizar = construirURL(id, idCartaoSelecionado)
         else
-            urlAtualizar = construirURL(idEndereco, id)
+            urlAtualizar = construirURL(idEnderecoEscolhido, id)
 
         window.location.href = urlAtualizar;
     }
 
-    function construirURL(idEndereco, idCartao){
+    function construirURL(idEnderecoEscolhido, idCartao){
         let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listar"/>`;
-        let parametrosVendaHref = `&idEndereco=\${idEndereco}&idCartaoDeCredito=\${idCartao}`;
+        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idCartaoSelecionado=\${idCartao}`;
         
         return urlBase + parametrosVendaHref;
     }

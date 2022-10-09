@@ -1,9 +1,7 @@
 package utils;
 
 import com.google.gson.*;
-import model.EntidadeDominio;
 import model.Result;
-import model.cliente.CartaoDeCredito;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,15 +47,8 @@ public class UtilsWeb {
         }
     }
 
-    public static void redirecionarParaOrigemChamada(String origemChamada, HttpServletRequest request, HttpServletResponse response, Result result) throws IOException {
-        Map<String, String> novosValoresParametros = new HashMap<>();
+    public static void redirecionarParaOrigemChamada(String origemChamada, HttpServletRequest request, HttpServletResponse response, Map<String, String> novosValoresParametros) throws IOException {
         String urlRedirecionada = mapaRedirect.get(origemChamada);
-
-        if (!result.getEntidades().isEmpty()){
-            EntidadeDominio entidade = result.getEntidades().get(0);
-            novosValoresParametros.put("id" + entidade.getClass().getSimpleName(), entidade.getId().toString());
-        }
-
         response.sendRedirect(URL_BASE + urlRedirecionada + getParametrosRequest(request, novosValoresParametros));
     }
 
