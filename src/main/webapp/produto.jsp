@@ -52,27 +52,31 @@
             </div>
             <div class="col-md-3 border p-3">
                 <div class="container">
-                    <p class="text-muted">10 vendidos</p>
+                    <!-- <p class="text-muted">10 vendidos</p> -->
                     <div class="mb-3">
                         <h2><fmt:formatNumber value="${produto.valorVenda}" type="currency"/></h2>
                     </div>
                     <hr>
-                    <div class="row">
-                        <div class="row g-2 m-2 align-items-center">
-                            <div class="col-auto">
-                                <span class="form-text">(10 disponíveis)</span> <!-- TODO definir quantidade de produtos-->
+                    <!-- TODO definir quantidade de produtos
+                        <div class="row">
+                            <div class="row g-2 m-2 align-items-center">
+                                <div class="col-auto">
+                                    <span class="form-text">(10 disponíveis)</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- TODO Caso o usuário não esteja logado e tente realizar alguma ação deve redirecionar para página de login-->
-                    <div class="d-grid gap-1 col-10 mx-auto mt-3">
-                        <a type="button" href="cliente/finalizarCompra.jsp" class="btn btn-primary rounded-pill">Comprar</a>
-                        <form action="/emug/clientes/carrinho" method="POST">
+                    -->
+
+                    <form action="${sessionScope.usuarioLogado.tipoUsuario == 'CLIENTE' ? '/emug/clientes/carrinho' : 'login.jsp' }"
+                          method="POST">
+                        <div class="d-grid gap-1 col-10 mx-auto mt-3">
+                            <a type="button" href="cliente/finalizarCompra.jsp" class="btn btn-primary rounded-pill">Comprar</a>
                             <input type="hidden" name="id" value="${produto.id}">
                             <input type="hidden" name="operacao" value="salvar">
                             <input type="submit" class="btn btn-outline-primary rounded-pill" value="Adicionar ao carrinho">
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>

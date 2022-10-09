@@ -73,7 +73,7 @@ public class ProdutoViewHelper implements IViewHelper {
 
         String valorCompra = request.getParameter("valorCompra");
 
-        if(valorCompra != null) {
+        if(valorCompra != null && !valorCompra.isEmpty()) {
             String valorCompraFormatado = valorCompra.replace(".", "")
                     .replace(",", ".");
             produto.setValorCompra(Double.parseDouble(valorCompraFormatado));
@@ -82,19 +82,21 @@ public class ProdutoViewHelper implements IViewHelper {
         produto.setCodBarras(request.getParameter("codBarras"));
         produto.setMaterial(request.getParameter("material"));
 
-        if(request.getParameter("fabricante") != null) {
-            long idFabricante = Long.parseLong(request.getParameter("fabricante"));
+        String fabricante = request.getParameter("fabricante");
+        if(fabricante != null && !fabricante.isEmpty()) {
+            long idFabricante = Long.parseLong(fabricante);
             produto.setFabricante(new Fabricante(idFabricante, ""));
         }
 
-        if(request.getParameter("grupoPrecificacao") != null) {
-            long idGrupoPrecificacao = Long.parseLong(request.getParameter("grupoPrecificacao"));
+        String grupoPrecificacao = request.getParameter("grupoPrecificacao");
+        if(grupoPrecificacao != null && !grupoPrecificacao.isEmpty()) {
+            long idGrupoPrecificacao = Long.parseLong(grupoPrecificacao);
             produto.setGrupoPrecificacao(new GrupoPrecificacao(idGrupoPrecificacao, ""));
         }
 
         produto.setDescricao(request.getParameter("descricao"));
 
-        if(request.getParameter("categorias") != null) {
+        if(request.getParameter("categorias") != null && request.getParameterValues("categorias").length > 0) {
             List<Categoria> categorias = Arrays.stream(request.getParameterValues("categorias"))
                     .map(categoria -> new Categoria(Long.parseLong(categoria), ""))
                     .toList();
@@ -102,7 +104,7 @@ public class ProdutoViewHelper implements IViewHelper {
             produto.setCategorias(categorias);
         }
 
-        produto.setAtivo(request.getParameter("isAtivo").equals("on"));
+        produto.setAtivo(request.getParameter("isAtivo") != null && request.getParameter("isAtivo").equals("on"));
         return produto;
     }
 
@@ -140,9 +142,11 @@ public class ProdutoViewHelper implements IViewHelper {
                 } else {
                     String[] mensagens = msgTela.split("\n");
 
+                    request.setAttribute("isSalvar", operacao.equals("salvar"));
+                    request.setAttribute("produto", result.getEntidades().get(0));
                     request.setAttribute("mensagens", mensagens);
                     request.setAttribute("erro", true);
-                    request.getRequestDispatcher("/adm/formularios/formProduto.jsp").forward(request, response);
+                    request.getRequestDispatcher("/gerenciar/formularios/formProduto.jsp").forward(request, response);
                 }
             }
 

@@ -22,16 +22,16 @@ public class VerificaProdutoStrategy implements IStrategy {
         if(produto.getMaterial().isBlank())
             return "Insira o material do produto";
 
-        if(produto.getGrupoPrecificacao().getId() == null)
+        if(produto.getGrupoPrecificacao() == null)
             return "Escolha um grupo de precificação";
 
-        if(produto.getFabricante().getId() == null)
+        if(produto.getFabricante() == null)
             return "Escolha um fabricantes";
 
         if(produto.getCodBarras().isBlank())
             return "Digite o código de barras";
 
-        if(produto.getCategorias() != null && produto.getCategorias().isEmpty())
+        if(produto.getCategorias() == null)
             return "Escolha uma ou mais categorias para o produto";
 
         if(produto.getImagem().isBlank())

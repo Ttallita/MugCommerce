@@ -111,6 +111,7 @@ public class CartaoViewHelper implements IViewHelper {
                     AuditoriaType tipo = operacao.equals("salvar") ? AuditoriaType.INSERCAO : AuditoriaType.ALTERACAO;
 
                     new AuditoriaDAO().salvar(Utils.criaAuditoria(cartao, tipo, cartao.getCliente().getUsuario()));
+
                     if(origemChamada != null) {
                         Map<String, String> novosValoresParametros = new HashMap<>();
                         novosValoresParametros.put("idCartaoSelecionado", result.getEntidades().get(0).getId().toString());
@@ -123,6 +124,7 @@ public class CartaoViewHelper implements IViewHelper {
                 } else {
                     String[] mensagens = msgTela.split("\n");
 
+                    request.setAttribute("isEditar", operacao.equals("atualizar"));
                     request.setAttribute("cartao", result.getEntidades().get(0));
                     request.setAttribute("mensagens", mensagens);
                     request.setAttribute("erro", true);
@@ -130,7 +132,12 @@ public class CartaoViewHelper implements IViewHelper {
                 }
             }
             case "listarUnico" -> {
-                CartaoDeCredito cartaoPreferencial = (CartaoDeCredito) new Facade().listar(new CartaoDeCredito(), null, "findCartaoPreferencial")
+                Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+
+                CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
+                cartaoDeCredito.setCliente(new Cliente(usuarioLogado));
+
+                CartaoDeCredito cartaoPreferencial = (CartaoDeCredito) new Facade().listar(cartaoDeCredito, null, "findCartaoPreferencial")
                         .getEntidades()
                         .get(0);
 

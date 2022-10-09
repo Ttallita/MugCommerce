@@ -2,7 +2,10 @@ package dao.cliente;
 
 import dao.IDAO;
 import model.EntidadeDominio;
+import model.Usuario;
 import model.cliente.CartaoDeCredito;
+import model.cliente.Cliente;
+import org.checkerframework.checker.units.qual.C;
 import utils.Conexao;
 
 import java.sql.*;
@@ -21,7 +24,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             conn = conexao.getConexao();
 
             if(cartao.isPreferencial())
-                atualizaCartaoPreferencial();
+                atualizaCartaoPreferencial(cartao);
 
             String sql = "INSERT INTO cartoes (crt_cli_usr_id, crt_numero, crt_bandeira, crt_nome_impresso, crt_mes_validade," +
                     " crt_ano_validade, crt_cod_seg, crt_preferencial)" +
@@ -35,7 +38,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             pstm.setInt(5, cartao.getMesValidade());
             pstm.setInt(6, cartao.getAnoValidade());
             pstm.setInt(7, cartao.getCodigo());
-            pstm.setBoolean(8, !existeCartaoPreferencial() || cartao.isPreferencial());
+            pstm.setBoolean(8, !existeCartaoPreferencial(cartao.getCliente().getUsuario()) || cartao.isPreferencial());
             pstm.execute();
 
             ResultSet rs = pstm.getGeneratedKeys();
@@ -69,7 +72,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             conn = conexao.getConexao();
 
             if(cartao.isPreferencial())
-                atualizaCartaoPreferencial();
+                atualizaCartaoPreferencial(cartao);
 
             String sql = "UPDATE cartoes SET crt_numero = ?, crt_bandeira = ?, crt_nome_impresso = ?, crt_mes_validade = ?," +
                     " crt_ano_validade = ?, crt_cod_seg = ?, crt_preferencial = ? WHERE crt_id = ?";
@@ -82,7 +85,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             pstm.setInt(5, cartao.getAnoValidade());
             pstm.setInt(6, cartao.getCodigo());
 
-            pstm.setBoolean(7, !existeCartaoPreferencial() || cartao.isPreferencial());
+            pstm.setBoolean(7, !existeCartaoPreferencial(cartao.getCliente().getUsuario()) || cartao.isPreferencial());
             pstm.setLong(8, cartao.getId());
 
             pstm.execute();
@@ -148,9 +151,10 @@ public class CartaoDeCreditoDAO implements IDAO {
                     pstm.setLong(2, cartao.getId());
                 }
                 case "findCartaoPreferencial" -> {
-                    sql = "SELECT * FROM cartoes where crt_preferencial = ?";
+                    sql = "SELECT * FROM cartoes where crt_preferencial = ? AND crt_cli_usr_id = ?";
                     pstm = conn.prepareStatement(sql);
                     pstm.setBoolean(1, true);
+                    pstm.setLong(2, cartao.getCliente().getUsuario().getId());
                 }
             }
 
@@ -183,17 +187,18 @@ public class CartaoDeCreditoDAO implements IDAO {
         return null;
     }
 
-    public void atualizaCartaoPreferencial() {
+    public void atualizaCartaoPreferencial(CartaoDeCredito cartao) {
         Conexao conexao = new Conexao();
         Connection conn = null;
         try {
             conn = conexao.getConexao();
 
-            String sql = "UPDATE cartoes SET crt_preferencial = ? WHERE crt_preferencial = ?";
+            String sql = "UPDATE cartoes SET crt_preferencial = ? WHERE crt_preferencial = ? AND crt_cli_usr_id = ?";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setBoolean(1, false);
             pstm.setBoolean(2, true);
+            pstm.setLong(3, cartao.getCliente().getUsuario().getId());
 
             pstm.execute();
         }catch (SQLException | ClassNotFoundException e) {
@@ -204,7 +209,10 @@ public class CartaoDeCreditoDAO implements IDAO {
 
     }
 
-    public boolean existeCartaoPreferencial() {
-        return listar(new CartaoDeCredito(), "findCartaoPreferencial").size() > 0;
+    public boolean existeCartaoPreferencial(Usuario usuario) {
+        CartaoDeCredito cartaoDeCredito = new CartaoDeCredito();
+        cartaoDeCredito.setCliente(new Cliente(usuario));
+
+        return listar(cartaoDeCredito, "findCartaoPreferencial").size() > 0;
     }
 }
