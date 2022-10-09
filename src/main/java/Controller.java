@@ -1,17 +1,16 @@
 import business.command.*;
 import business.viewHelper.IViewHelper;
+import business.viewHelper.impl.LoginViewHelper;
+import business.viewHelper.impl.model.UsuarioViewHelper;
 import business.viewHelper.impl.model.adm.ClienteAdmViewHelper;
 import business.viewHelper.impl.model.carrinho.CarrinhoViewHelper;
 import business.viewHelper.impl.model.cliente.CartaoViewHelper;
 import business.viewHelper.impl.model.cliente.ClienteViewHelper;
-import business.viewHelper.impl.LoginViewHelper;
-import business.viewHelper.impl.model.UsuarioViewHelper;
 import business.viewHelper.impl.model.cliente.EnderecoViewHelper;
 import business.viewHelper.impl.model.produto.CategoriaViewHelper;
 import business.viewHelper.impl.model.produto.FabricanteViewHelper;
 import business.viewHelper.impl.model.produto.GrupoPrecificacaoViewHelper;
 import business.viewHelper.impl.model.produto.ProdutoViewHelper;
-import business.viewHelper.impl.model.venda.CupomViewHelper;
 import business.viewHelper.impl.model.venda.VendaViewHelper;
 import model.EntidadeDominio;
 import model.Result;
@@ -23,9 +22,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
-import java.io.Serial;
 
 @WebServlet(urlPatterns = {
         "/login",
@@ -53,6 +52,7 @@ public class Controller extends HttpServlet{
         commandMap.put("excluir", new ExcluirCommand());
         commandMap.put("pesquisar", new ListarCommand());
         commandMap.put("listar", new ListarCommand());
+        commandMap.put("listarIndex", new ListarCommand());
         commandMap.put("listarJson", new ListarCommand());
         commandMap.put("listarTodos", new ListarCommand());
         commandMap.put("listarUnico", new ListarCommand());
@@ -76,7 +76,6 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/adm/categorias", new CategoriaViewHelper());
         viewHelperMap.put("/emug/adm/grupos", new GrupoPrecificacaoViewHelper());
 
-        viewHelperMap.put("/emug/produtos/index", new ProdutoViewHelper());
         viewHelperMap.put("/emug/produtos", new ProdutoViewHelper());
     }
 

@@ -9,8 +9,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.util.*;
 
 public class UtilsWeb {
+
+    public static final String URL_BASE = "/emug";
+
+    public static Map<String, String> mapaRedirect = new HashMap<>(Map.ofEntries(
+            Map.entry("finalizarCompra", "/clientes/carrinho/finalizarCompra?operacao=listar")
+    ));
 
     public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String operacao = request.getParameter("operacao");
@@ -35,22 +42,38 @@ public class UtilsWeb {
 
         if ("finalizarCompra".equals(origemChamada)){
             request.setAttribute("origemChamada", origemChamada);
-            request.setAttribute("idEnderecoEscolhido", request.getParameter("idEnderecoEscolhido"));
-            request.setAttribute("idCartaoSelecionado", request.getParameter("idCartaoSelecionado"));
+            request.setAttribute("idEndereco", request.getParameter("idEndereco"));
+            request.setAttribute("idCartaoDeCredito", request.getParameter("idCartaoDeCredito"));
         }
     }
 
-    public static void redirecionarParaOrigemChamada(String origemChamada, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public static void redirecionarParaOrigemChamada(String origemChamada, HttpServletRequest request, HttpServletResponse response, Map<String, String> novosValoresParametros) throws IOException {
+        String urlRedirecionada = mapaRedirect.get(origemChamada);
+        response.sendRedirect(URL_BASE + urlRedirecionada + getParametrosRequest(request, novosValoresParametros));
+    }
 
-        if("finalizarCompra".equals(origemChamada)) {
-            String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
-            String idCartaoSelecionado = request.getParameter("idCartaoSelecionado");
-            idEnderecoEscolhido = idEnderecoEscolhido != null ? idEnderecoEscolhido : "";
-            idCartaoSelecionado = idCartaoSelecionado != null ? idCartaoSelecionado : "";
+    private static StringBuilder getParametrosRequest(HttpServletRequest request, Map<String, String> novosValoresParametros) {
+        List<String> atributos = getNomesAtributosRequest(request);
+        StringBuilder parametros = new StringBuilder();
 
-            response.sendRedirect(String.format("/emug/clientes/carrinho/finalizarCompra?operacao=listar&origemChamada=finalizarCompra" +
-                    "&idEnderecoEscolhido=%s&idCartaoSelecionado=%s", idEnderecoEscolhido, idCartaoSelecionado));
+        for (String nomeParametro : novosValoresParametros.keySet()){
+            atributos.remove(nomeParametro);
+            parametros.append(String.format("&%s=%s", nomeParametro, novosValoresParametros.get(nomeParametro)));
         }
+
+        atributos.forEach(atr -> parametros.append(String.format("&%s=%s", atr, request.getParameter(atr))));
+        return parametros;
+    }
+
+    private static List<String> getNomesAtributosRequest(HttpServletRequest request) {
+        List<String> atributos = new ArrayList<>();
+
+        Iterator<String> iterator = request.getAttributeNames().asIterator();
+        while (iterator.hasNext()) {
+            String atributo = iterator.next();
+            atributos.add(atributo);
+        }
+        return atributos;
     }
 
     private static class LocalDateSerializer implements JsonSerializer<LocalDate> {

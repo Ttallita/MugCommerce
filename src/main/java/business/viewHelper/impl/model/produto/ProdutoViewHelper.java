@@ -31,7 +31,7 @@ public class ProdutoViewHelper implements IViewHelper {
 
         if ("salvar".equals(operacao)) {
             return criaProdutoBasico(request);
-        } else if(operacao.equals("listar") || operacao.equals("pesquisar")) {
+        } else if(operacao.equals("listar") || operacao.equals("listarIndex") || operacao.equals("pesquisar")) {
             return new Produto();
         } else if(operacao.equals("listarUnico")) {
             Produto produto = new Produto();
@@ -114,37 +114,26 @@ public class ProdutoViewHelper implements IViewHelper {
         String msgTela = result.getMsg();
 
         switch (operacao) {
-            case "listar":
 
-                if (request.getRequestURI().contains("index")) {
+            case "listar" -> {
+                List<CategoriaStatusType> categoriasInativacao = Arrays.stream(CategoriaStatusType.values())
+                        .filter(categoriaStatusType -> !categoriaStatusType.getType().equals(StatusType.ATIVO))
+                        .toList();
+                request.setAttribute("categoriasInativacao", categoriasInativacao);
+                request.setAttribute("produtos", result.getEntidades());
+                request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
+            }
 
-                    List<EntidadeDominio> produtos = result.getEntidades().stream()
-                            .filter(EntidadeDominio::isAtivo)
-                            .collect(Collectors.toList());
+            case "listarIndex" ->
+                UtilsWeb.montaRespostaJson(result, request, response);
 
-                    result.setEntidades(produtos.size() >= 5 ? produtos.subList(0,5) : produtos);
-                    UtilsWeb.montaRespostaJson(result, request, response);
-                } else {
-
-                    List<CategoriaStatusType> categoriasInativacao = Arrays.stream(CategoriaStatusType.values())
-                            .filter(categoriaStatusType -> !categoriaStatusType.getType().equals(StatusType.ATIVO))
-                            .toList();
-
-                    request.setAttribute("categoriasInativacao", categoriasInativacao);
-                    request.setAttribute("produtos", result.getEntidades());
-                    request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
-                }
-
-                break;
-            case "pesquisar":
+            case "pesquisar" -> {
                 request.setAttribute("produtos", result.getEntidades());
                 request.getRequestDispatcher("/pesquisa.jsp").forward(request, response);
-                break;
-            case "salvar":
-            case "excluir":
-            case "atualizar":
-                Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+            }
 
+            case "salvar", "excluir", "atualizar" -> {
+                Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
                 if (msgTela == null) {
                     AuditoriaType tipo = operacao.equals("salvar") ? AuditoriaType.INSERCAO : AuditoriaType.ALTERACAO;
 
@@ -159,8 +148,9 @@ public class ProdutoViewHelper implements IViewHelper {
                     request.setAttribute("erro", true);
                     request.getRequestDispatcher("/gerenciar/formularios/formProduto.jsp").forward(request, response);
                 }
-                break;
-            case "listarUnico":
+            }
+
+            case "listarUnico" -> {
                 List<Produto> produtos = result.getEntidades()
                         .stream()
                         .map(entidade -> (Produto) entidade)
@@ -178,8 +168,7 @@ public class ProdutoViewHelper implements IViewHelper {
                     request.getRequestDispatcher("/gerenciar/formularios/formProduto.jsp").forward(request, response);
                 else
                     request.getRequestDispatcher("/produto.jsp").forward(request, response);
-
-                break;
+            }
         }
     }
 }

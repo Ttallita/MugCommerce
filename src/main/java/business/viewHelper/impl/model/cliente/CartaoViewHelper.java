@@ -16,9 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CartaoViewHelper implements IViewHelper {
     @Override
@@ -113,8 +111,12 @@ public class CartaoViewHelper implements IViewHelper {
                     AuditoriaType tipo = operacao.equals("salvar") ? AuditoriaType.INSERCAO : AuditoriaType.ALTERACAO;
 
                     new AuditoriaDAO().salvar(Utils.criaAuditoria(cartao, tipo, cartao.getCliente().getUsuario()));
-                    if(origemChamada != null)
-                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);
+                    if(origemChamada != null) {
+                        Map<String, String> novosValoresParametros = new HashMap<>();
+                        novosValoresParametros.put("idCartaoSelecionado", result.getEntidades().get(0).getId().toString());
+
+                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response, novosValoresParametros);
+                    }
                     else
                         response.sendRedirect("/emug/clientes/cartoes?operacao=listar");
 

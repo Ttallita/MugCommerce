@@ -16,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EnderecoViewHelper implements IViewHelper {
 
@@ -74,8 +76,12 @@ public class EnderecoViewHelper implements IViewHelper {
 
                     new AuditoriaDAO().salvar(Utils.criaAuditoria(endereco, tipo, endereco.getCliente().getUsuario()));
 
-                    if (origemChamada != null)
-                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response);
+                    if (origemChamada != null){
+                        Map<String, String> novosValoresParametros = new HashMap<>();
+                        novosValoresParametros.put("idEnderecoEscolhido", result.getEntidades().get(0).getId().toString());
+
+                        UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response, novosValoresParametros);
+                    }
                     else
                         response.sendRedirect("/emug/clientes/enderecos?operacao=listar");
 

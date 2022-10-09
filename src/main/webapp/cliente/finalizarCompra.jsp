@@ -117,19 +117,19 @@
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Itens:</strong>
-                                <strong>R$ ${carrinho.totalCarrinho}</strong>
+                                <strong>R$ <fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></strong>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Frete:</strong>
-                                <strong>RS ${valorFrete}</strong>
+                                <strong>RS <fmt:formatNumber value="${valorFrete}" type="currency"/></strong>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <strong class="text-muted">Desconto:</strong>
-                                <strong>- R$ ${valorDesconto}</strong>
+                                <strong>- R$ <fmt:formatNumber value="${valorDesconto}" type="currency"/></strong>
                             </li>
                             <li class="d-flex justify-content-between py-3">
                                 <strong class="text-muted">Total do pedido:</strong>
-                                <h5 class="font-weight-bold">R$ ${carrinho.totalCarrinho}</h5>
+                                <h5 class="font-weight-bold">R$ <fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></h5>
                             </li>
 
                             <input type="hidden" name="id" value="${enderecoEntrega.id}">
@@ -285,9 +285,9 @@
         window.location.href = urlAtualizar;
     }
 
-    function construirURL(idEndereco, idCartao){
+    function construirURL(idEnderecoEscolhido, idCartao){
         let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listar"/>`;
-        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEndereco}&idCartaoSelecionado=\${idCartao}`;
+        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idCartaoSelecionado=\${idCartao}`;
         
         return urlBase + parametrosVendaHref;
     }

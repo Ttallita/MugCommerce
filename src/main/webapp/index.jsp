@@ -100,9 +100,9 @@
 
     $(document).ready(() => {
         const baseUrl = 'http://localhost:8080/emug';
-        let params = { operacao: 'listar'}
+        let params = { operacao: 'listarIndex'}
 
-        let urlProdutos = montaUrl(baseUrl, 'produtos/index', params)
+        let urlProdutos = montaUrl(baseUrl, 'produtos', params)
 
         listaProdutos(urlProdutos, "lancamentos")
     })
