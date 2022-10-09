@@ -20,7 +20,7 @@
                     <div class="col-sm-6 col-md-7">
                         <form action="<c:url value='/produtos'/>" class="col-md-auto justify-content-center mb-md-0">
                             <div class="input-group">
-                                <input class="form-control" type="search" placeholder="Pesquisar...">
+                                <input class="form-control" type="text" name="pesquisa" placeholder="Pesquisar...">
                                 <button class="btn btn-primary" type="submit">
                                     <span class="material-icons">search</span>
                                 </button>
