@@ -15,9 +15,9 @@ public class UtilsWeb {
 
     public static final String URL_BASE = "/emug";
 
-    public static Map<String, String> mapaRedirect = new HashMap<>(Map.ofEntries(
-            Map.entry("finalizarCompra", "/clientes/carrinho/finalizarCompra?operacao=listar")
-    ));
+    public static Map<String, String> mapaRedirect = Map.of(
+            "finalizarCompra", "/clientes/carrinho/finalizarCompra?operacao=listar"
+    );
 
     public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String operacao = request.getParameter("operacao");
@@ -56,9 +56,9 @@ public class UtilsWeb {
         List<String> atributos = getNomesAtributosRequest(request);
         StringBuilder parametros = new StringBuilder();
 
-        for (String nomeParametro : novosValoresParametros.keySet()){
-            atributos.remove(nomeParametro);
-            parametros.append(String.format("&%s=%s", nomeParametro, novosValoresParametros.get(nomeParametro)));
+        for (Map.Entry<String, String> entry : novosValoresParametros.entrySet()){
+            atributos.remove(entry.getKey());
+            parametros.append(String.format("&%s=%s", entry.getKey(), entry.getValue()));
         }
 
         atributos.forEach(atr -> parametros.append(String.format("&%s=%s", atr, request.getParameter(atr))));
@@ -73,6 +73,7 @@ public class UtilsWeb {
             String atributo = iterator.next();
             atributos.add(atributo);
         }
+
         return atributos;
     }
 

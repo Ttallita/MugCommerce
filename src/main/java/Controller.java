@@ -107,6 +107,7 @@ public class Controller extends HttpServlet{
         IViewHelper viewHelper = viewHelperMap.get(req.getRequestURI());
 
         Result result = new Result();
+
         if (command != null ) {
             EntidadeDominio entidade = viewHelper.getEntidade(req);
             result = command.execute(entidade, req.getSession(), operacao);
