@@ -42,8 +42,8 @@ public class UtilsWeb {
 
         if ("finalizarCompra".equals(origemChamada)){
             request.setAttribute("origemChamada", origemChamada);
-            request.setAttribute("idEndereco", request.getParameter("idEndereco"));
-            request.setAttribute("idCartaoDeCredito", request.getParameter("idCartaoDeCredito"));
+            request.setAttribute("idEnderecoEscolhido", request.getParameter("idEnderecoEscolhido"));
+            request.setAttribute("idCartaoSelecionado", request.getParameter("idCartaoSelecionado"));
         }
     }
 
