@@ -213,8 +213,8 @@
         return (filters.categorias.length === 0 || produto.categorias.some(v => filters.categorias.includes(v)))
             && (filters.fabricantes.length === 0 || filters.fabricantes.includes(produto.fabricante.id))
             && (filters.materiais.length === 0 || filters.materiais.includes(produto.material))
-            && produto.valorVenda > filters.minPrice
-            && produto.valorVenda < filters.maxPrice
+            && produto.valorVenda >= filters.minPrice
+            && produto.valorVenda <= filters.maxPrice
     }
 
     function montaProduto(produto) {
