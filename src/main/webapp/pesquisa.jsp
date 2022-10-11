@@ -118,14 +118,13 @@
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="btn-group float-end">
-
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Ordenar por
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Maior preço</a></li>
-                                    <li><a class="dropdown-item" href="#">Menor preço</a></li>
+                                    <li onclick="ordena(true)"><a class="dropdown-item" href="#">Maior preço</a></li>
+                                    <li onclick="ordena(false)"><a class="dropdown-item" href="#">Menor preço</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -135,9 +134,19 @@
                 <hr>
 
                 <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div id="loading" style="display: none">
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row row-cols-xl-4 g-4" id="divProdutos">
                         <!-- Lista produtos -->
-
                         <c:forEach var="produto" items="${produtos}">
                             <div class="col mb-3 ">
                                 <div class="card produto">
@@ -176,44 +185,29 @@
     $( "#formFilters" ).submit(async function( event ) {
         event.preventDefault()
 
-        let categorias = []
-        let fabricantes = []
-        let materiais = []
+        $('#divProdutos').html("")
+        $("#loading").show();
 
-        $("input:checkbox[name=categorias]:checked").each(function() { categorias.push($(this).val()) })
-        $("input:checkbox[name=fabricantes]:checked").each(function () { fabricantes.push($(this).val()) })
-        $("input:checkbox[name=material]:checked").each(function() { materiais.push($(this).val()) })
+        let produtos = await getProdutos()
 
-        let minPrice = $('#minPrice').val()
-        let maxPrice = $('#maxPrice').val()
+        let filters = getFilters();
 
+        montaProdutos(produtos, filters)
+
+        $("#loading").hide();
+    })
+
+    async function getProdutos() {
         const baseUrl = 'http://localhost:8080/emug/adm';
         let url = new URL(baseUrl + "/produtos")
         let params = { operacao: 'listarJson' }
 
         url.search = new URLSearchParams(params).toString()
 
-        console.log(url)
-
         let response = await fetch(url)
-        const json = await response.json();
 
-        let filters = {
-            categorias,
-            fabricantes,
-            materiais,
-            minPrice: minPrice === '' ? 0 : parseFloat(minPrice.replaceAll(".", "").replace(",", ".")),
-            maxPrice: maxPrice === '' ? 1000000000 : parseFloat(maxPrice.replaceAll(".", "").replace(",", "."))
-        }
-
-        $('#divProdutos').html("")
-
-        json.forEach(produto => {
-            if(isFilter(produto, filters)) {
-                montaProduto(produto)
-            }
-        })
-    })
+        return await response.json()
+    }
 
     function isFilter(produto, filters) {
         return (filters.categorias.length === 0 || produto.categorias.some(v => filters.categorias.includes(v)))
@@ -258,6 +252,51 @@
 
         document.getElementById('divProdutos').appendChild(divInterna)
     }
+
+    function getFilters() {
+        let categorias = []
+        let fabricantes = []
+        let materiais = []
+
+        $("input:checkbox[name=categorias]:checked").each(function() { categorias.push($(this).val()) })
+        $("input:checkbox[name=fabricantes]:checked").each(function () { fabricantes.push($(this).val()) })
+        $("input:checkbox[name=material]:checked").each(function() { materiais.push($(this).val()) })
+
+        let minPrice = $('#minPrice').val()
+        let maxPrice = $('#maxPrice').val()
+
+        return {
+            categorias,
+            fabricantes,
+            materiais,
+            minPrice: minPrice === '' ? 0 : parseFloat(minPrice.replaceAll(".", "").replace(",", ".")),
+            maxPrice: maxPrice === '' ? 1000000000 : parseFloat(maxPrice.replaceAll(".", "").replace(",", "."))
+        }
+    }
+
+    function montaProdutos(produtos, filters) {
+        produtos.forEach(produto => {
+            if(isFilter(produto, filters)) {
+                montaProduto(produto)
+            }
+        })
+    }
+
+    async function ordena(isMaior) {
+        $('#divProdutos').html("")
+        $("#loading").show();
+
+        let produtos = await getProdutos()
+
+        let filters = getFilters();
+
+        produtos.sort((a, b) => isMaior ? b.valorVenda - a.valorVenda : a.valorVenda - b.valorVenda)
+
+        montaProdutos(produtos, filters)
+
+        $("#loading").hide();
+    }
+
 
 </script>
 </html>
