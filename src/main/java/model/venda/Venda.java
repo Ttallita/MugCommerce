@@ -1,6 +1,7 @@
 package model.venda;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ public class Venda extends EntidadeDominio {
     private Cliente cliente;
     private Endereco enderecoEntrega;
     private Carrinho carrinho;
-    private CartaoDeCredito cartao; //// TODO verificar se pode usar mais de um cartão de crédito
+    private List<CartaoDeCredito> cartoes = new ArrayList<>();
     private List<Cupom> cupons;
 
     private Double valorItens;
@@ -69,12 +70,16 @@ public class Venda extends EntidadeDominio {
         this.atualizarFrete();
     }
 
-    public CartaoDeCredito getCartao() {
-        return cartao;
+    public List<CartaoDeCredito> getCartoes() {
+        return cartoes;
     }
 
-    public void setCartao(CartaoDeCredito cartao) {
-        this.cartao = cartao;
+    public void setCartoes(List<CartaoDeCredito> cartoes) {
+        this.cartoes = cartoes;
+    }
+
+    public void addCartaoDeCredito(CartaoDeCredito cartaoDeCredito){
+        this.addCartaoDeCredito(cartaoDeCredito);
     }
 
     public List<Cupom> getCupons() {
@@ -139,7 +144,7 @@ public class Venda extends EntidadeDominio {
                 "cliente=" + cliente +
                 ", enderecoEntrega=" + enderecoEntrega +
                 ", carrinho=" + carrinho +
-                ", cartao=" + cartao +
+                ", cartoes=" + cartoes +
                 ", cupons=" + cupons +
                 ", valorItens=" + valorItens +
                 ", frete=" + frete +
@@ -150,5 +155,4 @@ public class Venda extends EntidadeDominio {
                 ", vendaStatus=" + vendaStatus +
                 '}';
     }
-
 }

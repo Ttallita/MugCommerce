@@ -93,7 +93,7 @@ public class VendaDAO implements IDAO {
                         // com base na request e/ou dados default
 
                         Endereco endereco = venda.getEnderecoEntrega();
-                        CartaoDeCredito cartao = venda.getCartao();
+                        CartaoDeCredito cartao = new CartaoDeCredito();
 
                         endereco.setCliente(cliente);
                         cartao.setCliente(cliente);
@@ -104,17 +104,10 @@ public class VendaDAO implements IDAO {
                         else
                             enderecoEntrega = (Endereco) enderecoDAO.listar(endereco, "listarUnico").get(0);
 
-                        CartaoDeCredito cartaoPreferencial;
-                        if (cartao.getId() != null)
-                            cartaoPreferencial = (CartaoDeCredito) cartaoDeCreditoDAO.listar(cartao, "listarUnico").get(0);
-                        else {
-                            List<EntidadeDominio> lista = cartaoDeCreditoDAO.listar(cartao, "findCartaoPreferencial");
-
-                            cartaoPreferencial = lista.size() > 0  ? (CartaoDeCredito) lista.get(0) : null;
-                        }
-
-                        venda.setCartao(cartaoPreferencial);
                         venda.setEnderecoEntrega(enderecoEntrega);
+
+                        List<? extends EntidadeDominio> cartoes = cartaoDeCreditoDAO.listar(cartao, "listar");
+                        venda.setCartoes((List<CartaoDeCredito>) cartoes);
 
                         return List.of(venda);
                     }

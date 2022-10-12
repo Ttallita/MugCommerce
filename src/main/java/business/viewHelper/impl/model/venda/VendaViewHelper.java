@@ -14,6 +14,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class VendaViewHelper implements IViewHelper {
 
@@ -31,6 +35,9 @@ public class VendaViewHelper implements IViewHelper {
             case "salvar" -> {
                 Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
 
+                // criar cupons com ids
+
+                // TODO Calcular valor da venda
                 venda.setCarrinho(carrinho);
 
                 return venda;
@@ -38,17 +45,12 @@ public class VendaViewHelper implements IViewHelper {
 
             case "listar" -> {
                 Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
-                String idCartaoSelecionado = request.getParameter("idCartaoSelecionado");
                 String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
 
                 Endereco enderecoEntrega = new Endereco();
-                CartaoDeCredito cartao = new CartaoDeCredito();
-
                 enderecoEntrega.setId(idEnderecoEscolhido != null && !idEnderecoEscolhido.isEmpty() ? Long.parseLong(idEnderecoEscolhido) : null);
-                cartao.setId(idCartaoSelecionado != null && !idCartaoSelecionado.isEmpty()? Long.parseLong(idCartaoSelecionado) : null);
 
                 venda.setEnderecoEntrega(enderecoEntrega);
-                venda.setCartao(cartao);
                 venda.setCarrinho(carrinho);
             }
 
@@ -74,9 +76,22 @@ public class VendaViewHelper implements IViewHelper {
                 Venda venda = (Venda) result.getEntidades().get(0);
 
                 request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
-                request.setAttribute("cartaoSelecionado", venda.getCartao());
                 request.setAttribute("carrinho", venda.getCarrinho());
                 request.setAttribute("valorFrete", venda.getFrete());
+
+                String idsCartoesSelecionados = request.getParameter("idsCartoesSelecionados");
+
+                List<CartaoDeCredito> cartoes = venda.getCartoes();
+                if(idsCartoesSelecionados != null && !idsCartoesSelecionados.isEmpty()){
+                    List<Long> idsCartoes = new ArrayList<>();
+                    Arrays.stream(idsCartoesSelecionados.replace("[","").replace("]","").split(",")).forEach(idCartao-> idsCartoes.add(Long.parseLong(idCartao)));
+                    cartoes = cartoes.stream().filter(c -> idsCartoes.contains(c.getId())).collect(Collectors.toList());
+                } else {
+                    cartoes = cartoes.stream().filter(CartaoDeCredito::isPreferencial).collect(Collectors.toList());
+                }
+
+                request.setAttribute("idsCartoesSelecionados", idsCartoesSelecionados);
+                request.setAttribute("cartoesSelecionados", cartoes);
 
                 request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
             }

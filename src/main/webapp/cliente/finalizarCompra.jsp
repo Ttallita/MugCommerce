@@ -49,9 +49,12 @@
                                 Alterar
                             </a>
                             
-                            <p>
-                                (Crédito) ${cartaoSelecionado.nomeImpressoCartao}, cartão com final ${cartaoSelecionado.finalCartao}
-                            </p>
+                            <c:forEach var="cartao" items="${cartoesSelecionados}">
+                                <p>
+                                    (Crédito) cartão com final ${cartao.finalCartao}
+                                </p>
+                            </c:forEach>
+
                         </div>
                     </div>
 
@@ -133,12 +136,12 @@
                                 <h5 class="font-weight-bold"><fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></h5>
                             </li>
 
-                            <input type="hidden" name="id" value="${enderecoEntrega.id}">
-                            <input type="hidden" name="id" value="${cartaoSelecionado.id}">
-                            <!-- <input type="hidden" name="id" value="${cupons.id}"> -->
-
+                            <input type="hidden" name="idEnderecoEscolhido" value="${enderecoEntrega.id}">
+                            <input type="hidden" name="idsCartoesSelecionados[]" value="${idsCartoesSelecionados}">
+                            <input type="hidden" name="idsCupons[]" value="">
                             <!-- todos os produtos da venda são resgatados do carrinho salvo na session -->
                             <input type="hidden" name="operacao" value="salvar">
+
                             <input type="submit" class="btn btn-primary rounded-pill py-2" value="Confirmar pedido">
 
                         </ul>
@@ -149,7 +152,7 @@
             
         </div>
 
-        <!-- Modal-->
+        <!-- Modal endereço-->
         <div class="modal fade" id="modalAlterar" tabindex="-1" aria-labelledby="modalAlterarLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -168,6 +171,7 @@
                 </div>
             </div>
         </div>
+
     </main>
 
     <jsp:include page="../include/footer.jsp"/>
@@ -183,83 +187,55 @@
     const baseUrl = 'http://localhost:8080/emug';
 
     const idEnderecoEscolhido = '${enderecoEntrega.id}';
-    const idCartaoSelecionado = '${cartaoSelecionado.id}';
+    const idsCartoesSelecionados = '${idsCartoesSelecionados}';
 
     const parametroOrigemChamada = "&origemChamada=finalizarCompra";
-    const parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idCartaoSelecionado=\${idCartaoSelecionado}`;
+    const parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
 
     async function listaItensModal(url, path) {
         let response = await fetch(url)
         let json = await response.json();
 
         let formModal = document.getElementById("formModal");
-
-        // Limpa todos os campos de check
-        formModal.innerHTML = '';
-
         let tituloModal = document.getElementById("modalAlterarLabel");
 
-        let urlAdicionar;
+        formModal.innerHTML = '';
+
+        let urlAdicionar, botaoAlterar;
 
         if (path.includes("enderecos")) {
-            json.forEach(endereco => {
 
-                let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;
-
-                let hrefEditar = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`
-                
-                let checkEndereco =
-                    $(`<div class="form-check">
-                        <input class="form-check-input" type="radio" name="endereco" id="endereco\${endereco.id}" \${isEnderecoSelecionado ? 'checked' : ''}>
-                        <label class="form-check-label" for="endereco\${endereco.id}">
-                            <small class="float-end"><a href='\${hrefEditar}'>Editar</a> </small>
-                            \${endereco.tipoLogradouro} \${endereco.logradouro}, \${endereco.numero}, \${endereco.bairro}, \${endereco.estado}, CEP \${endereco.cep}
-                        </label>
-                    </div>`);
-
-                checkEndereco.appendTo(formModal);
-            })
+            listaEnderecosModal(json);
 
             tituloModal.innerText = "Escolha o endereço";
             urlAdicionar = "<c:url value='/clientes/enderecos?operacao=adicionar'/>";
 
+            botaoAlterar =
+                $(`<button type="button" class="btn btn-primary" onclick="atualizarEnderecoEntrega()" id="botaoAlterarModal">Alterar</button>`);
+
         } else if (path.includes("cartoes")) {
-            json.forEach(cartao => {
 
-                let isCartaoSelecionado = idCartaoSelecionado == cartao.id;
-
-                let hrefEditar = `<c:url value="/clientes/cartoes?operacao=listarUnico&id=\${cartao.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`;
-
-                let checkCartao =
-                    $(`<div class="form-check">
-                        <input class="form-check-input" type="radio" name="cartao" id="cartao\${cartao.id}" \${isCartaoSelecionado ? 'checked' : ''}>
-                        <label class="form-check-label" for="cartao\${cartao.id}">
-                            <small class="float-end"><a href='\${hrefEditar}'>Editar</a> </small>
-                            \${cartao.nomeImpressoCartao} \${cartao.bandeira}, final \${cartao.finalCartao}
-                        </label>
-                    </div>`);
-
-                checkCartao.appendTo(formModal);
-            })
+            listaCartoesModal(json);
 
             tituloModal.innerText = "Escolha o cartão";
             urlAdicionar = "<c:url value='/clientes/cartoes?operacao=adicionar'/>";
+
+            botaoAlterar =
+                $(`<button type="button" class="btn btn-primary" onclick="atualizarCartoesUtilizados()" id="botaoAlterarModal">Alterar</button>`);
+
         }
 
-        let botaoAlterar =
-            $(`<button type="button" class="btn btn-primary" onclick="atualizarInfoVenda()" id="botaoAlterarModal">Alterar</button>`);
-        
         let botaoAdicionar =
-            $(`<a href="\${urlAdicionar}\${parametroOrigemChamada}\${parametrosVendaHref}">
-                <button type="button" class="btn btn-primary" id="botaoAdicionarModal">Adicionar</button>
-            </a>`);
+                $(`<a href="\${urlAdicionar}\${parametroOrigemChamada}\${parametrosVendaHref}">
+                    <button type="button" class="btn btn-primary" id="botaoAdicionarModal">Adicionar</button>
+                </a>`);
 
         let modalFooter = document.getElementById("modalFooter");
-
         modalFooter.innerHTML = '';
 
         botaoAdicionar.appendTo(modalFooter);
         botaoAlterar.appendTo(modalFooter);
+        
     }
 
     function montarModalCadastro(path){
@@ -270,25 +246,71 @@
         listaItensModal(urlItensModal, path);
     }
 
-    function atualizarInfoVenda(){
-        // Encontra endereço/cartão selecionado
-        let idAlterar = Array.from(document.getElementById("formModal").getElementsByTagName("input")).find(elem => elem.checked).id;
+    function listaEnderecosModal(json){
 
+        json.forEach(endereco => {
+
+            let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;
+
+            let hrefEditar = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`
+
+            let checkEndereco =
+                $(`<div class="form-check">
+                    <input class="form-check-input" type="radio" name="endereco" id="endereco\${endereco.id}" \${isEnderecoSelecionado ? 'checked' : ''}>
+                    <label class="form-check-label" for="endereco\${endereco.id}">
+                        <small class="float-end"><a href='\${hrefEditar}'>Editar</a> </small>
+                        \${endereco.tipoLogradouro} \${endereco.logradouro}, \${endereco.numero}, \${endereco.bairro}, \${endereco.estado}, CEP \${endereco.cep}
+                    </label>
+                </div>`);
+
+            checkEndereco.appendTo(formModal);
+        });
+    }
+
+    function listaCartoesModal(json){
+
+        json.forEach(cartao => {
+
+            let isCartaoSelecionado = idsCartoesSelecionados.includes(cartao.id);
+
+            let hrefEditar = `<c:url value="/clientes/cartoes?operacao=listarUnico&id=\${cartao.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`;
+
+            let checkCartao =
+                $(`<div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="cartao\${cartao.id}" \${isCartaoSelecionado ? 'checked' : ''}>
+                    <label class="form-check-label" for="cartao\${cartao.id}">
+                        <small class="float-end"><a href='\${hrefEditar}'>Editar</a> </small>
+                        \${cartao.nomeImpressoCartao} \${cartao.bandeira}, final \${cartao.finalCartao}
+                    </label>
+                </div>`);
+
+            checkCartao.appendTo(formModal);
+        });
+    }
+
+    function atualizarCartoesUtilizados(){
+        // Encontra endereço/cartão selecionado
+        var ids = [];
+        Array.from(document.getElementById("formModal").getElementsByTagName("input"))
+                            .filter(elem => elem.checked)
+                            .forEach(elem => ids.push(elem.id.match(/\d+/g)));
+
+        window.location.href = construirURL(idEnderecoEscolhido, ids)
+
+    }
+
+    function atualizarEnderecoEntrega(){
+        let idAlterar = Array.from(document.getElementById("formModal").getElementsByTagName("input")).find(elem => elem.checked).id;
+        
         var id = idAlterar.match(/\d+/g);
         var tipoInfo =  idAlterar.match(/[a-zA-Z]+/g);
 
-        let urlAtualizar;
-        if (tipoInfo == 'endereco')
-            urlAtualizar = construirURL(id, idCartaoSelecionado)
-        else
-            urlAtualizar = construirURL(idEnderecoEscolhido, id)
-
-        window.location.href = urlAtualizar;
+        window.location.href = construirURL(id, idsCartoesSelecionados);
     }
 
-    function construirURL(idEnderecoEscolhido, idCartaoSelecionado){
+    function construirURL(idEnderecoEscolhido, idsCartoesSelecionados){
         let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listar"/>`;
-        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idCartaoSelecionado=\${idCartaoSelecionado}`;
+        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
         
         return urlBase + parametrosVendaHref;
     }

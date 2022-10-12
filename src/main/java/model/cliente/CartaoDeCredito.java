@@ -118,12 +118,14 @@ public class CartaoDeCredito extends EntidadeDominio {
     public String toString() {
         return "CartaoDeCredito{" +
                 "numCartao='" + numCartao + '\'' +
+                ", finalCartao='" + finalCartao + '\'' +
                 ", nomeImpressoCartao='" + nomeImpressoCartao + '\'' +
                 ", bandeira='" + bandeira + '\'' +
                 ", mesValidade=" + mesValidade +
                 ", anoValidade=" + anoValidade +
                 ", codigo=" + codigo +
                 ", preferencial=" + preferencial +
+                ", cliente=" + cliente +
                 '}';
     }
 }
