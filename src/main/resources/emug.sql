@@ -1,3 +1,10 @@
+-- BANCO EMUG
+
+--------------------------------------------------
+-- TABELAS
+
+---- Clientes
+
 DROP TABLE IF EXISTS "usuarios" CASCADE;
 CREATE TABLE usuarios (
     usr_id    serial       NOT NULL,
@@ -51,6 +58,35 @@ CREATE TABLE enderecos (
     end_observacao    varchar(255)
 );
 
+DROP TABLE IF EXISTS "cupons" CASCADE;
+CREATE TABLE cupons (
+    cpm_id serial NOT NULL,
+    cpm_cli_usr_id integer,
+    cpm_vnd_id integer,
+    cpm_nome varchar(255),
+    cpm_tp varchar(11) NOT NULL,
+    cpm_valor numeric(8, 2) NOT NULL,
+    cpm_dt_validade date,
+    cpm_descricao varchar(255)
+);
+
+---- Produtos
+
+DROP TABLE IF EXISTS "produtos" CASCADE;
+CREATE TABLE produtos (
+    pro_id                 serial        NOT NULL,
+    pro_fab_id             int           NOT NULL,
+    pro_grp_id             int           NOT NULL,
+    pro_nome               varchar(255)  NOT NULL,
+    pro_valor_compra       numeric(8, 2) NOT NULL,
+    pro_valor_venda        numeric(8, 2) NOT NULL,
+    pro_descricao          varchar(255)  NOT NULL,
+    pro_material           varchar(255)  NOT NULL,
+    pro_cod_barras         varchar(255)  NOT NULL,
+    pro_imagem             varchar       NOT NULL,
+    pro_ativo              boolean       NOT NULL
+);
+
 DROP TABLE IF EXISTS "categorias" CASCADE;
 CREATE TABLE categorias (
     ctg_id   serial       NOT NULL,
@@ -70,23 +106,6 @@ CREATE TABLE grupos_precificacao (
     grp_margem_lucro numeric(8, 2) NOT NULL
 );
 
---- Login
-
-DROP TABLE IF EXISTS "produtos" CASCADE;
-CREATE TABLE produtos (
-    pro_id                 serial        NOT NULL,
-    pro_fab_id             int           NOT NULL,
-    pro_grp_id             int           NOT NULL,
-    pro_nome               varchar(255)  NOT NULL,
-    pro_valor_compra       numeric(8, 2) NOT NULL,
-    pro_valor_venda        numeric(8, 2) NOT NULL,
-    pro_descricao          varchar(255)  NOT NULL,
-    pro_material           varchar(255)  NOT NULL,
-    pro_cod_barras         varchar(255)  NOT NULL,
-    pro_imagem             varchar       NOT NULL,
-    pro_ativo              boolean       NOT NULL
-);
-
 DROP TABLE IF EXISTS "categorias_produtos" CASCADE;
 CREATE TABLE categorias_produtos(
     ctp_pro_id int NOT NULL,
@@ -101,6 +120,38 @@ CREATE TABLE produtos_status (
     pst_justificativa varchar(255) NOT NULL
 );
 
+---- Vendas
+
+DROP TABLE IF EXISTS "vendas" CASCADE;
+CREATE TABLE vendas (
+	vnd_id serial NOT NULL,
+    vnd_cli_usr_id int NOT NULL,
+    vnd_end_entrega_id int NOT NULL,
+	vnd_preco_total numeric(8,2) NOT NULL,
+	vnd_frete numeric(8,2) NOT NULL,
+	vnd_dt_compra timestamp NOT NULL,
+    vnd_dt_envio timestamp,
+    vnd_dt_entrega timestamp,
+	vnd_pagamento_aprovado boolean NOT NULL,
+	vnd_status varchar(16) NOT NULL
+);
+
+DROP TABLE IF EXISTS "produtos_em_venda" CASCADE;
+CREATE TABLE produtos_em_venda(
+    prv_pro_id int NOT NULL,
+    prv_vnd_id int NOT NULL,
+    prv_quant int NOT NULL,
+    prv_em_troca boolean
+);
+
+DROP TABLE IF EXISTS "cartoes_em_venda" CASCADE;
+CREATE TABLE cartoes_em_venda (
+	crv_vnd_id int NOT NULL,
+    crv_crt_id int NOT NULL
+);
+
+---- Geral
+
 DROP TABLE IF EXISTS "auditoria" CASCADE;
 CREATE TABLE auditoria (
     aud_id     serial       NOT NULL,
@@ -110,7 +161,12 @@ CREATE TABLE auditoria (
     aud_dados  jsonb        NOT NULL
 );
 
--- Constraints de primary key
+
+--------------------------------------------------
+-- CONSTRAINTS
+
+---- Primary keys
+-- clientes
 ALTER TABLE usuarios
     ADD CONSTRAINT pk_usr PRIMARY KEY (usr_id);
 
@@ -123,6 +179,10 @@ ALTER TABLE cartoes
 ALTER TABLE enderecos
     ADD CONSTRAINT pk_end PRIMARY KEY (end_id);
 
+ALTER TABLE cupons
+    ADD CONSTRAINT pk_cpm PRIMARY KEY (cpm_id);
+
+-- produtos
 ALTER TABLE categorias
     ADD CONSTRAINT pk_ctg PRIMARY KEY (ctg_id);
 
@@ -141,7 +201,20 @@ ALTER TABLE categorias_produtos
 ALTER TABLE produtos_status
     ADD CONSTRAINT pk_pst PRIMARY KEY (pst_id);
 
--- Constraints de foreign key
+-- vendas
+ALTER TABLE vendas
+    ADD CONSTRAINT pk_vnd PRIMARY KEY (vnd_id);
+
+ALTER TABLE cartoes_em_venda
+    ADD CONSTRAINT pk_crv PRIMARY KEY (crv_vnd_id, crv_crt_id);
+
+ALTER TABLE produtos_em_venda
+    ADD CONSTRAINT pk_prv PRIMARY KEY (prv_pro_id, prv_vnd_id);
+
+------
+
+---- Foreign keys
+-- clientes
 ALTER TABLE clientes
     ADD CONSTRAINT fk_cli_usr FOREIGN KEY (cli_usr_id)
         REFERENCES usuarios (usr_id);
@@ -158,6 +231,7 @@ ALTER TABLE enderecos
     ADD CONSTRAINT fk_end_cli_usr FOREIGN KEY (end_cli_usr_id)
         REFERENCES clientes (cli_usr_id);
 
+-- produtos
 ALTER TABLE produtos
     ADD CONSTRAINT fk_pro_fab FOREIGN KEY (pro_fab_id)
         REFERENCES fabricantes (fab_id);
@@ -165,10 +239,6 @@ ALTER TABLE produtos
 ALTER TABLE produtos
     ADD CONSTRAINT fk_pro_grp FOREIGN KEY (pro_grp_id)
         REFERENCES grupos_precificacao (grp_id);
-
-ALTER TABLE produtos
-    ADD CONSTRAINT fk_pro_pst FOREIGN KEY (pro_pst_id)
-        REFERENCES produtos_status (pst_id);
 
 ALTER TABLE categorias_produtos
     ADD CONSTRAINT fk_ctp_pro FOREIGN KEY (ctp_pro_id)
@@ -181,3 +251,32 @@ ALTER TABLE categorias_produtos
 ALTER TABLE produtos_status
     ADD CONSTRAINT fk_prod_id FOREIGN KEY (pst_prod_id)
         REFERENCES produtos (pro_id);
+
+-- vendas
+ALTER TABLE vendas
+    ADD CONSTRAINT fk_vnd_cli_usr FOREIGN KEY (vnd_cli_usr_id)
+        REFERENCES clientes (cli_usr_id);
+
+ALTER TABLE vendas
+    ADD CONSTRAINT fk_vnd_end_entrega FOREIGN KEY (vnd_end_entrega_id)
+        REFERENCES enderecos (end_id);
+
+ALTER TABLE cartoes_em_venda
+    ADD CONSTRAINT fk_crv_vnd FOREIGN KEY (crv_vnd_id)
+        REFERENCES vendas (vnd_id);
+
+ALTER TABLE cartoes_em_venda
+    ADD CONSTRAINT fk_crv_crt FOREIGN KEY (crv_crt_id)
+        REFERENCES cartoes (crt_id);
+
+ALTER TABLE produtos_em_venda
+    ADD CONSTRAINT fk_prv_pro FOREIGN KEY (prv_pro_id)
+        REFERENCES produtos (pro_id);
+
+ALTER TABLE produtos_em_venda
+    ADD CONSTRAINT fk_prv_vnd FOREIGN KEY (prv_vnd_id)
+        REFERENCES vendas (vnd_id);
+
+ALTER TABLE cupons
+    ADD CONSTRAINT fk_cpm_vnd FOREIGN KEY (cpm_vnd_id)
+        REFERENCES vendas (vnd_id);
