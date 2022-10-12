@@ -160,7 +160,7 @@ public class ProdutoDAO implements IDAO {
 
             switch (operacao) {
 
-                case "listar" -> {
+                case "listar", "listarJson" -> {
                     sql = "SELECT * FROM produtos";
 
                     pstm = connection.prepareStatement(sql);
@@ -173,9 +173,10 @@ public class ProdutoDAO implements IDAO {
                 }
 
                 case "pesquisar" -> {
-                    sql = "SELECT * FROM produtos WHERE pro_ativo = true";
+                    sql = "SELECT * FROM produtos WHERE pro_ativo = true AND upper(pro_nome) LIKE upper(?)";
 
                     pstm = connection.prepareStatement(sql);
+                    pstm.setString(1, "%" + produto.getNome() + "%");
                 }
 
                 case "listarUnico" -> {

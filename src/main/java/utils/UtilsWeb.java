@@ -22,7 +22,9 @@ public class UtilsWeb {
     public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String operacao = request.getParameter("operacao");
 
-        if(operacao.contains("listar") || operacao.equals("pesquisar")) {
+        if(operacao.contains("listar")
+                || operacao.equals("listarIndex")
+                || operacao.equals("listarJson")) {
 
             response.setCharacterEncoding("UTF8");
             response.setContentType("application/json");

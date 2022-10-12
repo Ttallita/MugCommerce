@@ -3,6 +3,8 @@ package business.viewHelper.impl.model.produto;
 import business.viewHelper.IViewHelper;
 import com.google.gson.Gson;
 import dao.AuditoriaDAO;
+import dao.produto.CategoriaDAO;
+import dao.produto.FabricanteDAO;
 import model.AuditoriaType;
 import model.EntidadeDominio;
 import model.Result;
@@ -31,7 +33,7 @@ public class ProdutoViewHelper implements IViewHelper {
 
         if ("salvar".equals(operacao)) {
             return criaProdutoBasico(request);
-        } else if(operacao.equals("listar") || operacao.equals("listarIndex") || operacao.equals("pesquisar")) {
+        } else if(operacao.equals("listar") || operacao.equals("listarIndex") || operacao.equals("listarJson")) {
             return new Produto();
         } else if(operacao.equals("listarUnico")) {
             Produto produto = new Produto();
@@ -59,6 +61,13 @@ public class ProdutoViewHelper implements IViewHelper {
         } else if(operacao.equals("atualizar")) {
             Produto produto = criaProdutoBasico(request);
             produto.setId(Long.valueOf(request.getParameter("id")));
+
+            return produto;
+        } else if(operacao.equals("pesquisar")) {
+            String pesquisa = request.getParameter("pesquisa");
+
+            Produto produto = new Produto();
+            produto.setNome(pesquisa);
 
             return produto;
         }
@@ -115,19 +124,28 @@ public class ProdutoViewHelper implements IViewHelper {
 
         switch (operacao) {
 
-            case "listar" -> {
+            case "listar", "listarJson" -> {
                 List<CategoriaStatusType> categoriasInativacao = Arrays.stream(CategoriaStatusType.values())
                         .filter(categoriaStatusType -> !categoriaStatusType.getType().equals(StatusType.ATIVO))
                         .toList();
-                request.setAttribute("categoriasInativacao", categoriasInativacao);
-                request.setAttribute("produtos", result.getEntidades());
-                request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
+
+                if(operacao.equals("listar")) {
+                    request.setAttribute("categoriasInativacao", categoriasInativacao);
+                    request.setAttribute("produtos", result.getEntidades());
+                    request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
+                } else
+                    UtilsWeb.montaRespostaJson(result, request, response);
             }
 
-            case "listarIndex" ->
-                UtilsWeb.montaRespostaJson(result, request, response);
+            case "listarIndex" -> UtilsWeb.montaRespostaJson(result, request, response);
 
             case "pesquisar" -> {
+                List<EntidadeDominio> categorias = new CategoriaDAO().listar(new Categoria(), "listar");
+                List<EntidadeDominio> fabricantes = new FabricanteDAO().listar(new Fabricante(), "listar");
+
+                request.setAttribute("fabricantes", fabricantes);
+                request.setAttribute("categorias", categorias);
+                request.setAttribute("pesquisa", request.getParameter("pesquisa"));
                 request.setAttribute("produtos", result.getEntidades());
                 request.getRequestDispatcher("/pesquisa.jsp").forward(request, response);
             }
