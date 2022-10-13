@@ -60,14 +60,14 @@ CREATE TABLE enderecos (
 
 DROP TABLE IF EXISTS "cupons" CASCADE;
 CREATE TABLE cupons (
-    cpm_id serial NOT NULL,
-    cpm_cli_usr_id integer,
-    cpm_vnd_id integer,
-    cpm_nome varchar(255),
-    cpm_tp varchar(11) NOT NULL,
-    cpm_valor numeric(8, 2) NOT NULL,
+    cpm_id          serial NOT NULL,
+    cpm_cli_usr_id  integer,
+    cpm_vnd_id      integer,
+    cpm_nome        varchar(255),
+    cpm_tp          varchar(11) NOT NULL,
+    cpm_valor       numeric(8, 2) NOT NULL,
     cpm_dt_validade date,
-    cpm_descricao varchar(255)
+    cpm_descricao   varchar(255)
 );
 
 ---- Produtos
@@ -124,24 +124,24 @@ CREATE TABLE produtos_status (
 
 DROP TABLE IF EXISTS "vendas" CASCADE;
 CREATE TABLE vendas (
-	vnd_id serial NOT NULL,
-    vnd_cli_usr_id int NOT NULL,
-    vnd_end_entrega_id int NOT NULL,
-	vnd_preco_total numeric(8,2) NOT NULL,
-	vnd_frete numeric(8,2) NOT NULL,
-	vnd_dt_compra timestamp NOT NULL,
-    vnd_dt_envio timestamp,
-    vnd_dt_entrega timestamp,
-	vnd_pagamento_aprovado boolean NOT NULL,
-	vnd_status varchar(16) NOT NULL
+	vnd_id                  serial NOT NULL,
+    vnd_cli_usr_id          int NOT NULL,
+    vnd_end_entrega_id      int NOT NULL,
+	vnd_preco_total         numeric(8,2) NOT NULL,
+	vnd_frete               numeric(8,2) NOT NULL,
+	vnd_dt_compra           timestamp NOT NULL,
+    vnd_dt_envio            timestamp,
+    vnd_dt_entrega          timestamp,
+	vnd_pagamento_aprovado  boolean NOT NULL,
+	vnd_status              varchar(16) NOT NULL
 );
 
 DROP TABLE IF EXISTS "produtos_em_venda" CASCADE;
 CREATE TABLE produtos_em_venda(
-    prv_pro_id int NOT NULL,
-    prv_vnd_id int NOT NULL,
-    prv_quant int NOT NULL,
-    prv_em_troca boolean
+    prv_pro_id      int NOT NULL,
+    prv_vnd_id      int NOT NULL,
+    prv_quant       int NOT NULL,
+    prv_em_troca    boolean
 );
 
 DROP TABLE IF EXISTS "cartoes_em_venda" CASCADE;

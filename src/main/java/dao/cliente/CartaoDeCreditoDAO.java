@@ -52,7 +52,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             cartao.setId(cartaoId);
 
             return cartao;
-        }catch (SQLException | ClassNotFoundException e) {
+        }catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }finally {
@@ -91,7 +91,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             pstm.execute();
 
             return cartao;
-        }catch (SQLException | ClassNotFoundException e) {
+        }catch (Exception e) {
             System.err.println(e.getMessage());
             return null;
         }finally {
@@ -116,7 +116,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             pstm.execute();
 
             return cartao;
-        }catch (SQLException | ClassNotFoundException e) {
+        }catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }finally {
@@ -177,7 +177,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             }
 
             return cartoes;
-        }catch (SQLException | ClassNotFoundException e) {
+        }catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }finally {
@@ -201,7 +201,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             pstm.setLong(3, cartao.getCliente().getUsuario().getId());
 
             pstm.execute();
-        }catch (SQLException | ClassNotFoundException e) {
+        }catch (Exception e) {
             System.err.println(e.getMessage());
         }finally {
             conexao.fecharConexao(conn);

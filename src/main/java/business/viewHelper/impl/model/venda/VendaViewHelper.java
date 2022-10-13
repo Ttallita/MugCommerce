@@ -8,14 +8,16 @@ import model.carrinho.Carrinho;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
+import model.cupom.Cupom;
 import model.venda.Venda;
+import utils.Utils;
+import utils.UtilsWeb;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,10 +37,30 @@ public class VendaViewHelper implements IViewHelper {
             case "salvar" -> {
                 Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
 
-                // criar cupons com ids
+                String idEndereco = request.getParameter("idEnderecoEscolhido");
 
-                // TODO Calcular valor da venda
+                Endereco endereco = new Endereco();
+                endereco.setId(idEndereco != null && !idEndereco.isEmpty() ? Long.parseLong(idEndereco) : null);
+
+                List<String> idsCartoesSelecionados = UtilsWeb.converteParametrosParaLista(request.getParameter("idsCartoesSelecionados[]"));
+                List<String> idsCupons = UtilsWeb.converteParametrosParaLista(request.getParameter("idsCupons[]"));
+
+                for (String id : idsCartoesSelecionados){
+                    CartaoDeCredito cartao = new CartaoDeCredito();
+                    cartao.setId(Long.parseLong(id));
+
+                    venda.addCartaoDeCredito(cartao);
+                }
+
+                for (String id : idsCupons){
+                    Cupom cupom = new Cupom();
+                    cupom.setId(Long.parseLong(id));
+
+                    venda.addCupom(cupom);
+                }
+
                 venda.setCarrinho(carrinho);
+                venda.setEnderecoEntrega(endereco);
 
                 return venda;
             }
@@ -76,22 +98,26 @@ public class VendaViewHelper implements IViewHelper {
                 Venda venda = (Venda) result.getEntidades().get(0);
 
                 request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
+                request.setAttribute("dataPrevisaoEntrega", Utils.formataLocalDateBR(venda.calculaDataEntrega()));
                 request.setAttribute("carrinho", venda.getCarrinho());
-                request.setAttribute("valorFrete", venda.getFrete());
+                request.setAttribute("valorFrete", venda.calculaFrete());
 
                 String idsCartoesSelecionados = request.getParameter("idsCartoesSelecionados");
 
                 List<CartaoDeCredito> cartoes = venda.getCartoes();
                 if(idsCartoesSelecionados != null && !idsCartoesSelecionados.isEmpty()){
                     List<Long> idsCartoes = new ArrayList<>();
-                    Arrays.stream(idsCartoesSelecionados.replace("[","").replace("]","").split(",")).forEach(idCartao-> idsCartoes.add(Long.parseLong(idCartao)));
+                    UtilsWeb.converteParametrosParaLista(idsCartoesSelecionados).forEach(id -> idsCartoes.add(Long.parseLong(id)));
+
                     cartoes = cartoes.stream().filter(c -> idsCartoes.contains(c.getId())).collect(Collectors.toList());
                 } else {
                     cartoes = cartoes.stream().filter(CartaoDeCredito::isPreferencial).collect(Collectors.toList());
+                    idsCartoesSelecionados = cartoes.get(0).getId().toString();
                 }
 
                 request.setAttribute("idsCartoesSelecionados", idsCartoesSelecionados);
                 request.setAttribute("cartoesSelecionados", cartoes);
+                request.setAttribute("cupons", venda.getCupons());
 
                 request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
             }

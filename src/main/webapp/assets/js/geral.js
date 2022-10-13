@@ -1,3 +1,4 @@
+const baseUrl = 'http://localhost:8080/emug';
 
 function montaUrl(baseUrl, path, params) {
     let url = new URL(baseUrl + "/" +path)

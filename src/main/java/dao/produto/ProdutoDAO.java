@@ -55,7 +55,7 @@ public class ProdutoDAO implements IDAO {
             produto.getCategorias().forEach(consumer);
 
             return produto;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -96,7 +96,7 @@ public class ProdutoDAO implements IDAO {
             pstm.execute();
 
             return produto;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -135,7 +135,7 @@ public class ProdutoDAO implements IDAO {
             pstm.execute();
 
             return produto;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -226,10 +226,8 @@ public class ProdutoDAO implements IDAO {
                 produtos.add(produtoConsulta);
             }
 
-            System.err.println("Listando " + produtos.size() + " produto(s)");
-
             return produtos;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {

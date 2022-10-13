@@ -1,6 +1,7 @@
 package model.venda;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,7 +18,7 @@ public class Venda extends EntidadeDominio {
     private Endereco enderecoEntrega;
     private Carrinho carrinho;
     private List<CartaoDeCredito> cartoes = new ArrayList<>();
-    private List<Cupom> cupons;
+    private List<Cupom> cupons = new ArrayList<>();
 
     private Double valorItens;
     private Double frete;
@@ -29,11 +30,21 @@ public class Venda extends EntidadeDominio {
     private boolean pagamentoAprovado;
     private VendaType vendaStatus;
 
-    public void atualizarFrete(){
+    public double calculaFrete(){
         int quantTotalItens = carrinho != null ? carrinho.getQuantTotalItens() : 1;
         int distanciaEndereco = new Random(10L).nextInt(30);
 
-        frete = Math.max(1, quantTotalItens / 10) * 10.0 * distanciaEndereco;
+        return Math.max(1, quantTotalItens / 10) * 10.0 * distanciaEndereco;
+    }
+
+    public double calculaTotalEntrega(){
+        Double valorDesconto = cupons.stream().map(Cupom::getValor).mapToDouble(Double::doubleValue).sum();
+
+        return  carrinho.getTotalCarrinho() + calculaFrete() - valorDesconto;
+    }
+
+    public LocalDate calculaDataEntrega(){
+        return LocalDate.now().plusDays(15L);
     }
 
     public Cliente getCliente() {
@@ -50,7 +61,6 @@ public class Venda extends EntidadeDominio {
 
     public void setEnderecoEntrega(Endereco enderecoEntrega) {
         this.enderecoEntrega = enderecoEntrega;
-        this.atualizarFrete();
     }
 
     public Double getPrecoTotal() {
@@ -67,7 +77,6 @@ public class Venda extends EntidadeDominio {
 
     public void setCarrinho(Carrinho carrinho) {
         this.carrinho = carrinho;
-        this.atualizarFrete();
     }
 
     public List<CartaoDeCredito> getCartoes() {
@@ -79,7 +88,7 @@ public class Venda extends EntidadeDominio {
     }
 
     public void addCartaoDeCredito(CartaoDeCredito cartaoDeCredito){
-        this.addCartaoDeCredito(cartaoDeCredito);
+        this.cartoes.add(cartaoDeCredito);
     }
 
     public List<Cupom> getCupons() {
@@ -88,6 +97,10 @@ public class Venda extends EntidadeDominio {
 
     public void setCupons(List<Cupom> cupons) {
         this.cupons = cupons;
+    }
+
+    public void addCupom(Cupom cupom){
+        this.cupons.add(cupom);
     }
 
     public Double getValorItens() {

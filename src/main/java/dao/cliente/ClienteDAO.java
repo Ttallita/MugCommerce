@@ -61,7 +61,7 @@ public class ClienteDAO implements IDAO {
             return cliente;
 
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
 
             /*
              * TODO melhorar comportamentos em caso de exceção
@@ -100,7 +100,7 @@ public class ClienteDAO implements IDAO {
             pstm.execute();
 
             return cliente;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -157,10 +157,8 @@ public class ClienteDAO implements IDAO {
                 clientes.add(clienteConsulta);
             }
 
-            System.err.printf("Listando %d cliente(s)/n", clientes.size());
-
             return clientes;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {

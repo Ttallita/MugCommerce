@@ -41,7 +41,7 @@ public class UsuarioDAO implements IDAO {
             usuario.setId(idUser);
 
             return usuario;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -70,7 +70,7 @@ public class UsuarioDAO implements IDAO {
             pstm.execute();
 
             return usuario;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -99,7 +99,7 @@ public class UsuarioDAO implements IDAO {
             pstm.execute();
 
             return usuario;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -146,7 +146,7 @@ public class UsuarioDAO implements IDAO {
             }
 
             return entidadesConsulta;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
