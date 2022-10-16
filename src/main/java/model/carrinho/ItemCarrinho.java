@@ -6,6 +6,7 @@ import model.produto.Produto;
 public class ItemCarrinho extends EntidadeDominio {
     private Produto produto;
     private int quant;
+    private boolean emTroca = false;
 
     public Produto getProduto() {
         return produto;
@@ -21,5 +22,13 @@ public class ItemCarrinho extends EntidadeDominio {
     
     public void setQuant(int quant) {
         this.quant = quant;
+    }
+
+    public boolean isEmTroca() {
+        return emTroca;
+    }
+
+    public void setEmTroca(boolean emTroca) {
+        this.emTroca = emTroca;
     }
 }

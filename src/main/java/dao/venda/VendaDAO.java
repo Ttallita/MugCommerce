@@ -5,11 +5,13 @@ import dao.cliente.CartaoDeCreditoDAO;
 import dao.cliente.CupomDAO;
 import dao.cliente.EnderecoDAO;
 import model.EntidadeDominio;
+import model.carrinho.Carrinho;
 import model.carrinho.ItemCarrinho;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
+import model.produto.Produto;
 import model.venda.Venda;
 import model.venda.VendaType;
 import utils.Conexao;
@@ -17,9 +19,7 @@ import utils.Conexao;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class VendaDAO implements IDAO {
 
@@ -135,8 +135,9 @@ public class VendaDAO implements IDAO {
             String sql;
             PreparedStatement pstm = null;
 
+            Cliente cliente = venda.getCliente();
             switch (operacao) {
-                case "listar" -> {
+                case "listarUnico", "listarJson" -> {
                     if (venda.getId() == null) {
                         return criaVendaProvisoria(venda);
                     }
@@ -148,8 +149,9 @@ public class VendaDAO implements IDAO {
                 }
 
                 case "listarTodos" -> {
-                    sql = "SELECT * FROM clientes";
+                    sql = "SELECT * FROM vendas v WHERE v.vnd_cli_usr_id = ?";
                     pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, cliente.getUsuario().getId());
                 }
 
             }
@@ -159,8 +161,57 @@ public class VendaDAO implements IDAO {
             List<EntidadeDominio> vendas = new ArrayList<>();
             while (rs.next()) {
                 Venda vendaConsulta = new Venda();
-                vendaConsulta.setId(rs.getLong("vnd_id"));
+                long idVenda = rs.getLong("vnd_id");
 
+                Endereco endereco = new Endereco();
+                endereco.setId(rs.getLong("vnd_end_entrega_id"));
+                endereco.setCliente(cliente);
+
+                vendaConsulta.setId(idVenda);
+                vendaConsulta.setCliente(cliente);
+                vendaConsulta.setPrecoTotal(rs.getDouble("vnd_preco_total"));
+                vendaConsulta.setFrete(rs.getDouble("vnd_frete"));
+                vendaConsulta.setPagamentoAprovado(rs.getBoolean("vnd_pagamento_aprovado"));
+                vendaConsulta.setVendaStatus(VendaType.valueOf(rs.getString("vnd_status")));
+                vendaConsulta.setDataCompra(rs.getTimestamp("vnd_dt_compra").toLocalDateTime().toLocalDate());
+                vendaConsulta.setEnderecoEntrega((Endereco) enderecoDAO.listar(endereco, "listarUnico").get(0));
+
+                Timestamp dtEnvio = rs.getTimestamp("vnd_dt_envio");
+                Timestamp dtEntrega = rs.getTimestamp("vnd_dt_entrega");
+                vendaConsulta.setDataEnvio(dtEnvio != null ? rs.getTimestamp("vnd_dt_envio").toLocalDateTime().toLocalDate() : null);
+                vendaConsulta.setDataEntrega(dtEntrega  != null ? rs.getTimestamp("vnd_dt_entrega").toLocalDateTime().toLocalDate() : null);
+
+                sql = "SELECT * FROM produtos p " +
+                        "RIGHT JOIN (SELECT * FROM produtos_em_venda WHERE prv_vnd_id = ?) pev " +
+                        "ON p.pro_id = pev.prv_pro_id;";
+
+                pstm = connection.prepareStatement(sql);
+                pstm.setLong(1, idVenda);
+
+                Carrinho carrinho = new Carrinho();
+
+                ResultSet rsProdutosVenda = pstm.executeQuery();
+                while (rsProdutosVenda.next()) {
+                    ItemCarrinho item = new ItemCarrinho();
+                    Produto produto = new Produto();
+
+                    produto.setId(rsProdutosVenda.getLong("pro_id"));
+                    produto.setNome(rsProdutosVenda.getString("pro_nome"));
+                    produto.setValorCompra(rsProdutosVenda.getDouble("pro_valor_compra"));
+                    produto.setValorVenda(rsProdutosVenda.getDouble("pro_valor_venda"));
+                    produto.setDescricao(rsProdutosVenda.getString("pro_descricao"));
+                    produto.setMaterial(rsProdutosVenda.getString("pro_material"));
+                    produto.setCodBarras(rsProdutosVenda.getString("pro_cod_barras"));
+                    produto.setImagem(rsProdutosVenda.getString("pro_imagem"));
+
+                    item.setProduto(produto);
+                    item.setQuant(rsProdutosVenda.getInt("prv_quant"));
+                    item.setEmTroca(rsProdutosVenda.getBoolean("prv_em_troca"));
+
+                    carrinho.addItem(item);
+                }
+
+                vendaConsulta.setCarrinho(carrinho);
                 vendas.add(vendaConsulta);
             }
 
@@ -199,7 +250,7 @@ public class VendaDAO implements IDAO {
             enderecoEntrega = (Endereco) enderecoDAO.listar(endereco, "listarUnico").get(0);
 
         List<? extends EntidadeDominio> cartoes = cartaoDeCreditoDAO.listar(cartao, "listar");
-        List<? extends EntidadeDominio> cupons = cupomDAO.listar(cupom, "listar");
+        List<? extends EntidadeDominio> cupons = cupomDAO.listar(cupom, "listarTodos");
 
         venda.setEnderecoEntrega(enderecoEntrega);
         venda.setCartoes((List<CartaoDeCredito>) cartoes);
@@ -211,7 +262,7 @@ public class VendaDAO implements IDAO {
     @SuppressWarnings("unchecked")
     private List<Cupom> getCuponsVenda(Cupom cupom, Venda venda) {
         List<Long> ids = venda.getCupons().stream().map(Cupom::getId).toList();
-        List<? extends EntidadeDominio> cupons = cupomDAO.listar(cupom, "listar");
+        List<? extends EntidadeDominio> cupons = cupomDAO.listar(cupom, "listarTodos");
 
         return (List<Cupom>) cupons.stream().filter(c -> ids.contains(c.getId())).toList();
     }

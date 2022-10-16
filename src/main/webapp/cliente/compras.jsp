@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -38,47 +39,39 @@
                             <thead>
                                 <tr>
                                     <th>Data de compra</th>
-                                    <th>Quant. Produtos</th>
                                     <th>Valor</th>
+                                    <th>Frete</th>
                                     <th>Status</th>
+                                    <th>Data de envio</th>
                                     <th>Data de entrega</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 
-                                <tr>
-                                    <td>00/00/0000</td>
-                                    <td>00</td>
-                                    <td>R$ 00,00</td>
-                                    <td>Aprovado</td>
-                                    <td>00/00/0000</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalhesCompra"><span class="material-icons">remove_red_eye</span></button>
-                                    </td>
-                                </tr>
+                                <c:forEach var="compra" items="${compras}">
+                                    <tr>
+                                        <fmt:parseDate  value="${compra.dataCompra}"  type="date" pattern="yyyy-MM-dd" var="dataCompraParseada" />
+                                        <fmt:formatDate value="${dataCompraParseada}" type="date" pattern="dd/MM/yyyy" var="dataCompraFormatada" />
+                                        <td>${dataCompraFormatada}</td>
 
-                                <tr>
-                                    <td>00/00/0000</td>
-                                    <td>00</td>
-                                    <td>R$ 00,00</td>
-                                    <td>Aprovado</td>
-                                    <td>00/00/0000</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalhesCompra"><span class="material-icons">remove_red_eye</span></button>
-                                    </td>
-                                </tr>
+                                        <td>R$ ${compra.precoTotal}</td>
+                                        <td>R$ ${compra.frete}</td>
+                                        <td>${compra.vendaStatus.nomeExibicao}</td>
 
-                                <tr>
-                                    <td>00/00/0000</td>
-                                    <td>00</td>
-                                    <td>R$ 00,00</td>
-                                    <td>Aprovado</td>
-                                    <td>00/00/0000</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalhesCompra"><span class="material-icons">remove_red_eye</span></button>
-                                    </td>
-                                </tr>
-                
+                                        <fmt:parseDate  value="${compra.dataEnvio}"  type="date" pattern="yyyy-MM-dd" var="dataEnvioParseada" />
+                                        <fmt:formatDate value="${dataEnvioParseada}" type="date" pattern="dd/MM/yyyy" var="dataEnvioFormatada" />
+                                        <td>${dataEnvioFormatada}</td>
+
+                                        <fmt:parseDate  value="${compra.dataEntrega}"  type="date" pattern="yyyy-MM-dd" var="dataEntregaParseada" />
+                                        <fmt:formatDate value="${dataEntregaParseada}" type="date" pattern="dd/MM/yyyy" var="dataEntregaFormatada" />
+                                        <td>${dataEntregaFormatada}</td>
+
+                                        <td>
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="montarModal('clientes/compras', '${compra.id}')" data-bs-toggle="modal" data-bs-target="#modal"><span class="material-icons">remove_red_eye</span></button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+
                             </tbody>
                         </table>
                     </div>
@@ -87,61 +80,92 @@
             </div>
 
             <hr>
-
-            <!-- Modal Detalhes compra-->
-            <div class="modal fade" id="detalhesCompra" tabindex="-1" aria-labelledby="detalhesCompraLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title fw-bold" id="detalhesCompraLabel">Detalhes compra</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <div class="modal-body m-5">
-
-                            <h6 class="fw-bold">00/00/0000</h6>
-                            <h6>Status</h6>
-                            <h6>Chegou no dia 00/00/0000</h6>
-
-                            <!-- Produto -->
-                            <div class="row border rounded p-3">
-                                <div class="col-2">
-                                    <div class="card produto mb-3">
-                                        <img alt="produto" src="\emug\assets\img\canecas\caneca_porco.jpeg" class="p-2">
-                                    </div>
-                                </div>
-
-                                <div class="col">
-                                    <h6 class="text-muted">Categoria</h6>
-                                    <h5>Nome produto</h5>
-                                    <h6>Quantidade: 00</h6>
-                                    <h6>Valor: R$ 00,00</h6>
-                                </div>
-
-                                <div class="col-2">
-                                    <button type="button" class="btn btn-primary btn-sm">Solicitar troca</button>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Cancelar compra</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
   
         </div>
     </main>
 
     <br/>
 
+    <jsp:include page="../include/modalBase.jsp" />
     <jsp:include page="../include/footer.jsp"/>
     
-    <script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 </body>
+
+<script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+<script src='<c:url value="../webjars/jquery/3.6.1/jquery.min.js"/>'></script>
+<script src='<c:url value="../assets/js/geral.js"/>'></script>
+<script src='<c:url value="../assets/js/construir-modal.js"/>'></script>
+
+<script>
+
+    async function listaItensModal(url) {
+        let response = await fetch(url)
+        let json = await response.json();
+
+        limpaModal();
+        
+        json.forEach(venda => {
+            let detalhesVenda =
+                $(`<ul class="list-unstyled">
+                    <li><h6 class="fw-bold">\${venda.dataCompra}</h6></li>
+                    <li><h6>\${venda.vendaStatus}</h6></li>
+                    <li>Valor total da venda: \${venda.precoTotal}</li>
+                    <li>Frete: \${venda.frete}</li>
+                </ul>`);
+
+            if (venda.dataEntrega != null)
+                $(`<li>Chegou no dia \${venda.dataEntrega}</li>`).appendTo(detalhesVenda);
+
+            if (venda.dataEnvio != null)
+                $(`<li>Data de envio: \${venda.dataEnvio}</li>`).appendTo(detalhesVenda);
+
+            adicionaItemBodyModal(detalhesVenda);
+            
+            venda.carrinho.itensCarrinho.forEach(i => {
+                let itemCompra =
+                    $(`<div class="row border rounded p-3">
+                        <div class="col-2">
+                            <div class="card produto mb-3">
+                                <img alt="produto" src="\${i.produto.imagem}" class="p-2">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <h5>\${i.produto.nome}</h5>
+                            <h6>Quantidade: \${i.quant}</h6>
+                            <h6>Valor: R$ \${i.produto.valorCompra}</h6>
+                        </div>
+
+                        <div class="col-2">
+                            <button type="button" class="btn btn-primary btn-sm">Solicitar troca</button>
+                        </div>
+                    </div>`);
+
+                adicionaItemBodyModal(itemCompra);
+            }); 
+
+        });
+
+        setTituloModal("Detalhes compra");
+
+        let botaoCancelar = $('<button type="button" class="btn btn-primary">Cancelar compra</button>');
+        let botaoFecharModal = $('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>');
+
+        adicionaBotaoFooter(botaoCancelar);
+        adicionaBotaoFooter(botaoFecharModal);
+        
+    }
+
+    function montarModal(path, idVenda){
+        let params = { operacao: 'listarJson',
+                        id: idVenda};
+
+        let urlItensModal = montaUrl(baseUrl, path, params);
+
+        listaItensModal(urlItensModal);
+    }
+
+
+</script>
 
 </html>

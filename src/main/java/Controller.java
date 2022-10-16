@@ -53,6 +53,8 @@ public class Controller extends HttpServlet{
         commandMap.put("excluir", new ExcluirCommand());
         commandMap.put("pesquisar", new ListarCommand());
         commandMap.put("listar", new ListarCommand());
+
+        /// TODO talvez criar uma nova operação padrão para evitar tantos usos do mesmo listar
         commandMap.put("listarIndex", new ListarCommand());
         commandMap.put("listarJson", new ListarCommand());
         commandMap.put("listarTodos", new ListarCommand());
@@ -68,6 +70,7 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/clientes/enderecos", new EnderecoViewHelper());
         viewHelperMap.put("/emug/clientes/cartoes", new CartaoViewHelper());
         viewHelperMap.put("/emug/clientes/cupons", new CupomViewHelper());
+        viewHelperMap.put("/emug/clientes/compras", new VendaViewHelper());
         viewHelperMap.put("/emug/clientes/desativarConta", new UsuarioViewHelper());
         viewHelperMap.put("/emug/clientes/carrinho", new CarrinhoViewHelper());
         viewHelperMap.put("/emug/clientes/carrinho/finalizarCompra", new VendaViewHelper());

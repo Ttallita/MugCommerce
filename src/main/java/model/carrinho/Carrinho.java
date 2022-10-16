@@ -1,11 +1,10 @@
 package model.carrinho;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import model.EntidadeDominio;
 import model.cliente.Cliente;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Carrinho extends EntidadeDominio {
     private Cliente cliente;    

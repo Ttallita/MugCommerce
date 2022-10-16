@@ -1,27 +1,39 @@
 package model.venda;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.annotations.SerializedName;
+
 public enum VendaType {
-    EM_PROCESSAMENTO,
-    PAGAMENTO_REALIZADO,
-    ENVIADO_PARA_TRANSPORTADORA,
-    EM_TRANSPORTE,
-    ENTREGUE,
 
-    TROCA_SOLICITADA,
-    CANCELAMENTO_SOLICITADO,
+    @SerializedName("Em processamento")
+    EM_PROCESSAMENTO ("Em processamento"),
 
-    TROCA_RECUSADA,
-    CANCELAMENTO_RECUSADO,
+    @SerializedName("Enviado para transportadora")
+    PAGAMENTO_REALIZADO ("Enviado para transportadora"),
 
-    TROCA_ACEITA,
-    CANCELAMENTO_ACEITO,
+    @SerializedName("Enviado para transportadora")
+    ENVIADO_PARA_TRANSPORTADORA ("Enviado para transportadora"),
 
-    PRODUTO_ENVIADO_PARA_TROCA,
-    PRODUTO_ENVIADO_PARA_CANCELAMENTO,
+    @SerializedName("Em transporte")
+    EM_TRANSPORTE ("Em transporte"),
 
-    PRODUTO_RECEBIDO_PARA_TROCA,
-    PRODUTO_RECEBIDO_PARA_CANCELAMENTO,
+    @SerializedName("Entregue")
+    ENTREGUE ("Entregue"),
+    ;
 
-    TROCA_REALIZADA,
-    CANCELAMENTO_REALIZADO,
+    public String nomeExibicao;
+
+    VendaType(String nomeExibicao) {
+        this.nomeExibicao = nomeExibicao;
+    }
+
+    @JsonValue
+    public String getNomeExibicao() {
+        return nomeExibicao;
+    }
+
+    public void setNomeExibicao(String nomeExibicao) {
+        this.nomeExibicao = nomeExibicao;
+    }
+
 }

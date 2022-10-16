@@ -1,12 +1,11 @@
 package utils;
 
 import com.google.gson.*;
-import model.*;
+import model.Auditoria;
+import model.AuditoriaType;
+import model.EntidadeDominio;
+import model.Usuario;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

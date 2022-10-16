@@ -30,7 +30,7 @@
 
                     <div class="col-6 p-3">
                         <h6>Endereço de entrega</h6>
-                        <a type="button" id="alterarEndereco" onclick="montarModalCadastro('clientes/enderecos')" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalAlterar">
+                        <a type="button" id="alterarEndereco" onclick="montarModalCadastro('clientes/enderecos')" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal">
                             Alterar
                         </a>
                         <ul class="list-unstyled">
@@ -45,7 +45,7 @@
                     <div class="col-6">
                         <div class="col p-3">
                             <h6>Forma de pagamento</h6>
-                            <a type="button" id="alterarPagamento" onclick="montarModalCadastro('clientes/cartoes')" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalAlterar">
+                            <a type="button" id="alterarPagamento" onclick="montarModalCadastro('clientes/cartoes')" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal">
                                 Alterar
                             </a>
                             <ul class="list-unstyled">
@@ -149,8 +149,8 @@
 </body>
 
 <script src='<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"/>'></script>
-<script src='<c:url value="/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js"/>'></script>
 <script src='<c:url value="/webjars/jquery/3.6.1/jquery.min.js"/>'></script>
+<script src='<c:url value="/assets/js/construir-modal.js"/>'></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
 
 <script>
@@ -162,7 +162,6 @@
     const parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
 
     function atualizarCartoesUtilizados(){
-        // Encontra endereço/cartão selecionado
         var ids = [];
         Array.from(document.getElementById("formModal").getElementsByTagName("input"))
                             .filter(elem => elem.checked)
@@ -188,66 +187,24 @@
         return urlBase + parametrosVendaHref;
     }
 
-    async function listaItensModal(url, path) {
-        let response = await fetch(url)
-        let json = await response.json();
-
-        let formModal = document.getElementById("formModal");
-        let tituloModal = document.getElementById("modalAlterarLabel");
-
-        formModal.innerHTML = '';
-
-        let urlAdicionar, botaoAlterar;
-
-        if (path.includes("enderecos")) {
-
-            listarEnderecosModal(json);
-
-            tituloModal.innerText = "Escolha o endereço";
-            urlAdicionar = "<c:url value='/clientes/enderecos?operacao=adicionar'/>";
-
-            botaoAlterar =
-                $(`<button type="button" class="btn btn-primary" onclick="atualizarEnderecoEntrega()" id="botaoAlterarModal">Alterar</button>`);
-
-        } else if (path.includes("cartoes")) {
-
-            listarCartoesModal(json);
-
-            tituloModal.innerText = "Escolha o cartão";
-            urlAdicionar = "<c:url value='/clientes/cartoes?operacao=adicionar'/>";
-
-            botaoAlterar =
-                $(`<button type="button" class="btn btn-primary" onclick="atualizarCartoesUtilizados()" id="botaoAlterarModal">Alterar</button>`);
-
-        }
-
-        let botaoAdicionar =
-                $(`<a href="\${urlAdicionar}\${parametroOrigemChamada}\${parametrosVendaHref}">
-                    <button type="button" class="btn btn-primary" id="botaoAdicionarModal">Adicionar</button>
-                </a>`);
-
-        let modalFooter = document.getElementById("modalFooter");
-        modalFooter.innerHTML = '';
-
-        botaoAdicionar.appendTo(modalFooter);
-        botaoAlterar.appendTo(modalFooter);
-        
-    }
-
     function montarModalCadastro(path){
         let params = { operacao: 'listarJson'}
 
-        let urlItensModal = montaUrl(baseUrl, path, params);
+        if (path.includes("enderecos")) 
+            montaModalSelecionarEnderecos(montaUrl(baseUrl, path, params));
 
-        listaItensModal(urlItensModal, path);
+        else if (path.includes("cartoes")) 
+            montaModalSelecionarCartoes(montaUrl(baseUrl, path, params));
     }
 
-    function listarEnderecosModal(json){
+    async function montaModalSelecionarEnderecos(url){
+        let response = await fetch(url)
+        let json = await response.json();
+
+        limpaModal();
 
         json.forEach(endereco => {
-
             let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;
-
             let hrefEditar = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`
 
             let checkEndereco =
@@ -259,16 +216,34 @@
                     </label>
                 </div>`);
 
-            checkEndereco.appendTo(formModal);
+            adicionaFormModal(checkEndereco);
         });
+
+        setTituloModal("Escolha o endereço");
+        
+        let botaoAlterar =
+            $(`<button type="button" class="btn btn-primary" onclick="atualizarEnderecoEntrega()" id="botaoAlterarModal">Alterar</button>`);
+
+        let urlAdicionar = "<c:url value='/clientes/enderecos?operacao=adicionar'/>";
+        let botaoAdicionar =
+                $(`<a href="\${urlAdicionar}\${parametroOrigemChamada}\${parametrosVendaHref}">
+                    <button type="button" class="btn btn-primary" id="botaoAdicionarModal">Adicionar</button>
+                </a>`);
+
+        adicionaBotaoFooter(botaoAdicionar);
+        adicionaBotaoFooter(botaoAlterar);
     }
 
-    function listarCartoesModal(json){
+
+    async function montaModalSelecionarCartoes(url){
+        let response = await fetch(url)
+        let json = await response.json();
+
+        limpaModal();
 
         json.forEach(cartao => {
 
             let isCartaoSelecionado = idsCartoesSelecionados.includes(cartao.id);
-
             let hrefEditar = `<c:url value="/clientes/cartoes?operacao=listarUnico&id=\${cartao.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`;
 
             let checkCartao =
@@ -280,13 +255,27 @@
                     </label>
                 </div>`);
 
-            checkCartao.appendTo(formModal);
+            adicionaFormModal(checkCartao);
         });
+
+        setTituloModal("Escolha o cartão");
+        
+        let botaoAlterar =
+            $(`<button type="button" class="btn btn-primary" onclick="atualizarCartoesUtilizados()" id="botaoAlterarModal">Alterar</button>`);
+
+        let urlAdicionar = "<c:url value='/clientes/cartoes?operacao=adicionar'/>";
+        let botaoAdicionar =
+                $(`<a href="\${urlAdicionar}\${parametroOrigemChamada}\${parametrosVendaHref}">
+                    <button type="button" class="btn btn-primary" id="botaoAdicionarModal">Adicionar</button>
+                </a>`);
+
+        adicionaBotaoFooter(botaoAdicionar);
+        adicionaBotaoFooter(botaoAlterar);
     }
 
-</script>
 
-<script>
+
+
 
     const cuponsAplicados = new Map();
 
@@ -335,7 +324,7 @@
         atualizarValoresVenda();
     }
 
-    const valorVenda =  parseFloat('${carrinho.totalCarrinho}') + parseFloat('${valorFrete}');
+    const valorVenda = parseFloat('${carrinho.totalCarrinho}') + parseFloat('${valorFrete}');
 
     function atualizarValoresVenda(){
         let somaCupons = 0;

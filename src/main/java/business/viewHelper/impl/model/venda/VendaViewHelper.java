@@ -65,7 +65,7 @@ public class VendaViewHelper implements IViewHelper {
                 return venda;
             }
 
-            case "listar" -> {
+            case "listarUnico" -> {
                 Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
                 String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
 
@@ -74,6 +74,19 @@ public class VendaViewHelper implements IViewHelper {
 
                 venda.setEnderecoEntrega(enderecoEntrega);
                 venda.setCarrinho(carrinho);
+
+                return venda;
+            }
+
+            case "listarJson" -> {
+                String idVenda = request.getParameter("id");
+                venda.setId(idVenda == null || idVenda.isEmpty() ? null : Long.parseLong(idVenda));
+
+                return venda;
+            }
+
+            case "listarTodos" -> {
+                return venda;
             }
 
         }
@@ -94,7 +107,7 @@ public class VendaViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
             }
 
-            case "listar" -> {
+            case "listarUnico" -> {
                 Venda venda = (Venda) result.getEntidades().get(0);
 
                 request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
@@ -121,6 +134,14 @@ public class VendaViewHelper implements IViewHelper {
 
                 request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
             }
+
+            case "listarTodos" -> {
+                request.setAttribute("compras", result.getEntidades());
+                request.getRequestDispatcher("/cliente/compras.jsp").forward(request, response);
+            }
+
+            case "listarJson" ->
+                UtilsWeb.montaRespostaJson(result, request, response);
 
         }
 

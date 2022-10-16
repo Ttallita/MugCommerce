@@ -115,7 +115,7 @@
                                     <fmt:formatNumber value="${sessionScope.carrinho.totalCarrinho}" type="currency"/>
                                 </h5>
                             </li>
-                            <a href="<c:url value='/clientes/carrinho/finalizarCompra?operacao=listar'/>" class="btn btn-primary rounded-pill py-2 ">
+                            <a href="<c:url value='/clientes/carrinho/finalizarCompra?operacao=listarUnico'/>" class="btn btn-primary rounded-pill py-2 ">
                                 Finalizar compra
                             </a>
                         </ul>

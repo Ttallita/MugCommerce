@@ -1,17 +1,16 @@
 package model.venda;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import model.EntidadeDominio;
 import model.carrinho.Carrinho;
 import model.cliente.CartaoDeCredito;
+import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
-import model.cliente.Cliente;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Venda extends EntidadeDominio {
     private Cliente cliente;
@@ -25,6 +24,7 @@ public class Venda extends EntidadeDominio {
     private Double precoTotal;
 
     private LocalDate dataCompra;
+    private LocalDate dataEnvio;
     private LocalDate dataEntrega;
 
     private boolean pagamentoAprovado;
@@ -125,6 +125,14 @@ public class Venda extends EntidadeDominio {
 
     public void setDataCompra(LocalDate dataCompra) {
         this.dataCompra = dataCompra;
+    }
+
+    public LocalDate getDataEnvio() {
+        return dataEnvio;
+    }
+
+    public void setDataEnvio(LocalDate dataEnvio) {
+        this.dataEnvio = dataEnvio;
     }
 
     public LocalDate getDataEntrega() {
