@@ -38,9 +38,9 @@ VALUES (1,'Maria','dos Anjos','303.799.550-59','2001-12-12','Feminino','50678-04
 INSERT INTO enderecos (end_cli_usr_id,end_tp,end_apelido,end_tp_residencia,end_tp_logradouro,end_logradouro,end_num,end_bairro,end_cep,end_cidade,end_estado,end_observacao)
 VALUES (1,'COBRANCA_ENTREGA','Minha casa','Sobrado','Avenida','Pingo d''água','586','Fernandes','95044-120','Mogi das Cruzes','São Paulo','');
 
-INSERT INTO cupons (cpm_id, cpm_cli_usr_id, cpm_vnd_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao)
-VALUES (1, 1, NULL, 'Cupom aniversariante', 'PROMOCIONAL', 20.0, '2023-01-01', 'Se presenteie bla bla bla...'),
-VALUES (2, 1, NULL, 'Cupom natal', 'PROMOCIONAL', 30.0, '2023-01-01', 'HOU! HOU! HOU!..........');
+INSERT INTO cupons (cpm_id, cpm_cli_usr_id, cpm_vnd_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) VALUES
+(1, 1, NULL, 'Cupom aniversariante', 'PROMOCIONAL', 20.0, '2023-01-01', 'Se presenteie bla bla bla...'),
+(2, 1, NULL, 'Cupom natal', 'PROMOCIONAL', 30.0, '2023-01-01', 'HOU! HOU! HOU!..........');
 
 
 -- Administrador

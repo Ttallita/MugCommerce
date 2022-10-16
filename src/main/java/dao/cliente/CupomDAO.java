@@ -71,7 +71,7 @@ public class CupomDAO implements IDAO {
             String sql;
             PreparedStatement pstm = null;
 
-            if(operacao.equals("listar")) { // cupons válidos para venda
+            if(operacao.equals("listarTodos")) { // cupons válidos para venda
                 sql = "SELECT * FROM cupons c WHERE c.cpm_cli_usr_id = ? AND c.cpm_vnd_id IS NULL";
 
                 pstm = conn.prepareStatement(sql);

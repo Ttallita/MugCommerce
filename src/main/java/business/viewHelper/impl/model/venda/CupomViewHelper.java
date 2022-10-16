@@ -1,7 +1,6 @@
 package business.viewHelper.impl.model.venda;
 
 import business.viewHelper.IViewHelper;
-import dao.cliente.CupomDAO;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
@@ -33,7 +32,7 @@ public class CupomViewHelper implements IViewHelper {
             return cupom;
         }
 
-        if ("listar".equals(operacao)){
+        if ("listarTodos".equals(operacao)){
             return cupom;
         }
 
@@ -42,7 +41,20 @@ public class CupomViewHelper implements IViewHelper {
 
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        UtilsWeb.montaRespostaJson(result, request, response);
+        String operacao = request.getParameter("operacao");
+
+        switch (operacao) {
+
+            case "listarUnico" ->
+                UtilsWeb.montaRespostaJson(result, request, response);
+
+            case "listarTodos" -> {
+                request.setAttribute("cupons", result.getEntidades());
+                request.getRequestDispatcher("/cliente/cupons.jsp").forward(request, response);
+            }
+        }
+
+
     }
 
 }
