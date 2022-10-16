@@ -50,7 +50,7 @@ public class FabricanteDAO implements IDAO {
             }
 
             return fabricantes;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {

@@ -38,7 +38,7 @@ public class AuditoriaDAO implements IDAO{
             pstm.execute();
 
             return auditoria;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {

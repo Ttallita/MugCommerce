@@ -61,7 +61,7 @@ public class CategoriaDAO implements IDAO {
             }
 
             return categorias;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -83,7 +83,7 @@ public class CategoriaDAO implements IDAO {
             pstm.setLong(2, idCategoria);
             pstm.execute();
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {

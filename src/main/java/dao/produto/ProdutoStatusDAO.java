@@ -48,7 +48,7 @@ public class ProdutoStatusDAO implements IDAO {
             new ProdutoDAO().deletar(status.getProduto());
 
             return status;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -76,7 +76,7 @@ public class ProdutoStatusDAO implements IDAO {
             pstm.setLong(1, produto.getId());
 
             pstm.execute();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {

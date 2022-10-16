@@ -52,7 +52,7 @@ public class EnderecoDAO implements IDAO {
             endereco.setId(enderecoId);
 
             return endereco;
-        }catch (SQLException | ClassNotFoundException e) {
+        }catch (Exception e) {
             System.err.println(e.getMessage());
             return null;
         }finally {
@@ -90,7 +90,7 @@ public class EnderecoDAO implements IDAO {
             pstm.execute();
 
             return endereco;
-        }catch (SQLException | ClassNotFoundException e) {
+        }catch (Exception e) {
             System.err.println(e.getMessage());
             return null;
         }finally {
@@ -114,7 +114,7 @@ public class EnderecoDAO implements IDAO {
             pstm.execute();
 
             return endereco;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
@@ -173,7 +173,7 @@ public class EnderecoDAO implements IDAO {
             }
 
             return enderecos;
-        }catch (SQLException | ClassNotFoundException e) {
+        }catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }finally {

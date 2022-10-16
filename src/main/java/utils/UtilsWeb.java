@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class UtilsWeb {
 
@@ -77,6 +78,10 @@ public class UtilsWeb {
         }
 
         return atributos;
+    }
+
+    public static List<String> converteParametrosParaLista(String parametros) {
+        return Arrays.stream(parametros.replace("[","").replace("]","").split(",")).collect(Collectors.toList());
     }
 
     private static class LocalDateSerializer implements JsonSerializer<LocalDate> {
