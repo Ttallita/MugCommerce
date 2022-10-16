@@ -84,7 +84,10 @@ public class VendaViewHelper implements IViewHelper {
                 List<CartaoDeCredito> cartoes = venda.getCartoes();
                 if(idsCartoesSelecionados != null && !idsCartoesSelecionados.isEmpty()){
                     List<Long> idsCartoes = new ArrayList<>();
-                    Arrays.stream(idsCartoesSelecionados.replace("[","").replace("]","").split(",")).forEach(idCartao-> idsCartoes.add(Long.parseLong(idCartao)));
+
+                    Arrays.stream(idsCartoesSelecionados.replace("[","").replace("]","").split(","))
+                            .forEach(idCartao-> idsCartoes.add(Long.parseLong(idCartao)));
+
                     cartoes = cartoes.stream().filter(c -> idsCartoes.contains(c.getId())).collect(Collectors.toList());
                 } else {
                     cartoes = cartoes.stream().filter(CartaoDeCredito::isPreferencial).collect(Collectors.toList());

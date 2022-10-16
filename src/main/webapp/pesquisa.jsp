@@ -210,7 +210,7 @@
     }
 
     function isFilter(produto, filters) {
-        return (filters.categorias.length === 0 || produto.categorias.some(v => filters.categorias.includes(v)))
+        return (filters.categorias.length === 0 || produto.categorias.some(v => filters.categorias.includes(v.id)))
             && (filters.fabricantes.length === 0 || filters.fabricantes.includes(produto.fabricante.id))
             && (filters.materiais.length === 0 || filters.materiais.includes(produto.material))
             && produto.valorVenda >= filters.minPrice

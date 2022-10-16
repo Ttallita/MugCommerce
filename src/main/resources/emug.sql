@@ -70,8 +70,6 @@ CREATE TABLE grupos_precificacao (
     grp_margem_lucro numeric(8, 2) NOT NULL
 );
 
---- Login
-
 DROP TABLE IF EXISTS "produtos" CASCADE;
 CREATE TABLE produtos (
     pro_id                 serial        NOT NULL,
@@ -110,6 +108,23 @@ CREATE TABLE auditoria (
     aud_dados  jsonb        NOT NULL
 );
 
+DROP TABLE IF EXISTS "estoque" CASCADE;
+CREATE TABLE estoque (
+    est_id     serial  NOT NULL,
+    est_pro_id int     NOT NULL,
+    est_quant  int     NOT NULL
+);
+
+DROP TABLE IF EXISTS "estoque_historico" CASCADE;
+CREATE TABLE estoque_historico (
+    est_hist_id          serial        NOT NULL,
+    est_hist_est_id      int           NOT NULL,
+    est_hist_quant       int           NOT NULL,
+    est_hist_data        timestamp     NOT NULL,
+    est_hist_valor_custo numeric(8, 2) NOT NULL,
+    est_hist_fornecedor  varchar(255)  NOT NULL
+);
+
 -- Constraints de primary key
 ALTER TABLE usuarios
     ADD CONSTRAINT pk_usr PRIMARY KEY (usr_id);
@@ -140,6 +155,12 @@ ALTER TABLE categorias_produtos
 
 ALTER TABLE produtos_status
     ADD CONSTRAINT pk_pst PRIMARY KEY (pst_id);
+
+ALTER TABLE estoque
+    ADD CONSTRAINT pk_est PRIMARY KEY (est_id);
+
+ALTER TABLE estoque_historico
+    ADD CONSTRAINT pk_est_hist PRIMARY KEY (est_hist_id);
 
 -- Constraints de foreign key
 ALTER TABLE clientes
@@ -181,3 +202,12 @@ ALTER TABLE categorias_produtos
 ALTER TABLE produtos_status
     ADD CONSTRAINT fk_prod_id FOREIGN KEY (pst_prod_id)
         REFERENCES produtos (pro_id);
+
+ALTER TABLE estoque
+    ADD CONSTRAINT fk_prod_id FOREIGN KEY (est_pro_id)
+        REFERENCES produtos (pro_id);
+
+ALTER TABLE estoque_historico
+    ADD CONSTRAINT fk_est_id FOREIGN KEY (est_hist_est_id)
+        REFERENCES estoque (est_id);
+

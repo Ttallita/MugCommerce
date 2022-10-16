@@ -1,7 +1,9 @@
 package dao.produto;
 
 import dao.IDAO;
+import dao.estoque.EstoqueDAO;
 import model.EntidadeDominio;
+import model.estoque.Estoque;
 import model.produto.Categoria;
 import model.produto.Fabricante;
 import model.produto.GrupoPrecificacao;
@@ -50,9 +52,14 @@ public class ProdutoDAO implements IDAO {
 
             produto.setId(idProduto);
 
-            long finalIdProduto = idProduto;
-            Consumer<Categoria> consumer = (categoria) -> new CategoriaDAO().salvarAssociacaoCategoriaProduto(finalIdProduto, categoria.getId());
+            Consumer<Categoria> consumer = (categoria) -> new CategoriaDAO().salvarAssociacaoCategoriaProduto(produto.getId(), categoria.getId());
             produto.getCategorias().forEach(consumer);
+
+            Estoque estoque = new Estoque();
+            estoque.setQuantidade(0);
+            estoque.setProduto(produto);
+
+            new EstoqueDAO().salvar(estoque);
 
             return produto;
         } catch (SQLException | ClassNotFoundException e) {
@@ -94,6 +101,8 @@ public class ProdutoDAO implements IDAO {
             setaValores(produto, valorVenda, pstm);
             pstm.setLong(10, produto.getId());
             pstm.execute();
+
+
 
             return produto;
         } catch (SQLException | ClassNotFoundException e) {
@@ -161,7 +170,7 @@ public class ProdutoDAO implements IDAO {
             switch (operacao) {
 
                 case "listar", "listarJson" -> {
-                    sql = "SELECT * FROM produtos";
+                    sql = "SELECT * FROM produtos where pro_ativo = true";
 
                     pstm = connection.prepareStatement(sql);
                 }

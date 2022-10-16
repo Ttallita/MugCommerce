@@ -33,7 +33,7 @@
                     <span class="material-icons inline-icon">fact_check</span> Solicitações pendentes
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'estoque') ? 'active-navbar' : ''}" id="paginaEstoque" type="button" href="/emug/gerenciar/estoque.jsp">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'estoque') ? 'active-navbar' : ''}" id="paginaEstoque" type="button" href="/emug/adm/estoque?operacao=listar">
                     <span class="material-icons inline-icon">all_inbox</span> Estoque
                 </a>
 
