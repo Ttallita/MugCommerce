@@ -7,6 +7,8 @@ import business.viewHelper.impl.model.carrinho.CarrinhoViewHelper;
 import business.viewHelper.impl.model.cliente.CartaoViewHelper;
 import business.viewHelper.impl.model.cliente.ClienteViewHelper;
 import business.viewHelper.impl.model.cliente.EnderecoViewHelper;
+import business.viewHelper.impl.model.estoque.EstoqueEntradaViewHelper;
+import business.viewHelper.impl.model.estoque.EstoqueViewHelper;
 import business.viewHelper.impl.model.produto.CategoriaViewHelper;
 import business.viewHelper.impl.model.produto.FabricanteViewHelper;
 import business.viewHelper.impl.model.produto.GrupoPrecificacaoViewHelper;
@@ -80,6 +82,8 @@ public class Controller extends HttpServlet{
         viewHelperMap.put("/emug/adm/fabricantes", new FabricanteViewHelper());
         viewHelperMap.put("/emug/adm/categorias", new CategoriaViewHelper());
         viewHelperMap.put("/emug/adm/grupos", new GrupoPrecificacaoViewHelper());
+        viewHelperMap.put("/emug/adm/estoqueEntrada", new EstoqueEntradaViewHelper());
+        viewHelperMap.put("/emug/adm/estoque", new EstoqueViewHelper());
 
         viewHelperMap.put("/emug/produtos", new ProdutoViewHelper());
     }

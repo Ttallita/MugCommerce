@@ -161,12 +161,28 @@ CREATE TABLE auditoria (
     aud_dados  jsonb        NOT NULL
 );
 
+DROP TABLE IF EXISTS "estoque" CASCADE;
+CREATE TABLE estoque (
+    est_id     serial  NOT NULL,
+    est_pro_id int     NOT NULL,
+    est_quant  int     NOT NULL
+);
+
+DROP TABLE IF EXISTS "estoque_historico" CASCADE;
+CREATE TABLE estoque_historico (
+    est_hist_id          serial        NOT NULL,
+    est_hist_est_id      int           NOT NULL,
+    est_hist_quant       int           NOT NULL,
+    est_hist_data        timestamp     NOT NULL,
+    est_hist_valor_custo numeric(8, 2) NOT NULL,
+    est_hist_fornecedor  varchar(255)  NOT NULL
+);
+
 
 --------------------------------------------------
 -- CONSTRAINTS
 
 ---- Primary keys
--- clientes
 ALTER TABLE usuarios
     ADD CONSTRAINT pk_usr PRIMARY KEY (usr_id);
 
@@ -200,6 +216,12 @@ ALTER TABLE categorias_produtos
 
 ALTER TABLE produtos_status
     ADD CONSTRAINT pk_pst PRIMARY KEY (pst_id);
+
+ALTER TABLE estoque
+    ADD CONSTRAINT pk_est PRIMARY KEY (est_id);
+
+ALTER TABLE estoque_historico
+    ADD CONSTRAINT pk_est_hist PRIMARY KEY (est_hist_id);
 
 -- vendas
 ALTER TABLE vendas
@@ -280,3 +302,12 @@ ALTER TABLE produtos_em_venda
 ALTER TABLE cupons
     ADD CONSTRAINT fk_cpm_vnd FOREIGN KEY (cpm_vnd_id)
         REFERENCES vendas (vnd_id);
+
+ALTER TABLE estoque
+    ADD CONSTRAINT fk_prod_id FOREIGN KEY (est_pro_id)
+        REFERENCES produtos (pro_id);
+
+ALTER TABLE estoque_historico
+    ADD CONSTRAINT fk_est_id FOREIGN KEY (est_hist_est_id)
+        REFERENCES estoque (est_id);
+

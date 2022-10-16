@@ -53,6 +53,7 @@ public class Utils {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
 
         auditoria.setJson(gsonBuilder.create().toJson(entidade));
         auditoria.setUsuario(usuario);
@@ -64,6 +65,13 @@ public class Utils {
         @Override
         public JsonElement serialize(LocalDate localDate, Type srcType, JsonSerializationContext context) {
             return new JsonPrimitive(formatterBR.format(localDate));
+        }
+    }
+
+    public static class LocalDateTimeSerializer implements JsonSerializer <LocalDateTime> {
+        @Override
+        public JsonElement serialize(LocalDateTime localDate, Type srcType, JsonSerializationContext context) {
+            return new JsonPrimitive(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(localDate));
         }
     }
 

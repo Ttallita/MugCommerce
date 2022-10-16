@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -25,87 +25,82 @@
     
         <div class="w-75 bg-white rounded p-5">
             <h5>Estoque</h5>
-
             <hr>
 
-            <!-- Filtro de Estoque-->
             <div class="container">
-                <form>
-                    <div class="row g-3">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
-                        <div class="col-sm-4">
-                            <small>Valor compra</small>
-                            <div class="input-group">
-                                <input class="form-control" id="minCompra" placeholder="R$ min" type="text">
-                                <span class="input-group-text">-</span>
-                                <input type="text" class="form-control" id="maxCompra" placeholder="R$ max">
-                            </div>
-                        </div>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-estoque-tab" data-bs-toggle="pill" data-bs-target="#pills-estoque" type="button" role="tab" aria-controls="pills-estoque" aria-selected="true">Estoque atual</button>
+                    </li>
 
-                        <div class="col-sm-4">
-                            <small>Valor venda</small>
-                            <div class="input-group">
-                                <input class="form-control" id="minVenda" placeholder="R$ min" type="text">
-                                <span class="input-group-text">-</span>
-                                <input type="text" class="form-control" id="maxVenda" placeholder="R$ max">
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary btn-sm">Pesquisar</button>
-                        </div>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-estoque-historico-tab" data-bs-toggle="pill" data-bs-target="#pills-estoque-historico" type="button" role="tab" aria-controls="pills-estoque-historico" aria-selected="false">Historico Estoque</button>
+                    </li>
+
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+
+                    <div class="tab-pane fade show active" id="pills-estoque" role="tabpanel" aria-labelledby="pills-estoque-tab" tabindex="0">
+
+                        <table class="table table-hover w-100">
+                            <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Quant.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <c:forEach var="estoque" items="${estoques}">
+                                        <td>${estoque.produto.nome}</td>
+                                        <td>${estoque.quantidade}</td>
+                                    </c:forEach>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <a href="${pageContext.request.contextPath}/gerenciar/formularios/entradaEstoque.jsp">
+                            <button type="button" class="w-100 btn btn-primary btn-sm" >
+                                Entrada de estoque
+                            </button>
+                        </a>
                     </div>
-                </form>
-            </div>
 
-            <hr>
+                    <div class="tab-pane fade" id="pills-estoque-historico" role="tabpanel" aria-labelledby="pills-estoque-historico-tab" tabindex="0">
+                        <table class="table table-hover w-100">
+                            <thead>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Quant.</th>
+                                    <th>Data de entrada</th>
+                                    <th>Valor custo</th>
+                                    <th>Fornecedor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="entrada" items="${estoqueHistorico}">
+                                    <tr>
+                                        <td>${entrada.estoque.produto.nome}</td>
+                                        <td>${entrada.quantidade}</td>
+                                        <td>
+                                            <fmt:parseDate  value="${entrada.dataEntrada}" type="both" pattern="yyyy-MM-dd'T'HH:mm" var="dataParseada" />
+                                            <fmt:formatDate value="${dataParseada}" type="both" pattern="dd/MM/yyyy HH:mm" var="dataFormatada" />
+                                            ${dataFormatada}
+                                        </td>
+                                        <td>
+                                            <fmt:formatNumber value="${entrada.valorCusto}" type="currency"/>
+                                        </td>
+                                        <td>${entrada.fornecedor.nome}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
 
-            <div class="table-responsive p-3 rounded mb-4">
-                <table class="table table-hover w-100">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Quant. Produtos</th>
-                            <th>Valor compra</th>
-                            <th>Valor venda</th>
-                            <th>Quant. estoque</th>
-                            <th>Limite venda</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <tr>
-                            <td>nome</td>
-                            <td>00</td>
-                            <td>R$ 00,00</td>
-                            <td>R$ 00,00</td>
-                            <td>00</td>
-                            <td>00</td>
-                            <td>
-                                <span class="material-icons">edit</span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>nome</td>
-                            <td>00</td>
-                            <td>R$ 00,00</td>
-                            <td>R$ 00,00</td>
-                            <td>00</td>
-                            <td>00</td>
-                            <td>
-                                <span class="material-icons">edit</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <a href="formularios/formProduto.jsp">
-                    <button type="button" class="w-100 btn btn-primary btn-sm" >
-                        Adicionar produto
-                    </button>
-                </a>
+                </div>
             </div>
         </div>
     </main>

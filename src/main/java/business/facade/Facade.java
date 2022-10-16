@@ -3,6 +3,7 @@ package business.facade;
 import business.strategy.IStrategy;
 import business.strategy.impl.cliente.*;
 import business.strategy.impl.cliente.cartao.VerificarCartaoStrategy;
+import business.strategy.impl.estoque.VerificaEntradaEstoqueStrategy;
 import business.strategy.impl.produto.VerificaProdutoStrategy;
 import dao.IDAO;
 import dao.UsuarioDAO;
@@ -10,6 +11,8 @@ import dao.cliente.CartaoDeCreditoDAO;
 import dao.cliente.ClienteDAO;
 import dao.cliente.CupomDAO;
 import dao.cliente.EnderecoDAO;
+import dao.estoque.EstoqueDAO;
+import dao.estoque.EstoqueHistoricoDAO;
 import dao.produto.*;
 import dao.venda.VendaDAO;
 import model.EntidadeDominio;
@@ -19,6 +22,8 @@ import model.carrinho.ItemCarrinho;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
+import model.estoque.Estoque;
+import model.estoque.EstoqueHistorico;
 import model.cupom.Cupom;
 import model.produto.*;
 import model.venda.Venda;
@@ -50,6 +55,8 @@ public class Facade implements IFacade {
         daosMap.put(ProdutoStatus.class.getName(), new ProdutoStatusDAO());
         daosMap.put(Venda.class.getName(), new VendaDAO());
         daosMap.put(Cupom.class.getName(), new CupomDAO());
+        daosMap.put(Estoque.class.getName(), new EstoqueDAO());
+        daosMap.put(EstoqueHistorico.class.getName(), new EstoqueHistoricoDAO());
 
         sessionMap = new HashMap<>();
         sessionMap.put(ItemCarrinho.class.getName(), new CarrinhoSessionUtil());
@@ -61,6 +68,7 @@ public class Facade implements IFacade {
         regrasDeNegocioMap.put(Endereco.class.getName(), getRegrasNegocioEndereco());
         regrasDeNegocioMap.put(CartaoDeCredito.class.getName(), getRegrasNegocioCartao());
         regrasDeNegocioMap.put(Produto.class.getName(), getRegrasNegocioProduto());
+        regrasDeNegocioMap.put(EstoqueHistorico.class.getName(), getRegrasNegocioEstoqueEntrada());
     }
 
     @Override
@@ -254,6 +262,17 @@ public class Facade implements IFacade {
         Map<String, List<IStrategy>> mapStrategy = new HashMap<>();
         mapStrategy.put("salvar", regraProdutoGeral);
         mapStrategy.put("atualizar", regraProdutoGeral);
+
+        return mapStrategy;
+    }
+
+    private Map<String, List<IStrategy>> getRegrasNegocioEstoqueEntrada() {
+        List<IStrategy> regraEstoqueGeral = List.of(
+                new VerificaEntradaEstoqueStrategy()
+        );
+
+        Map<String, List<IStrategy>> mapStrategy = new HashMap<>();
+        mapStrategy.put("salvar", regraEstoqueGeral);
 
         return mapStrategy;
     }

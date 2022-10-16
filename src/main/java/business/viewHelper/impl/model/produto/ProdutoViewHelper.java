@@ -124,20 +124,17 @@ public class ProdutoViewHelper implements IViewHelper {
 
         switch (operacao) {
 
-            case "listar", "listarJson" -> {
+            case "listar" -> {
                 List<CategoriaStatusType> categoriasInativacao = Arrays.stream(CategoriaStatusType.values())
                         .filter(categoriaStatusType -> !categoriaStatusType.getType().equals(StatusType.ATIVO))
                         .toList();
 
-                if(operacao.equals("listar")) {
-                    request.setAttribute("categoriasInativacao", categoriasInativacao);
-                    request.setAttribute("produtos", result.getEntidades());
-                    request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
-                } else
-                    UtilsWeb.montaRespostaJson(result, request, response);
+                request.setAttribute("categoriasInativacao", categoriasInativacao);
+                request.setAttribute("produtos", result.getEntidades());
+                request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
             }
 
-            case "listarIndex" -> UtilsWeb.montaRespostaJson(result, request, response);
+            case "listarJson", "listarIndex" -> UtilsWeb.montaRespostaJson(result, request, response);
 
             case "pesquisar" -> {
                 List<EntidadeDominio> categorias = new CategoriaDAO().listar(new Categoria(), "listar");
