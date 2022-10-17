@@ -140,20 +140,20 @@ public class ClienteDAO implements IDAO {
             List<EntidadeDominio> clientes = new ArrayList<>();
             while (rs.next()) {
                 Cliente clienteConsulta = new Cliente();
-                clienteConsulta.setId(rs.getLong(1));
-                clienteConsulta.setNome(rs.getString(2));
-                clienteConsulta.setSobrenome(rs.getString(3));
-                clienteConsulta.setCpf(rs.getString(4));
-                clienteConsulta.setDataNascimento(rs.getTimestamp(5).toLocalDateTime().toLocalDate());
-                clienteConsulta.setGenero(rs.getString(6));
+                clienteConsulta.setId(rs.getLong("cli_usr_id"));
+                clienteConsulta.setNome(rs.getString("cli_nome"));
+                clienteConsulta.setSobrenome(rs.getString("cli_sobrenome"));
+                clienteConsulta.setCpf(rs.getString("cli_cpf"));
+                clienteConsulta.setDataNascimento(rs.getTimestamp("cli_dt_nasc").toLocalDateTime().toLocalDate());
+                clienteConsulta.setGenero(rs.getString("cli_genero"));
 
                 Telefone telefone = new Telefone();
-                telefone.setNumero(rs.getString(7));
-                telefone.setDdd(rs.getString(8));
-                telefone.setTipo(TelefoneType.valueOf(rs.getString(9)));
+                telefone.setNumero(rs.getString("cli_telefone_num"));
+                telefone.setDdd(rs.getString("cli_telefone_ddd"));
+                telefone.setTipo(TelefoneType.valueOf(rs.getString("cli_telefone_tp")));
 
                 clienteConsulta.setTelefone(telefone);
-                clienteConsulta.setRanking(rs.getInt(10));
+                clienteConsulta.setRanking(rs.getInt("cli_rank"));
                 clientes.add(clienteConsulta);
             }
 

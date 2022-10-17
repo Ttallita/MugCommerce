@@ -17,9 +17,6 @@ public class ClienteAdmViewHelper implements IViewHelper {
     public EntidadeDominio getEntidade(HttpServletRequest request) {
         String operacao = request.getParameter("operacao");
 
-        if(operacao.equals("salvar"))
-            return new ClienteViewHelper().getEntidade(request);
-
         if(operacao.equals("listarTodos"))
             return new Cliente();
 
