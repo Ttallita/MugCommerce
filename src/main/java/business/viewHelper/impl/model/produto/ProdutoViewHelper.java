@@ -3,12 +3,14 @@ package business.viewHelper.impl.model.produto;
 import business.viewHelper.IViewHelper;
 import com.google.gson.Gson;
 import dao.AuditoriaDAO;
+import dao.estoque.EstoqueDAO;
 import dao.produto.CategoriaDAO;
 import dao.produto.FabricanteDAO;
 import model.AuditoriaType;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
+import model.estoque.Estoque;
 import model.produto.Categoria;
 import model.produto.Fabricante;
 import model.produto.GrupoPrecificacao;
@@ -181,8 +183,16 @@ public class ProdutoViewHelper implements IViewHelper {
 
                 if (request.getRequestURI().contains("adm"))
                     request.getRequestDispatcher("/gerenciar/formularios/formProduto.jsp").forward(request, response);
-                else
+                else {
+                    Estoque estoque = new Estoque();
+                    estoque.setProduto(produtos.get(0));
+
+                    Estoque estoqueConsulta = (Estoque) new EstoqueDAO().listar(estoque, "findByIdProduto")
+                            .get(0);
+
+                    request.setAttribute("quantidadeDisponivel", estoqueConsulta.getQuantidade());
                     request.getRequestDispatcher("/produto.jsp").forward(request, response);
+                }
             }
         }
     }

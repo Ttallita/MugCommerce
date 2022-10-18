@@ -31,7 +31,6 @@
                        class="table table-hover w-100"
                        data-toggle="table"
                        data-pagination="true"
-                       data-sortable="true"
                        data-search="true"
                        data-page-size="25"
                        data-locale="pt-BR"
@@ -44,14 +43,14 @@
                             <th data-field="genero" data-filter-control="select">Gênero</th>
                             <th data-field="dtNasc" data-filter-control="input">Data de Nascimento</th>
                             <th data-field="telefone" data-filter-control="input">Telefone</th>
-                            <th data-field="nome" data-filter-control="input">Rank</th>
+                            <th data-field="rank" data-filter-control="input">Rank</th>
                             <!-- <th>Editar</th>
                             <th>Inativar</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="cliente" items="${clientes}">
-                                <tr>
+                            <tr>
                                 <td>${cliente.nome} ${cliente.sobrenome}</td>
                                 <td>${cliente.cpf}</td>
                                 <td>${cliente.genero}</td>
@@ -63,8 +62,9 @@
                                 <td>(${cliente.telefone.ddd}) ${cliente.telefone.numero}</td>
                                 <td>${cliente.ranking}</td>
                                 <!--
-                                <td><span class="material-icons text-primary">edit</span></td>
-                                <td><span class="material-icons text-danger">delete</span></td> -->
+                                    <td><span class="material-icons text-primary">edit</span></td>
+                                    <td><span class="material-icons text-danger">delete</span></td>
+                                -->
                             </tr>
                         </c:forEach>
                     </tbody>

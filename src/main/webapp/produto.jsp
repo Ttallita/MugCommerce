@@ -56,24 +56,32 @@
                     <div class="mb-3">
                         <h2><fmt:formatNumber value="${produto.valorVenda}" type="currency"/></h2>
                     </div>
+
                     <hr>
-                    <!-- TODO definir quantidade de produtos
-                        <div class="row">
-                            <div class="row g-2 m-2 align-items-center">
-                                <div class="col-auto">
-                                    <span class="form-text">(10 disponíveis)</span>
-                                </div>
+                    <div class="row">
+                        <div class="row g-2 m-2 align-items-center">
+                            <div class="col-auto">
+                                <span class="form-text">
+                                    ${quantidadeDisponivel} disponíveis
+                                </span>
                             </div>
                         </div>
-                    -->
+                    </div>
 
                     <form action="${sessionScope.usuarioLogado.tipoUsuario == 'CLIENTE' ? '/emug/clientes/carrinho' : 'login.jsp' }"
                           method="POST">
                         <div class="d-grid gap-1 col-10 mx-auto mt-3">
-                            <a type="button" href="cliente/finalizarCompra.jsp" class="btn btn-primary rounded-pill">Comprar</a>
-                            <input type="hidden" name="id" value="${produto.id}">
-                            <input type="hidden" name="operacao" value="salvar">
-                            <input type="submit" class="btn btn-outline-primary rounded-pill" value="Adicionar ao carrinho">
+                            <c:choose>
+                                <c:when test="${quantidadeDisponivel > 0}">
+                                    <a type="button" href="cliente/finalizarCompra.jsp" class="btn btn-primary rounded-pill">Comprar</a>
+                                    <input type="hidden" name="id" value="${produto.id}">
+                                    <input type="hidden" name="operacao" value="salvar">
+                                    <input type="submit" class="btn btn-outline-primary rounded-pill" value="Adicionar ao carrinho">
+                                </c:when>
+                                <c:otherwise>
+                                    Sem produtos no estoque
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </form>
 

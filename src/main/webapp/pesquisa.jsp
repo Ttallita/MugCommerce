@@ -215,6 +215,7 @@
             && (filters.materiais.length === 0 || filters.materiais.includes(produto.material))
             && produto.valorVenda >= filters.minPrice
             && produto.valorVenda <= filters.maxPrice
+            && produto.ativo
     }
 
     function montaProduto(produto) {
@@ -270,7 +271,7 @@
             fabricantes,
             materiais,
             minPrice: minPrice === '' ? 0 : parseFloat(minPrice.replaceAll(".", "").replace(",", ".")),
-            maxPrice: maxPrice === '' ? 1000000000 : parseFloat(maxPrice.replaceAll(".", "").replace(",", "."))
+            maxPrice: maxPrice === '' ? Number.MAX_SAFE_INTEGER : parseFloat(maxPrice.replaceAll(".", "").replace(",", "."))
         }
     }
 

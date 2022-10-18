@@ -33,6 +33,9 @@
             <div class="container">
                 <div class="row row-cols-xl-2">
 
+                    <c:if test="${cupons.size() == 0}">
+                        <h4>Sem cupons disponíveis</h4>
+                    </c:if>
                     <c:forEach var="cupom" items="${cupons}">
                         <div class="col">
                             <div class="border p-2 rounded m-1">
