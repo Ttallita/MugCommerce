@@ -34,6 +34,7 @@
                             Alterar
                         </a>
                         <ul class="list-unstyled">
+                            <li><small class="text-muted">${enderecoEntrega.tipoEndereco.nomeExibicao}</small></li>
                             <li>${enderecoEntrega.apelido} (${enderecoEntrega.tipoResidencia})</li>
                             <li>${enderecoEntrega.tipoLogradouro} ${enderecoEntrega.logradouro}, ${enderecoEntrega.numero}</li>
                             <li>${enderecoEntrega.cidade}, ${enderecoEntrega.estado} - Brasil</li>
@@ -49,6 +50,7 @@
                         </a>
                         <c:if test="${enderecoCobranca.id != null}">
                             <ul class="list-unstyled">
+                                <li><small class="text-muted">${enderecoCobranca.tipoEndereco.nomeExibicao}</small></li>
                                 <li>${enderecoCobranca.apelido} (${enderecoCobranca.tipoResidencia})</li>
                                 <li>${enderecoCobranca.tipoLogradouro} ${enderecoCobranca.logradouro}, ${enderecoCobranca.numero}</li>
                                 <li>${enderecoCobranca.cidade}, ${enderecoCobranca.estado} - Brasil</li>
@@ -176,7 +178,7 @@
     const idsCartoesSelecionados = '${idsCartoesSelecionados}';
 
     const parametroOrigemChamada = "&origemChamada=finalizarCompra";
-    const parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
+    const parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idEnderecoCobrancaEscolhido=\${idEnderecoCobrancaEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
 
     function atualizarCartoesUtilizados(){
         var ids = [];
@@ -242,7 +244,7 @@
             })
             .forEach(endereco => {
                 let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;
-                let hrefEditar = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`
+                let hrefEditar = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}\${parametroOrigemChamada}\${parametrosVendaHref}&isEnderecoEntrega=\${isEnderecoEntrega}"/>`
 
                 let checkEndereco =
                     $(`<div class="form-check">
@@ -265,7 +267,7 @@
 
         let urlAdicionar = "<c:url value='/clientes/enderecos?operacao=adicionar'/>";
         let botaoAdicionar =
-                $(`<a href="\${urlAdicionar}\${parametroOrigemChamada}\${parametrosVendaHref}">
+                $(`<a href="\${urlAdicionar}\${parametroOrigemChamada}\${parametrosVendaHref}&isEnderecoEntrega=\${isEnderecoEntrega}">
                     <button type="button" class="btn btn-primary" id="botaoAdicionarModal">Adicionar</button>
                 </a>`);
 

@@ -80,6 +80,11 @@ public class EnderecoViewHelper implements IViewHelper {
                         Map<String, String> novosValoresParametros = new HashMap<>();
                         novosValoresParametros.put("idEnderecoEscolhido", result.getEntidades().get(0).getId().toString());
 
+                        if (Boolean.parseBoolean(request.getParameter("isEnderecoEntrega")))
+                            novosValoresParametros.put("idEnderecoEscolhido", result.getEntidades().get(0).getId().toString());
+                        else
+                            novosValoresParametros.put("idEnderecoCobrancaEscolhido", result.getEntidades().get(0).getId().toString());
+
                         UtilsWeb.redirecionarParaOrigemChamada(origemChamada, request, response, novosValoresParametros);
                     }
                     else

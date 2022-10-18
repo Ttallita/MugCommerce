@@ -206,9 +206,13 @@ public class VendaDAO implements IDAO {
 
                 clienteVenda = (Cliente) clienteDAO.listar(clienteVenda, "listarUnico").get(0);
 
-                Endereco endereco = new Endereco();
-                endereco.setId(rs.getLong("vnd_end_entrega_id"));
-                endereco.setCliente(clienteVenda);
+                Endereco enderecoEntrega = new Endereco();
+                enderecoEntrega.setId(rs.getLong("vnd_end_entrega_id"));
+                enderecoEntrega.setCliente(clienteVenda);
+
+                Endereco enderecoCobranca = new Endereco();
+                enderecoCobranca.setId(rs.getLong("vnd_end_cobranca_id"));
+                enderecoCobranca.setCliente(clienteVenda);
 
                 long idVenda = rs.getLong("vnd_id");
 
@@ -219,7 +223,8 @@ public class VendaDAO implements IDAO {
                 vendaConsulta.setPagamentoAprovado(rs.getBoolean("vnd_pagamento_aprovado"));
                 vendaConsulta.setVendaStatus(StatusVendaType.valueOf(rs.getString("vnd_status")));
                 vendaConsulta.setDataCompra(rs.getTimestamp("vnd_dt_compra").toLocalDateTime().toLocalDate());
-                vendaConsulta.setEnderecoEntrega((Endereco) enderecoDAO.listar(endereco, "listarUnico").get(0));
+                vendaConsulta.setEnderecoEntrega((Endereco) enderecoDAO.listar(enderecoEntrega, "listarUnico").get(0));
+                vendaConsulta.setEnderecoCobranca((Endereco) enderecoDAO.listar(enderecoCobranca, "listarUnico").get(0));
 
                 Timestamp dtEnvio = rs.getTimestamp("vnd_dt_envio");
                 Timestamp dtEntrega = rs.getTimestamp("vnd_dt_entrega");
