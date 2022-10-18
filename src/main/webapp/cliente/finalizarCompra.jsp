@@ -181,7 +181,7 @@
     }
 
     function construirURLFinalizarCompra(idEnderecoEscolhido, idsCartoesSelecionados){
-        let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listar"/>`;
+        let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listarUnico"/>`;
         let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
         
         return urlBase + parametrosVendaHref;

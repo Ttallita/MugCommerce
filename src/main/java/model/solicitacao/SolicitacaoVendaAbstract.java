@@ -7,14 +7,14 @@ import model.venda.Venda;
  */
 public class SolicitacaoVendaAbstract {
 
-    private SolicitacaoStatusType statusSolicitacao;
+    private StatusSolicitacaoType statusSolicitacao;
     private Venda venda;
 
-    public SolicitacaoStatusType getStatusSolicitacao() {
+    public StatusSolicitacaoType getStatusSolicitacao() {
         return statusSolicitacao;
     }
 
-    public void setStatusSolicitacao(SolicitacaoStatusType statusSolicitacao) {
+    public void setStatusSolicitacao(StatusSolicitacaoType statusSolicitacao) {
         this.statusSolicitacao = statusSolicitacao;
     }
 

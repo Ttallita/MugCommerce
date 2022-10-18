@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang=pt-br>
@@ -29,109 +30,110 @@
             <div class="row">
 
                 <div class="col-12">
-                    <div class="p-3 border">
-                        <h6>Dados cliente</h6>
+                    <div class="p-3">
+                        <h5>Dados cliente</h5>
                         <ul class="list-group">
-                            <li class="list-group-item">Nome: Nome sobrenome cliente</li>
-                            <li class="list-group-item">CPF: 000.000.000-00</li>
-                            <li class="list-group-item">Telefone: (00) 00000-0000</li>
+                            <li class="list-group-item">Nome: ${venda.cliente.nome} ${venda.cliente.sobrenome}</li>
+                            <li class="list-group-item">CPF: ${venda.cliente.cpf}</li>
+                            <li class="list-group-item">Telefone: (${venda.cliente.telefone.ddd}) ${venda.cliente.telefone.numero}</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-12">
-                    <div class="p-3 border bg-light">
-                        <h6>Dados gerais</h6>
+                    <div class="p-3">
+                        <h5>Dados gerais</h5>
                         <ul class="list-group">
-                            <li class="list-group-item">Data compra: 00/00/0000 </li>
-                            <li class="list-group-item">Data entrega: 00/00/0000 </li>
-                            <li class="list-group-item">Valor total: 00,00 </li>
+                            <fmt:parseDate  value="${venda.dataEntrega}"  type="date" pattern="yyyy-MM-dd" var="dataEntregaParseada" />
+                            <fmt:formatDate value="${dataEntregaParseada}" type="date" pattern="dd/MM/yyyy" var="dataEntregaFormatada" />
+                            <li class="list-group-item">Data compra: ${dataEntregaFormatada} </li>
+
+                            <fmt:parseDate  value="${venda.dataCompra}"  type="date" pattern="yyyy-MM-dd" var="dataCompraParseada" />
+                            <fmt:formatDate value="${dataCompraParseada}" type="date" pattern="dd/MM/yyyy" var="dataCompraFormatada" />
+                            <li class="list-group-item">Data entrega: ${dataCompraFormatada} </li>
+
+                            <li class="list-group-item">Valor total: ${venda.precoTotal} </li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-12">
-                    <div class="p-3 border bg-light">
-                        <h6>Endereços</h6>
+                    <div class="p-3">
+                        <h5>Endereços</h5>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                Endereço entrega:
-                                Endereço Endereço Endereço Endereço Endereço Endereço
+                                <h6>Endereço entrega:</h6>
+                                <ul class="list-unstyled">
+                                    <li>${venda.enderecoEntrega.apelido} (${venda.enderecoEntrega.tipoResidencia}), ${venda.enderecoEntrega.tipoLogradouro} ${venda.enderecoEntrega.logradouro}, ${venda.enderecoEntrega.numero}</li>
+                                    <li>${venda.enderecoEntrega.cidade}, ${venda.enderecoEntrega.estado} - Brasil</li>
+                                    <li>CEP: ${venda.enderecoEntrega.cep}</li>
+                                    <li>${venda.enderecoEntrega.observacoes}</li>
+                                </ul>
                             </li>
-                            <li class="list-group-item">
+                            <!-- <li class="list-group-item">
                                 Endereço cobrança:
-                                Endereço Endereço Endereço Endereço Endereço Endereço
-                            </li>
+                                <ul class="list-unstyled">
+                                    <li>${enderecoCobranca.apelido} (${enderecoCobranca.tipoResidencia})</li>
+                                    <li>${enderecoCobranca.tipoLogradouro} ${enderecoCobranca.logradouro}, ${enderecoCobranca.numero}</li>
+                                    <li>${enderecoCobranca.cidade}, ${enderecoCobranca.estado} - Brasil</li>
+                                    <li>CEP: ${enderecoCobranca.cep}</li>
+                                    <li>${enderecoCobranca.observacoes}</li>
+                                </ul>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-12">
-                    <div class="p-3 border bg-light">
-                        <h6>Produtos</h6>
+                    <div class="p-3">
+                        <h5>Produtos</h5>
 
                         <ul class="list-group">
-                            <li class="list-group-item">
-                                <!-- Produto -->
-                                <div class="row p-3">
-                                    <div class="col-2">
-                                        <div class="card produto mb-3">
-                                            <img alt="produto" src="\emug\assets\img\canecas\caneca_porco.jpeg" class="p-2">
+                            <!-- Produtos -->
+                            <c:forEach var="item" items="${venda.carrinho.itensCarrinho}">
+                                <li class="list-group-item">
+                                    <div class="row p-3">
+                                        <div class="col-2">
+                                            <div class="card produto mb-3">
+                                                <img alt="produto" src="${item.produto.imagem}" class="p-2">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col">
+                                            <h5>${item.produto.nome}</h5>
+                                            <h6>Quantidade: ${item.quant}</h6>
+                                            <h6>Valor unitário: R$ ${item.produto.valorVenda}</h6>
                                         </div>
                                     </div>
-                            
-                                    <div class="col">
-                                        <h6 class="text-muted">Categoria</h6>
-                                        <h5>Nome produto</h5>
-                                        <h6>Quantidade: 00</h6>
-                                        <h6>Valor: R$ 00,00</h6>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li class="list-group-item">
-                                <!-- Produto -->
-                                <div class="row p-3">
-                                    <div class="col-2">
-                                        <div class="card produto mb-3">
-                                            <img alt="produto" src="\emug\assets\img\canecas\caneca_porco.jpeg" class="p-2">
-                                        </div>
-                                    </div>
-                            
-                                    <div class="col">
-                                        <h6 class="text-muted">Categoria</h6>
-                                        <h5>Nome produto</h5>
-                                        <h6>Quantidade: 00</h6>
-                                        <h6>Valor: R$ 00,00</h6>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            </c:forEach>
                         </ul>
                 
                     </div>
                 </div>
 
                 <div class="col-12">
-                    <div class="p-3 border bg-light">
-                        <h6>Status</h6>
+                    <div class="p-3">
+                        <h5>Status</h5>
                        
                         <ul class="list-group">
                             <li class="list-group-item">
-                                Status atual:
-                                Em processamento
+                                Status atual: ${venda.vendaStatus.nomeExibicao}
                             </li>
 
                             <li class="list-group-item">
                                 Novo status:
-                                <form>
-                                    <select class="form-select" aria-label="Default select example">
+                                <form action="/emug/adm/vendas" method="POST">
+                                    <select class="form-select" id="status" name="status">
                                         <option value="">Selecione</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <c:forEach var="status" items="${listaStatus}">
+                                            <option value="${status}">${status.nomeExibicao}</option>
+                                        </c:forEach>
                                     </select>
 
-                                    <button type="button" class="w-100 btn btn-primary btn-sm">
+                                    <input type="hidden" name="id" value="${venda.id}">
+                                    <input type="hidden" name="operacao" value="atualizar">
+                                    <button type="submit" class="w-100 btn btn-primary btn-sm">
                                         Atualizar status
                                     </button>
                                 </form>

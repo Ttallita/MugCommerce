@@ -17,7 +17,7 @@ public class UtilsWeb {
     public static final String URL_BASE = "/emug";
 
     public static Map<String, String> mapaRedirect = Map.of(
-            "finalizarCompra", "/clientes/carrinho/finalizarCompra?operacao=listar"
+            "finalizarCompra", "/clientes/carrinho/finalizarCompra?operacao=listarUnico"
     );
 
     public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {

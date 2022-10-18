@@ -1,6 +1,6 @@
 package model.solicitacao;
 
-public enum SolicitacaoStatusType {
+public enum StatusSolicitacaoType {
 
     SOLICITADA ("Solicitado(a)"),
     RECUSADA ("Recusado(a)"),
@@ -12,7 +12,7 @@ public enum SolicitacaoStatusType {
 
     private String nomeExibicao;
 
-    SolicitacaoStatusType(String nomeExibicao) {
+    StatusSolicitacaoType(String nomeExibicao) {
         this.nomeExibicao = nomeExibicao;
     }
 

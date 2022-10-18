@@ -125,7 +125,7 @@ public class ClienteDAO implements IDAO {
 
             String sql;
             PreparedStatement pstm = null;
-            if(operacao.equals("listar")) {
+            if(operacao.equals("listarUnico")) {
                 sql = "SELECT * FROM clientes where cli_usr_id = ?";
 
                 pstm = connection.prepareStatement(sql);
@@ -139,6 +139,9 @@ public class ClienteDAO implements IDAO {
 
             List<EntidadeDominio> clientes = new ArrayList<>();
             while (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getLong(1));
+
                 Cliente clienteConsulta = new Cliente();
                 clienteConsulta.setId(rs.getLong(1));
                 clienteConsulta.setNome(rs.getString(2));
@@ -146,6 +149,7 @@ public class ClienteDAO implements IDAO {
                 clienteConsulta.setCpf(rs.getString(4));
                 clienteConsulta.setDataNascimento(rs.getTimestamp(5).toLocalDateTime().toLocalDate());
                 clienteConsulta.setGenero(rs.getString(6));
+                clienteConsulta.setUsuario(usuario);
 
                 Telefone telefone = new Telefone();
                 telefone.setNumero(rs.getString(7));

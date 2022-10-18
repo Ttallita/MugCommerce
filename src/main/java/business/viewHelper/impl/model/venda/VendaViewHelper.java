@@ -10,6 +10,7 @@ import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
 import model.venda.Venda;
+import model.venda.StatusVendaType;
 import utils.Utils;
 import utils.UtilsWeb;
 
@@ -31,10 +32,11 @@ public class VendaViewHelper implements IViewHelper {
         Cliente cliente = new Cliente(usuarioLogado);
 
         Venda venda = new Venda();
-        venda.setCliente(cliente);
 
         switch (operacao) {
             case "salvar" -> {
+                venda.setCliente(cliente);
+
                 Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
 
                 String idEndereco = request.getParameter("idEnderecoEscolhido");
@@ -65,33 +67,51 @@ public class VendaViewHelper implements IViewHelper {
                 return venda;
             }
 
-            case "listarUnico" -> {
-                Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
-                String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
+            case "listarUnico", "listarJson" -> {
+                venda.setCliente(cliente);
 
-                Endereco enderecoEntrega = new Endereco();
-                enderecoEntrega.setId(idEnderecoEscolhido != null && !idEnderecoEscolhido.isEmpty() ? Long.parseLong(idEnderecoEscolhido) : null);
+                if (request.getRequestURI().contains("finalizarCompra")) {
+                    Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
+                    String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
 
-                venda.setEnderecoEntrega(enderecoEntrega);
-                venda.setCarrinho(carrinho);
+                    Endereco enderecoEntrega = new Endereco();
+                    enderecoEntrega.setId(idEnderecoEscolhido != null && !idEnderecoEscolhido.isEmpty() ? Long.parseLong(idEnderecoEscolhido) : null);
+
+                    venda.setEnderecoEntrega(enderecoEntrega);
+                    venda.setCarrinho(carrinho);
+                } else {
+                    String idVenda = request.getParameter("id");
+                    venda.setId(idVenda == null || idVenda.isEmpty() ? null : Long.parseLong(idVenda));
+                }
 
                 return venda;
             }
 
-            case "listarJson" -> {
-                String idVenda = request.getParameter("id");
-                venda.setId(idVenda == null || idVenda.isEmpty() ? null : Long.parseLong(idVenda));
-
+            case "listar" -> {
+                venda.setCliente(cliente);
                 return venda;
             }
 
             case "listarTodos" -> {
+                return new Venda();
+            }
+
+            case "atualizar" -> {
+                String status = request.getParameter("status");
+                StatusVendaType tipoStatus = status != null && !status.isEmpty() ? StatusVendaType.valueOf(status) : null;
+
+                String id = request.getParameter("id");
+                Long idVenda = id != null && !id.isEmpty() ? Long.parseLong(id) : null;
+
+                venda.setVendaStatus(tipoStatus);
+                venda.setId(idVenda);
+
                 return venda;
             }
 
         }
 
-        return venda;
+        return null;
     }
 
     @Override
@@ -107,37 +127,57 @@ public class VendaViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
             }
 
+            case "atualizar" -> {
+                response.sendRedirect("/emug/adm/vendas?operacao=listarTodos");
+            }
+
             case "listarUnico" -> {
-                Venda venda = (Venda) result.getEntidades().get(0);
 
-                request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
-                request.setAttribute("dataPrevisaoEntrega", Utils.formataLocalDateBR(venda.calculaDataEntrega()));
-                request.setAttribute("carrinho", venda.getCarrinho());
-                request.setAttribute("valorFrete", venda.calculaFrete());
+                Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
-                String idsCartoesSelecionados = request.getParameter("idsCartoesSelecionados");
+                if (usuarioLogado.isAdministrador()) {
+                    request.setAttribute("venda", result.getEntidades().get(0));
+                    request.setAttribute("listaStatus", StatusVendaType.values());
+                    request.getRequestDispatcher("/gerenciar/listarVenda.jsp").forward(request, response);
 
-                List<CartaoDeCredito> cartoes = venda.getCartoes();
-                if(idsCartoesSelecionados != null && !idsCartoesSelecionados.isEmpty()){
-                    List<Long> idsCartoes = new ArrayList<>();
-                    UtilsWeb.converteParametrosParaLista(idsCartoesSelecionados).forEach(id -> idsCartoes.add(Long.parseLong(id)));
-
-                    cartoes = cartoes.stream().filter(c -> idsCartoes.contains(c.getId())).collect(Collectors.toList());
                 } else {
-                    cartoes = cartoes.stream().filter(CartaoDeCredito::isPreferencial).collect(Collectors.toList());
-                    idsCartoesSelecionados = cartoes.get(0).getId().toString();
+
+                    Venda venda = (Venda) result.getEntidades().get(0);
+
+                    request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
+                    request.setAttribute("dataPrevisaoEntrega", Utils.formataLocalDateBR(venda.calculaDataEntrega()));
+                    request.setAttribute("carrinho", venda.getCarrinho());
+                    request.setAttribute("valorFrete", venda.calculaFrete());
+
+                    String idsCartoesSelecionados = request.getParameter("idsCartoesSelecionados");
+
+                    List<CartaoDeCredito> cartoes = venda.getCartoes();
+                    if (idsCartoesSelecionados != null && !idsCartoesSelecionados.isEmpty()) {
+                        List<Long> idsCartoes = new ArrayList<>();
+                        UtilsWeb.converteParametrosParaLista(idsCartoesSelecionados).forEach(id -> idsCartoes.add(Long.parseLong(id)));
+
+                        cartoes = cartoes.stream().filter(c -> idsCartoes.contains(c.getId())).collect(Collectors.toList());
+                    } else {
+                        cartoes = cartoes.stream().filter(CartaoDeCredito::isPreferencial).collect(Collectors.toList());
+                        idsCartoesSelecionados = cartoes.get(0).getId().toString();
+                    }
+
+                    request.setAttribute("idsCartoesSelecionados", idsCartoesSelecionados);
+                    request.setAttribute("cartoesSelecionados", cartoes);
+                    request.setAttribute("cupons", venda.getCupons());
+
+                    request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
                 }
+            }
 
-                request.setAttribute("idsCartoesSelecionados", idsCartoesSelecionados);
-                request.setAttribute("cartoesSelecionados", cartoes);
-                request.setAttribute("cupons", venda.getCupons());
-
-                request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
+            case "listar" -> {
+                request.setAttribute("compras", result.getEntidades());
+                request.getRequestDispatcher("/cliente/compras.jsp").forward(request, response);
             }
 
             case "listarTodos" -> {
-                request.setAttribute("compras", result.getEntidades());
-                request.getRequestDispatcher("/cliente/compras.jsp").forward(request, response);
+                request.setAttribute("vendas", result.getEntidades());
+                request.getRequestDispatcher("/gerenciar/vendas.jsp").forward(request, response);
             }
 
             case "listarJson" ->

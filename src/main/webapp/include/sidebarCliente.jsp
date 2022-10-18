@@ -11,7 +11,7 @@
     <nav class="l-nav">
         <div class="nav_list">
             <div class="list-group btn-group-vertical">
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'perfil') ? 'active-navbar' : ''}" id="paginaPerfil" type="button" href="/emug/clientes?operacao=listar">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'perfil') ? 'active-navbar' : ''}" id="paginaPerfil" type="button" href="/emug/clientes?operacao=listarUnico">
                     <span class="material-icons inline-icon">account_circle</span> Perfil
                 </a>
 
@@ -19,7 +19,7 @@
                     <span class="material-icons inline-icon">lock</span> Atualizar senha
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'compras') ? 'active-navbar' : ''}" id="paginaCompras" type="button" href="/emug/clientes/compras?operacao=listarTodos">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'compras') ? 'active-navbar' : ''}" id="paginaCompras" type="button" href="/emug/clientes/compras?operacao=listar">
                     <span class="material-icons inline-icon">shopping_bag</span> Compras
                 </a>
 

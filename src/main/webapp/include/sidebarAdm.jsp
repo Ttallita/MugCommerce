@@ -25,7 +25,7 @@
                     <span class="material-icons inline-icon">free_breakfast</span> Produtos
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'vendas') ? 'active-navbar' : ''}" id="paginaVendas" type="button" href="/emug/gerenciar/vendas.jsp">
+                <a class="nav_link ${ fn:contains(paginaCorrente, 'vendas') ? 'active-navbar' : ''}" id="paginaVendas" type="button" href="/emug/adm/vendas?operacao=listarTodos">
                     <span class="material-icons inline-icon">show_chart</span> Vendas
                 </a>
 
