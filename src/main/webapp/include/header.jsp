@@ -34,7 +34,7 @@
                         <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'CLIENTE'}">
                             
                             <div class="col-md-1">
-                                <a href="<c:url value='/clientes?operacao=listar' />" class="btn btn-light pr-2" type="button">
+                                <a href="<c:url value='/clientes?operacao=listarUnico' />" class="btn btn-light pr-2" type="button">
                                     <span class="material-icons">account_circle</span>
                                 </a>
                             </div>

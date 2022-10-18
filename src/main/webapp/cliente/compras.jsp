@@ -98,7 +98,7 @@
 
 <script>
 
-    async function listaItensModal(url) {
+    async function listaItensModal(url, idVenda) {
         let response = await fetch(url)
         let json = await response.json();
 
@@ -151,6 +151,12 @@
         let botaoCancelar = $('<button type="button" class="btn btn-primary">Cancelar compra</button>');
         let botaoFecharModal = $('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>');
 
+        let urlCancelarVenda = "<c:url value='/clientes/solicitacoes?operacao=salvar&tipoOperacao=cancelar&idVenda=\${idVenda}'/>";
+        let botaoCancelar =
+                $(`<a href="\${urlCancelarVenda}">
+                    <button type="button" class="btn btn-primary" id="botaoCancelarCompra">Cancelar compra</button>
+                </a>`);
+
         adicionaBotaoFooter(botaoCancelar);
         adicionaBotaoFooter(botaoFecharModal);
         
@@ -162,7 +168,7 @@
 
         let urlItensModal = montaUrl(baseUrl, path, params);
 
-        listaItensModal(urlItensModal);
+        listaItensModal(urlItensModal, idVenda);
     }
 
 

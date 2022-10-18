@@ -45,7 +45,7 @@ public class ClienteViewHelper implements IViewHelper {
                 cliente.setEnderecos(List.of(endereco));
                 return cliente;
             }
-            case "listar" -> {
+            case "listarUnico" -> {
                 Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
                 Cliente cliente = new Cliente();
@@ -124,7 +124,7 @@ public class ClienteViewHelper implements IViewHelper {
                 request.setAttribute("erro", msgTela != null);
                 request.getRequestDispatcher("cadastroCliente.jsp").forward(request, response);
             }
-            case "listar" -> {
+            case "listarUnico" -> {
                 Cliente cliente = (Cliente) result.getEntidades().get(0);
                 request.setAttribute("cliente", cliente);
 

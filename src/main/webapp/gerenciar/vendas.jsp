@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -10,9 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar - Vendas</title>
 
-    <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
-    <link rel="stylesheet" href="../assets/css/style.css"/>
+    <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css' />"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/style.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/bootstrap-table.min.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/bootstrap-table-filter-control.min.css' />"/>
 </head>
 
 <body>
@@ -28,74 +32,47 @@
 
             <hr>
 
-            <!-- Filtro de vendas-->
-            <div class="container">
-                <form>
-                    <div class="row g-3">
-
-                        <div class="col-sm-4">
-                            <small>Status</small>
-                            <select class="form-select" aria-label="Default select example">
-                                <option value="">Selecione</option>
-                                <option value="">Aprovado</option>
-                                <option value="">Entregue</option>
-                                <option value="">Em processamento</option>
-                                <option value="">Troca solicitada</option>
-                            </select>
-                        </div>
-
-                        <div class="col-sm-4">
-                            <small>Data de compra</small>
-                            <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
-                        </div>
-
-                        <div class="col-sm-4">
-                            <small>Data de entrega</small>
-                            <input type="date" class="form-control" id="dtNascimento" name="dtNascimento" value="">
-                        </div>
-                        
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary btn-sm">Pesquisar</button>
-                        </div>
-
-                    </div>
-
-                </form>
-            </div>
-
-            <hr>
-
             <div class="table-responsive p-3 rounded mb-4">
-                
-                <table class="table table-hover" width="100%">
+                <table id="tableVenda" class="table table-hover"
+                        data-toggle="table"
+                        data-pagination="true"
+                        data-search="true"
+                        data-page-size="25"
+                        data-locale="pt-BR"
+                        data-filter-control="true"
+                        data-show-search-clear-button="true">
                     <thead>
                         <tr>
-                            <th>Cliente</th>
-                            <th>Quant. Produtos</th>
-                            <th>Valor</th>
-                            <th>Data compra</th>
-                            <th>Data entrega</th>
-                            <th>Status</th>
+                            <th data-field="nomeCliente" data-filter-control="input">Cliente</th>
+                            <th data-field="valor" data-filter-control="input">Valor</th>
+                            <th data-field="dataCompra" data-filter-control="datepicker">Data compra</th>
+                            <th data-field="dataEntrega" data-filter-control="datepicker">Data entrega</th>
+                            <th data-field="status" data-filter-control="select">Status</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        <tr>
-                            <td>nome sobrenome</td>
-                            <td>00</td>
-                            <td>R$ 00,00</td>
-                            <td>00/00/0000</td>
-                            <td>00/00/0000</td>
-                            <td>
-                                Aprovado
-                            </td>
-                            <td>
-                                <a href="/emug/gerenciar/listarVenda.jsp" name="botaoListarVenda" type="button" class="btn btn-primary btn-sm">
-                                    <span class="material-icons">edit</span>
-                                </a>
-                            </td>
-                        </tr>
+                        <c:forEach items="${vendas}" var="venda">
+                            <tr>
+                                <td>${venda.cliente.nome} ${venda.cliente.sobrenome}</td>
+                                <td>R$ ${venda.precoTotal}</td>
+
+                                <fmt:parseDate  value="${venda.dataCompra}"  type="date" pattern="yyyy-MM-dd" var="dataCompraParseada" />
+                                <fmt:formatDate value="${dataCompraParseada}" type="date" pattern="dd/MM/yyyy" var="dataCompraFormatada" />
+                                <td>${dataCompraFormatada}</td>
+
+                                <fmt:parseDate  value="${venda.dataEntrega}"  type="date" pattern="yyyy-MM-dd" var="dataEntregaParseada" />
+                                <fmt:formatDate value="${dataEntregaParseada}" type="date" pattern="dd/MM/yyyy" var="dataEntregaFormatada" />
+                                <td>${dataEntregaFormatada}</td>
+                                <td>${venda.vendaStatus.nomeExibicao}</td>
+                                <td>
+                                    <a href="/emug/adm/vendas?operacao=listarUnico&id=${venda.id}" >
+                                        <button name="botaoListarVenda" type="button" class="btn btn-primary btn-sm"><span class="material-icons">edit</span></button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
         
                     </tbody>
                 </table>
@@ -109,8 +86,19 @@
 
     <jsp:include page="../include/footer.jsp"/>
 
-    <script src="/emug/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
-
 </body>
+
+<script src="<c:url value='/webjars/jquery/3.6.1/jquery.min.js' />"></script>
+<script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js' />"></script>
+<script src='<c:url value="/assets/js/bootstrap-table.min.js"/>'></script>
+<script src='<c:url value="/assets/js/bootstrap-table-filter-control.min.js"/>'></script>
+<script src='<c:url value="/assets/js/bootstrap-table-pt-BR.min.js"/>'></script>
+
+<script>
+
+    $(function() {
+        $('#tableVenda').bootstrapTable()
+    })
+</script>
 
 </html>

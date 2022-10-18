@@ -134,7 +134,7 @@ CREATE TABLE vendas (
     vnd_dt_envio            timestamp,
     vnd_dt_entrega          timestamp,
 	vnd_pagamento_aprovado  boolean NOT NULL,
-	vnd_status              varchar(16) NOT NULL
+	vnd_status              varchar(50) NOT NULL
 );
 
 DROP TABLE IF EXISTS "produtos_em_venda" CASCADE;

@@ -29,7 +29,7 @@ public class Venda extends EntidadeDominio {
     private LocalDate dataEntrega;
 
     private boolean pagamentoAprovado;
-    private VendaType vendaStatus;
+    private StatusVendaType vendaStatus;
 
     public double calculaFrete(){
         int quantTotalItens = carrinho != null ? carrinho.getQuantTotalItens() : 1;
@@ -152,11 +152,11 @@ public class Venda extends EntidadeDominio {
         return pagamentoAprovado;
     }
 
-    public VendaType getVendaStatus() {
+    public StatusVendaType getVendaStatus() {
         return vendaStatus;
     }
 
-    public void setVendaStatus(VendaType vendaStatus) {
+    public void setVendaStatus(StatusVendaType vendaStatus) {
         this.vendaStatus = vendaStatus;
     }
 

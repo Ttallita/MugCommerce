@@ -47,6 +47,10 @@ public class Usuario extends EntidadeDominio{
         this.tipoUsuario = tipoUsuario;
     }
 
+    public boolean isAdministrador(){
+        return getTipoUsuario().equals(UsuarioType.ADMINISTRADOR);
+    }
+
     public String getSenhaAntiga() {
         return senhaAntiga;
     }

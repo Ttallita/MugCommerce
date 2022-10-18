@@ -2,9 +2,11 @@ package dao.venda;
 
 import dao.IDAO;
 import dao.cliente.CartaoDeCreditoDAO;
+import dao.cliente.ClienteDAO;
 import dao.cliente.CupomDAO;
 import dao.cliente.EnderecoDAO;
 import model.EntidadeDominio;
+import model.Usuario;
 import model.carrinho.Carrinho;
 import model.carrinho.ItemCarrinho;
 import model.cliente.CartaoDeCredito;
@@ -12,8 +14,8 @@ import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
 import model.produto.Produto;
+import model.venda.StatusVendaType;
 import model.venda.Venda;
-import model.venda.VendaType;
 import utils.Conexao;
 
 import java.sql.*;
@@ -24,6 +26,7 @@ import java.util.List;
 public class VendaDAO implements IDAO {
 
     private final CartaoDeCreditoDAO cartaoDeCreditoDAO = new CartaoDeCreditoDAO();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
     private final EnderecoDAO enderecoDAO = new EnderecoDAO();
     private final CupomDAO cupomDAO = new CupomDAO();
 
@@ -115,6 +118,31 @@ public class VendaDAO implements IDAO {
 
     @Override
     public EntidadeDominio atualizar(EntidadeDominio entidade) {
+        Venda venda = (Venda) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+
+        try {
+            connection = conexao.getConexao();
+
+            String sql = "UPDATE vendas SET vnd_status = ? WHERE vnd_id = ?";
+
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setString(1, venda.getVendaStatus().name());
+            pstm.setLong(2, venda.getId());
+
+            pstm.execute();
+
+            return venda;
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
+        }
+
         return null;
     }
 
@@ -149,10 +177,15 @@ public class VendaDAO implements IDAO {
                     pstm.setLong(1, venda.getId());
                 }
 
-                case "listarTodos" -> {
+                case "listar" -> {
                     sql = "SELECT * FROM vendas v WHERE v.vnd_cli_usr_id = ?";
                     pstm = connection.prepareStatement(sql);
                     pstm.setLong(1, cliente.getUsuario().getId());
+                }
+
+                case "listarTodos" -> {
+                    sql = "SELECT * FROM vendas";
+                    pstm = connection.prepareStatement(sql);
                 }
 
             }
@@ -162,18 +195,27 @@ public class VendaDAO implements IDAO {
             List<EntidadeDominio> vendas = new ArrayList<>();
             while (rs.next()) {
                 Venda vendaConsulta = new Venda();
-                long idVenda = rs.getLong("vnd_id");
+
+                Usuario usuario = new Usuario();
+                usuario.setId(rs.getLong("vnd_cli_usr_id"));
+
+                Cliente clienteVenda = new Cliente();
+                clienteVenda.setUsuario(usuario);
+
+                clienteVenda = (Cliente) clienteDAO.listar(clienteVenda, "listarUnico").get(0);
 
                 Endereco endereco = new Endereco();
                 endereco.setId(rs.getLong("vnd_end_entrega_id"));
-                endereco.setCliente(cliente);
+                endereco.setCliente(clienteVenda);
+
+                long idVenda = rs.getLong("vnd_id");
 
                 vendaConsulta.setId(idVenda);
-                vendaConsulta.setCliente(cliente);
+                vendaConsulta.setCliente(clienteVenda);
                 vendaConsulta.setPrecoTotal(rs.getDouble("vnd_preco_total"));
                 vendaConsulta.setFrete(rs.getDouble("vnd_frete"));
                 vendaConsulta.setPagamentoAprovado(rs.getBoolean("vnd_pagamento_aprovado"));
-                vendaConsulta.setVendaStatus(VendaType.valueOf(rs.getString("vnd_status")));
+                vendaConsulta.setVendaStatus(StatusVendaType.valueOf(rs.getString("vnd_status")));
                 vendaConsulta.setDataCompra(rs.getTimestamp("vnd_dt_compra").toLocalDateTime().toLocalDate());
                 vendaConsulta.setEnderecoEntrega((Endereco) enderecoDAO.listar(endereco, "listarUnico").get(0));
 
