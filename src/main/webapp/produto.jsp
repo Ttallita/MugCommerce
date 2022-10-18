@@ -71,7 +71,7 @@
                     <form action="${sessionScope.usuarioLogado.tipoUsuario == 'CLIENTE' ? '/emug/clientes/carrinho' : 'login.jsp' }"
                           method="POST">
                         <div class="d-grid gap-1 col-10 mx-auto mt-3">
-                            <c:choose>
+                            <!-- <c:choose>
                                 <c:when test="${quantidadeDisponivel > 0}">
                                     <a type="button" href="cliente/finalizarCompra.jsp" class="btn btn-primary rounded-pill">Comprar</a>
                                     <input type="hidden" name="id" value="${produto.id}">
@@ -81,7 +81,12 @@
                                 <c:otherwise>
                                     Sem produtos no estoque
                                 </c:otherwise>
-                            </c:choose>
+                            </c:choose> -->
+
+                            <a type="button" href="cliente/finalizarCompra.jsp" class="btn btn-primary rounded-pill">Comprar</a>
+                            <input type="hidden" name="id" value="${produto.id}">
+                            <input type="hidden" name="operacao" value="salvar">
+                            <input type="submit" class="btn btn-outline-primary rounded-pill" value="Adicionar ao carrinho">
                         </div>
                     </form>
 

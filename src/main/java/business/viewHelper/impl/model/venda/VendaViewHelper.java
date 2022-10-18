@@ -8,6 +8,7 @@ import model.carrinho.Carrinho;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
+import model.cliente.endereco.EnderecoType;
 import model.cupom.Cupom;
 import model.venda.Venda;
 import utils.Utils;
@@ -38,9 +39,18 @@ public class VendaViewHelper implements IViewHelper {
                 Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
 
                 String idEndereco = request.getParameter("idEnderecoEscolhido");
+                String idEnderecoCobrancaEscolhido = request.getParameter("idEnderecoCobrancaEscolhido");
 
-                Endereco endereco = new Endereco();
-                endereco.setId(idEndereco != null && !idEndereco.isEmpty() ? Long.parseLong(idEndereco) : null);
+                if(idEnderecoCobrancaEscolhido == null || idEnderecoCobrancaEscolhido.isBlank()) {
+                    idEnderecoCobrancaEscolhido = idEndereco;
+                }
+
+
+                Endereco enderecoEntrega = new Endereco();
+                enderecoEntrega.setId(Long.valueOf(idEndereco));
+
+                Endereco enderecoCobranca = new Endereco();
+                enderecoCobranca.setId(Long.valueOf(idEnderecoCobrancaEscolhido));
 
                 List<String> idsCartoesSelecionados = UtilsWeb.converteParametrosParaLista(request.getParameter("idsCartoesSelecionados[]"));
                 List<String> idsCupons = UtilsWeb.converteParametrosParaLista(request.getParameter("idsCupons[]"));
@@ -60,7 +70,8 @@ public class VendaViewHelper implements IViewHelper {
                 }
 
                 venda.setCarrinho(carrinho);
-                venda.setEnderecoEntrega(endereco);
+                venda.setEnderecoEntrega(enderecoEntrega);
+                venda.setEnderecoCobranca(enderecoCobranca);
 
                 return venda;
             }
@@ -68,11 +79,17 @@ public class VendaViewHelper implements IViewHelper {
             case "listarUnico" -> {
                 Carrinho carrinho = (Carrinho) request.getSession().getAttribute("carrinho");
                 String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
+                String idEnderecoCobrancaEscolhido = request.getParameter("idEnderecoCobrancaEscolhido");
+
 
                 Endereco enderecoEntrega = new Endereco();
                 enderecoEntrega.setId(idEnderecoEscolhido != null && !idEnderecoEscolhido.isEmpty() ? Long.parseLong(idEnderecoEscolhido) : null);
 
+                Endereco enderecoCobranca = new Endereco();
+                enderecoCobranca.setId(idEnderecoCobrancaEscolhido != null && !idEnderecoCobrancaEscolhido.isEmpty() ? Long.parseLong(idEnderecoCobrancaEscolhido) : null);
+
                 venda.setEnderecoEntrega(enderecoEntrega);
+                venda.setEnderecoCobranca(enderecoCobranca);
                 venda.setCarrinho(carrinho);
 
                 return venda;
@@ -110,6 +127,10 @@ public class VendaViewHelper implements IViewHelper {
             case "listarUnico" -> {
                 Venda venda = (Venda) result.getEntidades().get(0);
 
+                boolean isEntregaECobranca = venda.getEnderecoEntrega().getTipoEndereco().equals(EnderecoType.COBRANCA_ENTREGA);
+
+                request.setAttribute("showEnderecoCobranca", isEntregaECobranca);
+                request.setAttribute("enderecoCobranca", venda.getEnderecoCobranca());
                 request.setAttribute("enderecoEntrega", venda.getEnderecoEntrega());
                 request.setAttribute("dataPrevisaoEntrega", Utils.formataLocalDateBR(venda.calculaDataEntrega()));
                 request.setAttribute("carrinho", venda.getCarrinho());

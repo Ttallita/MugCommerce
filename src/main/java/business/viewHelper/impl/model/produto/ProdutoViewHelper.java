@@ -187,10 +187,13 @@ public class ProdutoViewHelper implements IViewHelper {
                     Estoque estoque = new Estoque();
                     estoque.setProduto(produtos.get(0));
 
-                    Estoque estoqueConsulta = (Estoque) new EstoqueDAO().listar(estoque, "findByIdProduto")
-                            .get(0);
+                    List<EntidadeDominio> lista = new EstoqueDAO().listar(estoque, "findByIdProduto");
 
-                    request.setAttribute("quantidadeDisponivel", estoqueConsulta.getQuantidade());
+                    if(lista.size() > 0) {
+                        Estoque estoqueConsulta = (Estoque) lista.get(0);
+                        request.setAttribute("quantidadeDisponivel", estoqueConsulta.getQuantidade());
+                    }
+
                     request.getRequestDispatcher("/produto.jsp").forward(request, response);
                 }
             }

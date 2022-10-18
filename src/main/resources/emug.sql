@@ -127,6 +127,7 @@ CREATE TABLE vendas (
 	vnd_id                  serial NOT NULL,
     vnd_cli_usr_id          int NOT NULL,
     vnd_end_entrega_id      int NOT NULL,
+    vnd_end_cobranca_id     int NOT NULL,
 	vnd_preco_total         numeric(8,2) NOT NULL,
 	vnd_frete               numeric(8,2) NOT NULL,
 	vnd_dt_compra           timestamp NOT NULL,
@@ -281,6 +282,10 @@ ALTER TABLE vendas
 
 ALTER TABLE vendas
     ADD CONSTRAINT fk_vnd_end_entrega FOREIGN KEY (vnd_end_entrega_id)
+        REFERENCES enderecos (end_id);
+
+ALTER TABLE vendas
+    ADD CONSTRAINT fk_vnd_end_cobranca FOREIGN KEY (vnd_end_cobranca_id)
         REFERENCES enderecos (end_id);
 
 ALTER TABLE cartoes_em_venda

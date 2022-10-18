@@ -30,7 +30,7 @@
 
                     <div class="col-6 p-3">
                         <h6>Endereço de entrega</h6>
-                        <a type="button" id="alterarEndereco" onclick="montarModalCadastro('clientes/enderecos')" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal">
+                        <a type="button" id="alterarEndereco" onclick="montarModalCadastro('clientes/enderecos', true)" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal">
                             Alterar
                         </a>
                         <ul class="list-unstyled">
@@ -42,10 +42,26 @@
                         </ul>
                     </div>
 
+                    <div class="col-6 p-3 ${showEnderecoCobranca ? 'd-none' : ''}" id="divEnderecoCobranca">
+                        <h6>Endereço de Cobrança</h6>
+                        <a type="button" id="alterarEnderecoCobranca" onclick="montarModalCadastro('clientes/enderecos', false)" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal">
+                            Alterar
+                        </a>
+                        <c:if test="${enderecoCobranca.id != null}">
+                            <ul class="list-unstyled">
+                                <li>${enderecoCobranca.apelido} (${enderecoCobranca.tipoResidencia})</li>
+                                <li>${enderecoCobranca.tipoLogradouro} ${enderecoCobranca.logradouro}, ${enderecoCobranca.numero}</li>
+                                <li>${enderecoCobranca.cidade}, ${enderecoCobranca.estado} - Brasil</li>
+                                <li>CEP: ${enderecoCobranca.cep}</li>
+                                <li>${enderecoCobranca.observacoes}</li>
+                            </ul>
+                        </c:if>
+                    </div>
+
                     <div class="col-6">
                         <div class="col p-3">
                             <h6>Forma de pagamento</h6>
-                            <a type="button" id="alterarPagamento" onclick="montarModalCadastro('clientes/cartoes')" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal">
+                            <a type="button" id="alterarPagamento" onclick="montarModalCadastro('clientes/cartoes', false)" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal">
                                 Alterar
                             </a>
                             <ul class="list-unstyled">
@@ -156,6 +172,7 @@
 <script>
 
     const idEnderecoEscolhido = '${enderecoEntrega.id}';
+    const idEnderecoCobrancaEscolhido = '${enderecoCobranca.id}'
     const idsCartoesSelecionados = '${idsCartoesSelecionados}';
 
     const parametroOrigemChamada = "&origemChamada=finalizarCompra";
@@ -168,61 +185,83 @@
                             .forEach(elem => ids.push(elem.id.match(/\d+/g)));
 
         window.location.href = construirURLFinalizarCompra(idEnderecoEscolhido, ids)
-
     }
 
-    function atualizarEnderecoEntrega(){
+    async function atualizarEnderecoEntrega(event){
         let idAlterar = Array.from(document.getElementById("formModal").getElementsByTagName("input")).find(elem => elem.checked).id;
         
-        var id = idAlterar.match(/\d+/g);
-        var tipoInfo =  idAlterar.match(/[a-zA-Z]+/g);
+        let id = idAlterar.match(/\d+/g);
 
-        window.location.href = construirURLFinalizarCompra(id, idsCartoesSelecionados);
+        let params = { operacao: 'listarJson'}
+        let url = montaUrl(baseUrl, "clientes/enderecos", params)
+
+        let response = await fetch(url)
+        let json = await response.json();
+
+        let endereco = json.find(endereco => endereco.id == id[0]);
+
+        if(endereco.tipoEndereco === 'COBRANCA_ENTREGA')  {
+            window.location.href = construirURLFinalizarCompra(id, idsCartoesSelecionados, '')
+            return
+        }
+
+        window.location.href = event.data.isEnderecoEntrega ?
+            construirURLFinalizarCompra(id, idsCartoesSelecionados, idEnderecoCobrancaEscolhido)
+            :
+            construirURLFinalizarCompra(idEnderecoEscolhido, idsCartoesSelecionados, id);
     }
 
-    function construirURLFinalizarCompra(idEnderecoEscolhido, idsCartoesSelecionados){
-        let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listar"/>`;
-        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
+    function construirURLFinalizarCompra(idEnderecoEscolhido, idsCartoesSelecionados, idEnderecoCobrancaEscolhido){
+        let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listarUnico"/>`;
+        let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idEnderecoCobrancaEscolhido=\${idEnderecoCobrancaEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
         
         return urlBase + parametrosVendaHref;
     }
 
-    function montarModalCadastro(path){
+    function montarModalCadastro(path, isEnderecoEntrega){
         let params = { operacao: 'listarJson'}
 
-        if (path.includes("enderecos")) 
-            montaModalSelecionarEnderecos(montaUrl(baseUrl, path, params));
+        if (path.includes("enderecos"))
+            montaModalSelecionarEnderecos(montaUrl(baseUrl, path, params), isEnderecoEntrega);
 
         else if (path.includes("cartoes")) 
             montaModalSelecionarCartoes(montaUrl(baseUrl, path, params));
     }
 
-    async function montaModalSelecionarEnderecos(url){
+    async function montaModalSelecionarEnderecos(url, isEnderecoEntrega){
         let response = await fetch(url)
         let json = await response.json();
 
         limpaModal();
 
-        json.forEach(endereco => {
-            let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;
-            let hrefEditar = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`
+        json.filter(endereco =>{
+                if(isEnderecoEntrega)
+                    return endereco.tipoEndereco !== 'COBRANCA'
+                else
+                    return endereco.tipoEndereco === 'COBRANCA'
+            })
+            .forEach(endereco => {
+                let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;
+                let hrefEditar = `<c:url value="/clientes/enderecos?operacao=listarUnico&id=\${endereco.id}\${parametroOrigemChamada}\${parametrosVendaHref}"/>`
 
-            let checkEndereco =
-                $(`<div class="form-check">
-                    <input class="form-check-input" type="radio" name="endereco" id="endereco\${endereco.id}" \${isEnderecoSelecionado ? 'checked' : ''}>
-                    <label class="form-check-label" for="endereco\${endereco.id}">
-                        <small class="float-end"><a href='\${hrefEditar}'>Editar</a> </small>
-                        \${endereco.tipoLogradouro} \${endereco.logradouro}, \${endereco.numero}, \${endereco.bairro}, \${endereco.estado}, CEP \${endereco.cep}
-                    </label>
-                </div>`);
+                let checkEndereco =
+                    $(`<div class="form-check">
+                        <input class="form-check-input" type="radio" name="endereco" id="endereco\${endereco.id}" \${isEnderecoSelecionado ? 'checked' : ''}>
+                        <label class="form-check-label" for="endereco\${endereco.id}">
+                            <small class="float-end"><a href='\${hrefEditar}'>Editar</a> </small>
+                            \${endereco.tipoLogradouro} \${endereco.logradouro}, \${endereco.numero}, \${endereco.bairro}, \${endereco.estado}, CEP \${endereco.cep}
+                        </label>
+                    </div>`);
 
-            adicionaFormModal(checkEndereco);
+                adicionaFormModal(checkEndereco);
         });
 
         setTituloModal("Escolha o endereço");
-        
+
         let botaoAlterar =
-            $(`<button type="button" class="btn btn-primary" onclick="atualizarEnderecoEntrega()" id="botaoAlterarModal">Alterar</button>`);
+            $(`<button type="button" class="btn btn-primary" id="botaoAlterarModal">Alterar</button>`);
+
+        botaoAlterar.click({ isEnderecoEntrega }, atualizarEnderecoEntrega)
 
         let urlAdicionar = "<c:url value='/clientes/enderecos?operacao=adicionar'/>";
         let botaoAdicionar =
@@ -272,10 +311,6 @@
         adicionaBotaoFooter(botaoAdicionar);
         adicionaBotaoFooter(botaoAlterar);
     }
-
-
-
-
 
     const cuponsAplicados = new Map();
 

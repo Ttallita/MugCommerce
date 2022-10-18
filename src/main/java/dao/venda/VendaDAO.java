@@ -46,8 +46,8 @@ public class VendaDAO implements IDAO {
 
             cupomDAO.listar(cupom, "listar");
 
-            String sql = "INSERT INTO vendas (vnd_cli_usr_id, vnd_end_entrega_id, vnd_preco_total, vnd_frete, vnd_dt_compra, vnd_dt_envio, vnd_dt_entrega, vnd_pagamento_aprovado, vnd_status)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO vendas (vnd_cli_usr_id, vnd_end_entrega_id, vnd_preco_total, vnd_frete, vnd_dt_compra, vnd_dt_envio, vnd_dt_entrega, vnd_pagamento_aprovado, vnd_status, vnd_end_cobranca_id)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1, cliente.getUsuario().getId());
@@ -59,6 +59,7 @@ public class VendaDAO implements IDAO {
             pstm.setTimestamp(7, null); // sem data entrega
             pstm.setBoolean(8, false); // pagamento aprovado
             pstm.setString(9, VendaType.EM_PROCESSAMENTO.name());
+            pstm.setLong(10, venda.getEnderecoCobranca().getId());
 
             pstm.execute();
 
@@ -235,24 +236,32 @@ public class VendaDAO implements IDAO {
     @SuppressWarnings("unchecked")
     private List<EntidadeDominio> criaVendaProvisoria(Venda venda) {
         Cliente cliente = venda.getCliente();
-        Endereco endereco = venda.getEnderecoEntrega();
+        Endereco enderecoEntregaVenda = venda.getEnderecoEntrega();
+        Endereco enderecoCobrancaVenda = venda.getEnderecoCobranca();
+
         CartaoDeCredito cartao = new CartaoDeCredito();
         Cupom cupom = new Cupom();
 
-        endereco.setCliente(cliente);
+        enderecoEntregaVenda.setCliente(cliente);
+        enderecoCobrancaVenda.setCliente(cliente);
         cartao.setCliente(cliente);
         cupom.setCliente(cliente);
 
         Endereco enderecoEntrega;
-        if (endereco.getId() == null)
-            enderecoEntrega = (Endereco) enderecoDAO.listar(endereco, "listar").get(0);
+        if (enderecoEntregaVenda.getId() == null)
+            enderecoEntrega = (Endereco) enderecoDAO.listar(enderecoEntregaVenda, "listar").get(0);
         else
-            enderecoEntrega = (Endereco) enderecoDAO.listar(endereco, "listarUnico").get(0);
+            enderecoEntrega = (Endereco) enderecoDAO.listar(enderecoEntregaVenda, "listarUnico").get(0);
+
+        Endereco enderecoCobranca = null;
+        if (enderecoCobrancaVenda.getId() != null)
+            enderecoCobranca = (Endereco) enderecoDAO.listar(enderecoCobrancaVenda, "listarUnico").get(0);
 
         List<? extends EntidadeDominio> cartoes = cartaoDeCreditoDAO.listar(cartao, "listar");
         List<? extends EntidadeDominio> cupons = cupomDAO.listar(cupom, "listarTodos");
 
         venda.setEnderecoEntrega(enderecoEntrega);
+        venda.setEnderecoCobranca(enderecoCobranca);
         venda.setCartoes((List<CartaoDeCredito>) cartoes);
         venda.setCupons((List<Cupom>) cupons);
 

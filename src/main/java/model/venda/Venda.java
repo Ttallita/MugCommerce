@@ -15,6 +15,7 @@ import java.util.Random;
 public class Venda extends EntidadeDominio {
     private Cliente cliente;
     private Endereco enderecoEntrega;
+    private Endereco enderecoCobranca;
     private Carrinho carrinho;
     private List<CartaoDeCredito> cartoes = new ArrayList<>();
     private List<Cupom> cupons = new ArrayList<>();
@@ -157,6 +158,14 @@ public class Venda extends EntidadeDominio {
 
     public void setVendaStatus(VendaType vendaStatus) {
         this.vendaStatus = vendaStatus;
+    }
+
+    public Endereco getEnderecoCobranca() {
+        return enderecoCobranca;
+    }
+
+    public void setEnderecoCobranca(Endereco enderecoCobranca) {
+        this.enderecoCobranca = enderecoCobranca;
     }
 
     @Override
