@@ -185,6 +185,7 @@ public class VendaViewHelper implements IViewHelper {
                     request.setAttribute("idsCartoesSelecionados", idsCartoesSelecionados);
                     request.setAttribute("cartoesSelecionados", cartoes);
                     request.setAttribute("cupons", venda.getCupons());
+                    request.setAttribute("venda", venda);
 
                     request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
                 }

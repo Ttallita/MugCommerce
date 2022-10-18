@@ -44,13 +44,13 @@
                     <div class="p-3">
                         <h5>Dados gerais</h5>
                         <ul class="list-group">
-                            <fmt:parseDate  value="${venda.dataEntrega}"  type="date" pattern="yyyy-MM-dd" var="dataEntregaParseada" />
-                            <fmt:formatDate value="${dataEntregaParseada}" type="date" pattern="dd/MM/yyyy" var="dataEntregaFormatada" />
-                            <li class="list-group-item">Data compra: ${dataEntregaFormatada} </li>
-
                             <fmt:parseDate  value="${venda.dataCompra}"  type="date" pattern="yyyy-MM-dd" var="dataCompraParseada" />
                             <fmt:formatDate value="${dataCompraParseada}" type="date" pattern="dd/MM/yyyy" var="dataCompraFormatada" />
-                            <li class="list-group-item">Data entrega: ${dataCompraFormatada} </li>
+                            <li class="list-group-item">Data compra: ${dataCompraFormatada} </li>
+
+                            <fmt:parseDate  value="${venda.dataEntrega}"  type="date" pattern="yyyy-MM-dd" var="dataEntregaParseada" />
+                            <fmt:formatDate value="${dataEntregaParseada}" type="date" pattern="dd/MM/yyyy" var="dataEntregaFormatada" />
+                            <li class="list-group-item">Data entrega: ${dataEntregaFormatada} </li>
 
                             <li class="list-group-item">Valor total: ${venda.precoTotal} </li>
                         </ul>
@@ -70,16 +70,16 @@
                                     <li>${venda.enderecoEntrega.observacoes}</li>
                                 </ul>
                             </li>
-                            <!-- <li class="list-group-item">
+                            <li class="list-group-item">
                                 Endereço cobrança:
                                 <ul class="list-unstyled">
-                                    <li>${enderecoCobranca.apelido} (${enderecoCobranca.tipoResidencia})</li>
-                                    <li>${enderecoCobranca.tipoLogradouro} ${enderecoCobranca.logradouro}, ${enderecoCobranca.numero}</li>
-                                    <li>${enderecoCobranca.cidade}, ${enderecoCobranca.estado} - Brasil</li>
-                                    <li>CEP: ${enderecoCobranca.cep}</li>
-                                    <li>${enderecoCobranca.observacoes}</li>
+                                    <li>${venda.enderecoCobranca.apelido} (${venda.enderecoCobranca.tipoResidencia})</li>
+                                    <li>${venda.enderecoCobranca.tipoLogradouro} ${venda.enderecoCobranca.logradouro}, ${venda.enderecoCobranca.numero}</li>
+                                    <li>${venda.enderecoCobranca.cidade}, ${venda.enderecoCobranca.estado} - Brasil</li>
+                                    <li>CEP: ${venda.enderecoCobranca.cep}</li>
+                                    <li>${venda.enderecoCobranca.observacoes}</li>
                                 </ul>
-                            </li> -->
+                            </li>
                         </ul>
                     </div>
                 </div>

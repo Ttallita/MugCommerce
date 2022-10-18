@@ -38,7 +38,7 @@ public class Venda extends EntidadeDominio {
         return Math.max(1, quantTotalItens / 10) * 10.0 * distanciaEndereco;
     }
 
-    public double calculaTotalEntrega(){
+    public double getCalculaTotalEntrega(){
         double valorDesconto = 0;
 
         if(cupons != null)

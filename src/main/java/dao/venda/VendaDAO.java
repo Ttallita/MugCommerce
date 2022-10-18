@@ -55,7 +55,7 @@ public class VendaDAO implements IDAO {
             PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1, cliente.getUsuario().getId());
             pstm.setDouble(2, venda.getEnderecoEntrega().getId());
-            pstm.setDouble(3, venda.calculaTotalEntrega()); ///
+            pstm.setDouble(3, venda.getCalculaTotalEntrega()); ///
             pstm.setDouble(4, venda.calculaFrete());
             pstm.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
             pstm.setTimestamp(6, null); // sem data envio

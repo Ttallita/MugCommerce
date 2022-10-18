@@ -75,7 +75,7 @@
                     <c:if test="${origemChamada == 'finalizarCompra'}">
                         <input type="hidden" name="origemChamada" value="${origemChamada}">
                         <input type="hidden" name="idEnderecoEscolhido" value="${idEnderecoEscolhido}">
-                        <input type="hidden" name="idCartaoSelecionado" value="${idCartaoSelecionado}">
+                        <input type="hidden" name="idCartoesSelecionados" value="${idCartoesSelecionados}">
                         <input type="hidden" name="idEnderecoCobrancaEscolhido" value="${idEnderecoCobrancaEscolhido}">
                         <input type="hidden" name="isEnderecoEntrega" value="${isEnderecoEntrega}">
                     </c:if>

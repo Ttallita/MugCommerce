@@ -137,7 +137,7 @@
                             </li>
                             <li class="d-flex justify-content-between py-3">
                                 <strong class="text-muted">Total do pedido:</strong>
-                                <h5 class="font-weight-bold" id="vlrTotalPedido"><fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></h5>
+                                <h5 class="font-weight-bold" id="vlrTotalPedido"><fmt:formatNumber value="${carrinho.totalCarrinho + valorFrete}" type="currency"/></h5>
                             </li>
                         </ul>
 
@@ -215,6 +215,13 @@
 
     function construirURLFinalizarCompra(idEnderecoEscolhido, idsCartoesSelecionados, idEnderecoCobrancaEscolhido){
         let urlBase = `<c:url value="/clientes/carrinho/finalizarCompra?operacao=listarUnico"/>`;
+
+        if(idEnderecoCobrancaEscolhido == null)
+            idEnderecoCobrancaEscolhido = ""
+
+        if(idEnderecoEscolhido == null)
+            idEnderecoEscolhido = ""
+
         let parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idEnderecoCobrancaEscolhido=\${idEnderecoCobrancaEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
         
         return urlBase + parametrosVendaHref;
@@ -240,7 +247,7 @@
                 if(isEnderecoEntrega)
                     return endereco.tipoEndereco !== 'COBRANCA'
                 else
-                    return endereco.tipoEndereco === 'COBRANCA'
+                    return endereco.tipoEndereco !== 'ENTREGA'
             })
             .forEach(endereco => {
                 let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;

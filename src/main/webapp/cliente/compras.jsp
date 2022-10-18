@@ -148,7 +148,6 @@
 
         setTituloModal("Detalhes compra");
 
-        let botaoCancelar = $('<button type="button" class="btn btn-primary">Cancelar compra</button>');
         let botaoFecharModal = $('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>');
 
         let urlCancelarVenda = "<c:url value='/clientes/solicitacoes?operacao=salvar&tipoOperacao=cancelar&idVenda=\${idVenda}'/>";

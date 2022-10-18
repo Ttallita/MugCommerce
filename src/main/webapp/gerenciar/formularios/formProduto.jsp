@@ -150,7 +150,7 @@
                             Deseja realmente ativar o produto?
                             <br/><br/>
                             <label for="categoriaStatus">
-                                <small>Categoria de Inativação</small>
+                                <small>Categoria de Ativação</small>
                             </label>
                             <select class="form-select" id="categoriaStatus" name="categoriaInativacao"
                                     aria-label="Categorias de inativação">

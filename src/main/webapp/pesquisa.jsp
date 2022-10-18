@@ -73,15 +73,7 @@
                         </li>
                         <li class="d-flex justify-content-between">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="Porcelana"  name="material">
-                                <label class="form-check-label">
-                                    Porcelana
-                                </label>
-                            </div>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="Plástico"  name="material">
+                                <input class="form-check-input" type="checkbox" value="Plastico"  name="material">
                                 <label class="form-check-label">
                                     Plástico
                                 </label>

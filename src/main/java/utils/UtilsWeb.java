@@ -59,6 +59,7 @@ public class UtilsWeb {
         List<String> atributos = getNomesAtributosRequest(request);
         StringBuilder parametros = new StringBuilder();
 
+        // TODO verificar casos onde tem endereço de cobrança
         for (Map.Entry<String, String> entry : novosValoresParametros.entrySet()){
             atributos.remove(entry.getKey());
             parametros.append(String.format("&%s=%s", entry.getKey(), entry.getValue()));
