@@ -55,7 +55,12 @@ public class VendaViewHelper implements IViewHelper {
                 enderecoCobranca.setId(Long.valueOf(idEnderecoCobrancaEscolhido));
 
                 List<String> idsCartoesSelecionados = UtilsWeb.converteParametrosParaLista(request.getParameter("idsCartoesSelecionados[]"));
-                List<String> idsCupons = UtilsWeb.converteParametrosParaLista(request.getParameter("idsCupons[]"));
+
+                String cupons = request.getParameter("idsCupons[]");
+
+                List<String> idsCupons = null;
+                if(cupons != null)
+                    idsCupons = UtilsWeb.converteParametrosParaLista(cupons);
 
                 for (String id : idsCartoesSelecionados){
                     CartaoDeCredito cartao = new CartaoDeCredito();
@@ -64,12 +69,15 @@ public class VendaViewHelper implements IViewHelper {
                     venda.addCartaoDeCredito(cartao);
                 }
 
-                for (String id : idsCupons){
-                    Cupom cupom = new Cupom();
-                    cupom.setId(Long.parseLong(id));
+                if(idsCupons != null) {
+                    for (String id : idsCupons){
+                        Cupom cupom = new Cupom();
+                        cupom.setId(Long.parseLong(id));
 
-                    venda.addCupom(cupom);
+                        venda.addCupom(cupom);
+                    }
                 }
+
 
                 venda.setCarrinho(carrinho);
                 venda.setEnderecoEntrega(enderecoEntrega);
@@ -136,16 +144,9 @@ public class VendaViewHelper implements IViewHelper {
 
         switch (operacao){
 
-            case "salvar" -> {
-                Venda venda = (Venda) result.getEntidades().get(0);
+            case "salvar" -> response.sendRedirect("/emug/index.jsp");
 
-                request.setAttribute("venda", venda);
-                request.getRequestDispatcher("/cliente/finalizarCompra.jsp").forward(request, response);
-            }
-
-            case "atualizar" -> {
-                response.sendRedirect("/emug/adm/vendas?operacao=listarTodos");
-            }
+            case "atualizar" -> response.sendRedirect("/emug/adm/vendas?operacao=listarTodos");
 
             case "listarUnico" -> {
 
@@ -199,8 +200,7 @@ public class VendaViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/gerenciar/vendas.jsp").forward(request, response);
             }
 
-            case "listarJson" ->
-                UtilsWeb.montaRespostaJson(result, request, response);
+            case "listarJson" -> UtilsWeb.montaRespostaJson(result, request, response);
 
         }
 

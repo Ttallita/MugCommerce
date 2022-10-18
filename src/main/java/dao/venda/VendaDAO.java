@@ -61,7 +61,7 @@ public class VendaDAO implements IDAO {
             pstm.setTimestamp(6, null); // sem data envio
             pstm.setTimestamp(7, null); // sem data entrega
             pstm.setBoolean(8, false); // pagamento aprovado
-            pstm.setString(9, VendaType.EM_PROCESSAMENTO.name());
+            pstm.setString(9, StatusVendaType.EM_ANALISE.name());
             pstm.setLong(10, venda.getEnderecoCobranca().getId());
 
             pstm.execute();
@@ -100,8 +100,10 @@ public class VendaDAO implements IDAO {
                 pstm.execute();
             }
 
-            for (Cupom c : venda.getCupons()){
-                cupomDAO.deletar((EntidadeDominio) c);
+            if(venda.getCupons() != null) {
+                for (Cupom c : venda.getCupons()){
+                    cupomDAO.deletar(c);
+                }
             }
 
             return venda;

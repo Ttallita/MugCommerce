@@ -39,7 +39,14 @@ public class Venda extends EntidadeDominio {
     }
 
     public double calculaTotalEntrega(){
-        Double valorDesconto = cupons.stream().map(Cupom::getValor).mapToDouble(Double::doubleValue).sum();
+        double valorDesconto = 0;
+
+        if(cupons != null)
+            valorDesconto = cupons.stream()
+                    .map(Cupom::getValor)
+                    .mapToDouble(Double::doubleValue)
+                    .sum();
+
 
         return  carrinho.getTotalCarrinho() + calculaFrete() - valorDesconto;
     }
@@ -101,7 +108,12 @@ public class Venda extends EntidadeDominio {
     }
 
     public void addCupom(Cupom cupom){
-        this.cupons.add(cupom);
+        if(cupons != null)
+            this.cupons.add(cupom);
+        else {
+            this.cupons = new ArrayList<>();
+            this.cupons.add(cupom);
+        }
     }
 
     public Double getValorItens() {
