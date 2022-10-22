@@ -383,7 +383,7 @@
         atualizarValoresVenda();
     }
 
-    const valorVenda = parseFloat('${carrinho.totalCarrinho}') + parseFloat('${valorFrete}');
+    let valorVenda = parseFloat('${carrinho.totalCarrinho}') + parseFloat('${valorFrete}');
     let formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
@@ -406,6 +406,7 @@
             return
         }
 
+        valorVenda = valorFinal;
         document.getElementById("valorDesconto").innerText = "-R$ " + somaCupons;
         document.getElementById("vlrTotalPedido").innerText = formatter.format(Math.max(valorFinal, 0));
     }
