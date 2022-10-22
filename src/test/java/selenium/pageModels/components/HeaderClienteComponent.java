@@ -2,6 +2,7 @@ package selenium.pageModels.components;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import selenium.pageModels.CarrinhoPage;
 import selenium.utils.UtilsTeste;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ public class HeaderClienteComponent extends HeaderComponentAbstract {
     private final Map<String, Runnable> mapPaginaBotao;
 
     private static final String LINK_PERFIL_CLIENTE = "/emug/clientes?operacao=listar";
+    private static final String LINK_CARRINHO = "/emug/cliente/carrinho.jsp";
 
     public HeaderClienteComponent(WebDriver driver) {
         super(driver);
@@ -27,4 +29,8 @@ public class HeaderClienteComponent extends HeaderComponentAbstract {
         mapPaginaBotao.get(pagina).run();
     }
 
+    public CarrinhoPage acessarCarrinho() {
+        UtilsTeste.getBotaoByLink(LINK_CARRINHO, driver).click();
+        return new CarrinhoPage(driver);
+    }
 }

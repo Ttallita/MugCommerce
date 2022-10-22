@@ -18,7 +18,7 @@
             <div class="col-lg-5">
                 <div class="container row text-center gap-3">
                     <div class="col-sm-6 col-md-7">
-                        <form action="<c:url value='/produtos'/>" class="col-md-auto justify-content-center mb-md-0">
+                        <form action="<c:url value='/produtos'/>" id="pesquisa" class="col-md-auto justify-content-center mb-md-0">
                             <div class="input-group">
                                 <input class="form-control" type="text" name="pesquisa" placeholder="Pesquisar...">
                                 <button class="btn btn-primary" type="submit">

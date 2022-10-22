@@ -2,10 +2,14 @@ package selenium.pageModels;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
 import selenium.pageModels.components.HeaderComponentAbstract;
 import selenium.pageModels.perfilCliente.PerfilPrincipalPage;
+import utils.UtilsWeb;
+
+import java.util.List;
 
 public class HomePage extends PageAbstract{
 
@@ -31,15 +35,12 @@ public class HomePage extends PageAbstract{
         return new PerfilPrincipalPage(driver);
     }
 
-    private HeaderComponentAbstract getHeader(WebDriver driver) {
-        String tipoHeader = driver.findElement(By.tagName("header")).getAttribute("name");
-        
-        header = tipoHeader.equals("CLIENTE") ? new HeaderClienteComponent(driver) : new HeaderAdmComponent(driver);
-
-        return header;
+    public ProdutoPage abrirPaginaProduto(String nomeProduto){
+        return ProdutoPage.abrirPaginaProduto(nomeProduto);
     }
 
-    public HeaderComponentAbstract getHeader() {
-        return header;
+    public ResultadoPesquisaPage pesquisar(String termoPesquisa){
+        return header.pesquisar(termoPesquisa);
     }
+
 }

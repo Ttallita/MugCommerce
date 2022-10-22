@@ -26,7 +26,7 @@ public class TesteLogin extends TesteAbstract{
         LoginPage loginPage = new LoginPage(driver);
         HomePage home = loginPage.logar(UsuarioVO.createUsuarioClientePadrao());
 
-        assertTrue(home.getHeader() instanceof HeaderClienteComponent);
+        assertTrue(home.getHeader(driver) instanceof HeaderClienteComponent);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class TesteLogin extends TesteAbstract{
         LoginPage loginPage = new LoginPage(driver);
         HomePage home = loginPage.logar(UsuarioVO.createUsuarioAdmPadrao());
 
-        assertTrue(home.getHeader() instanceof HeaderAdmComponent);
+        assertTrue(home.getHeader(driver) instanceof HeaderAdmComponent);
     }
 
     @ParameterizedTest
