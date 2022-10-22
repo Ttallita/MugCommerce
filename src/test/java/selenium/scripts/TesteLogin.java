@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.WebDriver;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
 import selenium.dataHelpers.VOs.UsuarioVO;
@@ -16,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TesteLogin extends TesteAbstract{
 
-    /*
-        Lembrar de inserir o cliente padrão de login do arquivo emug.sql
-     */
+    @Override
+    void configurarCenarioTeste() { }
+
     @Test
     public void testeLoginClienteValido(){
         driver.get(LINK_LOGIN);

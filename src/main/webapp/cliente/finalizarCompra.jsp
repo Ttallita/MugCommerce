@@ -28,7 +28,7 @@
                 
                 <div class="row border rounded p-3 m-2">
 
-                    <div class="col-6 p-3">
+                    <div class="col-6 p-3" id="divEnderecoEntrega">
                         <h6>Endereço de entrega</h6>
                         <a type="button" id="alterarEndereco" onclick="montarModalCadastro('clientes/enderecos', true)" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal">
                             Alterar
@@ -60,7 +60,7 @@
                         </c:if>
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-6" id="divCartoes">
                         <div class="col p-3">
                             <h6>Forma de pagamento</h6>
                             <a type="button" id="alterarPagamento" onclick="montarModalCadastro('clientes/cartoes', false)" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modal">

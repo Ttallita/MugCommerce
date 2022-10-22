@@ -35,8 +35,8 @@ CREATE TABLE cartoes(
     crt_numero        varchar(19)  NOT NULL,
     crt_bandeira      varchar(255) NOT NULL,
     crt_nome_impresso varchar(255) NOT NULL,
-    crt_mes_validade  numeric(2)   NOT NULL,
-    crt_ano_validade  numeric(4)   NOT NULL,
+    crt_mes_validade  varchar(2)   NOT NULL,
+    crt_ano_validade  varchar(4)   NOT NULL,
     crt_cod_seg       varchar(3)   NOT NULL,
     crt_preferencial  boolean      NOT NULL
 );

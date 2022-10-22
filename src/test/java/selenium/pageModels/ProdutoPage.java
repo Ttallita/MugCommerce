@@ -2,7 +2,7 @@ package selenium.pageModels;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import selenium.pageModels.perfilCliente.CarrinhoPage;
 import selenium.utils.UtilsTeste;
 
 public class ProdutoPage extends PageAbstract{

@@ -1,16 +1,15 @@
 package selenium.scripts;
 
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import selenium.pageModels.CarrinhoPage;
+import org.openqa.selenium.WebDriver;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.ProdutoPage;
 import selenium.pageModels.components.HeaderClienteComponent;
+import selenium.pageModels.perfilCliente.CarrinhoPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,11 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class TesteCarrinho extends TesteAbstract{
 
     HomePage homeCliente;
+    HeaderClienteComponent headerCliente;
 
-    @BeforeEach
-    public void setup(){
-        super.setup();
+    @Override
+    void configurarCenarioTeste() {
         this.homeCliente = this.realizarLoginClientePadrao();
+        headerCliente = (HeaderClienteComponent) homeCliente.getHeader(driver);
     }
 
     @ParameterizedTest
@@ -39,16 +39,16 @@ public class TesteCarrinho extends TesteAbstract{
     public void testeAdicionarProdutoPesquisaCarrinho(String nomeProduto){
         homeCliente.pesquisar(nomeProduto);
 
-        // Verifica se produto pesquisado foi encontrado
-        ProdutoPage.abrirPaginaProduto(nomeProduto);
+        ProdutoPage.abrirPaginaProduto(nomeProduto).adicionarProdutoCarrinho();
+
+        // Verifica se produto foi adicionado ao carinho
+        driver.findElement(By.linkText(nomeProduto));
     }
 
     @ParameterizedTest
     @MethodSource("selenium.dataHelpers.ProdutoDataHelper#quantProdutosCarrinho")
     public void testeAlterarQuantidade(int quantAlterar, String nomeProduto) {
         this.testeAdicionarProdutoIndexCarrinho(nomeProduto);
-
-        HeaderClienteComponent headerCliente = (HeaderClienteComponent) homeCliente.getHeader(driver);
         CarrinhoPage carrinho = headerCliente.acessarCarrinho();
 
         if(quantAlterar < 0) // Garante que o carrinho sempre tenha uma quantidade válida de produtos para o teste
@@ -64,8 +64,6 @@ public class TesteCarrinho extends TesteAbstract{
     @ValueSource(strings = {"Caneca ursinho"})
     public void testeExcluirProdutocarrinho(String nomeProduto){
         this.testeAdicionarProdutoIndexCarrinho(nomeProduto);
-
-        HeaderClienteComponent headerCliente = (HeaderClienteComponent) homeCliente.getHeader(driver);
         CarrinhoPage carrinho = headerCliente.acessarCarrinho();
 
         carrinho.excluirProdutoCarrinho(nomeProduto);

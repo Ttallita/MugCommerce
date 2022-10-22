@@ -1,13 +1,18 @@
-package selenium.pageModels;
+package selenium.pageModels.perfilCliente;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import selenium.pageModels.FinalizarCompraPage;
+import selenium.pageModels.PageAbstract;
+import selenium.utils.UtilsTeste;
 
 public class CarrinhoPage extends PageAbstract{
 
     public static final String TITULO_PAGINA = "Carrinho";
+
+    private static final String LINK_FINALIZAR_COMPRA = "/emug/clientes/carrinho/finalizarCompra?operacao=listarUnico";
 
     public CarrinhoPage(WebDriver driver) {
         super(driver, TITULO_PAGINA);
@@ -49,7 +54,7 @@ public class CarrinhoPage extends PageAbstract{
     private WebElement getLinhaTabelaProduto(String nomeProduto) {
         WebElement trProduto = null;
         for(WebElement e : driver.findElements(By.cssSelector("tr"))){
-             if (driver.findElement(By.cssSelector("td > a > h6")).getText().equals(nomeProduto))
+            if (driver.findElement(By.cssSelector("td > a > h6")).getText().equals(nomeProduto))
                 trProduto = e;
         }
 
@@ -59,4 +64,8 @@ public class CarrinhoPage extends PageAbstract{
         return trProduto;
     }
 
+    public FinalizarCompraPage finalizarCompra(){
+        UtilsTeste.getBotaoByLink(LINK_FINALIZAR_COMPRA, driver).click();
+        return new FinalizarCompraPage(driver);
+    }
 }

@@ -29,6 +29,10 @@ public class CartaoVO {
         this.numCartao = numCartao;
     }
 
+    public String getFinalCartao(){
+        return this.numCartao.substring(numCartao.length() - 4);
+    }
+
     public String getNomeCartao() {
         return nomeCartao;
     }

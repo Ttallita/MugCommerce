@@ -2,7 +2,9 @@ package selenium.pageModels.components;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import selenium.pageModels.CarrinhoPage;
+import selenium.pageModels.FinalizarCompraPage;
+import selenium.pageModels.perfilCliente.CarrinhoPage;
+import selenium.pageModels.perfilCliente.CartoesPage;
 import selenium.utils.UtilsTeste;
 
 import java.util.HashMap;
@@ -33,4 +35,5 @@ public class HeaderClienteComponent extends HeaderComponentAbstract {
         UtilsTeste.getBotaoByLink(LINK_CARRINHO, driver).click();
         return new CarrinhoPage(driver);
     }
+
 }

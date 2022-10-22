@@ -23,7 +23,7 @@ public class PerfilFilter implements Filter {
 
         if(usuario != null) {
             if(usuario.getTipoUsuario().equals(UsuarioType.ADMINISTRADOR))
-                response.sendRedirect("/emug/adm/principal.jsp");
+                response.sendRedirect("/emug/adm/clientes?operacao=listarTodos");
         } else
             response.sendRedirect("/emug/index.jsp");
 

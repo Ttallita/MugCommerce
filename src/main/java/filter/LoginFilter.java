@@ -1,6 +1,7 @@
 package filter;
 
 import model.Usuario;
+import model.UsuarioType;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -21,10 +22,10 @@ public class LoginFilter implements Filter {
 
         Usuario usuarioLogado = (Usuario) req.getSession().getAttribute("usuarioLogado");
 
-        if(usuarioLogado != null) {
-            res.sendRedirect("/emug/adm/principal.jsp");
-            return;
-        }
+        if(usuarioLogado != null && usuarioLogado.getTipoUsuario().equals(UsuarioType.ADMINISTRADOR))
+            res.sendRedirect("/emug/adm/clientes?operacao=listarTodos");
+        else
+            res.sendRedirect("/emug/index.jsp");
 
         filterChain.doFilter(req, res);
     }
