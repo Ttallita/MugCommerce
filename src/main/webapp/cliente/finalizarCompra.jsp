@@ -271,10 +271,16 @@
                 let checkEndereco =
                     $(`<div class="form-check">
                         <input class="form-check-input" type="radio" name="endereco" id="endereco\${endereco.id}" \${isEnderecoSelecionado ? 'checked' : ''}>
-                        <label class="form-check-label" for="endereco\${endereco.id}">
-                            <small class="float-end"><a href='\${hrefEditar}'>Editar</a> </small>
-                            \${endereco.tipoLogradouro} \${endereco.logradouro}, \${endereco.numero}, \${endereco.bairro}, \${endereco.estado}, CEP \${endereco.cep}
-                        </label>
+                        <div class="d-flex justify-content-between">
+                            <label class="form-check-label" for="endereco\${endereco.id}">
+                                <ul class="list-unstyled">
+                                    <li><small class="text-muted">\${endereco.tipoEndereco}</small></li>
+                                    <li>\${endereco.apelido}</li>
+                                    <li>\${endereco.tipoLogradouro} \${endereco.logradouro}, \${endereco.numero}, \${endereco.bairro}, \${endereco.estado}, CEP \${endereco.cep}</li>
+                                </ul>
+                            </label>
+                            <small><a href='\${hrefEditar}'>Editar</a> </small>
+                        </div>
                     </div>`);
 
                 adicionaFormModal(checkEndereco);
@@ -312,10 +318,12 @@
             let checkCartao =
                 $(`<div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="cartao\${cartao.id}" \${isCartaoSelecionado ? 'checked' : ''}>
-                    <label class="form-check-label" for="cartao\${cartao.id}">
-                        <small class="float-end"><a href='\${hrefEditar}'>Editar</a> </small>
-                        \${cartao.nomeImpressoCartao} \${cartao.bandeira}, final \${cartao.finalCartao}
-                    </label>
+                    <div class="d-flex justify-content-between">
+                        <label class="form-check-label" for="cartao\${cartao.id}">
+                            \${cartao.nomeImpressoCartao} \${cartao.bandeira}, final \${cartao.finalCartao}
+                        </label>
+                        <small><a href='\${hrefEditar}'>Editar</a> </small>
+                    </div>
                 </div>`);
 
             adicionaFormModal(checkCartao);

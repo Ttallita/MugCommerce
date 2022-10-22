@@ -59,6 +59,9 @@
                             <option ${endereco.tipoEndereco == 'ENTREGA' ? 'selected' : ''} value="ENTREGA">Entrega</option>
                             <option ${endereco.tipoEndereco == 'COBRANCA' ? 'selected' : ''} value="COBRANCA">Cobrança</option>
                             <option ${endereco.tipoEndereco == 'COBRANCA_ENTREGA' ? 'selected' : ''} value="COBRANCA_ENTREGA">Entrega e cobrança</option>
+
+
+                            <!-- TODO caso tenha vindo da tela de finalizar compra deve selecionar o tipo de endereço correspondente e bloquear o campo-->
                         </select>
                     </div>
 

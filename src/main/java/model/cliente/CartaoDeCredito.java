@@ -10,8 +10,8 @@ public class CartaoDeCredito extends EntidadeDominio {
     private String finalCartao;
     private String nomeImpressoCartao;
     private String bandeira;
-    private Integer mesValidade;
-    private Integer anoValidade;
+    private String mesValidade;
+    private String anoValidade;
     private Integer codigo;
     private boolean preferencial;
     private transient Cliente cliente;
@@ -51,19 +51,19 @@ public class CartaoDeCredito extends EntidadeDominio {
         this.bandeira = bandeira;
     }
 
-    public Integer getMesValidade() {
+    public String getMesValidade() {
         return mesValidade;
     }
 
-    public void setMesValidade(Integer mesValidade) {
+    public void setMesValidade(String mesValidade) {
         this.mesValidade = mesValidade;
     }
 
-    public Integer getAnoValidade() {
+    public String getAnoValidade() {
         return anoValidade;
     }
     
-    public void setAnoValidade(Integer anoValidade) {
+    public void setAnoValidade(String anoValidade) {
         this.anoValidade = anoValidade;
     }
 

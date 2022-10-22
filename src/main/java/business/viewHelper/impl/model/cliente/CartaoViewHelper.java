@@ -68,8 +68,8 @@ public class CartaoViewHelper implements IViewHelper {
             String[] data = dtValidade.split("/");
 
             if(data.length > 1) {
-                cartaoDeCredito.setMesValidade(Integer.parseInt(data[0]));
-                cartaoDeCredito.setAnoValidade(Integer.parseInt(data[1]));
+                cartaoDeCredito.setMesValidade(data[0]);
+                cartaoDeCredito.setAnoValidade(data[1]);
             }
         }
 

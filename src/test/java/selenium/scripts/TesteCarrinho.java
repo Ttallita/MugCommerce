@@ -5,7 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.ProdutoPage;
 import selenium.pageModels.components.HeaderClienteComponent;

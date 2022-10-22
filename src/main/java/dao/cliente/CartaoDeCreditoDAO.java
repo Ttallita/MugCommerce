@@ -35,8 +35,8 @@ public class CartaoDeCreditoDAO implements IDAO {
             pstm.setString(2, cartao.getNumCartao());
             pstm.setString(3, cartao.getBandeira());
             pstm.setString(4, cartao.getNomeImpressoCartao());
-            pstm.setInt(5, cartao.getMesValidade());
-            pstm.setInt(6, cartao.getAnoValidade());
+            pstm.setString(5, cartao.getMesValidade());
+            pstm.setString(6, cartao.getAnoValidade());
             pstm.setInt(7, cartao.getCodigo());
             pstm.setBoolean(8, !existeCartaoPreferencial(cartao.getCliente().getUsuario()) || cartao.isPreferencial());
             pstm.execute();
@@ -81,8 +81,8 @@ public class CartaoDeCreditoDAO implements IDAO {
             pstm.setString(1, cartao.getNumCartao());
             pstm.setString(2, cartao.getBandeira());
             pstm.setString(3, cartao.getNomeImpressoCartao());
-            pstm.setInt(4, cartao.getMesValidade());
-            pstm.setInt(5, cartao.getAnoValidade());
+            pstm.setString(4, cartao.getMesValidade());
+            pstm.setString(5, cartao.getAnoValidade());
             pstm.setInt(6, cartao.getCodigo());
 
             pstm.setBoolean(7, !existeCartaoPreferencial(cartao.getCliente().getUsuario()) || cartao.isPreferencial());
@@ -168,8 +168,8 @@ public class CartaoDeCreditoDAO implements IDAO {
                 cartaoConsulta.setNumCartao(rs.getString("crt_numero"));
                 cartaoConsulta.setBandeira( rs.getString("crt_bandeira"));
                 cartaoConsulta.setNomeImpressoCartao(rs.getString("crt_nome_impresso"));
-                cartaoConsulta.setMesValidade(rs.getInt("crt_mes_validade"));
-                cartaoConsulta.setAnoValidade(rs.getInt("crt_ano_validade"));
+                cartaoConsulta.setMesValidade(rs.getString("crt_mes_validade"));
+                cartaoConsulta.setAnoValidade(rs.getString("crt_ano_validade"));
                 cartaoConsulta.setCodigo(rs.getInt("crt_cod_seg"));
                 cartaoConsulta.setPreferencial(rs.getBoolean("crt_preferencial"));
 

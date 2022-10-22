@@ -1,12 +1,15 @@
 package selenium.pageModels;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.pageModels.components.ModalCartoesComponent;
+import selenium.pageModels.components.ModalEnderecosComponent;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class FinalizarCompraPage extends PageAbstract{
 
@@ -16,12 +19,18 @@ public class FinalizarCompraPage extends PageAbstract{
         super(driver, TITULO_PAGINA);
     }
 
-    public void abrirModalAlterarEnderecoEntrega(){
+    public ModalEnderecosComponent abrirModalAlterarEnderecoEntrega(){
         driver.findElement(By.id("alterarEndereco")).click();
+        return new ModalEnderecosComponent(driver);
     }
 
-    public void abrirModalAlterarEnderecoCobranca(){
-        driver.findElement(By.id("alterarEnderecoCobranca")).click();
+    public ModalEnderecosComponent abrirModalAlterarEnderecoCobranca(){
+        try {
+            driver.findElement(By.id("alterarEnderecoCobranca")).click();
+        } catch (ElementNotInteractableException e){
+            driver.findElement(By.id("alterarEndereco")).click();
+        }
+        return new ModalEnderecosComponent(driver);
     }
 
     public ModalCartoesComponent abrirModalAlterarFormaPagamento(){

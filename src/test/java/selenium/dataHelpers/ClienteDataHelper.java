@@ -79,21 +79,6 @@ public class ClienteDataHelper {
         };
     }
 
-//    public static Object[][] cartoesValidos(){
-//
-//        List<CartaoVO> cartoesVO = new ArrayList<>();
-//        addCartoesFinalizarCompra(cartoesVO);
-//
-//        return new Object[][]{
-//                {cartoesVO.get(0)},
-//                {cartoesVO.get(1)},
-//                {cartoesVO.get(2)},
-//                {cartoesVO.get(3)},
-//                {cartoesVO.get(4)},
-//                {cartoesVO.get(5)}
-//        };
-//    }
-
     /**
      * Cartões previamente salvos no banco de dados
      */
@@ -149,6 +134,86 @@ public class ClienteDataHelper {
         cartoesVO.add(cartaoVO6);
 
         return cartoesVO;
+    }
+
+    /**
+     * Endereços previamente salvos no banco de dados
+     */
+    public static List<EnderecoVO> getEnderecosPreviamenteCadastrados() {
+        List<EnderecoVO> enderecoVOS = new ArrayList<>();
+
+        EnderecoVO enderecoCadastro = new EnderecoVO();
+        enderecoCadastro.setTpResidencia("Sobrado");
+        enderecoCadastro.setTpLogradouro("Avenida");
+        enderecoCadastro.setTpEndereco("Entrega");
+        enderecoCadastro.setLogradouro("Pingo d'água");
+        enderecoCadastro.setBairro("Fernandes");
+        enderecoCadastro.setNumeroEndereco("586");
+        enderecoCadastro.setCep("95044-120");
+        enderecoCadastro.setEstado("São Paulo");
+        enderecoCadastro.setCidade("Mogi das Cruzes");
+        enderecoCadastro.setApelidoEndereco("Minha casa");
+        enderecoCadastro.setObservacaoEndereco("");
+
+        EnderecoVO enderecoVO1 = new EnderecoVO();
+        enderecoVO1.setTpResidencia("Apartamento");
+        enderecoVO1.setTpLogradouro("Alameda");
+        enderecoVO1.setTpEndereco("Entrega e cobrança");
+        enderecoVO1.setLogradouro("Águas sagradas");
+        enderecoVO1.setBairro("Amélia Soares");
+        enderecoVO1.setNumeroEndereco("111");
+        enderecoVO1.setCep("11111-111");
+        enderecoVO1.setEstado("Acre");
+        enderecoVO1.setCidade("Acrelândia");
+        enderecoVO1.setApelidoEndereco("Apartamento A");
+        enderecoVO1.setObservacaoEndereco("");
+
+        EnderecoVO enderecoVO2 = new EnderecoVO();
+        enderecoVO2.setTpResidencia("Sobrado");
+        enderecoVO2.setTpLogradouro("Beco");
+        enderecoVO2.setTpEndereco("Cobrança");
+        enderecoVO2.setLogradouro("Bonda dourada");
+        enderecoVO2.setBairro("Barões");
+        enderecoVO2.setNumeroEndereco("222");
+        enderecoVO2.setCep("22222-222");
+        enderecoVO2.setEstado("Bahia");
+        enderecoVO2.setCidade("Bonito");
+        enderecoVO2.setApelidoEndereco("Sobrado B");
+        enderecoVO2.setObservacaoEndereco("");
+
+        EnderecoVO enderecoVO3 = new EnderecoVO();
+        enderecoVO3.setTpResidencia("Casa");
+        enderecoVO3.setTpLogradouro("Comunidade");
+        enderecoVO3.setTpEndereco("Entrega");
+        enderecoVO3.setLogradouro("Coroa Lorenzo");
+        enderecoVO3.setBairro("Carmo Nogueira");
+        enderecoVO3.setNumeroEndereco("333");
+        enderecoVO3.setCep("33333-333");
+        enderecoVO3.setEstado("Ceará");
+        enderecoVO3.setCidade("Camocim");
+        enderecoVO3.setApelidoEndereco("Casa C");
+        enderecoVO3.setObservacaoEndereco("");
+
+        EnderecoVO enderecoVO4 = new EnderecoVO();
+        enderecoVO4.setTpResidencia("Casa");
+        enderecoVO4.setTpLogradouro("Distrito");
+        enderecoVO4.setTpEndereco("Entrega e cobrança");
+        enderecoVO4.setLogradouro("Dom Terciário Quarto");
+        enderecoVO4.setBairro("Dama Claudite");
+        enderecoVO4.setNumeroEndereco("444");
+        enderecoVO4.setCep("44444-444");
+        enderecoVO4.setEstado("Distrito Federal");
+        enderecoVO4.setCidade("Brasília");
+        enderecoVO4.setApelidoEndereco("Casa D");
+        enderecoVO4.setObservacaoEndereco("");
+        
+        enderecoVOS.add(enderecoCadastro);
+        enderecoVOS.add(enderecoVO1);
+        enderecoVOS.add(enderecoVO2);
+        enderecoVOS.add(enderecoVO3);
+        enderecoVOS.add(enderecoVO4);
+
+        return enderecoVOS;
     }
 
 }

@@ -35,10 +35,12 @@ public class VerificarCartaoStrategy implements IStrategy {
 
         LocalDate dataAtual = LocalDate.now();
 
-        if(cartao.getAnoValidade() < dataAtual.getYear())
+        String anoValidade = cartao.getAnoValidade();
+        if(anoValidade == null || anoValidade.isEmpty() || (Integer.parseInt(cartao.getAnoValidade()) < dataAtual.getYear()))
             return "Ano de validade menor que o ano atual";
 
-        if(cartao.getMesValidade() < 1 || cartao.getMesValidade() > 12)
+        String mesValidade = cartao.getMesValidade();
+        if(mesValidade == null || mesValidade.isEmpty() || (Integer.parseInt(cartao.getMesValidade()) < 1 || Integer.parseInt(cartao.getMesValidade()) > 12))
             return "Mês de validade inválido";
 
         return null;

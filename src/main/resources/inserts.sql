@@ -45,7 +45,12 @@ INSERT INTO cartoes (crt_cli_usr_id, crt_numero, crt_bandeira, crt_nome_impresso
 
 
 INSERT INTO enderecos (end_cli_usr_id,end_tp,end_apelido,end_tp_residencia,end_tp_logradouro,end_logradouro,end_num,end_bairro,end_cep,end_cidade,end_estado,end_observacao)
-VALUES (1,'COBRANCA_ENTREGA','Minha casa','Sobrado','Avenida','Pingo d''água','586','Fernandes','95044-120','Mogi das Cruzes','São Paulo','');
+VALUES  (1,'COBRANCA_ENTREGA','Minha casa','Sobrado','Avenida','Pingo d''água','586','Fernandes','95044-120','Mogi das Cruzes','São Paulo',''),
+        (1,'COBRANCA_ENTREGA','Apartamento A','Apartamento','Alameda','Águas sagradas','111','Amélia Soares','11111-111','Acrelândia','Acre',''),
+        (1,'COBRANCA','Sobrado B','Sobrado','Beco','Bonda dourada','222','Barões','22222-222','Bonito','Bahia',''),
+        (1,'ENTREGA','Casa C','Casa','Comunidade','Coroa Lorenzo','333','Carmo Nogueira','33333-333','Camocim','Ceará',''),
+        (1,'COBRANCA_ENTREGA','Casa D','Casa','Distrito','Dom Terciário Quarto','444','Dama Claudite','44444-444','Brasília','Distrito Federal','');
+
 
 INSERT INTO cupons (cpm_id, cpm_cli_usr_id, cpm_vnd_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) VALUES
 (1, 1, NULL, 'Cupom aniversariante', 'PROMOCIONAL', 20.0, '2023-01-01', 'Se presenteie bla bla bla...'),

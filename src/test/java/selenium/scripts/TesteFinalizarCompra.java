@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Test;
 import selenium.dataHelpers.ClienteDataHelper;
 import selenium.dataHelpers.ProdutoDataHelper;
 import selenium.dataHelpers.VOs.CartaoVO;
+import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.FinalizarCompraPage;
 import selenium.pageModels.ProdutoPage;
-import selenium.pageModels.components.FormCartaoComponent;
-import selenium.pageModels.components.HeaderClienteComponent;
-import selenium.pageModels.components.ModalCartoesComponent;
-import selenium.pageModels.perfilCliente.CarrinhoPage;
+import selenium.pageModels.components.*;
 
 import java.util.List;
 
@@ -44,15 +42,10 @@ public class TesteFinalizarCompra extends TesteAbstract{
             modalCartoes.selecionarCartao(cartao);
         }
 
-        modalCartoes.alterarCartoesSelecionados();
+        modalCartoes.alterarItensSelecionados();
 
         for(CartaoVO cartao : cartoes)
             assertTrue(finalizarCompra.isCartaoListado(cartao));
-
-        /*
-            editar cartão
-            selecionar mais de um cartão
-         */
     }
 
     @Test
@@ -60,7 +53,7 @@ public class TesteFinalizarCompra extends TesteAbstract{
         ModalCartoesComponent modalCartoes = finalizarCompra.abrirModalAlterarFormaPagamento();
         FormCartaoComponent formCartao = modalCartoes.adicionarNovoCartao();
 
-        CartaoVO cartaoVO = new CartaoVO(); // Cartão preferencial
+        CartaoVO cartaoVO = new CartaoVO();
         cartaoVO.setNumCartao("1234 1234 1234 1234");
         cartaoVO.setNomeCartao("Cartão finalizar compra teste");
         cartaoVO.setBandeira("Elo");
@@ -72,21 +65,46 @@ public class TesteFinalizarCompra extends TesteAbstract{
         assertTrue(finalizarCompra.abrirModalAlterarFormaPagamento().isCartaoListado(cartaoVO));
     }
 
-//    @Test
-//    public void testeAdicionarCartao(){
-//        ModalCartoesComponent modalCartoes = finalizarCompra.abrirModalAlterarFormaPagamento();
-//        FormCartaoComponent formCartao = modalCartoes.adicionarNovoCartao();
-//
-//        CartaoVO cartaoVO = new CartaoVO(); // Cartão preferencial
-//        cartaoVO.setNumCartao("1234 1234 1234 1234");
-//        cartaoVO.setNomeCartao("Cartão finalizar compra teste");
-//        cartaoVO.setBandeira("Elo");
-//        cartaoVO.setCodigoCartao("111");
-//        cartaoVO.setDtValidade("01/2030");
-//
-//        formCartao.salvarNovoCartao(cartaoVO);
-//
-//        assertTrue(finalizarCompra.abrirModalAlterarFormaPagamento().isCartaoListado(cartaoVO));
-//    }
+    @Test
+    public void testeEditarCartao(){
+        CartaoVO cartao = ClienteDataHelper.getCartoesPreviamenteCadastrados().get(0);
+
+        ModalCartoesComponent modalCartoes = finalizarCompra.abrirModalAlterarFormaPagamento();
+        FormCartaoComponent formCartao = modalCartoes.editarCartao(cartao);
+
+    }
+
+    @Test
+    public void testeAdicionarEnderecoCobranca(){
+        ModalEnderecosComponent modalEndereco = finalizarCompra.abrirModalAlterarEnderecoCobranca();
+        FormEnderecoComponent formEndereco = modalEndereco.adicionarNovoEndereco();
+
+        EnderecoVO enderecoVO = new EnderecoVO();
+        enderecoVO.setTpResidencia("Sobrado");
+        enderecoVO.setTpLogradouro("Avenida");
+        enderecoVO.setTpEndereco("Entrega");
+        enderecoVO.setLogradouro("Pingo d'água");
+        enderecoVO.setBairro("Fernandes");
+        enderecoVO.setNumeroEndereco("586");
+        enderecoVO.setCep("95044-120");
+        enderecoVO.setEstado("São Paulo");
+        enderecoVO.setCidade("Mogi das Cruzes");
+        enderecoVO.setApelidoEndereco("Teste finalizar compra");
+        enderecoVO.setObservacaoEndereco("");
+
+        formEndereco.salvarNovoEndereco(enderecoVO);
+
+        assertTrue(finalizarCompra.abrirModalAlterarEnderecoCobranca().isEnderecoListado(enderecoVO));
+    }
+
+    @Test
+    public void testeEditarEndereco(){
+        EnderecoVO endereco = ClienteDataHelper.getEnderecosPreviamenteCadastrados().get(0);
+
+        ModalEnderecosComponent modalEndereco = finalizarCompra.abrirModalAlterarEnderecoCobranca();
+        FormEnderecoComponent formEndereco = modalEndereco.editarEndereco(endereco);
+    }
+
+
 
 }

@@ -6,24 +6,21 @@ import org.openqa.selenium.WebElement;
 import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+public class ModalEnderecosComponent extends ModalAbstract {
 
-public class ModalCartoesComponent extends ModalAbstract{
-
-    public ModalCartoesComponent(WebDriver driver){
+    public ModalEnderecosComponent(WebDriver driver){
         super(driver);
     }
 
-    public FormCartaoComponent adicionarNovoCartao(){
+    public FormEnderecoComponent adicionarNovoEndereco(){
         driver.findElement(By.id("botaoAdicionarModal")).click();
-        return new FormCartaoComponent(driver);
+        return new FormEnderecoComponent(driver);
     }
 
-    public FormCartaoComponent editarCartao(CartaoVO cartaoVO){
-        WebElement cartao = getItemModal(cartaoVO.getFinalCartao());
+    public FormEnderecoComponent editarEndereco(EnderecoVO endereco){
+        WebElement cartao = getItemModal(endereco.getApelidoEndereco());
         cartao.findElement(By.tagName("small")).findElement(By.tagName("a")).click();
-        return new FormCartaoComponent(driver);
+        return new FormEnderecoComponent(driver);
     }
 
     public void selecionarCartao(CartaoVO cartaoVO){
@@ -33,8 +30,7 @@ public class ModalCartoesComponent extends ModalAbstract{
         cartao.findElement(By.tagName("a"));
     }
 
-    public boolean isCartaoListado(CartaoVO cartao){
-        return super.isItemListado(cartao.getFinalCartao());
+    public boolean isEnderecoListado(EnderecoVO enderecoVO){
+        return super.isItemListado(enderecoVO.getApelidoEndereco());
     }
-
 }
