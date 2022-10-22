@@ -33,9 +33,8 @@ public class Venda extends EntidadeDominio {
 
     public double calculaFrete(){
         int quantTotalItens = carrinho != null ? carrinho.getQuantTotalItens() : 1;
-        int distanciaEndereco = new Random(10L).nextInt(30);
 
-        return Math.max(1, quantTotalItens / 10) * 10.0 * distanciaEndereco;
+        return Math.max(1, quantTotalItens / 10) * 10.0;
     }
 
     public double getCalculaTotalEntrega(){

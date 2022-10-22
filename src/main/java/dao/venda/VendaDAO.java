@@ -55,6 +55,8 @@ public class VendaDAO implements IDAO {
             PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1, cliente.getUsuario().getId());
             pstm.setDouble(2, venda.getEnderecoEntrega().getId());
+
+            // TODO precisa gerar um cupom de troca caso o valor da compra esteja negativo
             pstm.setDouble(3, venda.getCalculaTotalEntrega()); ///
             pstm.setDouble(4, venda.calculaFrete());
             pstm.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
@@ -282,7 +284,6 @@ public class VendaDAO implements IDAO {
      * @param venda
      * @return
      */
-    @SuppressWarnings("unchecked")
     private List<EntidadeDominio> criaVendaProvisoria(Venda venda) {
         Cliente cliente = venda.getCliente();
         Endereco enderecoEntregaVenda = venda.getEnderecoEntrega();
@@ -306,23 +307,36 @@ public class VendaDAO implements IDAO {
         if (enderecoCobrancaVenda.getId() != null)
             enderecoCobranca = (Endereco) enderecoDAO.listar(enderecoCobrancaVenda, "listarUnico").get(0);
 
-        List<? extends EntidadeDominio> cartoes = cartaoDeCreditoDAO.listar(cartao, "listar");
-        List<? extends EntidadeDominio> cupons = cupomDAO.listar(cupom, "listarTodos");
+        List<CartaoDeCredito> cartoes = cartaoDeCreditoDAO.listar(cartao, "listar")
+                .stream()
+                .map(entidade -> (CartaoDeCredito) entidade)
+                .toList();
+
+        List<Cupom> cupons = cupomDAO.listar(cupom, "listarTodos")
+                .stream()
+                .map(entidade -> (Cupom) entidade)
+                .toList();
 
         venda.setEnderecoEntrega(enderecoEntrega);
         venda.setEnderecoCobranca(enderecoCobranca);
-        venda.setCartoes((List<CartaoDeCredito>) cartoes);
-        venda.setCupons((List<Cupom>) cupons);
+        venda.setCartoes(cartoes);
+        venda.setCupons(cupons);
 
         return List.of(venda);
     }
 
-    @SuppressWarnings("unchecked")
     private List<Cupom> getCuponsVenda(Cupom cupom, Venda venda) {
-        List<Long> ids = venda.getCupons().stream().map(Cupom::getId).toList();
+        List<Long> ids = venda.getCupons()
+                .stream()
+                .map(Cupom::getId)
+                .toList();
+
         List<? extends EntidadeDominio> cupons = cupomDAO.listar(cupom, "listarTodos");
 
-        return (List<Cupom>) cupons.stream().filter(c -> ids.contains(c.getId())).toList();
+        return cupons.stream()
+                .map(entidade -> (Cupom) entidade)
+                .filter(c -> ids.contains(c.getId()))
+                .toList();
     }
 
 }
