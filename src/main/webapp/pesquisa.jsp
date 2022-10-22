@@ -178,6 +178,7 @@
         event.preventDefault()
 
         $('#divProdutos').html("")
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
         $("#loading").show();
 
         let produtos = await getProdutos()

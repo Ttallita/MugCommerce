@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/assets/css/style.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/simple-notify.min.css'/>"/>
 </head>
 
 <body>
@@ -71,6 +72,7 @@
                                     <li>(Crédito) cartão com final ${cartao.finalCartao}</li>
                                 </c:forEach>
                             </ul>
+                            <div class="form-text"><b>Atenção:</b> apenas compras com preço final maior que R$ 20,00 podem ser pagas com mais de um cartão.</div>
                         </div>
                     </div>
 
@@ -89,6 +91,7 @@
                                 </c:forEach>
                             </select>
                             <button type="button" class="btn btn-outline-primary" id="botaoAplicarCupom" onclick="aplicarCupom()">Aplicar</button>
+                            <div class="form-text"><b>Atenção:</b> caso os <desconto></desconto>s superem o valor final de venda um cupom de troca será gerado.</div>
                         </div>
                     </div>
 
@@ -119,39 +122,39 @@
                 <div class="row vstack mt-5">
                     <div class="container border rounded py-4">
                         <form action="<c:url value='/clientes/carrinho/finalizarCompra'/>" id="formFinalizarCompra">
-                        <ul class="list-group">
-                            <li class="d-flex mb-4 justify-content-between">
-                                <h5 class="fw-bold">Resumo do pedido</h5>
-                            </li>
-                            <li class="d-flex justify-content-between">
-                                <strong class="text-muted">Itens:</strong>
-                                <strong><fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></strong>
-                            </li>
-                            <li class="d-flex justify-content-between">
-                                <strong class="text-muted">Frete:</strong>
-                                <strong><fmt:formatNumber value="${valorFrete}" type="currency"/></strong>
-                            </li>
-                            <li class="d-flex justify-content-between">
-                                <strong class="text-muted">Desconto:</strong>
-                                <strong id="valorDesconto" class="text-danger"> - R$ 00,00</strong>
-                            </li>
-                            <li class="d-flex justify-content-between py-3">
-                                <strong class="text-muted">Total do pedido:</strong>
-                                <h5 class="font-weight-bold" id="vlrTotalPedido"><fmt:formatNumber value="${carrinho.totalCarrinho + valorFrete}" type="currency"/></h5>
-                            </li>
-                        </ul>
+                            <ul class="list-group">
+                                <li class="d-flex mb-4 justify-content-between">
+                                    <h5 class="fw-bold">Resumo do pedido</h5>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <strong class="text-muted">Itens:</strong>
+                                    <strong><fmt:formatNumber value="${carrinho.totalCarrinho}" type="currency"/></strong>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <strong class="text-muted">Frete:</strong>
+                                    <strong><fmt:formatNumber value="${valorFrete}" type="currency"/></strong>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <strong class="text-muted">Desconto:</strong>
+                                    <strong id="valorDesconto" class="text-danger"> - R$ 00,00</strong>
+                                </li>
+                                <li class="d-flex justify-content-between py-3">
+                                    <strong class="text-muted">Total do pedido:</strong>
+                                    <h5 class="font-weight-bold" id="vlrTotalPedido"><fmt:formatNumber value="${carrinho.totalCarrinho + valorFrete}" type="currency"/></h5>
+                                </li>
+                            </ul>
 
-                        <input type="hidden" name="idEnderecoEscolhido" value="${enderecoEntrega.id}">
-                        <!-- IDs cupons -->
-                        <c:forEach var="cartao" items="${cartoesSelecionados}">
-                            <input type="hidden" name="idsCartoesSelecionados[]" value="${cartao.id}">
-                        </c:forEach>
-                        
-                        <!-- todos os produtos da venda são resgatados do carrinho salvo na session -->
-                        <input type="hidden" name="operacao" value="salvar">
+                            <input type="hidden" name="idEnderecoEscolhido" value="${enderecoEntrega.id}">
+                            <!-- IDs cupons -->
+                            <c:forEach var="cartao" items="${cartoesSelecionados}">
+                                <input type="hidden" name="idsCartoesSelecionados[]" value="${cartao.id}">
+                            </c:forEach>
 
-                        <input type="submit" class="btn btn-primary rounded-pill py-2" value="Confirmar pedido">
-                    </form>
+                            <!-- todos os produtos da venda são resgatados do carrinho salvo na session -->
+                            <input type="hidden" name="operacao" value="salvar">
+
+                            <input type="submit" class="btn btn-primary rounded-pill py-2" value="Confirmar pedido">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -159,6 +162,7 @@
         </div>
 
         <jsp:include page="../include/modalBase.jsp" />
+
 
     </main>
 
@@ -169,8 +173,8 @@
 <script src='<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"/>'></script>
 <script src='<c:url value="/webjars/jquery/3.6.1/jquery.min.js"/>'></script>
 <script src='<c:url value="/assets/js/construir-modal.js"/>'></script>
+<script src='<c:url value="/assets/js/simple-notify.min.js"/>'></script>
 <script src='<c:url value="/assets/js/geral.js"/>'></script>
-
 <script>
 
     const idEnderecoEscolhido = '${enderecoEntrega.id}';
@@ -181,12 +185,23 @@
     const parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idEnderecoCobrancaEscolhido=\${idEnderecoCobrancaEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
 
     function atualizarCartoesUtilizados(){
-        var ids = [];
-        Array.from(document.getElementById("formModal").getElementsByTagName("input"))
+        let ids = [];
+        let checkeds = Array.from(document.getElementById("formModal").getElementsByTagName("input"))
                             .filter(elem => elem.checked)
-                            .forEach(elem => ids.push(elem.id.match(/\d+/g)));
 
-        window.location.href = construirURLFinalizarCompra(idEnderecoEscolhido, ids)
+        let valorTotal = $('#vlrTotalPedido').text()
+
+        let valorTotalFormatado = valorTotal.replaceAll(".", "")
+            .replace(",", ".")
+            .replace("R$", "")
+
+        if(Number(valorTotalFormatado) < 20 && checkeds.length > 1) {
+            createNotify("error", "", "Não é possivel usar dois cartões se o valor final da compra é menor que R$ 10,00")
+            return
+        }
+
+        checkeds.forEach(elem => ids.push(elem.id.match(/\d+/g)))
+        window.location.href = construirURLFinalizarCompra(idEnderecoEscolhido, ids, idEnderecoCobrancaEscolhido)
     }
 
     async function atualizarEnderecoEntrega(event){
@@ -368,14 +383,32 @@
         atualizarValoresVenda();
     }
 
-    const valorVenda = parseFloat('${carrinho.totalCarrinho}') + parseFloat('${valorFrete}');
-
+    let valorVenda = parseFloat('${carrinho.totalCarrinho}') + parseFloat('${valorFrete}');
+    let formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
     function atualizarValoresVenda(){
         let somaCupons = 0;
         cuponsAplicados.forEach((v) => {somaCupons += v;});
 
+        if(valorVenda < 0) {
+            createNotify("error", "", "Não é possivel aplicar o cupom pois já foi superado o valor de venda")
+            return
+        }
+
+        let cartoes = $('input[name="idsCartoesSelecionados[]"')
+
+        let valorFinal = (parseFloat(valorVenda) - parseFloat(somaCupons)) * 100.0 / 100.0;
+
+        if(valorFinal < 20 && cartoes.length > 1) {
+            createNotify("error", "", "Não é possivel aplicar o cupom pois apenas é possivel usar dois cartões se o valor final for maior ou igual a R$ 20,00")
+            return
+        }
+
+        valorVenda = valorFinal;
         document.getElementById("valorDesconto").innerText = "-R$ " + somaCupons;
-        document.getElementById("vlrTotalPedido").innerText = "R$ " + (parseFloat(valorVenda) - parseFloat(somaCupons)) * 100.0 / 100.0 ;
+        document.getElementById("vlrTotalPedido").innerText = formatter.format(Math.max(valorFinal, 0));
     }
     
 </script>

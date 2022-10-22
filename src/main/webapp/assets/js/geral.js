@@ -148,3 +148,23 @@ $( "#formStatus" ).submit(function( event ) {
 
     $('#formStatus')[0].submit()
 });
+
+function createNotify(tipo, title, message) {
+    return new Notify({
+        status: tipo,
+        title: title,
+        text: message,
+        effect: 'fade',
+        speed: 300,
+        customClass: null,
+        customIcon: null,
+        showIcon: true,
+        showCloseButton: true,
+        autoclose: true,
+        autotimeout: 3000,
+        gap: 20,
+        distance: 20,
+        type: 1,
+        position: 'right top'
+    })
+}
