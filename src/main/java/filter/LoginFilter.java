@@ -22,10 +22,11 @@ public class LoginFilter implements Filter {
 
         Usuario usuarioLogado = (Usuario) req.getSession().getAttribute("usuarioLogado");
 
-        if(usuarioLogado != null && usuarioLogado.getTipoUsuario().equals(UsuarioType.ADMINISTRADOR))
-            res.sendRedirect("/emug/adm/clientes?operacao=listarTodos");
-        else
-            res.sendRedirect("/emug/index.jsp");
+        if(usuarioLogado != null)
+            if (usuarioLogado.getTipoUsuario().equals(UsuarioType.ADMINISTRADOR))
+                res.sendRedirect("/emug/adm/clientes?operacao=listarTodos");
+            else
+                res.sendRedirect("/emug/index.jsp");
 
         filterChain.doFilter(req, res);
     }

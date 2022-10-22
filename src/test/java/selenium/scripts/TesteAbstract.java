@@ -11,11 +11,16 @@ import selenium.pageModels.LoginPage;
 
 import java.time.Duration;
 
+/**
+ * ATENÇÃO! Lembrar de inserir o cliente padrão de login do arquivo emug.sql
+ */
 public abstract class TesteAbstract {
 
     protected WebDriver driver;
 
     protected static final String LINK_LOGIN = "http://localhost:8080/emug/login.jsp";
+
+    abstract void configurarCenarioTeste();
 
     @BeforeEach
     public void setup(){
@@ -23,6 +28,8 @@ public abstract class TesteAbstract {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        configurarCenarioTeste();
     }
 
     @AfterEach

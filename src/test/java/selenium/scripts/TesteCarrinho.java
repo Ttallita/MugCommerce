@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class TesteCarrinho extends TesteAbstract{
 
-    HomePage homeCliente;
-    HeaderClienteComponent headerCliente;
+    private HomePage homeCliente;
+    private HeaderClienteComponent headerCliente;
 
     @Override
     void configurarCenarioTeste() {
