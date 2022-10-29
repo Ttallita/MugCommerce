@@ -134,7 +134,7 @@ public class EstoqueDAO implements IDAO {
                 estoques.add(estoqueConsulta);
             }
 
-            System.err.printf("Listando %d estoques(s)/n", estoques.size());
+            System.err.printf("Listando %d estoques(s)\n", estoques.size());
 
             return estoques;
         } catch (SQLException | ClassNotFoundException e) {

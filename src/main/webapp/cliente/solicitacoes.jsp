@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
+<c:set var="paginaCorrente" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+<c:set var="nomePaginaCorrente" value="${ fn:contains(paginaCorrente, 'cancelamentos') ? 'Cancelamentos' : 'Trocas'}"/>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -9,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Perfil - Solicitações</title>
+    <title>Perfil - ${nomePaginaCorrente}</title>
 
     <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
@@ -25,8 +29,8 @@
         <jsp:include page="../include/sidebarCliente.jsp" />
 
         <div class="w-75 bg-white rounded p-5">
-            <h5>Solicitações</h5>
-
+            <h5>${nomePaginaCorrente}</h5>
+            
             <hr>
 
             <div class="container">
@@ -37,52 +41,28 @@
                         <table class="table table-hover" width="100%">
                             <thead>
                                 <tr>
+                                    <th>Data de solicitação</th>
                                     <th>Quant. Produtos</th>
                                     <th>Valor</th>
                                     <th>Tipo</th>
                                     <th>Status</th>
                                     <th>Data de entrega</th>
-                                    <th>Data de solicitação</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
-                                <tr>
-                                    <td>00</td>
-                                    <td>R$ 00,00</td>
-                                    <td>Troca</td>
-                                    <td>Aprovado</td>
-                                    <td>00/00/0000</td>
-                                    <td>00/00/0000</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalhesSolicitacao"><span class="material-icons">remove_red_eye</span></button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>00</td>
-                                    <td>R$ 00,00</td>
-                                    <td>Troca</td>
-                                    <td>Aprovado</td>
-                                    <td>00/00/0000</td>
-                                    <td>00/00/0000</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalhesSolicitacao"><span class="material-icons">remove_red_eye</span></button>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>00</td>
-                                    <td>R$ 00,00</td>
-                                    <td>Cancelamento</td>
-                                    <td>Aprovado</td>
-                                    <td>00/00/0000</td>
-                                    <td>00/00/0000</td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalhesSolicitacao"><span class="material-icons">remove_red_eye</span></button>
-                                    </td>
-                                </tr>
-                
+                                <c:forEach var="solicitacao" items="${solicitacoes}">
+                                    <tr>
+                                        <td>00/00/0000</td>
+                                        <td>${solicitacao}</td>
+                                        <td>R$ 00,00</td>
+                                        <td>Troca</td>
+                                        <td>${solicitacao.status.nomeExibicao}</td>
+                                        <td>00/00/0000</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalhesSolicitacao"><span class="material-icons">remove_red_eye</span></button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -97,7 +77,7 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title fw-bold" id="detalhesSolicitacaoLabel">Detalhes troca/cancelamento</h4>
+                            <h4 class="modal-title fw-bold" id="detalhesSolicitacaoLabel">Detalhes ${nomePaginaCorrente}</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
