@@ -51,8 +51,6 @@ public class VendaDAO implements IDAO {
         try {
             connection = conexao.getConexao();
 
-            cupomDAO.listar(cupom, "listar");
-
             String sql = "INSERT INTO vendas (vnd_cli_usr_id, vnd_end_entrega_id, vnd_preco_total, vnd_frete, vnd_dt_compra, vnd_dt_envio, vnd_dt_entrega, vnd_pagamento_aprovado, vnd_status, vnd_end_cobranca_id)" +
                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
