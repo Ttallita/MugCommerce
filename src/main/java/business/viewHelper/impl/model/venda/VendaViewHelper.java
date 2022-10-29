@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -197,7 +198,13 @@ public class VendaViewHelper implements IViewHelper {
             }
 
             case "listarTodos" -> {
-                request.setAttribute("vendas", result.getEntidades());
+                List<Venda> vendasOrdenadasDataCompra = result.getEntidades()
+                        .stream()
+                        .map(entidade -> (Venda) entidade)
+                        .sorted(Comparator.comparing(Venda::getDataCompra, Comparator.reverseOrder()))
+                        .toList();
+
+                request.setAttribute("vendas", vendasOrdenadasDataCompra);
                 request.getRequestDispatcher("/gerenciar/vendas.jsp").forward(request, response);
             }
 

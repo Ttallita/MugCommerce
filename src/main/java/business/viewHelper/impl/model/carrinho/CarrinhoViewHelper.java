@@ -5,6 +5,7 @@ import model.EntidadeDominio;
 import model.Result;
 import model.carrinho.ItemCarrinho;
 import model.produto.Produto;
+import utils.UtilsWeb;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -63,6 +64,11 @@ public class CarrinhoViewHelper implements IViewHelper {
 
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.sendRedirect("/emug/cliente/carrinho.jsp");
+        String operacao = request.getParameter("operacao");
+
+        if(operacao.equals("salvar"))
+            response.sendRedirect("/emug/cliente/carrinho.jsp");
+        else
+            UtilsWeb.montaRespostaJson(result, request, response);
     }
 }

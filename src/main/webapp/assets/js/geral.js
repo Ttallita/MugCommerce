@@ -159,7 +159,7 @@ function createNotify(tipo, title, message) {
         customClass: null,
         customIcon: null,
         showIcon: true,
-        showCloseButton: true,
+        showCloseButton: false,
         autoclose: true,
         autotimeout: 3000,
         gap: 20,

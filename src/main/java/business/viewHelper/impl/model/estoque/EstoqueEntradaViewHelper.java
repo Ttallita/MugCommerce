@@ -43,7 +43,10 @@ public class EstoqueEntradaViewHelper implements IViewHelper {
             estoqueHistorico.setFornecedor(new Fornecedor(request.getParameter("fornecedor")));
             estoqueHistorico.setDataEntrada(LocalDateTime.now());
 
-            String valorCusto = request.getParameter("valorCusto");
+            String valorCusto = request.getParameter("valorCusto")
+                    .replace(".", "")
+                    .replace(",", ".");
+
             if(!valorCusto.isBlank())
                 estoqueHistorico.setValorCusto(Double.parseDouble(valorCusto));
 
