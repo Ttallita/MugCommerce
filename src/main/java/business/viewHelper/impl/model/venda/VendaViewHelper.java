@@ -48,10 +48,10 @@ public class VendaViewHelper implements IViewHelper {
                 }
 
 
-                Endereco enderecoEntrega = new Endereco();
+                Endereco enderecoEntrega = new Endereco(cliente);
                 enderecoEntrega.setId(Long.valueOf(idEndereco));
 
-                Endereco enderecoCobranca = new Endereco();
+                Endereco enderecoCobranca = new Endereco(cliente);
                 enderecoCobranca.setId(Long.valueOf(idEnderecoCobrancaEscolhido));
 
                 List<String> idsCartoesSelecionados = UtilsWeb.converteParametrosParaLista(request.getParameter("idsCartoesSelecionados[]"));
@@ -63,7 +63,7 @@ public class VendaViewHelper implements IViewHelper {
                     idsCupons = UtilsWeb.converteParametrosParaLista(cupons);
 
                 for (String id : idsCartoesSelecionados){
-                    CartaoDeCredito cartao = new CartaoDeCredito();
+                    CartaoDeCredito cartao = new CartaoDeCredito(cliente);
                     cartao.setId(Long.parseLong(id));
 
                     venda.addCartaoDeCredito(cartao);
@@ -71,7 +71,7 @@ public class VendaViewHelper implements IViewHelper {
 
                 if(idsCupons != null) {
                     for (String id : idsCupons){
-                        Cupom cupom = new Cupom();
+                        Cupom cupom = new Cupom(cliente);
                         cupom.setId(Long.parseLong(id));
 
                         venda.addCupom(cupom);
@@ -94,10 +94,10 @@ public class VendaViewHelper implements IViewHelper {
                     String idEnderecoEscolhido = request.getParameter("idEnderecoEscolhido");
                     String idEnderecoCobrancaEscolhido = request.getParameter("idEnderecoCobrancaEscolhido");
 
-                    Endereco enderecoEntrega = new Endereco();
+                    Endereco enderecoEntrega = new Endereco(cliente);
                     enderecoEntrega.setId(idEnderecoEscolhido != null && !idEnderecoEscolhido.isEmpty() ? Long.parseLong(idEnderecoEscolhido) : null);
 
-                    Endereco enderecoCobranca = new Endereco();
+                    Endereco enderecoCobranca = new Endereco(cliente);
                     enderecoCobranca.setId(idEnderecoCobrancaEscolhido != null && !idEnderecoCobrancaEscolhido.isEmpty() ? Long.parseLong(idEnderecoCobrancaEscolhido) : null);
 
                     venda.setEnderecoEntrega(enderecoEntrega);

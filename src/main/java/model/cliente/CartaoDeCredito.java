@@ -1,5 +1,6 @@
 package model.cliente;
 
+import dao.cliente.ClienteDAO;
 import model.EntidadeDominio;
 
 import java.util.Objects;
@@ -15,6 +16,12 @@ public class CartaoDeCredito extends EntidadeDominio {
     private Integer codigo;
     private boolean preferencial;
     private transient Cliente cliente;
+
+    public CartaoDeCredito(){}
+
+    public CartaoDeCredito(Cliente cliente){
+        this.cliente = cliente;
+    }
 
     public String getNumCartao() {
         return numCartao;

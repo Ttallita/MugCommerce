@@ -20,6 +20,12 @@ public class Endereco extends EntidadeDominio {
     private String apelido;
     private transient Cliente cliente;
 
+    public Endereco() {}
+
+    public Endereco(Cliente cliente){
+        this.cliente = cliente;
+    }
+
     public String getTipoResidencia() {
         return tipoResidencia;
     }

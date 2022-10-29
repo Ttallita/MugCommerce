@@ -96,7 +96,7 @@
                     <div class="col-md-6">
                         <label for="cidade"><small>Cidade</small></label>
                         <input type="hidden" value="${endereco.cidade}" id="cidadeAtual">
-                        <select class="form-select" id="cidade" name="cidade">
+                        <select class="form-select" id="cidade" name="cidade" ${empty endereco.cidade  ? 'disabled' : ''}>
                             <option value="">Selecione</option>
                         </select>
                     </div>
