@@ -3,6 +3,7 @@ package selenium.pageModels.perfilCliente;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.formularios.FormEnderecoPage;
 import selenium.utils.UtilsTeste;

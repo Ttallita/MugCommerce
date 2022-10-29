@@ -5,11 +5,11 @@ import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import selenium.dataHelpers.VOs.CartaoVO;
+import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.components.ModalCartoesComponent;
 import selenium.pageModels.components.ModalEnderecosComponent;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class FinalizarCompraPage extends PageAbstract{
 
@@ -40,9 +40,23 @@ public class FinalizarCompraPage extends PageAbstract{
 
     public boolean isCartaoListado(CartaoVO cartao){
         List<WebElement> cartoes = driver.findElement(By.id("divCartoes")).findElements(By.tagName("li"));
+        return isElementoListado(cartoes, cartao.getFinalCartao());
+    }
 
-        for (WebElement c: cartoes){
-            if (c.getText().contains(cartao.getFinalCartao()))
+    public boolean isEnderecoEntregaListado(EnderecoVO endereco){
+
+        List<WebElement> enderecos = driver.findElement(By.id("divEnderecoEntrega")).findElements(By.tagName("li"));
+        return isElementoListado(enderecos, endereco.getApelidoEndereco());
+    }
+
+    public boolean isEnderecoCobrancaListado(EnderecoVO endereco){
+        List<WebElement> enderecos = driver.findElement(By.id("divEnderecoCobranca")).findElements(By.tagName("li"));
+        return isElementoListado(enderecos, endereco.getApelidoEndereco());
+    }
+
+    private static boolean isElementoListado(List<WebElement> elementos, String identificadorElemento) {
+        for (WebElement e: elementos){
+            if (e.getText().contains(identificadorElemento))
                 return true;
         }
         return false;

@@ -4,10 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import selenium.dataHelpers.VOs.CartaoVO;
-import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.PageAbstract;
 import selenium.pageModels.components.FormCartaoComponent;
-import selenium.pageModels.components.FormEnderecoComponent;
 
 public class FormCartaoPage extends PageAbstract{
 

@@ -17,16 +17,16 @@ public class ModalEnderecosComponent extends ModalAbstract {
         return new FormEnderecoComponent(driver);
     }
 
-    public FormEnderecoComponent editarEndereco(EnderecoVO endereco){
-        WebElement cartao = getItemModal(endereco.getApelidoEndereco());
-        cartao.findElement(By.tagName("small")).findElement(By.tagName("a")).click();
+    public FormEnderecoComponent editarEndereco(EnderecoVO enderecoVO){
+        WebElement endereco = getItemModal(enderecoVO.getApelidoEndereco());
+        endereco.findElement(By.tagName("a")).click();
         return new FormEnderecoComponent(driver);
     }
 
-    public void selecionarCartao(CartaoVO cartaoVO){
-        WebElement cartao = getItemModal(cartaoVO.getFinalCartao());
+    public void selecionarEndereco(EnderecoVO enderecoVO){
+        WebElement cartao = getItemModal(enderecoVO.getApelidoEndereco());
 
-        cartao.findElement(By.cssSelector("input[type*='checkbox']")).click();
+        cartao.findElement(By.cssSelector("input[type*='radio']")).click();
         cartao.findElement(By.tagName("a"));
     }
 

@@ -9,8 +9,10 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 import selenium.dataHelpers.VOs.ClienteVO;
+import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.dataHelpers.VOs.UsuarioVO;
+import selenium.utils.UtilsTeste;
 
 public class CadastroClientePage extends PageAbstract{
 
@@ -88,15 +90,16 @@ public class CadastroClientePage extends PageAbstract{
         campoNumeroEndereco.sendKeys(endereco.getNumeroEndereco());
         campoCep.sendKeys(endereco.getCep());
 
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        UtilsTeste.esperarJavaScriptExecutar(wait);
+
         if(!endereco.getEstado().isBlank()) {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofMinutes(1));
-            wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("estado"), endereco.getEstado()));
             campoEstado.sendKeys(endereco.getEstado());
         }
 
         if(!endereco.getCidade().isBlank()) {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofMinutes(1));
-            wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("cidade"), endereco.getCidade()));
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("select[id='cidade'] > option"), 1));
             campoCidade.sendKeys(endereco.getCidade());
         }
 
