@@ -4,27 +4,60 @@ import dao.IDAO;
 import dao.produto.ProdutoDAO;
 import dao.venda.VendaDAO;
 import model.EntidadeDominio;
-import model.cliente.Cliente;
 import model.produto.Produto;
 import model.solicitacao.StatusSolicitacaoType;
 import model.solicitacao.Troca;
 import model.venda.Venda;
 import utils.Conexao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TrocaDAO implements IDAO {
 
-    private VendaDAO vendaDAO = new VendaDAO();
-    private ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final VendaDAO vendaDAO = new VendaDAO();
+    private final ProdutoDAO produtoDAO = new ProdutoDAO();
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
+        Troca troca = (Troca) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+
+        try {
+            connection = conexao.getConexao();
+
+            String sql = "INSERT INTO trocas (trc_pro_id, trc_vnd_id, trc_cli_usr_id, trc_data, trc_status)" +
+                    " VALUES (?, ?, ?, ?, ?)";
+
+            PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstm.setLong(1, troca.getProduto().getId());
+            pstm.setLong(2, troca.getVenda().getId());
+            pstm.setLong(3, troca.getCliente().getUsuario().getId());
+            pstm.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
+            pstm.setString(5, StatusSolicitacaoType.SOLICITADA.name());
+
+            pstm.execute();
+
+            ResultSet rs = pstm.getGeneratedKeys();
+            while (rs.next()) {
+                troca.setId(rs.getLong(1));
+            }
+
+            produtoDAO.marcarEmTrocaProdutoVenda(troca.getProduto(), troca.getVenda());
+
+            return troca;
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
+        }
+
         return null;
     }
 
@@ -67,11 +100,11 @@ public class TrocaDAO implements IDAO {
 
                 Produto produtoConsulta = new Produto();
                 produtoConsulta.setId(rs.getLong("trc_pro_id"));
-                trocaConsulta.setProduto((Produto) produtoDAO.listar(produtoConsulta, "listaUnico").get(0));
+                trocaConsulta.setProduto((Produto) produtoDAO.listar(produtoConsulta, "listarUnico").get(0));
 
                 Venda vendaConsulta = new Venda();
-                vendaConsulta.setId(rs.getLong("ccl_vnd_id"));
-                trocaConsulta.setVenda((Venda) vendaDAO.listar(vendaConsulta, "listaUnico").get(0));
+                vendaConsulta.setId(rs.getLong("trc_vnd_id"));
+                trocaConsulta.setVenda((Venda) vendaDAO.listar(vendaConsulta, "listarUnico").get(0));
 
                 trocaConsulta.setCliente(troca.getCliente());
                 trocaConsulta.setData(rs.getTimestamp("trc_data").toLocalDateTime().toLocalDate());

@@ -5,7 +5,6 @@ import model.cliente.Cliente;
 import model.venda.Venda;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Cancelamento extends EntidadeDominio implements ISolicitacao {
 

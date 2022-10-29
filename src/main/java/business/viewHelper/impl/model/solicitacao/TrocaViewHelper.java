@@ -5,7 +5,9 @@ import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.cliente.Cliente;
+import model.produto.Produto;
 import model.solicitacao.Troca;
+import model.venda.Venda;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +21,25 @@ public class TrocaViewHelper implements IViewHelper {
         String operacao = request.getParameter("operacao");
         Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
+        Troca troca = new Troca(new Cliente(usuarioLogado));
+
         switch (operacao) {
             case "listar" -> {
-                Troca troca = new Troca(new Cliente(usuarioLogado));
                 return troca;
             }
+
+            case "salvar" -> {
+                Venda venda = new Venda();
+                Produto produto = new Produto();
+                venda.setId(Long.parseLong(request.getParameter("idVenda")));
+                produto.setId(Long.parseLong(request.getParameter("idProduto")));
+
+                troca.setVenda(venda);
+                troca.setProduto(produto);
+
+                return troca;
+            }
+
         }
 
         return null;
@@ -38,6 +54,9 @@ public class TrocaViewHelper implements IViewHelper {
                 request.setAttribute("solicitacoes", result.getEntidades());
                 request.getRequestDispatcher("/cliente/solicitacoes.jsp").forward(request, response);
             }
+
+            case "salvar" ->
+                response.sendRedirect("/emug/clientes/compras?operacao=listar");
         }
     }
 

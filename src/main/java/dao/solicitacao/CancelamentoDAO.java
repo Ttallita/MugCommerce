@@ -20,6 +20,9 @@ public class CancelamentoDAO implements IDAO {
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
+
+        // TODO mudar status da compra para "Cancelada"
+
         return null;
     }
 
@@ -62,7 +65,7 @@ public class CancelamentoDAO implements IDAO {
 
                 Venda vendaConsulta = new Venda();
                 vendaConsulta.setId(rs.getLong("ccl_vnd_id"));
-                cancelamentoConsulta.setVenda((Venda) vendaDAO.listar(vendaConsulta, "listaUnico").get(0));
+                cancelamentoConsulta.setVenda((Venda) vendaDAO.listar(vendaConsulta, "listarUnico").get(0));
 
                 cancelamentoConsulta.setCliente(cancelamento.getCliente());
                 cancelamentoConsulta.setData(rs.getTimestamp("ccl_data").toLocalDateTime().toLocalDate());

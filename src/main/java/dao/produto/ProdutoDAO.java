@@ -8,6 +8,7 @@ import model.produto.Categoria;
 import model.produto.Fabricante;
 import model.produto.GrupoPrecificacao;
 import model.produto.Produto;
+import model.venda.Venda;
 import utils.Conexao;
 
 import java.sql.*;
@@ -101,8 +102,6 @@ public class ProdutoDAO implements IDAO {
             setaValores(produto, valorVenda, pstm);
             pstm.setLong(10, produto.getId());
             pstm.execute();
-
-
 
             return produto;
         } catch (Exception e) {
@@ -247,5 +246,30 @@ public class ProdutoDAO implements IDAO {
         }
 
         return null;
+    }
+
+    public void marcarEmTrocaProdutoVenda(Produto produto, Venda venda){
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "UPDATE produtos_em_venda " +
+                    "SET prv_em_troca = TRUE " +
+                    "WHERE prv_pro_id = ? AND prv_vnd_id = ?";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setLong(1, produto.getId());
+            pstm.setLong(2, venda.getId());
+
+            pstm.execute();
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(conn);
+        }
     }
 }
