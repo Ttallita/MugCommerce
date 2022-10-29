@@ -52,12 +52,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <c:forEach var="estoque" items="${estoques}">
+                                <c:forEach var="estoque" items="${estoques}">
+                                    <tr>
                                         <td>${estoque.produto.nome}</td>
                                         <td>${estoque.quantidade}</td>
-                                    </c:forEach>
-                                </tr>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
 
