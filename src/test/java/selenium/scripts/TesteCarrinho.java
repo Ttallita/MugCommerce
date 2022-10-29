@@ -25,7 +25,7 @@ public class TesteCarrinho extends TesteAbstract{
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Caneca ursinho"})
+    @ValueSource(strings = {"Caneca Urso Polar"})
     public void testeAdicionarProdutoIndexCarrinho(String nomeProduto) {
         homeCliente.abrirPaginaProduto(nomeProduto).adicionarProdutoCarrinho();
 
@@ -34,7 +34,7 @@ public class TesteCarrinho extends TesteAbstract{
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Caneca ursinho"})
+    @ValueSource(strings = {"Caneca Urso Polar"})
     public void testeAdicionarProdutoPesquisaCarrinho(String nomeProduto){
         homeCliente.pesquisar(nomeProduto);
 
@@ -60,7 +60,7 @@ public class TesteCarrinho extends TesteAbstract{
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"Caneca ursinho"})
+    @ValueSource(strings = {"Caneca Urso Polar"})
     public void testeExcluirProdutocarrinho(String nomeProduto){
         this.testeAdicionarProdutoIndexCarrinho(nomeProduto);
         CarrinhoPage carrinho = headerCliente.acessarCarrinho();

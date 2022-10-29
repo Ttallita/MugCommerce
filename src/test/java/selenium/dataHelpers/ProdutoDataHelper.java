@@ -10,17 +10,17 @@ public class ProdutoDataHelper {
 
     private static Stream<Arguments> quantProdutosCarrinho() {
         return Stream.of(
-                Arguments.of(1, "Caneca ursinho"),
-                Arguments.of(10, "Caneca ursinho"),
-                Arguments.of(-1, "Caneca ursinho"),
-                Arguments.of(-10, "Caneca ursinho")
+                Arguments.of(1, "Caneca Urso Polar"),
+                Arguments.of(9, "Caneca Urso Polar"),
+                Arguments.of(-1, "Caneca Urso Polar"),
+                Arguments.of(-9, "Caneca Urso Polar")
         );
     }
 
     public static List<String> nomesProdutos() {
         return List.of(
-                "Caneca ursinho",
-                "Caneca sapinho"
+                "Caneca Urso Polar",
+                "Caneca Urso Polar"
         );
     }
 }

@@ -66,9 +66,10 @@ public class CarrinhoViewHelper implements IViewHelper {
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String operacao = request.getParameter("operacao");
 
-        if(operacao.equals("salvar"))
-            response.sendRedirect("/emug/cliente/carrinho.jsp");
-        else
-            UtilsWeb.montaRespostaJson(result, request, response);
+        switch (operacao) {
+            case "salvar", "excluir" -> response.sendRedirect("/emug/cliente/carrinho.jsp");
+            default -> UtilsWeb.montaRespostaJson(result, request, response);
+        }
+        
     }
 }
