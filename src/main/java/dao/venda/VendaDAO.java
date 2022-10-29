@@ -90,6 +90,7 @@ public class VendaDAO implements IDAO {
 
                 pstm.execute();
 
+                // TODO pode ser que esse código precise ser movido para o momento da troca de status de acordo com a RN0028
                 Estoque estoque = new Estoque();
                 estoque.setProduto(item.getProduto());
 
