@@ -260,9 +260,9 @@
 
         json.filter(endereco =>{
                 if(isEnderecoEntrega)
-                    return endereco.tipoEndereco !== 'COBRANCA'
+                    return endereco.tipoEndereco !== 'Cobrança'
                 else
-                    return endereco.tipoEndereco !== 'ENTREGA'
+                    return endereco.tipoEndereco !== 'Entrega'
             })
             .forEach(endereco => {
                 let isEnderecoSelecionado = idEnderecoEscolhido == endereco.id;
@@ -415,7 +415,6 @@
             return
         }
 
-        valorVenda = valorFinal;
         document.getElementById("valorDesconto").innerText = "-R$ " + somaCupons;
         document.getElementById("vlrTotalPedido").innerText = formatter.format(Math.max(valorFinal, 0));
     }

@@ -13,6 +13,7 @@ import model.carrinho.ItemCarrinho;
 import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
+import model.cliente.endereco.EnderecoType;
 import model.cupom.Cupom;
 import model.estoque.Estoque;
 import model.produto.Produto;
@@ -299,58 +300,71 @@ public class VendaDAO implements IDAO {
      */
     private List<EntidadeDominio> criaVendaProvisoria(Venda venda) {
         Cliente cliente = venda.getCliente();
-        Endereco enderecoEntregaVenda = venda.getEnderecoEntrega();
-        Endereco enderecoCobrancaVenda = venda.getEnderecoCobranca();
 
-        CartaoDeCredito cartao = new CartaoDeCredito();
-        Cupom cupom = new Cupom();
+        defineEnderecosVenda(venda);
 
-        enderecoEntregaVenda.setCliente(cliente);
-        enderecoCobrancaVenda.setCliente(cliente);
-        cartao.setCliente(cliente);
-        cupom.setCliente(cliente);
+        List<CartaoDeCredito> cartoes = cartaoDeCreditoDAO.listar(new CartaoDeCredito(cliente), "listar").stream()
+                .map(entidade -> (CartaoDeCredito) entidade).toList();
 
-        Endereco enderecoEntrega;
-        if (enderecoEntregaVenda.getId() == null)
-            enderecoEntrega = (Endereco) enderecoDAO.listar(enderecoEntregaVenda, "listar").get(0);
-        else
-            enderecoEntrega = (Endereco) enderecoDAO.listar(enderecoEntregaVenda, "listarUnico").get(0);
+        List<Cupom> cupons = cupomDAO.listar(new Cupom(cliente), "listarTodos").stream()
+                .map(entidade -> (Cupom) entidade).toList();
 
-        Endereco enderecoCobranca = null;
-        if (enderecoCobrancaVenda.getId() != null)
-            enderecoCobranca = (Endereco) enderecoDAO.listar(enderecoCobrancaVenda, "listarUnico").get(0);
-
-        List<CartaoDeCredito> cartoes = cartaoDeCreditoDAO.listar(cartao, "listar")
-                .stream()
-                .map(entidade -> (CartaoDeCredito) entidade)
-                .toList();
-
-        List<Cupom> cupons = cupomDAO.listar(cupom, "listarTodos")
-                .stream()
-                .map(entidade -> (Cupom) entidade)
-                .filter(c -> c.getDataValidade().isAfter(LocalDate.now()) || c.getDataValidade().equals(LocalDate.now()))
-                .toList();
-
-        venda.setEnderecoEntrega(enderecoEntrega);
-        venda.setEnderecoCobranca(enderecoCobranca);
         venda.setCartoes(cartoes);
         venda.setCupons(cupons);
 
         return List.of(venda);
     }
 
+    private void defineEnderecosVenda(Venda venda) {
+
+        Endereco enderecoEntregaVenda = venda.getEnderecoEntrega();
+        Endereco enderecoCobrancaVenda = venda.getEnderecoCobranca();
+        Endereco enderecoEntrega = null;
+        Endereco enderecoCobranca = null;
+
+        List<Endereco> enderecos = enderecoDAO.listar(new Endereco(venda.getCliente()), "listar").stream()
+                .map(entidade -> (Endereco) entidade).toList();
+
+
+        if (enderecoEntregaVenda.getId() == null && enderecoCobrancaVenda.getId() == null){
+            enderecoEntrega = enderecos.stream()
+                    .filter(e -> e.getTipoEndereco().equals(EnderecoType.COBRANCA_ENTREGA))
+                    .findFirst().orElse(null);
+
+        } else if (enderecoEntregaVenda.getId() != null) {
+            enderecoEntrega = (Endereco) enderecoDAO.listar(enderecoEntregaVenda, "listarUnico").get(0);
+        }
+
+
+        // Caso não tenha sido possível definir um endereço que sirva tanto para entrega quanto para cobrança
+        if (!EnderecoType.COBRANCA_ENTREGA.equals(enderecoEntregaVenda.getTipoEndereco())){
+            if (enderecoEntrega == null) {
+                enderecoEntrega = enderecos.stream()
+                        .filter(e -> e.getTipoEndereco().equals(EnderecoType.ENTREGA))
+                        .findFirst().orElse(null);
+            }
+
+            if (enderecoCobrancaVenda.getId() == null) {
+                enderecoCobranca = enderecos.stream()
+                        .filter(e -> e.getTipoEndereco().equals(EnderecoType.COBRANCA))
+                        .findFirst().orElse(null);
+            } else
+                enderecoCobranca = (Endereco) enderecoDAO.listar(enderecoCobrancaVenda, "listarUnico").get(0);
+        }
+
+        venda.setEnderecoEntrega(enderecoEntrega);
+        venda.setEnderecoCobranca(enderecoCobranca);
+    }
+
     private List<Cupom> getCuponsVenda(Cupom cupom, Venda venda) {
-        List<Long> ids = venda.getCupons()
-                .stream()
-                .map(Cupom::getId)
-                .toList();
+        List<Long> ids = venda.getCupons().stream()
+                .map(Cupom::getId).toList();
 
         List<? extends EntidadeDominio> cupons = cupomDAO.listar(cupom, "listarTodos");
 
         return cupons.stream()
                 .map(entidade -> (Cupom) entidade)
-                .filter(c -> ids.contains(c.getId()))
-                .toList();
+                .filter(c -> ids.contains(c.getId())).toList();
     }
 
 }

@@ -18,6 +18,12 @@ public class Cupom extends EntidadeDominio {
     private LocalDate dataValidade;
     private String descricao;
 
+    public Cupom(){}
+
+    public Cupom(Cliente cliente){
+        this.cliente = cliente;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }

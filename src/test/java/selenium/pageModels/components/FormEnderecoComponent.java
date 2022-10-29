@@ -1,14 +1,19 @@
 package selenium.pageModels.components;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
+import selenium.utils.UtilsTeste;
 
 import java.time.Duration;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 public class FormEnderecoComponent {
 
@@ -63,11 +68,17 @@ public class FormEnderecoComponent {
         campoBairro.sendKeys(endereco.getBairro());
         campoNumeroEndereco.sendKeys(endereco.getNumeroEndereco());
         campoCep.sendKeys(endereco.getCep());
-        campoEstado.sendKeys(endereco.getEstado());
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        UtilsTeste.esperarJavaScriptExecutar(wait);
 
         if(!endereco.getEstado().isBlank()) {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("cidade"), "Mogi das Cruzes"));
+            campoEstado.sendKeys(endereco.getEstado());
+        }
+
+        if(!endereco.getCidade().isBlank()) {
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("select[id='cidade'] > option"), 1));
             campoCidade.sendKeys(endereco.getCidade());
         }
 

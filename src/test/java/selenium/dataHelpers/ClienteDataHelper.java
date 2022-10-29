@@ -139,7 +139,59 @@ public class ClienteDataHelper {
     /**
      * Endereços previamente salvos no banco de dados
      */
-    public static List<EnderecoVO> getEnderecosPreviamenteCadastrados() {
+    public static List<EnderecoVO> getEnderecosCobrancaPreviamenteCadastrados() {
+        List<EnderecoVO> enderecoVOS = new ArrayList<>();
+
+        EnderecoVO enderecoVO1 = new EnderecoVO();
+        enderecoVO1.setTpResidencia("Apartamento");
+        enderecoVO1.setTpLogradouro("Alameda");
+        enderecoVO1.setTpEndereco("Entrega e cobrança");
+        enderecoVO1.setLogradouro("Águas sagradas");
+        enderecoVO1.setBairro("Amélia Soares");
+        enderecoVO1.setNumeroEndereco("111");
+        enderecoVO1.setCep("11111-111");
+        enderecoVO1.setEstado("Acre");
+        enderecoVO1.setCidade("Acrelândia");
+        enderecoVO1.setApelidoEndereco("Apartamento A");
+        enderecoVO1.setObservacaoEndereco("");
+
+        EnderecoVO enderecoVO2 = new EnderecoVO();
+        enderecoVO2.setTpResidencia("Sobrado");
+        enderecoVO2.setTpLogradouro("Beco");
+        enderecoVO2.setTpEndereco("Cobrança");
+        enderecoVO2.setLogradouro("Bonda dourada");
+        enderecoVO2.setBairro("Barões");
+        enderecoVO2.setNumeroEndereco("222");
+        enderecoVO2.setCep("22222-222");
+        enderecoVO2.setEstado("Bahia");
+        enderecoVO2.setCidade("Bonito");
+        enderecoVO2.setApelidoEndereco("Sobrado B");
+        enderecoVO2.setObservacaoEndereco("");
+
+        EnderecoVO enderecoVO4 = new EnderecoVO();
+        enderecoVO4.setTpResidencia("Casa");
+        enderecoVO4.setTpLogradouro("Distrito");
+        enderecoVO4.setTpEndereco("Entrega e cobrança");
+        enderecoVO4.setLogradouro("Dom Terciário Quarto");
+        enderecoVO4.setBairro("Dama Claudite");
+        enderecoVO4.setNumeroEndereco("444");
+        enderecoVO4.setCep("44444-444");
+        enderecoVO4.setEstado("Distrito Federal");
+        enderecoVO4.setCidade("Brasília");
+        enderecoVO4.setApelidoEndereco("Casa D");
+        enderecoVO4.setObservacaoEndereco("");
+
+        enderecoVOS.add(enderecoVO1);
+        enderecoVOS.add(enderecoVO2);
+        enderecoVOS.add(enderecoVO4);
+
+        return enderecoVOS;
+    }
+
+    /**
+     * Endereços previamente salvos no banco de dados
+     */
+    public static List<EnderecoVO> getEnderecosEntregaPreviamenteCadastrados() {
         List<EnderecoVO> enderecoVOS = new ArrayList<>();
 
         EnderecoVO enderecoCadastro = new EnderecoVO();
@@ -168,19 +220,6 @@ public class ClienteDataHelper {
         enderecoVO1.setApelidoEndereco("Apartamento A");
         enderecoVO1.setObservacaoEndereco("");
 
-        EnderecoVO enderecoVO2 = new EnderecoVO();
-        enderecoVO2.setTpResidencia("Sobrado");
-        enderecoVO2.setTpLogradouro("Beco");
-        enderecoVO2.setTpEndereco("Cobrança");
-        enderecoVO2.setLogradouro("Bonda dourada");
-        enderecoVO2.setBairro("Barões");
-        enderecoVO2.setNumeroEndereco("222");
-        enderecoVO2.setCep("22222-222");
-        enderecoVO2.setEstado("Bahia");
-        enderecoVO2.setCidade("Bonito");
-        enderecoVO2.setApelidoEndereco("Sobrado B");
-        enderecoVO2.setObservacaoEndereco("");
-
         EnderecoVO enderecoVO3 = new EnderecoVO();
         enderecoVO3.setTpResidencia("Casa");
         enderecoVO3.setTpLogradouro("Comunidade");
@@ -206,10 +245,9 @@ public class ClienteDataHelper {
         enderecoVO4.setCidade("Brasília");
         enderecoVO4.setApelidoEndereco("Casa D");
         enderecoVO4.setObservacaoEndereco("");
-        
+
         enderecoVOS.add(enderecoCadastro);
         enderecoVOS.add(enderecoVO1);
-        enderecoVOS.add(enderecoVO2);
         enderecoVOS.add(enderecoVO3);
         enderecoVOS.add(enderecoVO4);
 

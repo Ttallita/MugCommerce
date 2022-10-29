@@ -12,7 +12,7 @@ import selenium.pageModels.LoginPage;
 import java.time.Duration;
 
 /**
- * ATENÇÃO! Lembrar de inserir o cliente padrão de login do arquivo emug.sql
+ * ATENÇÃO! Lembrar de inserir o cliente padrão de login do arquivo banco_emug.sql
  */
 public abstract class TesteAbstract {
 

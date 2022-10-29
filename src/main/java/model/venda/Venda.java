@@ -31,6 +31,12 @@ public class Venda extends EntidadeDominio {
     private boolean pagamentoAprovado;
     private StatusVendaType vendaStatus;
 
+    public Venda(){}
+
+    public Venda(Cliente cliente){
+        this.cliente = cliente;
+    }
+
     public double calculaFrete(){
         int quantTotalItens = carrinho != null ? carrinho.getQuantTotalItens() : 1;
 
