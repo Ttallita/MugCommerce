@@ -99,20 +99,21 @@ public class EstoqueDAO implements IDAO {
 
             String sql;
             PreparedStatement pstm = null;
-            if(operacao.equals("listar")) {
-                sql = "SELECT * FROM estoque";
-
-                pstm = connection.prepareStatement(sql);
-            } else if(operacao.equals("findByIdProduto")) {
-                sql = "SELECT * FROM estoque WHERE est_pro_id = ?";
-
-                pstm = connection.prepareStatement(sql);
-                pstm.setLong(1, estoque.getProduto().getId());
-            } else if(operacao.equals("listarUnico")) {
-                sql = "SELECT * FROM estoque WHERE est_id = ?";
-
-                pstm = connection.prepareStatement(sql);
-                pstm.setLong(1, estoque.getId());
+            switch (operacao) {
+                case "listar" -> {
+                    sql = "SELECT * FROM estoque";
+                    pstm = connection.prepareStatement(sql);
+                }
+                case "findByIdProduto" -> {
+                    sql = "SELECT * FROM estoque WHERE est_pro_id = ?";
+                    pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, estoque.getProduto().getId());
+                }
+                case "listarUnico" -> {
+                    sql = "SELECT * FROM estoque WHERE est_id = ?";
+                    pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, estoque.getId());
+                }
             }
 
             ResultSet rs = pstm.executeQuery();

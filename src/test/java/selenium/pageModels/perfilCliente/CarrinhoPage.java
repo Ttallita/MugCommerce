@@ -29,6 +29,7 @@ public class CarrinhoPage extends PageAbstract{
         for(int i = 0; i < quantProduto; i++) {
             WebElement trProduto = getLinhaTabelaProduto(nomeProduto);
             trProduto.findElement(By.id(nomeBotao)).click();
+            UtilsTeste.esperarTelaRecarregar(driver);
         }
     }
 
@@ -38,7 +39,10 @@ public class CarrinhoPage extends PageAbstract{
     }
 
     public int getQuantProduto(String nomeProduto){
-        String quant = this.getLinhaTabelaProduto(nomeProduto).findElement(By.name("quantidade")).getAttribute("value");
+        String quant = this.getLinhaTabelaProduto(nomeProduto)
+                .findElement(By.name("quantidade"))
+                .getAttribute("value");
+
         return Integer.parseInt(quant);
     }
 

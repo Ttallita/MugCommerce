@@ -103,6 +103,10 @@ public class ProdutoDAO implements IDAO {
             pstm.setLong(10, produto.getId());
             pstm.execute();
 
+            new CategoriaProdutoDAO().deletar(produto);
+            Consumer<Categoria> consumer = (categoria) -> new CategoriaDAO().salvarAssociacaoCategoriaProduto(produto.getId(), categoria.getId());
+            produto.getCategorias().forEach(consumer);
+
             return produto;
         } catch (Exception e) {
             System.err.println(e.getMessage());
