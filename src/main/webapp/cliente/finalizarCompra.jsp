@@ -14,8 +14,8 @@
 
     <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css'/>"/>
-    <link rel="stylesheet" href="<c:url value='/assets/css/style.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/assets/css/simple-notify.min.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/style.css'/>"/>
 </head>
 
 <body>
@@ -91,7 +91,7 @@
                                 </c:forEach>
                             </select>
                             <button type="button" class="btn btn-outline-primary" id="botaoAplicarCupom" onclick="aplicarCupom()">Aplicar</button>
-                            <div class="form-text"><b>Atenção:</b> caso os <desconto></desconto>s superem o valor final de venda um cupom de troca será gerado.</div>
+                            <div class="form-text"><b>Atenção:</b> caso os descontos superem o valor final de venda um cupom de troca será gerado.</div>
                         </div>
                     </div>
 
@@ -394,7 +394,8 @@
     let valorVenda = parseFloat('${carrinho.totalCarrinho}') + parseFloat('${valorFrete}');
     let formatter = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
-        currency: 'BRL'
+        currency: 'BRL',
+        maximumFractionDigits: 2
     });
     function atualizarValoresVenda(){
         let somaCupons = 0;

@@ -12,6 +12,7 @@
     <title>Carrinho</title>
     <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/simple-notify.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/assets/css/style.css'/>"/>
 </head>
 <body>
@@ -58,17 +59,18 @@
                                     <td style="width: 20%">
                                        <form action="/emug/clientes/carrinho" method="POST" id="formQuantidade${item.produto.id}">
                                            <div class="input-group input-group-sm mb-3">
-                                               <button class="btn btn-outline-secondary btn-sm" type="button" id="removeQuant" onclick="mudarQuantidade('remover', '${item.produto.id}')">
+                                                <input type="hidden" value="atualizar" name="operacao">
+                                                <input type="hidden" value="" name="tipo" id="tipo${item.produto.id}">
+                                                <input type="hidden" value="${item.produto.id}" name="id">
+                                                <input type="hidden" value="${item.quant}" name="quantidade" id="quantidadeAtual${item.produto.id}">
+                                                
+                                                <button class="btn btn-outline-secondary btn-sm" type="button" id="removeQuant" onclick="mudarQuantidade('remover', '${item.produto.id}')">
                                                    <span class="material-icons">remove</span>
-                                               </button>
-                                               <input type="hidden" value="atualizar" name="operacao">
-                                               <input type="hidden" value="" name="tipo" id="tipo${item.produto.id}">
-                                               <input type="hidden" value="${item.produto.id}" name="id">
-                                               <input type="hidden" value="${item.quant}" name="quantidade" id="quantidadeAtual${item.produto.id}">
-                                               <input type="text" class="form-control" readonly value="${item.quant}">
-                                               <button class="btn btn-outline-secondary btn-sm" type="button" id="addQuant" onclick="mudarQuantidade('adicionar', '${item.produto.id}')">
+                                                </button>
+                                                <input type="text" class="form-control" readonly value="${item.quant}">
+                                                <button class="btn btn-outline-secondary btn-sm" type="button" id="addQuant" onclick="mudarQuantidade('adicionar', '${item.produto.id}')">
                                                    <span class="material-icons">add</span>
-                                               </button>
+                                                </button>
                                            </div>
                                        </form>
                                         <form action="/emug/clientes/carrinho" method="POST">
@@ -98,17 +100,6 @@
                                 <strong class="text-muted">Carrinho:</strong>
                                 <strong><fmt:formatNumber value="${sessionScope.carrinho.totalCarrinho}" type="currency"/></strong>
                             </li>
-                            <!--
-                                <li class="d-flex justify-content-between">
-                                    <strong class="text-muted">Frete:</strong>
-                                    <strong>$0.00</strong>
-                                </li>
-
-                                <li class="d-flex justify-content-between">
-                                    <strong class="text-muted">Desconto:</strong>
-                                    <strong>- R$ 0.00</strong>
-                                </li>
-                            -->
                             <li class="d-flex justify-content-between py-3">
                                 <strong class="text-muted">Total:</strong>
                                 <h5 class="font-weight-bold">
@@ -132,11 +123,31 @@
 
 <script src='<c:url value="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js"/>'></script>
 <script src='<c:url value="/webjars/jquery/3.6.1/jquery.min.js"/>'></script>
+<script src='<c:url value="/assets/js/simple-notify.min.js"/>'></script>
+<script src='<c:url value="/assets/js/geral.js"/>'></script>
 <script>
 
-    function mudarQuantidade(tipo, id) {
+    async function mudarQuantidade(tipo, id) {
         $('#tipo' + id).val(tipo)
-        $('#formQuantidade' + id)[0].submit()
+
+        let form = $('#formQuantidade' + id)[0]
+        
+        let response = await fetch(form.action, {
+            method:'post', 
+            body: new FormData(form)
+        });
+
+        let json = await response.json()
+
+        if(response.status != 404) {
+            location.reload()
+            return
+        }
+            
+        let msgErro = json
+
+        createNotify("error", "", msgErro)
     }
+
 </script>
 </html>

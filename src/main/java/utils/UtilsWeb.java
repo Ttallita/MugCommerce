@@ -23,22 +23,25 @@ public class UtilsWeb {
     public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String operacao = request.getParameter("operacao");
 
-        if(operacao.contains("listar")
-                || operacao.equals("listarIndex")
-                || operacao.equals("listarJson")) {
+        response.setCharacterEncoding("UTF8");
+        response.setContentType("application/json");
 
-            response.setCharacterEncoding("UTF8");
-            response.setContentType("application/json");
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
 
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+        Gson gson = gsonBuilder.setPrettyPrinting().create();
 
-            Gson gson = gsonBuilder.setPrettyPrinting().create();
+        PrintWriter writer = response.getWriter();
 
-            PrintWriter writer = response.getWriter();
+        String msg = result.getMsg();
+        if(msg != null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            writer.write(gson.toJson(msg));
+        } else {
             writer.write(gson.toJson(result.getEntidades()));
-            writer.flush();
         }
+
+        writer.flush();
     }
 
     public static void adicionaParametrosRequestOrigemChamada(String origemChamada, HttpServletRequest request){

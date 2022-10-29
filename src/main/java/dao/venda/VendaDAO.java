@@ -5,6 +5,7 @@ import dao.cliente.CartaoDeCreditoDAO;
 import dao.cliente.ClienteDAO;
 import dao.cliente.CupomDAO;
 import dao.cliente.EnderecoDAO;
+import dao.estoque.EstoqueDAO;
 import model.EntidadeDominio;
 import model.Usuario;
 import model.carrinho.Carrinho;
@@ -13,12 +14,14 @@ import model.cliente.CartaoDeCredito;
 import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
+import model.estoque.Estoque;
 import model.produto.Produto;
 import model.venda.StatusVendaType;
 import model.venda.Venda;
 import utils.Conexao;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,9 +89,18 @@ public class VendaDAO implements IDAO {
                 pstm.setBoolean(4, false);
 
                 pstm.execute();
-            }
 
-            // TODO Descontar produtos comprados do estoque
+                Estoque estoque = new Estoque();
+                estoque.setProduto(item.getProduto());
+
+                Estoque estoqueConsultado = (Estoque) new EstoqueDAO()
+                        .listar(estoque, "findByIdProduto")
+                        .get(0);
+
+                estoqueConsultado.setQuantidade(estoqueConsultado.getQuantidade() - item.getQuant());
+
+                new EstoqueDAO().atualizar(estoqueConsultado);
+            }
 
             for (CartaoDeCredito cartao : venda.getCartoes()){
                 sql = "INSERT INTO cartoes_em_venda (crv_vnd_id, crv_crt_id) " +
@@ -315,6 +327,7 @@ public class VendaDAO implements IDAO {
         List<Cupom> cupons = cupomDAO.listar(cupom, "listarTodos")
                 .stream()
                 .map(entidade -> (Cupom) entidade)
+                .filter(c -> c.getDataValidade().isAfter(LocalDate.now()) || c.getDataValidade().equals(LocalDate.now()))
                 .toList();
 
         venda.setEnderecoEntrega(enderecoEntrega);

@@ -1,6 +1,7 @@
 package business.facade;
 
 import business.strategy.IStrategy;
+import business.strategy.impl.carrinho.VerificaCarrinhoStrategy;
 import business.strategy.impl.cliente.*;
 import business.strategy.impl.cliente.cartao.VerificarCartaoStrategy;
 import business.strategy.impl.estoque.VerificaEntradaEstoqueStrategy;
@@ -69,6 +70,7 @@ public class Facade implements IFacade {
         regrasDeNegocioMap.put(CartaoDeCredito.class.getName(), getRegrasNegocioCartao());
         regrasDeNegocioMap.put(Produto.class.getName(), getRegrasNegocioProduto());
         regrasDeNegocioMap.put(EstoqueHistorico.class.getName(), getRegrasNegocioEstoqueEntrada());
+        regrasDeNegocioMap.put(ItemCarrinho.class.getName(), getRegrasNegocioCarrinho());
     }
 
     @Override
@@ -273,6 +275,17 @@ public class Facade implements IFacade {
 
         Map<String, List<IStrategy>> mapStrategy = new HashMap<>();
         mapStrategy.put("salvar", regraEstoqueGeral);
+
+        return mapStrategy;
+    }
+
+    private Map<String, List<IStrategy>> getRegrasNegocioCarrinho() {
+        List<IStrategy> regraCarrinho = List.of(
+                new VerificaCarrinhoStrategy()
+        );
+
+        Map<String, List<IStrategy>> mapStrategy = new HashMap<>();
+        mapStrategy.put("atualizar", regraCarrinho);
 
         return mapStrategy;
     }
