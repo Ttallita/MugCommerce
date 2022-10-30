@@ -8,6 +8,7 @@ import model.cliente.Cliente;
 import model.produto.Produto;
 import model.solicitacao.Troca;
 import model.venda.Venda;
+import utils.UtilsWeb;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,13 @@ public class TrocaViewHelper implements IViewHelper {
         Troca troca = new Troca(new Cliente(usuarioLogado));
 
         switch (operacao) {
+
             case "listar" -> {
+                return troca;
+            }
+
+            case "listarJson" -> {
+                troca.setId(Long.parseLong(request.getParameter("id")));
                 return troca;
             }
 
@@ -56,7 +63,10 @@ public class TrocaViewHelper implements IViewHelper {
             }
 
             case "salvar" ->
-                response.sendRedirect("/emug/clientes/compras?operacao=listar");
+                    response.sendRedirect("/emug/clientes/compras?operacao=listar");
+
+            case "listarJson" -> UtilsWeb.montaRespostaJson(result, request, response);
+
         }
     }
 

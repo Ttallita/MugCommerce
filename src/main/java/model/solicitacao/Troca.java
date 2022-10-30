@@ -6,7 +6,6 @@ import model.produto.Produto;
 import model.venda.Venda;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Troca extends EntidadeDominio implements ISolicitacao {
 
@@ -29,34 +28,42 @@ public class Troca extends EntidadeDominio implements ISolicitacao {
         this.produto = produto;
     }
 
+    @Override
     public Venda getVenda() {
         return venda;
     }
 
+    @Override
     public void setVenda(Venda venda) {
         this.venda = venda;
     }
 
+    @Override
     public Cliente getCliente() {
         return cliente;
     }
 
+    @Override
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
+    @Override
     public LocalDate getData() {
         return data;
     }
 
+    @Override
     public void setData(LocalDate data) {
         this.data = data;
     }
 
+    @Override
     public StatusSolicitacaoType getStatus() {
         return status;
     }
 
+    @Override
     public void setStatus(StatusSolicitacaoType status) {
         this.status = status;
     }

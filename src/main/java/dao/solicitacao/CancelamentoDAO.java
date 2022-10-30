@@ -5,12 +5,13 @@ import dao.venda.VendaDAO;
 import model.EntidadeDominio;
 import model.solicitacao.Cancelamento;
 import model.solicitacao.StatusSolicitacaoType;
+import model.solicitacao.Troca;
+import model.venda.StatusVendaType;
 import model.venda.Venda;
 import utils.Conexao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,43 @@ public class CancelamentoDAO implements IDAO {
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
+        Cancelamento cancelamento = (Cancelamento) entidade;
 
-        // TODO mudar status da compra para "Cancelada"
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+
+        try {
+            connection = conexao.getConexao();
+
+            String sql = "INSERT INTO cancelamentos (ccl_vnd_id, ccl_cli_usr_id, ccl_data, ccl_status)" +
+                    " VALUES (?, ?, ?, ?)";
+
+            PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstm.setLong(1, cancelamento.getVenda().getId());
+            pstm.setLong(2, cancelamento.getCliente().getUsuario().getId());
+            pstm.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            pstm.setString(4, StatusSolicitacaoType.SOLICITADA.name());
+
+            pstm.execute();
+
+            ResultSet rs = pstm.getGeneratedKeys();
+            while (rs.next()) {
+                cancelamento.setId(rs.getLong(1));
+            }
+
+            Venda venda = cancelamento.getVenda();
+            venda.setVendaStatus(StatusVendaType.CANCELADA);
+
+            vendaDAO.atualizar(venda);
+
+            return cancelamento;
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
+        }
 
         return null;
     }
@@ -49,11 +85,23 @@ public class CancelamentoDAO implements IDAO {
 
             String sql;
             PreparedStatement pstm = null;
-            if(operacao.equals("listar")) {
-                sql = "SELECT * FROM cancelamentos WHERE ccl_cli_usr_id = ?";
 
-                pstm = connection.prepareStatement(sql);
-                pstm.setLong(1, cancelamento.getCliente().getUsuario().getId());
+            switch (operacao) {
+
+                case "listar" -> {
+                    sql = "SELECT * FROM cancelamentos WHERE ccl_cli_usr_id = ?";
+
+                    pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, cancelamento.getCliente().getUsuario().getId());
+                }
+
+                case "listarJson" -> {
+                    sql = "SELECT * FROM cancelamentos WHERE ccl_id = ?";
+
+                    pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, cancelamento.getId());
+                }
+
             }
 
             ResultSet rs = pstm.executeQuery();

@@ -84,11 +84,23 @@ public class TrocaDAO implements IDAO {
 
             String sql;
             PreparedStatement pstm = null;
-            if(operacao.equals("listar")) {
-                sql = "SELECT * FROM trocas WHERE trc_cli_usr_id = ?";
 
-                pstm = connection.prepareStatement(sql);
-                pstm.setLong(1, troca.getCliente().getUsuario().getId());
+            switch (operacao) {
+
+                case "listar" -> {
+                    sql = "SELECT * FROM trocas WHERE trc_cli_usr_id = ?";
+
+                    pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, troca.getCliente().getUsuario().getId());
+                }
+
+                case "listarJson" -> {
+                    sql = "SELECT * FROM trocas WHERE trc_id = ?";
+
+                    pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, troca.getId());
+                }
+
             }
 
             ResultSet rs = pstm.executeQuery();

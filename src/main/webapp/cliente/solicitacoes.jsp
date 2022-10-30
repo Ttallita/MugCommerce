@@ -1,9 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:set var="paginaCorrente" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-<c:set var="nomePaginaCorrente" value="${ fn:contains(paginaCorrente, 'cancelamentos') ? 'Cancelamentos' : 'Trocas'}"/>
+<c:set var="isCancelamento" value="${ fn:contains(paginaCorrente, 'cancelamentos') }"/>
+
+<c:set var="nomePaginaCorrente" value="${ isCancelamento ? 'Cancelamentos' : 'Trocas'}"/>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -42,24 +45,18 @@
                             <thead>
                                 <tr>
                                     <th>Data de solicitação</th>
-                                    <th>Quant. Produtos</th>
-                                    <th>Valor</th>
-                                    <th>Tipo</th>
                                     <th>Status</th>
-                                    <th>Data de entrega</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="solicitacao" items="${solicitacoes}">
                                     <tr>
-                                        <td>00/00/0000</td>
-                                        <td>${solicitacao}</td>
-                                        <td>R$ 00,00</td>
-                                        <td>Troca</td>
+                                        <fmt:parseDate  value="${solicitacao.data}"  type="date" pattern="yyyy-MM-dd" var="dataParseada" />
+                                        <fmt:formatDate value="${dataParseada}" type="date" pattern="dd/MM/yyyy" var="dataFormatada" />
+                                        <td>${dataFormatada}</td>
                                         <td>${solicitacao.status.nomeExibicao}</td>
-                                        <td>00/00/0000</td>
                                         <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detalhesSolicitacao"><span class="material-icons">remove_red_eye</span></button>
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="montarModal('${solicitacao.id}')" data-bs-toggle="modal" data-bs-target="#modal"><span class="material-icons">remove_red_eye</span></button>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -72,54 +69,122 @@
 
             <hr>
 
-            <!-- Modal Detalhes Solicitação-->
-            <div class="modal fade" id="detalhesSolicitacao" tabindex="-1" aria-labelledby="detalhesSolicitacaoLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title fw-bold" id="detalhesSolicitacaoLabel">Detalhes ${nomePaginaCorrente}</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <div class="modal-body m-5">
-
-                            <h6>Status</h6>
-                            <h6>Data solicitação: 00/00/0000</h6>
-
-                            <!-- Produto -->
-                            <div class="row border rounded p-3">
-                                <div class="col-2">
-                                    <div class="card produto mb-3">
-                                        <img alt="produto" src="\emug\assets\img\canecas\caneca_porco.jpeg" class="p-2">
-                                    </div>
-                                </div>
-
-                                <div class="col">
-                                    <h6 class="text-muted">Categoria</h6>
-                                    <h5>Nome produto</h5>
-                                    <h6>Quantidade: 00</h6>
-                                    <h6>Valor: R$ 00,00</h6>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-  
-        </div>
     </main>
 
     <br/>
 
+    <jsp:include page="../include/modalBase.jsp" />
     <jsp:include page="../include/footer.jsp"/>
     
-    <script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
 </body>
+
+<script src="../webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+<script src='<c:url value="../webjars/jquery/3.6.1/jquery.min.js"/>'></script>
+<script src='<c:url value="../assets/js/geral.js"/>'></script>
+<script src='<c:url value="../assets/js/construir-modal.js"/>'></script>
+
+<script>
+    async function listaItensModal(url, idSolicitacao) {
+        let response = await fetch(url)
+        let json = await response.json();
+
+        limpaModal();
+        
+        json.forEach(solicitacao => {
+
+            if (${isCancelamento}) {
+                
+                let detalhesVenda =
+                    $(`<h5>Detalhes da venda cancelada:</h5>
+                    <ul class="list-unstyled">
+                        <li><h6 class="fw-bold">\${solicitacao.venda.dataCompra}</h6></li>
+                        <li><h6>\${solicitacao.venda.vendaStatus}</h6></li>
+                        <li>Valor total da venda: R$ \${solicitacao.venda.precoTotal}</li>
+                        <li>Frete: R$ \${solicitacao.venda.frete}</li>
+                    </ul>`);
+
+                if (solicitacao.venda.dataEntrega != null)
+                    $(`<li>Chegou no dia \${solicitacao.venda.dataEntrega}</li>`).appendTo(detalhesVenda);
+
+                if (solicitacao.venda.dataEnvio != null)
+                    $(`<li>Data de envio: \${solicitacao.venda.dataEnvio}</li>`).appendTo(detalhesVenda);
+
+                adicionaItemBodyModal(detalhesVenda);
+            }
+
+            let itens;
+
+            if (${isCancelamento}){
+                itens = solicitacao.venda.carrinho.itensCarrinho
+            } else {
+                itens = solicitacao.venda.carrinho.itensCarrinho.filter(i => i.produto.id == solicitacao.produto.id)
+            }
+
+            itens.forEach(i => {
+
+                // --- Imagem Item
+                let colImagem = document.createElement("div")
+                colImagem.classList.add("col-2")
+
+                let divImagem = document.createElement("div")
+                divImagem.classList.add("card")
+                divImagem.classList.add("produto")
+                divImagem.classList.add("mb-3")
+
+                let imagem = $('<img>')
+                imagem.attr("alt", i.produto.nome)
+                imagem.prop("src", i.produto.imagem)
+                imagem.prop("class", "p-2")
+
+                divImagem.appendChild(imagem[0])
+                colImagem.appendChild(divImagem)
+
+
+                // --- Detalhes
+                let colDetalhesItem = document.createElement("div")
+                colDetalhesItem.classList.add("col")
+
+                let nomeItem = document.createElement("h6")
+                let quantItem = document.createElement("h6")
+                let valorItem = document.createElement("h6")
+                nomeItem.innerHTML = i.produto.nome
+                quantItem.innerHTML = "Quantidade: " + i.quant
+                valorItem.innerHTML = "Valor: R$ " + i.produto.valorVenda
+
+                colDetalhesItem.appendChild(nomeItem)
+                colDetalhesItem.appendChild(quantItem)
+                colDetalhesItem.appendChild(valorItem)
+
+                let divItem = document.createElement("div")
+                divItem.appendChild(colImagem)
+                divItem.appendChild(colDetalhesItem)
+
+                divItem.classList.add("row")
+                divItem.classList.add("border")
+                divItem.classList.add("rounded")
+                divItem.classList.add("p-3")
+
+                document.getElementById("modalBody").appendChild(divItem);
+            });
+
+            let botaoFechar = $(`<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>`);
+            adicionaBotaoFooter(botaoFechar);
+            setTituloModal("Detalhes ${nomePaginaCorrente}");
+
+        });
+        
+    }
+
+    const path = "clientes/" + '${isCancelamento ? "cancelamentos" : "trocas"}' ;
+
+    function montarModal(idSolicitacao){
+        let params = { operacao: 'listarJson',
+                        id: idSolicitacao};
+
+        let urlItensModal = montaUrl(baseUrl, path, params);
+
+        listaItensModal(urlItensModal, idSolicitacao);
+    }
+</script>
 
 </html>

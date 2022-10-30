@@ -165,23 +165,25 @@
                 linkTrocar.href = "<c:url value='/clientes/trocas?operacao=salvar'/>" + "&idProduto=" + i.produto.id + "&idVenda=" + venda.id
                 
 
-                if (i.emTroca) {
-                    let texto = document.createElement("small")
-                    texto.classList.add("text-muted")
-                    texto.innerHTML = "Em troca"
+                if (venda.vendaStatus != 'Cancelada'){
+                    if (i.emTroca) {
+                        let texto = document.createElement("small")
+                        texto.classList.add("text-muted")
+                        texto.innerHTML = "Em troca"
 
-                    colAcaoTrocaItem.appendChild(texto)
-                    
-                } else {
-                    let botaoTrocar = document.createElement("button")
-                    botaoTrocar.type = "button"
-                    botaoTrocar.classList.add("btn")
-                    botaoTrocar.classList.add("btn-primary")
-                    botaoTrocar.classList.add("btn-sm")
-                    botaoTrocar.innerHTML = "Solicitar troca"
-                    
-                    linkTrocar.appendChild(botaoTrocar)
-                    colAcaoTrocaItem.appendChild(linkTrocar)
+                        colAcaoTrocaItem.appendChild(texto)
+                        
+                    } else {
+                        let botaoTrocar = document.createElement("button")
+                        botaoTrocar.type = "button"
+                        botaoTrocar.classList.add("btn")
+                        botaoTrocar.classList.add("btn-primary")
+                        botaoTrocar.classList.add("btn-sm")
+                        botaoTrocar.innerHTML = "Solicitar troca"
+                        
+                        linkTrocar.appendChild(botaoTrocar)
+                        colAcaoTrocaItem.appendChild(linkTrocar)
+                    }
                 }
                 
 
@@ -198,20 +200,28 @@
                 document.getElementById("modalBody").appendChild(divItem);
             }); 
 
+            setTituloModal("Detalhes compra");
+
+            let botaoFecharModal = $('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>');
+
+            let botaoCancelar;
+
+            if (venda.vendaStatus != 'Cancelada'){
+                let urlCancelarVenda = "<c:url value='/clientes/cancelamentos?operacao=salvar&idVenda='/>" + venda.id;
+                botaoCancelar =
+                        $(`<a href="\${urlCancelarVenda}">
+                            <button type="button" class="btn btn-primary" id="botaoCancelarCompra">Cancelar compra</button>
+                        </a>`);
+            } else {
+                botaoCancelar =
+                        $(`<button type="button" class="btn btn-primary" id="botaoCancelarCompra" disabled>Cancelar compra</button>`);
+                
+            }
+
+            adicionaBotaoFooter(botaoCancelar);
+            adicionaBotaoFooter(botaoFecharModal);
+
         });
-
-        setTituloModal("Detalhes compra");
-
-        let botaoFecharModal = $('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>');
-
-        let urlCancelarVenda = "<c:url value='/clientes/solicitacoes?operacao=salvar&tipoOperacao=cancelar&idVenda=\${idVenda}'/>";
-        let botaoCancelar =
-                $(`<a href="\${urlCancelarVenda}">
-                    <button type="button" class="btn btn-primary" id="botaoCancelarCompra">Cancelar compra</button>
-                </a>`);
-
-        adicionaBotaoFooter(botaoCancelar);
-        adicionaBotaoFooter(botaoFecharModal);
         
     }
 

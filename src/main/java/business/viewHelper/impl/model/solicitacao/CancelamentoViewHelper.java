@@ -6,6 +6,8 @@ import model.Result;
 import model.Usuario;
 import model.cliente.Cliente;
 import model.solicitacao.Cancelamento;
+import model.venda.Venda;
+import utils.UtilsWeb;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +21,24 @@ public class CancelamentoViewHelper implements IViewHelper {
         String operacao = request.getParameter("operacao");
         Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
+        Cancelamento cancelamento = new Cancelamento(new Cliente(usuarioLogado));
+
         switch (operacao) {
             case "listar" -> {
-                Cancelamento cancelamento = new Cancelamento(new Cliente(usuarioLogado));
+                return cancelamento;
+            }
+
+            case "listarJson" -> {
+                cancelamento.setId(Long.parseLong(request.getParameter("id")));
+                return cancelamento;
+            }
+
+            case "salvar" -> {
+                Venda venda = new Venda();
+                venda.setId(Long.parseLong(request.getParameter("idVenda")));
+
+                cancelamento.setVenda(venda);
+
                 return cancelamento;
             }
         }
@@ -35,9 +52,15 @@ public class CancelamentoViewHelper implements IViewHelper {
 
         switch (operacao) {
             case "listar" -> {
-                request.setAttribute("solicitacao", result.getEntidades());
+                request.setAttribute("solicitacoes", result.getEntidades());
                 request.getRequestDispatcher("/cliente/solicitacoes.jsp").forward(request, response);
             }
+
+            case "salvar" ->
+                    response.sendRedirect("/emug/clientes/compras?operacao=listar");
+
+            case "listarJson" -> UtilsWeb.montaRespostaJson(result, request, response);
+
         }
     }
 
