@@ -14,6 +14,8 @@ public class Cancelamento extends EntidadeDominio implements ISolicitacao {
     private LocalDate data;
     private StatusSolicitacaoType status;
 
+    public Cancelamento(){ }
+
     public Cancelamento(Cliente cliente){
         this.cliente = cliente;
     }
