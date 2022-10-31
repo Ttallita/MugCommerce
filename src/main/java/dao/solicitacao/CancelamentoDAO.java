@@ -1,11 +1,13 @@
 package dao.solicitacao;
 
 import dao.IDAO;
+import dao.cliente.ClienteDAO;
 import dao.venda.VendaDAO;
 import model.EntidadeDominio;
+import model.Usuario;
+import model.cliente.Cliente;
 import model.solicitacao.Cancelamento;
 import model.solicitacao.StatusSolicitacaoType;
-import model.solicitacao.Troca;
 import model.venda.StatusVendaType;
 import model.venda.Venda;
 import utils.Conexao;
@@ -18,6 +20,7 @@ import java.util.List;
 public class CancelamentoDAO implements IDAO {
 
     private VendaDAO vendaDAO = new VendaDAO();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
@@ -102,20 +105,31 @@ public class CancelamentoDAO implements IDAO {
                     pstm.setLong(1, cancelamento.getId());
                 }
 
+                case "listarTodos" -> {
+                    sql = "SELECT * FROM cancelamentos";
+
+                    pstm = connection.prepareStatement(sql);
+                }
+
             }
 
             ResultSet rs = pstm.executeQuery();
 
             List<EntidadeDominio> cancelamentos = new ArrayList<>();
             while (rs.next()) {
-                Cancelamento cancelamentoConsulta = new Cancelamento(cancelamento.getCliente());
+
+                Cliente clienteConsulta = new Cliente(new Usuario());
+                clienteConsulta.getUsuario().setId(rs.getLong("ccl_cli_usr_id"));
+                Cliente cliente = (Cliente) clienteDAO.listar(clienteConsulta, "listarUnico").get(0);
+
+                Cancelamento cancelamentoConsulta = new Cancelamento(cliente);
                 cancelamentoConsulta.setId(rs.getLong("ccl_id"));
 
                 Venda vendaConsulta = new Venda();
                 vendaConsulta.setId(rs.getLong("ccl_vnd_id"));
                 cancelamentoConsulta.setVenda((Venda) vendaDAO.listar(vendaConsulta, "listarUnico").get(0));
 
-                cancelamentoConsulta.setCliente(cancelamento.getCliente());
+                cancelamentoConsulta.setCliente(cliente);
                 cancelamentoConsulta.setData(rs.getTimestamp("ccl_data").toLocalDateTime().toLocalDate());
                 cancelamentoConsulta.setStatus(StatusSolicitacaoType.valueOf(rs.getString("ccl_status")));
 

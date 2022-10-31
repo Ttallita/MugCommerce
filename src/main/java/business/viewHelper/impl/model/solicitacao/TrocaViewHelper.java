@@ -20,7 +20,7 @@ public class TrocaViewHelper implements IViewHelper {
     @Override
     public EntidadeDominio getEntidade(HttpServletRequest request) {
         String operacao = request.getParameter("operacao");
-        Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+        Usuario usuarioLogado = getUsuarioLogado(request);
 
         Troca troca = new Troca(new Cliente(usuarioLogado));
 
@@ -33,6 +33,10 @@ public class TrocaViewHelper implements IViewHelper {
             case "listarJson" -> {
                 troca.setId(Long.parseLong(request.getParameter("id")));
                 return troca;
+            }
+
+            case "listarTodos" -> {
+                return new Troca();
             }
 
             case "salvar" -> {
@@ -62,11 +66,14 @@ public class TrocaViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/cliente/solicitacoes.jsp").forward(request, response);
             }
 
-            case "salvar" ->
-                    response.sendRedirect("/emug/clientes/compras?operacao=listar");
+            case "salvar" -> response.sendRedirect("/emug/clientes/compras?operacao=listar");
 
             case "listarJson" -> UtilsWeb.montaRespostaJson(result, request, response);
 
+            case "listarTodos" -> {
+                request.setAttribute("solicitacoes", result.getEntidades());
+                request.getRequestDispatcher("/gerenciar/solicitacoesPendentes.jsp").forward(request, response);
+            }
         }
     }
 

@@ -23,7 +23,7 @@
                     <span class="material-icons inline-icon">shopping_bag</span> Compras
                 </a>
 
-                <small class="nav_link text-muted">
+                <small class="nav_link">
                     <span class="material-icons inline-icon">dynamic_feed</span> Solicitações
                 </small>
                 <ul class="ms-4 list-unstyled">

@@ -28,6 +28,10 @@ public class CancelamentoViewHelper implements IViewHelper {
                 return cancelamento;
             }
 
+            case "listarTodos" -> {
+                return new Cancelamento();
+            }
+
             case "listarJson" -> {
                 cancelamento.setId(Long.parseLong(request.getParameter("id")));
                 return cancelamento;
@@ -60,6 +64,12 @@ public class CancelamentoViewHelper implements IViewHelper {
                     response.sendRedirect("/emug/clientes/compras?operacao=listar");
 
             case "listarJson" -> UtilsWeb.montaRespostaJson(result, request, response);
+
+            case "listarTodos" -> {
+                request.setAttribute("solicitacoes", result.getEntidades());
+                request.getRequestDispatcher("/gerenciar/solicitacoesPendentes.jsp").forward(request, response);
+            }
+
 
         }
     }

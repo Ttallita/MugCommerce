@@ -1,5 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+<c:set var="paginaCorrente" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+<c:set var="isCancelamento" value="${ fn:contains(paginaCorrente, 'cancelamentos') }"/>
+
+<c:set var="nomePaginaCorrente" value="${ isCancelamento ? 'Cancelamentos' : 'Trocas'}"/>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -9,11 +16,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Gerenciar - Solicitações</title>
+    <title>Gerenciar - ${nomePaginaCorrente}</title>
 
-    <link rel="stylesheet" href="../webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../webjars/material-design-icons/4.0.0/material-icons.css"/>
-    <link rel="stylesheet" href="../assets/css/style.css"/>
+    <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css' />"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/style.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/bootstrap-table.min.css' />"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/bootstrap-table-filter-control.min.css' />"/>
 </head>
 
 <body>
@@ -25,145 +35,53 @@
         <jsp:include page="../include/sidebarAdm.jsp" />
     
         <div class="w-75 bg-white rounded p-5">
-            <h5>Vendas</h5>
-
-            <hr>
-
-            <!-- Filtro de solicitações -->
-            <div class="container">
-                <form>
-                    <div class="row g-3">
-
-                        <div class="col-sm-4">
-                            <small>Status</small>
-                            <select class="form-select" aria-label="Default select example">
-                                <option value="">Selecione</option>
-                                <option value="">Troca solicitada</option>
-                            </select>
-                        </div>
-                        
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-primary btn-sm">Pesquisar</button>
-                        </div>
-
-                    </div>
-
-                </form>
-            </div>
+            <h5>${nomePaginaCorrente}</h5>
 
             <hr>
 
             <div class="container">
 
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <div class="table-responsive p-3 rounded mb-4">
+                    <table id="tableVenda" class="table table-hover"
+                            data-toggle="table"
+                            data-pagination="true"
+                            data-search="true"
+                            data-page-size="25"
+                            data-locale="pt-BR"
+                            data-filter-control="true"
+                            data-show-search-clear-button="true">
+                        <thead>
+                            <tr>
+                                <th data-field="nomeCliente" data-filter-control="input">Nome cliente</th>
+                                <th data-field="valor" data-filter-control="input">Valor venda</th>
+                                <th data-field="dataCompra" data-filter-control="datepicker">Data solicitacao</th>
+                                <th data-field="status" data-filter-control="select">Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-gerenciar-solicitacoes-tab" data-bs-toggle="pill" data-bs-target="#pills-gerenciar-solicitacoes" type="button" role="tab" aria-controls="pills-gerenciar-solicitacoes" aria-selected="true">Gerenciar solicitações</button>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-avancado-tab" data-bs-toggle="pill" data-bs-target="#pills-avancado" type="button" role="tab" aria-controls="pills-avancado" aria-selected="false">Avançado</button>
-                    </li>
-
-                </ul>
-
-
-                <div class="tab-content" id="pills-tabContent">
-
-                    <div class="tab-pane fade show active" id="pills-gerenciar-solicitacoes" role="tabpanel" aria-labelledby="pills-gerenciar-solicitacoes-tab" tabindex="0">
-                        
-                        <table class="table table-hover" width="100%">
-                            <thead>
+                            <c:forEach items="${solicitacoes}" var="solicitacao">
                                 <tr>
-                                    <th>Nome produto</th>
-                                    <th>Cliente</th>
-                                    <th>Quant.</th>
-                                    <th>Valor</th>
-                                    <th>Data compra</th>
-                                    <th>Data entrega</th>
-                                    <th>Status</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-        
-                                <tr>
-                                    <td>nome produto</td>
-                                    <td>nome sobrenome</td>
-                                    <td>00</td>
-                                    <td>R$ 00,00</td>
-                                    <td>00/00/0000</td>
-                                    <td>00/00/0000</td>
-                                    <td>
-                                        Aprovado
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm"><span class="material-icons">done</span></button>
-                                        <button type="button" class="btn btn-primary btn-sm"><span class="material-icons">clear</span></button>
-                                    </td>
-                                </tr>
-                
-                            </tbody>
-                        </table>
-                    </div>
+                                    <td>${solicitacao.cliente.nome} ${solicitacao.cliente.sobrenome}</td>
+                                    <td>R$ ${solicitacao.venda.precoTotal}</td>
 
-                    <div class="tab-pane fade" id="pills-avancado" role="tabpanel" aria-labelledby="pills-avancado-tab" tabindex="0">
-                        <table class="table table-hover" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Nome produto</th>
-                                    <th>Cliente</th>
-                                    <th>Quant.</th>
-                                    <th>Valor</th>
-                                    <th>Data compra</th>
-                                    <th>Data entrega</th>
-                                    <th>Status</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-        
-                                <tr>
-                                    <td>nome produto</td>
-                                    <td>nome sobrenome</td>
-                                    <td>00</td>
-                                    <td>R$ 00,00</td>
-                                    <td>00/00/0000</td>
-                                    <td>00/00/0000</td>
+                                    <fmt:parseDate  value="${solicitacao.data}"  type="date" pattern="yyyy-MM-dd" var="dataParseada" />
+                                    <fmt:formatDate value="${dataParseada}" type="date" pattern="dd/MM/yyyy" var="dataFormatada" />
+                                    <td>${dataFormatada}</td>
+                                    <td>${solicitacao.status.nomeExibicao}</td>
                                     <td>
-                                        Aprovado
-                                    </td>
-                                    <td>
-                                        <a href="/emug/gerenciar/listarSolicitacao.jsp" name="botaoListarVenda" type="button" class="btn btn-primary btn-sm">
-                                            <span class="material-icons">edit</span>
+                                        <a href="/emug/adm/vendas?operacao=listarUnico&id=${venda.id}" >
+                                            <button name="botaoListarVenda" type="button" class="btn btn-primary btn-sm"><span class="material-icons">edit</span></button>
                                         </a>
                                     </td>
                                 </tr>
-
-                                <tr>
-                                    <td>nome produto</td>
-                                    <td>nome sobrenome</td>
-                                    <td>00</td>
-                                    <td>R$ 00,00</td>
-                                    <td>00/00/0000</td>
-                                    <td>00/00/0000</td>
-                                    <td>
-                                        Aprovado
-                                    </td>
-                                    <td>
-                                        <a href="/emug/gerenciar/listarSolicitacao.jsp" name="botaoListarVenda" type="button" class="btn btn-primary btn-sm">
-                                            <span class="material-icons">edit</span>
-                                        </a>
-                                    </td>
-                                </tr>
-                
-                            </tbody>
-                        </table>
-                    </div>
+                            </c:forEach>
+            
+                        </tbody>
+                    </table>
                 </div>
             </div>
-              
-
             
         </div>
     </main>
@@ -172,8 +90,12 @@
 
     <jsp:include page="../include/footer.jsp"/>
 
-    <script src="/emug/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
-
 </body>
+
+<script src="<c:url value='/webjars/jquery/3.6.1/jquery.min.js' />"></script>
+<script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js' />"></script>
+<script src='<c:url value="/assets/js/bootstrap-table.min.js"/>'></script>
+<script src='<c:url value="/assets/js/bootstrap-table-filter-control.min.js"/>'></script>
+<script src='<c:url value="/assets/js/bootstrap-table-pt-BR.min.js"/>'></script>
 
 </html>

@@ -1,9 +1,12 @@
 package dao.solicitacao;
 
 import dao.IDAO;
+import dao.cliente.ClienteDAO;
 import dao.produto.ProdutoDAO;
 import dao.venda.VendaDAO;
 import model.EntidadeDominio;
+import model.Usuario;
+import model.cliente.Cliente;
 import model.produto.Produto;
 import model.solicitacao.StatusSolicitacaoType;
 import model.solicitacao.Troca;
@@ -19,6 +22,7 @@ public class TrocaDAO implements IDAO {
 
     private final VendaDAO vendaDAO = new VendaDAO();
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
@@ -101,13 +105,24 @@ public class TrocaDAO implements IDAO {
                     pstm.setLong(1, troca.getId());
                 }
 
+                case "listarTodos" -> {
+                    sql = "SELECT * FROM trocas";
+
+                    pstm = connection.prepareStatement(sql);
+                }
+
             }
 
             ResultSet rs = pstm.executeQuery();
 
             List<EntidadeDominio> trocas = new ArrayList<>();
             while (rs.next()) {
-                Troca trocaConsulta = new Troca(troca.getCliente());
+
+                Cliente clienteConsulta = new Cliente(new Usuario());
+                clienteConsulta.getUsuario().setId(rs.getLong("trc_cli_usr_id"));
+                Cliente cliente = (Cliente) clienteDAO.listar(clienteConsulta, "listarUnico").get(0);
+
+                Troca trocaConsulta = new Troca(cliente);
                 trocaConsulta.setId(rs.getLong("trc_id"));
 
                 Produto produtoConsulta = new Produto();
@@ -118,7 +133,7 @@ public class TrocaDAO implements IDAO {
                 vendaConsulta.setId(rs.getLong("trc_vnd_id"));
                 trocaConsulta.setVenda((Venda) vendaDAO.listar(vendaConsulta, "listarUnico").get(0));
 
-                trocaConsulta.setCliente(troca.getCliente());
+                trocaConsulta.setCliente(cliente);
                 trocaConsulta.setData(rs.getTimestamp("trc_data").toLocalDateTime().toLocalDate());
                 trocaConsulta.setStatus(StatusSolicitacaoType.valueOf(rs.getString("trc_status")));
 

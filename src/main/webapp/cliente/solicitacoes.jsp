@@ -98,7 +98,7 @@
                     $(`<h5>Detalhes da venda cancelada:</h5>
                     <ul class="list-unstyled">
                         <li><h6 class="fw-bold">\${solicitacao.venda.dataCompra}</h6></li>
-                        <li><h6>\${solicitacao.venda.vendaStatus}</h6></li>
+                        <li>Status venda: <h6>\${solicitacao.venda.vendaStatus}</h6></li>
                         <li>Valor total da venda: R$ \${solicitacao.venda.precoTotal}</li>
                         <li>Frete: R$ \${solicitacao.venda.frete}</li>
                     </ul>`);
@@ -108,6 +108,19 @@
 
                 if (solicitacao.venda.dataEnvio != null)
                     $(`<li>Data de envio: \${solicitacao.venda.dataEnvio}</li>`).appendTo(detalhesVenda);
+
+                adicionaItemBodyModal(detalhesVenda);
+            } else {
+
+                let detalhesVenda =
+                    $(`<h5>Detalhes da venda do produto trocado:</h5>
+                    <ul class="list-unstyled">
+                        <li>Compra realizada dia: <h6 class="fw-bold">\${solicitacao.venda.dataCompra}</h6></li>
+                        <li>Status venda: <h6>\${solicitacao.venda.vendaStatus}</h6></li>
+                    </ul>`);
+
+                if (solicitacao.venda.dataEntrega != null)
+                    $(`<li>Chegou no dia \${solicitacao.venda.dataEntrega}</li>`).appendTo(detalhesVenda);
 
                 adicionaItemBodyModal(detalhesVenda);
             }

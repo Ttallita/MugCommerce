@@ -16,6 +16,7 @@ public class Troca extends EntidadeDominio implements ISolicitacao {
     private LocalDate data;
     private StatusSolicitacaoType status;
 
+    public Troca() { }
     public Troca(Cliente cliente) {
         this.cliente = cliente;
     }
