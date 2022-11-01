@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class UtilsWeb {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
 
         Gson gson = gsonBuilder.setPrettyPrinting().create();
 
@@ -91,6 +93,13 @@ public class UtilsWeb {
     private static class LocalDateSerializer implements JsonSerializer<LocalDate> {
         @Override
         public JsonElement serialize(LocalDate localDate, Type srcType, JsonSerializationContext context) {
+            return new JsonPrimitive(Utils.formataLocalDateBR(localDate));
+        }
+    }
+
+    private static class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime> {
+        @Override
+        public JsonElement serialize(LocalDateTime localDate, Type srcType, JsonSerializationContext context) {
             return new JsonPrimitive(Utils.formataLocalDateBR(localDate));
         }
     }

@@ -71,8 +71,8 @@
                                     <td>${dataFormatada}</td>
                                     <td>${solicitacao.status.nomeExibicao}</td>
                                     <td>
-                                        <a href="/emug/adm/vendas?operacao=listarUnico&id=${venda.id}" >
-                                            <button name="botaoListarVenda" type="button" class="btn btn-primary btn-sm"><span class="material-icons">edit</span></button>
+                                        <a href="/emug/adm/${isCancelamento ? 'cancelamentos' : 'trocas'}?operacao=listarUnico&id=${solicitacao.id}" >
+                                            <button name="botaoListarSolicitacao" type="button" class="btn btn-primary btn-sm"><span class="material-icons">edit</span></button>
                                         </a>
                                     </td>
                                 </tr>

@@ -17,9 +17,15 @@ import java.time.format.DateTimeFormatter;
 public class Utils {
 
     private static final DateTimeFormatter formatterBR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter formatterTimeBR = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
 
     public static String formataLocalDateBR(LocalDate data){
         return data != null ? formatterBR.format(data) : null;
+    }
+
+    public static String formataLocalDateBR(LocalDateTime data){
+        return data != null ? formatterTimeBR.format(data) : null;
     }
 
     public static LocalDate converteStringLocalDate(String data) {

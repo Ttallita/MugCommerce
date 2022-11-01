@@ -5,7 +5,7 @@ import model.cliente.Cliente;
 import model.produto.Produto;
 import model.venda.Venda;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Troca extends EntidadeDominio implements ISolicitacao {
 
@@ -13,7 +13,7 @@ public class Troca extends EntidadeDominio implements ISolicitacao {
     private Venda venda;
     private Cliente cliente;
 
-    private LocalDate data;
+    private LocalDateTime data;
     private StatusSolicitacaoType status;
 
     public Troca() { }
@@ -50,12 +50,12 @@ public class Troca extends EntidadeDominio implements ISolicitacao {
     }
 
     @Override
-    public LocalDate getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
     @Override
-    public void setData(LocalDate data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 

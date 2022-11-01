@@ -4,14 +4,14 @@ import model.EntidadeDominio;
 import model.cliente.Cliente;
 import model.venda.Venda;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Cancelamento extends EntidadeDominio implements ISolicitacao {
 
     private Venda venda;
     private Cliente cliente;
 
-    private LocalDate data;
+    private LocalDateTime data;
     private StatusSolicitacaoType status;
 
     public Cancelamento(){ }
@@ -36,11 +36,11 @@ public class Cancelamento extends EntidadeDominio implements ISolicitacao {
         this.cliente = cliente;
     }
 
-    public LocalDate getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 

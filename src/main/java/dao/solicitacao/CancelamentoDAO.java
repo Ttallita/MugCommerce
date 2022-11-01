@@ -67,6 +67,31 @@ public class CancelamentoDAO implements IDAO {
 
     @Override
     public EntidadeDominio atualizar(EntidadeDominio entidade) {
+        Cancelamento cancelamento = (Cancelamento) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+
+        try {
+            connection = conexao.getConexao();
+
+            String sql = "UPDATE cancelamentos SET ccl_status = ? WHERE ccl_id = ?";
+
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setString(1, cancelamento.getStatus().name());
+            pstm.setLong(2, cancelamento.getId());
+
+            pstm.execute();
+
+            return cancelamento;
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
+        }
+
         return null;
     }
 
@@ -98,7 +123,7 @@ public class CancelamentoDAO implements IDAO {
                     pstm.setLong(1, cancelamento.getCliente().getUsuario().getId());
                 }
 
-                case "listarJson" -> {
+                case "listarUnico", "listarJson" -> {
                     sql = "SELECT * FROM cancelamentos WHERE ccl_id = ?";
 
                     pstm = connection.prepareStatement(sql);
@@ -130,7 +155,7 @@ public class CancelamentoDAO implements IDAO {
                 cancelamentoConsulta.setVenda((Venda) vendaDAO.listar(vendaConsulta, "listarUnico").get(0));
 
                 cancelamentoConsulta.setCliente(cliente);
-                cancelamentoConsulta.setData(rs.getTimestamp("ccl_data").toLocalDateTime().toLocalDate());
+                cancelamentoConsulta.setData(rs.getTimestamp("ccl_data").toLocalDateTime());
                 cancelamentoConsulta.setStatus(StatusSolicitacaoType.valueOf(rs.getString("ccl_status")));
 
                 cancelamentos.add(cancelamentoConsulta);

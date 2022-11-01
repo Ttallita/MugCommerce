@@ -5,7 +5,10 @@ import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.cliente.Cliente;
+import model.cliente.endereco.Endereco;
+import model.cliente.endereco.EnderecoType;
 import model.produto.Produto;
+import model.solicitacao.StatusSolicitacaoType;
 import model.solicitacao.Troca;
 import model.venda.Venda;
 import utils.UtilsWeb;
@@ -30,7 +33,7 @@ public class TrocaViewHelper implements IViewHelper {
                 return troca;
             }
 
-            case "listarJson" -> {
+            case "listarJson", "listarUnico" -> {
                 troca.setId(Long.parseLong(request.getParameter("id")));
                 return troca;
             }
@@ -51,6 +54,19 @@ public class TrocaViewHelper implements IViewHelper {
                 return troca;
             }
 
+            case "atualizar" -> {
+                String status = request.getParameter("status");
+                StatusSolicitacaoType tipoStatus = status != null && !status.isEmpty() ? StatusSolicitacaoType.valueOf(status) : null;
+
+                String id = request.getParameter("id");
+                Long idTroca = id != null && !id.isEmpty() ? Long.parseLong(id) : null;
+
+                troca.setStatus(tipoStatus);
+                troca.setId(idTroca);
+
+                return troca;
+            }
+
         }
 
         return null;
@@ -61,9 +77,29 @@ public class TrocaViewHelper implements IViewHelper {
         String operacao = request.getParameter("operacao");
 
         switch (operacao) {
+
+            case "atualizar" -> response.sendRedirect("/emug/adm/trocas?operacao=listarTodos");
+
             case "listar" -> {
                 request.setAttribute("solicitacoes", result.getEntidades());
+                request.setAttribute("listaStatus", StatusSolicitacaoType.values());
                 request.getRequestDispatcher("/cliente/solicitacoes.jsp").forward(request, response);
+            }
+
+            case "listarUnico" -> {
+                Troca troca = (Troca) result.getEntidades().get(0);
+                request.setAttribute("solicitacao", troca);
+
+                Endereco enderecoEntrega = troca.getVenda().getEnderecoEntrega();
+                if (enderecoEntrega.getTipoEndereco().equals(EnderecoType.COBRANCA_ENTREGA)) {
+                    request.setAttribute("enderecoCobrancaEntrega", enderecoEntrega);
+                } else {
+                    request.setAttribute("enderecoEntrega", enderecoEntrega);
+                    request.setAttribute("enderecoCobranca", troca.getVenda().getEnderecoCobranca());
+                }
+
+                request.setAttribute("listaStatus", StatusSolicitacaoType.values());
+                request.getRequestDispatcher("/gerenciar/listarSolicitacao.jsp").forward(request, response);
             }
 
             case "salvar" -> response.sendRedirect("/emug/clientes/compras?operacao=listar");

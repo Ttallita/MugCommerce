@@ -5,7 +5,10 @@ import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
 import model.cliente.Cliente;
+import model.cliente.endereco.Endereco;
+import model.cliente.endereco.EnderecoType;
 import model.solicitacao.Cancelamento;
+import model.solicitacao.StatusSolicitacaoType;
 import model.venda.Venda;
 import utils.UtilsWeb;
 
@@ -32,7 +35,7 @@ public class CancelamentoViewHelper implements IViewHelper {
                 return new Cancelamento();
             }
 
-            case "listarJson" -> {
+            case "listarJson", "listarUnico" -> {
                 cancelamento.setId(Long.parseLong(request.getParameter("id")));
                 return cancelamento;
             }
@@ -45,6 +48,20 @@ public class CancelamentoViewHelper implements IViewHelper {
 
                 return cancelamento;
             }
+
+            case "atualizar" -> {
+                String status = request.getParameter("status");
+                StatusSolicitacaoType tipoStatus = status != null && !status.isEmpty() ? StatusSolicitacaoType.valueOf(status) : null;
+
+                String id = request.getParameter("id");
+                Long idCancelamento = id != null && !id.isEmpty() ? Long.parseLong(id) : null;
+
+                cancelamento.setStatus(tipoStatus);
+                cancelamento.setId(idCancelamento);
+
+                return cancelamento;
+            }
+
         }
 
         return null;
@@ -55,9 +72,28 @@ public class CancelamentoViewHelper implements IViewHelper {
         String operacao = request.getParameter("operacao");
 
         switch (operacao) {
+
+            case "atualizar" -> response.sendRedirect("/emug/adm/cancelamentos?operacao=listarTodos");
+
             case "listar" -> {
                 request.setAttribute("solicitacoes", result.getEntidades());
                 request.getRequestDispatcher("/cliente/solicitacoes.jsp").forward(request, response);
+            }
+
+            case "listarUnico" -> {
+                Cancelamento cancelamento = (Cancelamento) result.getEntidades().get(0);
+                request.setAttribute("solicitacao", cancelamento);
+
+                Endereco enderecoEntrega = cancelamento.getVenda().getEnderecoEntrega();
+                if (enderecoEntrega.getTipoEndereco().equals(EnderecoType.COBRANCA_ENTREGA)) {
+                    request.setAttribute("enderecoCobrancaEntrega", enderecoEntrega);
+                } else {
+                    request.setAttribute("enderecoEntrega", enderecoEntrega);
+                    request.setAttribute("enderecoCobranca", cancelamento.getVenda().getEnderecoCobranca());
+                }
+
+                request.setAttribute("listaStatus", StatusSolicitacaoType.values());
+                request.getRequestDispatcher("/gerenciar/listarSolicitacao.jsp").forward(request, response);
             }
 
             case "salvar" ->
@@ -69,7 +105,6 @@ public class CancelamentoViewHelper implements IViewHelper {
                 request.setAttribute("solicitacoes", result.getEntidades());
                 request.getRequestDispatcher("/gerenciar/solicitacoesPendentes.jsp").forward(request, response);
             }
-
 
         }
     }

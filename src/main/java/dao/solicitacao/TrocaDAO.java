@@ -67,6 +67,31 @@ public class TrocaDAO implements IDAO {
 
     @Override
     public EntidadeDominio atualizar(EntidadeDominio entidade) {
+        Troca troca = (Troca) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+
+        try {
+            connection = conexao.getConexao();
+
+            String sql = "UPDATE trocas SET trc_status = ? WHERE trc_id = ?";
+
+            PreparedStatement pstm = connection.prepareStatement(sql);
+            pstm.setString(1, troca.getStatus().name());
+            pstm.setLong(2, troca.getId());
+
+            pstm.execute();
+
+            return troca;
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            conexao.fecharConexao(connection);
+        }
+
         return null;
     }
 
@@ -98,7 +123,7 @@ public class TrocaDAO implements IDAO {
                     pstm.setLong(1, troca.getCliente().getUsuario().getId());
                 }
 
-                case "listarJson" -> {
+                case "listarUnico", "listarJson" -> {
                     sql = "SELECT * FROM trocas WHERE trc_id = ?";
 
                     pstm = connection.prepareStatement(sql);
@@ -134,7 +159,7 @@ public class TrocaDAO implements IDAO {
                 trocaConsulta.setVenda((Venda) vendaDAO.listar(vendaConsulta, "listarUnico").get(0));
 
                 trocaConsulta.setCliente(cliente);
-                trocaConsulta.setData(rs.getTimestamp("trc_data").toLocalDateTime().toLocalDate());
+                trocaConsulta.setData(rs.getTimestamp("trc_data").toLocalDateTime());
                 trocaConsulta.setStatus(StatusSolicitacaoType.valueOf(rs.getString("trc_status")));
 
                 trocas.add(trocaConsulta);

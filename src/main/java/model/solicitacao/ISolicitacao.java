@@ -4,6 +4,7 @@ import model.cliente.Cliente;
 import model.venda.Venda;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Solicitações são geradas a partir de vendas, elas são criadas APENAS pelo cliente
@@ -18,9 +19,9 @@ public interface ISolicitacao {
 
     void setCliente(Cliente cliente);
 
-    LocalDate getData();
+    LocalDateTime getData();
 
-    void setData(LocalDate data);
+    void setData(LocalDateTime data);
 
     StatusSolicitacaoType getStatus();
 
