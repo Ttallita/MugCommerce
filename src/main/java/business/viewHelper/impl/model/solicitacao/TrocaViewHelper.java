@@ -61,6 +61,10 @@ public class TrocaViewHelper implements IViewHelper {
                 String id = request.getParameter("id");
                 Long idTroca = id != null && !id.isEmpty() ? Long.parseLong(id) : null;
 
+                String reentradaEstoque = request.getParameter("reentradaEstoque");
+                if(reentradaEstoque != null)
+                    troca.setReentradaEstoque(reentradaEstoque.equals("on"));
+
                 troca.setStatus(tipoStatus);
                 troca.setId(idTroca);
 

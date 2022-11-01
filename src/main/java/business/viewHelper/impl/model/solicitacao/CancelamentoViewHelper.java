@@ -56,6 +56,10 @@ public class CancelamentoViewHelper implements IViewHelper {
                 String id = request.getParameter("id");
                 Long idCancelamento = id != null && !id.isEmpty() ? Long.parseLong(id) : null;
 
+                String reentradaEstoque = request.getParameter("reentradaEstoque");
+                if(reentradaEstoque != null)
+                    cancelamento.setReentradaEstoque(reentradaEstoque.equals("on"));
+
                 cancelamento.setStatus(tipoStatus);
                 cancelamento.setId(idCancelamento);
 

@@ -3,11 +3,6 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:set var="paginaCorrente" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-<c:set var="isCancelamento" value="${ fn:contains(paginaCorrente, 'cancelamento') }"/>
-
-<c:set var="nomePaginaCorrente" value="${ isCancelamento ? 'Cancelamento' : 'Troca'}"/>
-
 <!DOCTYPE html>
 <html lang=pt-br>
 <head>
@@ -26,6 +21,10 @@
 
     <jsp:include page="/include/header.jsp" />
 
+    <c:set var="paginaCorrente" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+    <c:set var="isCancelamento" value="${ fn:contains(paginaCorrente, 'cancelamento') }"/>    
+    <c:set var="nomePaginaCorrente" value="${ isCancelamento ? 'Cancelamento' : 'Troca'}"/>
+    
     <div class="container card w-50 mt-5 mb-5">
 
         <jsp:include page="../include/alert.jsp" />
@@ -187,12 +186,20 @@
                                 Novo status:
 
                                 <form action="${isCancelamento ? '/emug/adm/cancelamentos' : '/emug/adm/trocas'}" method="POST">
-                                    <select class="form-select" id="status" name="status">
+                                    <select ${solicitacao.status == 'REALIZADA' ? 'disabled' : ''} class="form-select" id="status" name="status">
                                         <option value="">Selecione</option>
                                         <c:forEach var="status" items="${listaStatus}">
                                             <option value="${status}">${status.nomeExibicao}</option>
                                         </c:forEach>
                                     </select>
+
+                                    <div class="form-check" id="divReentrada" style="display: none;">
+                                        <br/>
+                                        <input class="form-check-input" type="checkbox" id="isRetornoEstoque" name="reentradaEstoque">
+                                        <label class="form-check-label" for="isRetornoEstoque">
+                                            Reentrada de estoque
+                                        </label>
+                                    </div>
 
                                     <input type="hidden" name="id" value="${solicitacao.id}">
                                     <input type="hidden" name="operacao" value="atualizar">
@@ -215,9 +222,19 @@
 
 </body>
 
-<script src="<c:url value='webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js'/>"></script>
-<script src="<c:url value='webjars/jquery/3.6.1/jquery.min.js'/>"></script>
-<script src="<c:url value='webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js'/>"></script>
-<script src="assets/js/geral.js"></script>
+<script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js' />"></script>
+<script src="<c:url value='/webjars/jquery/3.6.1/jquery.min.js' />"></script>
+<script src='<c:url value="/webjars/jquery-mask-plugin/1.14.16/dist/jquery.mask.min.js"/>'></script>
+<script src='<c:url value="/assets/js/geral.js"/>'></script>
 
+<script>
+    $('#status').change(function() {
+        let status = $('#status option:selected').val();
+
+        if(status === 'REALIZADA') 
+            $("#divReentrada").show()
+        else 
+            $("#divReentrada").hide()
+    })
+</script>
 </html>

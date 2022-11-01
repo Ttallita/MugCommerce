@@ -22,8 +22,6 @@ public class UtilsWeb {
     );
 
     public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String operacao = request.getParameter("operacao");
-
         response.setCharacterEncoding("UTF8");
         response.setContentType("application/json");
 
@@ -64,7 +62,6 @@ public class UtilsWeb {
         List<String> atributos = getNomesAtributosRequest(request);
         StringBuilder parametros = new StringBuilder();
 
-        // TODO verificar casos onde tem endereço de cobrança
         for (Map.Entry<String, String> entry : novosValoresParametros.entrySet()){
             atributos.remove(entry.getKey());
             parametros.append(String.format("&%s=%s", entry.getKey(), entry.getValue()));

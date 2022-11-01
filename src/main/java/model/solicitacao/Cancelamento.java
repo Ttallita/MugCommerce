@@ -14,6 +14,8 @@ public class Cancelamento extends EntidadeDominio implements ISolicitacao {
     private LocalDateTime data;
     private StatusSolicitacaoType status;
 
+    private boolean reentradaEstoque;
+
     public Cancelamento(){ }
 
     public Cancelamento(Cliente cliente){
@@ -50,5 +52,13 @@ public class Cancelamento extends EntidadeDominio implements ISolicitacao {
 
     public void setStatus(StatusSolicitacaoType status) {
         this.status = status;
+    }
+
+    public boolean isReentradaEstoque() {
+        return reentradaEstoque;
+    }
+
+    public void setReentradaEstoque(boolean reentradaEstoque) {
+        this.reentradaEstoque = reentradaEstoque;
     }
 }

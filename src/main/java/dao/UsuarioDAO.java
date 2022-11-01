@@ -156,10 +156,4 @@ public class UsuarioDAO implements IDAO {
         return null;
     }
 
-    public Usuario findUsuarioByEmail(String email) {
-        // TODO implementar
-
-        return null;
-    }
-
 }

@@ -62,11 +62,6 @@ public class ClienteDAO implements IDAO {
 
 
         } catch (Exception e) {
-
-            /*
-             * TODO melhorar comportamentos em caso de exceção
-             */
-
             System.err.println(e.getMessage());
             e.printStackTrace();
         } finally {
