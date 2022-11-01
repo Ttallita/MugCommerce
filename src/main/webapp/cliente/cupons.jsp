@@ -43,7 +43,7 @@
                                     <small>${cupom.tipo}</small>
                                     <fmt:parseDate  value="${cupom.dataValidade}"  type="date" pattern="yyyy-MM-dd" var="dataParseada" />
                                     <fmt:formatDate value="${dataParseada}" type="date" pattern="dd/MM/yyyy" var="dataFormatada" />
-                                    <h6>Validade: ${dataFormatada}</h6>
+                                    <h6>Validade: ${dataFormatada != null ? dataFormatada : 'Sem validade'}</h6>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h6>${cupom.nome}</h6>

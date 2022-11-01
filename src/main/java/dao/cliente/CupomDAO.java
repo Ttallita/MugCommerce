@@ -2,19 +2,13 @@ package dao.cliente;
 
 import dao.IDAO;
 import model.EntidadeDominio;
-import model.cliente.CartaoDeCredito;
+import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
-import model.cliente.endereco.EnderecoType;
 import model.cupom.Cupom;
 import model.cupom.CupomType;
-import model.produto.Produto;
 import utils.Conexao;
-import utils.Utils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +16,40 @@ public class CupomDAO implements IDAO {
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
-        return null;
+        Cupom cupom = (Cupom) entidade;
+
+        Conexao conexao = new Conexao();
+        Connection conn = null;
+        try {
+            conn = conexao.getConexao();
+
+            String sql = "INSERT INTO cupons (cpm_cli_usr_id, cpm_vnd_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) " +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstm.setLong(1, cupom.getCliente().getUsuario().getId());
+            pstm.setNull(2, Types.BIGINT);
+            pstm.setString(3, cupom.getNome());
+            pstm.setString(4, cupom.getTipo().name());
+            pstm.setDouble(5, cupom.getValor());
+            pstm.setObject(6, cupom.getDataValidade());
+            pstm.setString(7, cupom.getDescricao());
+
+            pstm.execute();
+
+            ResultSet rs = pstm.getGeneratedKeys();
+
+            while (rs.next()) {
+                cupom.setId(rs.getLong(1));;
+            }
+
+            return cupom;
+        }catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }finally {
+            conexao.fecharConexao(conn);
+        }
     }
 
     @Override
@@ -97,8 +124,10 @@ public class CupomDAO implements IDAO {
                 cupomConsulta.setNome(rs.getString("cpm_nome"));
                 cupomConsulta.setTipo(CupomType.valueOf(rs.getString("cpm_tp")));
                 cupomConsulta.setValor(rs.getDouble("cpm_valor"));
-                cupomConsulta.setDataValidade(rs.getTimestamp("cpm_dt_validade").toLocalDateTime().toLocalDate());
                 cupomConsulta.setDescricao(rs.getString("cpm_descricao"));
+
+                Timestamp dataValidade = rs.getTimestamp("cpm_dt_validade");
+                cupomConsulta.setDataValidade(dataValidade != null ? dataValidade.toLocalDateTime().toLocalDate() : null);
 
                 cartoes.add(cupomConsulta);
             }

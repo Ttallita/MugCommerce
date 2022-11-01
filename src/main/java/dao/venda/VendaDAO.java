@@ -15,13 +15,16 @@ import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cliente.endereco.EnderecoType;
 import model.cupom.Cupom;
+import model.cupom.CupomType;
 import model.estoque.Estoque;
 import model.produto.Produto;
 import model.venda.StatusVendaType;
 import model.venda.Venda;
 import utils.Conexao;
+import utils.Utils;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +61,7 @@ public class VendaDAO implements IDAO {
             pstm.setDouble(2, venda.getEnderecoEntrega().getId());
 
             // TODO precisa gerar um cupom de troca caso o valor da compra esteja negativo
-            pstm.setDouble(3, venda.getCalculaTotalEntrega()); ///
+            pstm.setDouble(3, venda.getCalculaTotalVenda());
             pstm.setDouble(4, venda.calculaFrete());
             pstm.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
             pstm.setTimestamp(6, null); // sem data envio
@@ -117,6 +120,19 @@ public class VendaDAO implements IDAO {
                 for (Cupom c : venda.getCupons()){
                     cupomDAO.deletar(c);
                 }
+            }
+
+            double valorVenda = venda.getCalculaTotalVenda();
+            if (valorVenda < 0){
+                Cupom cupomTroca = new Cupom();
+                cupomTroca.setValor(-valorVenda);
+                cupomTroca.setNome("Excedente compra dia " + Utils.formataLocalDateBR(LocalDate.now()));
+                cupomTroca.setDescricao("Cupom gerado automaticamente. Uma compra foi realizada e o pagamento excedeu " +
+                                        "o valor total da compra");
+                cupomTroca.setTipo(CupomType.TROCA);
+                cupomTroca.setCliente(cliente);
+
+                cupomDAO.salvar(cupomTroca);
             }
 
             return venda;

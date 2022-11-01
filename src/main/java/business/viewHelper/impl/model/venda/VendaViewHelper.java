@@ -55,28 +55,18 @@ public class VendaViewHelper implements IViewHelper {
                 Endereco enderecoCobranca = new Endereco(cliente);
                 enderecoCobranca.setId(Long.valueOf(idEnderecoCobrancaEscolhido));
 
-                List<String> idsCartoesSelecionados = UtilsWeb.converteParametrosParaLista(request.getParameter("idsCartoesSelecionados[]"));
-
-                String cupons = request.getParameter("idsCupons[]");
-
-                List<String> idsCupons = null;
-                if(cupons != null)
-                    idsCupons = UtilsWeb.converteParametrosParaLista(cupons);
-
-                for (String id : idsCartoesSelecionados){
+                for (String id : request.getParameterValues("idsCartoesSelecionados[]")){
                     CartaoDeCredito cartao = new CartaoDeCredito(cliente);
                     cartao.setId(Long.parseLong(id));
 
                     venda.addCartaoDeCredito(cartao);
                 }
 
-                if(idsCupons != null) {
-                    for (String id : idsCupons){
-                        Cupom cupom = new Cupom(cliente);
-                        cupom.setId(Long.parseLong(id));
+                for (String id : request.getParameterValues("idsCupons[]")){
+                    Cupom cupom = new Cupom(cliente);
+                    cupom.setId(Long.parseLong(id));
 
-                        venda.addCupom(cupom);
-                    }
+                    venda.addCupom(cupom);
                 }
 
 
