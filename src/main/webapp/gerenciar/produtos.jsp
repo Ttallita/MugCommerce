@@ -44,6 +44,7 @@
                    data-show-search-clear-button="true">
                 <thead>
                     <tr>
+                        <th></th>
                         <th data-field="nome" data-filter-control="input">Nome</th>
                         <th data-field="valorCompra" data-filter-control="input">Valor compra</th>
                         <th data-field="valorVenda" data-filter-control="input">Valor venda</th>
@@ -56,6 +57,7 @@
                 <tbody>
                     <c:forEach items="${produtos}" var="produto">
                         <tr ${!produto.ativo ? 'class="table-secondary"' : ''}>
+                            <td><img alt="${produto.nome}" class="img-thumbnail" src="${produto.imagem}"></td>
                             <td>${produto.nome}</td>
                             <td><fmt:formatNumber value="${produto.valorCompra}" type="currency"/></td>
                             <td><fmt:formatNumber value="${produto.valorVenda}" type="currency"/></td>
