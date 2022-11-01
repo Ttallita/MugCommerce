@@ -34,7 +34,6 @@ public abstract class TesteAbstract {
 
     @AfterEach
     public void tearDown(){
-        driver.quit();
     }
 
     public HomePage realizarLoginClientePadrao(){
@@ -42,6 +41,13 @@ public abstract class TesteAbstract {
         LoginPage loginPage = new LoginPage(driver);
 
         return loginPage.logar(UsuarioVO.createUsuarioClientePadrao());
+    }
+
+    public HomePage realizarLoginAdmPadrao() {
+        driver.get(LINK_LOGIN);
+        var loginPage = new LoginPage(driver);
+
+        return loginPage.logar(UsuarioVO.createUsuarioAdmPadrao());
     }
 
 }

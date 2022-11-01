@@ -51,7 +51,7 @@
                         </c:when>
                         <c:when test="${sessionScope.usuarioLogado.tipoUsuario == 'ADMINISTRADOR'}">
                             <div class="col-md-1">
-                                <a href="<c:url value='/adm/clientes?operacao=listarTodos' />" class="btn btn-light">
+                                <a href="<c:url value='/gerenciar/dashboard.jsp' />" class="btn btn-light">
                                     <span class="material-icons">dashboard</span>
                                 </a>
                             </div>
