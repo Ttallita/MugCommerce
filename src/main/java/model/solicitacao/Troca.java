@@ -16,6 +16,8 @@ public class Troca extends EntidadeDominio implements ISolicitacao {
     private LocalDateTime data;
     private StatusSolicitacaoType status;
 
+    private boolean isReentradaEstoque;
+
     public Troca() { }
     public Troca(Cliente cliente) {
         this.cliente = cliente;
@@ -67,5 +69,13 @@ public class Troca extends EntidadeDominio implements ISolicitacao {
     @Override
     public void setStatus(StatusSolicitacaoType status) {
         this.status = status;
+    }
+
+    public boolean isReentradaEstoque() {
+        return isReentradaEstoque;
+    }
+
+    public void setReentradaEstoque(boolean reentradaEstoque) {
+        isReentradaEstoque = reentradaEstoque;
     }
 }

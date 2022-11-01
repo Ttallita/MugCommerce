@@ -193,16 +193,14 @@ public class VendaViewHelper implements IViewHelper {
             }
 
             case "listar" -> {
-                request.setAttribute("compras", result.getEntidades());
+                List<Venda> vendasOrdenadasDataCompra = ordenaVendasPorDataDeCompra(result.getEntidades());
+
+                request.setAttribute("compras", vendasOrdenadasDataCompra);
                 request.getRequestDispatcher("/cliente/compras.jsp").forward(request, response);
             }
 
             case "listarTodos" -> {
-                List<Venda> vendasOrdenadasDataCompra = result.getEntidades()
-                        .stream()
-                        .map(entidade -> (Venda) entidade)
-                        .sorted(Comparator.comparing(Venda::getDataCompra, Comparator.reverseOrder()))
-                        .toList();
+                List<Venda> vendasOrdenadasDataCompra = ordenaVendasPorDataDeCompra(result.getEntidades());
 
                 request.setAttribute("vendas", vendasOrdenadasDataCompra);
                 request.getRequestDispatcher("/gerenciar/vendas.jsp").forward(request, response);
@@ -213,5 +211,14 @@ public class VendaViewHelper implements IViewHelper {
         }
 
     }
+
+    public List<Venda> ordenaVendasPorDataDeCompra(List<EntidadeDominio> vendas) {
+        return vendas.stream()
+                .map(entidade -> (Venda) entidade)
+                .sorted(Comparator.comparing(Venda::getDataCompra, Comparator.reverseOrder()))
+                .toList();
+    }
+
+
 
 }

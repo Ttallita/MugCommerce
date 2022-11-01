@@ -21,11 +21,6 @@ public class VerificarEmailStrategy implements IStrategy {
             email = usuario.getEmail();
         }
 
-        Usuario usuarioPorEmail = new UsuarioDAO().findUsuarioByEmail(email);
-
-        if(usuarioPorEmail != null)
-            return "Email já cadastrado";
-
         if(email.trim().isBlank())
             return "Insira um email";
 

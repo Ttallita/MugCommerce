@@ -2,12 +2,16 @@ package dao.solicitacao;
 
 import dao.IDAO;
 import dao.cliente.ClienteDAO;
+import dao.estoque.EstoqueDAO;
 import dao.venda.VendaDAO;
 import model.EntidadeDominio;
 import model.Usuario;
+import model.carrinho.ItemCarrinho;
 import model.cliente.Cliente;
+import model.estoque.Estoque;
 import model.solicitacao.Cancelamento;
 import model.solicitacao.StatusSolicitacaoType;
+import model.solicitacao.Troca;
 import model.venda.StatusVendaType;
 import model.venda.Venda;
 import utils.Conexao;
@@ -19,8 +23,10 @@ import java.util.List;
 
 public class CancelamentoDAO implements IDAO {
 
-    private VendaDAO vendaDAO = new VendaDAO();
+    private final VendaDAO vendaDAO = new VendaDAO();
     private final ClienteDAO clienteDAO = new ClienteDAO();
+    private final EstoqueDAO estoqueDAO = new EstoqueDAO();
+
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
@@ -83,8 +89,29 @@ public class CancelamentoDAO implements IDAO {
 
             pstm.execute();
 
-            return cancelamento;
+            // Nesse momento estaremos retornando todos os itens da compra para o estoque
+            if(cancelamento.isReentradaEstoque()) {
 
+                Cancelamento cancelamentoConsulta = (Cancelamento) listar(cancelamento, "listarUnico")
+                        .get(0);
+
+                List<ItemCarrinho> itensCarrinho = cancelamentoConsulta.getVenda()
+                        .getCarrinho()
+                        .getItensCarrinho();
+
+                itensCarrinho.forEach(item -> {
+                    Estoque estoque = new Estoque();
+                    estoque.setProduto(item.getProduto());
+
+                    Estoque estoqueConsulta = (Estoque) estoqueDAO.listar(estoque, "findByIdProduto")
+                            .get(0);
+                    estoqueConsulta.setQuantidade(estoqueConsulta.getQuantidade() + item.getQuant());
+
+                    estoqueDAO.atualizar(estoqueConsulta);
+                });
+            }
+
+            return cancelamento;
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();

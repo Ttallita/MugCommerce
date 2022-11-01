@@ -2,11 +2,14 @@ package dao.solicitacao;
 
 import dao.IDAO;
 import dao.cliente.ClienteDAO;
+import dao.estoque.EstoqueDAO;
 import dao.produto.ProdutoDAO;
 import dao.venda.VendaDAO;
 import model.EntidadeDominio;
 import model.Usuario;
+import model.carrinho.ItemCarrinho;
 import model.cliente.Cliente;
+import model.estoque.Estoque;
 import model.produto.Produto;
 import model.solicitacao.StatusSolicitacaoType;
 import model.solicitacao.Troca;
@@ -23,6 +26,7 @@ public class TrocaDAO implements IDAO {
     private final VendaDAO vendaDAO = new VendaDAO();
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
     private final ClienteDAO clienteDAO = new ClienteDAO();
+    private final EstoqueDAO estoqueDAO = new EstoqueDAO();
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
@@ -82,6 +86,33 @@ public class TrocaDAO implements IDAO {
             pstm.setLong(2, troca.getId());
 
             pstm.execute();
+
+            // Nesse momento estaremos retornando os itens da troca para o estoque
+            if(troca.isReentradaEstoque()) {
+
+                Troca trocaConsulta = (Troca) listar(troca, "listarUnico")
+                        .get(0);
+
+                ItemCarrinho itemCarrinho = trocaConsulta.getVenda()
+                        .getCarrinho()
+                        .getItensCarrinho()
+                        .stream()
+                        .filter(item -> item.getProduto().getId().equals(trocaConsulta.getProduto().getId()))
+                        .findFirst()
+                        .orElse(null);
+
+                if(itemCarrinho == null)
+                    throw new RuntimeException("Erro ao tentar encontrar item da troca na venda");
+
+                Estoque estoque = new Estoque();
+                estoque.setProduto(trocaConsulta.getProduto());
+
+                Estoque estoqueConsulta = (Estoque) estoqueDAO.listar(estoque, "findByIdProduto")
+                        .get(0);
+                estoqueConsulta.setQuantidade(estoqueConsulta.getQuantidade() + itemCarrinho.getQuant());
+
+                estoqueDAO.atualizar(estoqueConsulta);
+            }
 
             return troca;
 
