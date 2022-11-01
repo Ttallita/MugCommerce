@@ -2,6 +2,7 @@ package dao.solicitacao;
 
 import dao.IDAO;
 import dao.cliente.ClienteDAO;
+import dao.cliente.CupomDAO;
 import dao.estoque.EstoqueDAO;
 import dao.produto.ProdutoDAO;
 import dao.venda.VendaDAO;
@@ -9,14 +10,18 @@ import model.EntidadeDominio;
 import model.Usuario;
 import model.carrinho.ItemCarrinho;
 import model.cliente.Cliente;
+import model.cupom.Cupom;
+import model.cupom.CupomType;
 import model.estoque.Estoque;
 import model.produto.Produto;
 import model.solicitacao.StatusSolicitacaoType;
 import model.solicitacao.Troca;
 import model.venda.Venda;
 import utils.Conexao;
+import utils.Utils;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,7 @@ public class TrocaDAO implements IDAO {
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final EstoqueDAO estoqueDAO = new EstoqueDAO();
+    private final CupomDAO cupomDAO = new CupomDAO();
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
@@ -87,9 +93,8 @@ public class TrocaDAO implements IDAO {
 
             pstm.execute();
 
-            // Nesse momento estaremos retornando os itens da troca para o estoque
-            if(troca.isReentradaEstoque()) {
-
+            // Aqui estamos gerando o cupom de troca para o cliente.
+            if(troca.getStatus().equals(StatusSolicitacaoType.REALIZADA)) {
                 Troca trocaConsulta = (Troca) listar(troca, "listarUnico")
                         .get(0);
 
@@ -104,18 +109,29 @@ public class TrocaDAO implements IDAO {
                 if(itemCarrinho == null)
                     throw new RuntimeException("Erro ao tentar encontrar item da troca na venda");
 
-                Estoque estoque = new Estoque();
-                estoque.setProduto(trocaConsulta.getProduto());
+                Cupom cupomTroca = new Cupom();
+                cupomTroca.setValor(itemCarrinho.getProduto().getValorVenda() * itemCarrinho.getQuant());
+                cupomTroca.setNome("Troca do dia " + Utils.formataLocalDateBR(LocalDate.now()));
+                cupomTroca.setDescricao("Cupom gerado por troca de produto");
+                cupomTroca.setTipo(CupomType.TROCA);
+                cupomTroca.setCliente(troca.getCliente());
 
-                Estoque estoqueConsulta = (Estoque) estoqueDAO.listar(estoque, "findByIdProduto")
-                        .get(0);
-                estoqueConsulta.setQuantidade(estoqueConsulta.getQuantidade() + itemCarrinho.getQuant());
+                cupomDAO.salvar(cupomTroca);
 
-                estoqueDAO.atualizar(estoqueConsulta);
+                // Nesse momento estaremos retornando os itens da troca para o estoque
+                if(troca.isReentradaEstoque()) {
+                    Estoque estoque = new Estoque();
+                    estoque.setProduto(trocaConsulta.getProduto());
+
+                    Estoque estoqueConsulta = (Estoque) estoqueDAO.listar(estoque, "findByIdProduto")
+                            .get(0);
+                    estoqueConsulta.setQuantidade(estoqueConsulta.getQuantidade() + itemCarrinho.getQuant());
+
+                    estoqueDAO.atualizar(estoqueConsulta);
+                }
             }
 
             return troca;
-
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();

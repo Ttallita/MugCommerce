@@ -56,6 +56,10 @@ public class Venda extends EntidadeDominio {
         return  carrinho.getTotalCarrinho() + calculaFrete() - valorDesconto;
     }
 
+    public double getCalculaTotalVendaSemDesconto(){
+        return carrinho.getTotalCarrinho() + calculaFrete();
+    }
+
     public LocalDate calculaDataEntrega(){
         return LocalDate.now().plusDays(15L);
     }

@@ -59,8 +59,6 @@ public class VendaDAO implements IDAO {
             PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1, cliente.getUsuario().getId());
             pstm.setDouble(2, venda.getEnderecoEntrega().getId());
-
-            // TODO precisa gerar um cupom de troca caso o valor da compra esteja negativo
             pstm.setDouble(3, venda.getCalculaTotalVenda());
             pstm.setDouble(4, venda.calculaFrete());
             pstm.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));

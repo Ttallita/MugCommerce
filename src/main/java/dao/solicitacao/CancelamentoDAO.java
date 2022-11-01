@@ -2,12 +2,15 @@ package dao.solicitacao;
 
 import dao.IDAO;
 import dao.cliente.ClienteDAO;
+import dao.cliente.CupomDAO;
 import dao.estoque.EstoqueDAO;
 import dao.venda.VendaDAO;
 import model.EntidadeDominio;
 import model.Usuario;
 import model.carrinho.ItemCarrinho;
 import model.cliente.Cliente;
+import model.cupom.Cupom;
+import model.cupom.CupomType;
 import model.estoque.Estoque;
 import model.solicitacao.Cancelamento;
 import model.solicitacao.StatusSolicitacaoType;
@@ -15,8 +18,10 @@ import model.solicitacao.Troca;
 import model.venda.StatusVendaType;
 import model.venda.Venda;
 import utils.Conexao;
+import utils.Utils;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +31,7 @@ public class CancelamentoDAO implements IDAO {
     private final VendaDAO vendaDAO = new VendaDAO();
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final EstoqueDAO estoqueDAO = new EstoqueDAO();
-
+    private final CupomDAO cupomDAO = new CupomDAO();
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
@@ -89,26 +94,39 @@ public class CancelamentoDAO implements IDAO {
 
             pstm.execute();
 
-            // Nesse momento estaremos retornando todos os itens da compra para o estoque
-            if(cancelamento.isReentradaEstoque()) {
-
+            // Aqui estamos gerando o cupom de troca para o cliente.
+            if(cancelamento.getStatus().equals(StatusSolicitacaoType.REALIZADA)) {
                 Cancelamento cancelamentoConsulta = (Cancelamento) listar(cancelamento, "listarUnico")
                         .get(0);
 
-                List<ItemCarrinho> itensCarrinho = cancelamentoConsulta.getVenda()
-                        .getCarrinho()
-                        .getItensCarrinho();
+                double totalVenda = cancelamento.getVenda().getCalculaTotalVendaSemDesconto();
 
-                itensCarrinho.forEach(item -> {
-                    Estoque estoque = new Estoque();
-                    estoque.setProduto(item.getProduto());
+                Cupom cupomTroca = new Cupom();
+                cupomTroca.setValor(totalVenda);
+                cupomTroca.setNome("Troca do dia " + Utils.formataLocalDateBR(LocalDate.now()));
+                cupomTroca.setDescricao("Cupom gerado por cancelamento de venda");
+                cupomTroca.setTipo(CupomType.TROCA);
+                cupomTroca.setCliente(cancelamento.getCliente());
 
-                    Estoque estoqueConsulta = (Estoque) estoqueDAO.listar(estoque, "findByIdProduto")
-                            .get(0);
-                    estoqueConsulta.setQuantidade(estoqueConsulta.getQuantidade() + item.getQuant());
+                cupomDAO.salvar(cupomTroca);
 
-                    estoqueDAO.atualizar(estoqueConsulta);
-                });
+                // Nesse momento estaremos retornando todos os itens da compra para o estoque
+                if(cancelamento.isReentradaEstoque()) {
+                    List<ItemCarrinho> itensCarrinho = cancelamentoConsulta.getVenda()
+                            .getCarrinho()
+                            .getItensCarrinho();
+
+                    itensCarrinho.forEach(item -> {
+                        Estoque estoque = new Estoque();
+                        estoque.setProduto(item.getProduto());
+
+                        Estoque estoqueConsulta = (Estoque) estoqueDAO.listar(estoque, "findByIdProduto")
+                                .get(0);
+                        estoqueConsulta.setQuantidade(estoqueConsulta.getQuantidade() + item.getQuant());
+
+                        estoqueDAO.atualizar(estoqueConsulta);
+                    });
+                }
             }
 
             return cancelamento;
