@@ -151,6 +151,25 @@ CREATE TABLE cartoes_em_venda (
     crv_crt_id int NOT NULL
 );
 
+DROP TABLE IF EXISTS "cancelamentos" CASCADE;
+CREATE TABLE cancelamentos (
+    ccl_id                  serial NOT NULL,
+    ccl_vnd_id              int NOT NULL,
+    ccl_cli_usr_id          int NOT NULL,
+    ccl_data                timestamp NOT NULL,
+    ccl_status              varchar(50) NOT NULL
+);
+
+DROP TABLE IF EXISTS "trocas" CASCADE;
+CREATE TABLE trocas (
+    trc_id                  serial NOT NULL,
+    trc_pro_id              int NOT NULL,
+    trc_vnd_id              int NOT NULL,
+    trc_cli_usr_id          int NOT NULL,
+    trc_data                timestamp NOT NULL,
+    trc_status              varchar(50) NOT NULL
+);
+
 ---- Geral
 
 DROP TABLE IF EXISTS "auditoria" CASCADE;

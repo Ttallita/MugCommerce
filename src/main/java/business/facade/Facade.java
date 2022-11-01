@@ -15,6 +15,8 @@ import dao.cliente.EnderecoDAO;
 import dao.estoque.EstoqueDAO;
 import dao.estoque.EstoqueHistoricoDAO;
 import dao.produto.*;
+import dao.solicitacao.CancelamentoDAO;
+import dao.solicitacao.TrocaDAO;
 import dao.venda.VendaDAO;
 import model.EntidadeDominio;
 import model.Result;
@@ -27,6 +29,8 @@ import model.estoque.Estoque;
 import model.estoque.EstoqueHistorico;
 import model.cupom.Cupom;
 import model.produto.*;
+import model.solicitacao.Cancelamento;
+import model.solicitacao.Troca;
 import model.venda.Venda;
 import session.ISessionUtil;
 import session.carrinho.CarrinhoSessionUtil;
@@ -56,6 +60,8 @@ public class Facade implements IFacade {
         daosMap.put(ProdutoStatus.class.getName(), new ProdutoStatusDAO());
         daosMap.put(Venda.class.getName(), new VendaDAO());
         daosMap.put(Cupom.class.getName(), new CupomDAO());
+        daosMap.put(Troca.class.getName(), new TrocaDAO());
+        daosMap.put(Cancelamento.class.getName(), new CancelamentoDAO());
         daosMap.put(Estoque.class.getName(), new EstoqueDAO());
         daosMap.put(EstoqueHistorico.class.getName(), new EstoqueHistoricoDAO());
 
@@ -163,7 +169,8 @@ public class Facade implements IFacade {
 
             resultadoConsulta = dao.listar(entidade, operacao);
 
-            System.err.printf("Consulta (%s - %s) retornou %d resultado(s)\n", entidade.getClass().getSimpleName(), operacao, resultadoConsulta.size());
+            System.err.printf("Consulta (%s - %s) retornou %d resultado(s)\n",
+                    entidade.getClass().getSimpleName(), operacao, resultadoConsulta.size());
         }
 
         result.setMsg(resultado);

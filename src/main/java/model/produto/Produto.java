@@ -16,6 +16,8 @@ public class Produto extends EntidadeDominio {
     private List<Categoria> categorias;
     private String imagem;
 
+    private boolean emTroca = false;
+
     public String getNome() {
         return nome;
     }
@@ -94,6 +96,14 @@ public class Produto extends EntidadeDominio {
 
     public void setImagem(String imagem) {
         this.imagem = imagem;
+    }
+
+    public boolean isEmTroca() {
+        return emTroca;
+    }
+
+    public void setEmTroca(boolean emTroca) {
+        this.emTroca = emTroca;
     }
 
     @Override

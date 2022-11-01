@@ -1,6 +1,5 @@
 package model.venda;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.gson.annotations.SerializedName;
 
 public enum StatusVendaType {
@@ -22,6 +21,9 @@ public enum StatusVendaType {
 
     @SerializedName("Finalizado")
     FINALIZADO("Finalizado"),
+
+    @SerializedName("Cancelada")
+    CANCELADA("Cancelada"),
     ;
 
     public String nomeExibicao;
@@ -30,7 +32,6 @@ public enum StatusVendaType {
         this.nomeExibicao = nomeExibicao;
     }
 
-    @JsonValue
     public String getNomeExibicao() {
         return nomeExibicao;
     }

@@ -50,20 +50,20 @@
                                 
                                 <c:forEach var="compra" items="${compras}">
                                     <tr>
-                                        <fmt:parseDate  value="${compra.dataCompra}"  type="date" pattern="yyyy-MM-dd" var="dataCompraParseada" />
-                                        <fmt:formatDate value="${dataCompraParseada}" type="date" pattern="dd/MM/yyyy" var="dataCompraFormatada" />
+                                        <fmt:parseDate  value="${compra.dataCompra}"  type="date" pattern="yyyy-MM-dd'T'HH:mm" var="dataCompraParseada" />
+                                        <fmt:formatDate value="${dataCompraParseada}" type="date" pattern="dd/MM/yyyy HH:mm" var="dataCompraFormatada" />
                                         <td>${dataCompraFormatada}</td>
 
                                         <td>R$ ${compra.precoTotal}</td>
                                         <td>R$ ${compra.frete}</td>
                                         <td>${compra.vendaStatus.nomeExibicao}</td>
 
-                                        <fmt:parseDate  value="${compra.dataEnvio}"  type="date" pattern="yyyy-MM-dd" var="dataEnvioParseada" />
-                                        <fmt:formatDate value="${dataEnvioParseada}" type="date" pattern="dd/MM/yyyy" var="dataEnvioFormatada" />
+                                        <fmt:parseDate  value="${compra.dataEnvio}"  type="date" pattern="yyyy-MM-dd'T'HH:mm" var="dataEnvioParseada" />
+                                        <fmt:formatDate value="${dataEnvioParseada}" type="date" pattern="dd/MM/yyyy HH:mm" var="dataEnvioFormatada" />
                                         <td>${dataEnvioFormatada}</td>
 
-                                        <fmt:parseDate  value="${compra.dataEntrega}"  type="date" pattern="yyyy-MM-dd" var="dataEntregaParseada" />
-                                        <fmt:formatDate value="${dataEntregaParseada}" type="date" pattern="dd/MM/yyyy" var="dataEntregaFormatada" />
+                                        <fmt:parseDate  value="${compra.dataEntrega}"  type="date" pattern="yyyy-MM-dd'T'HH:mm" var="dataEntregaParseada" />
+                                        <fmt:formatDate value="${dataEntregaParseada}" type="date" pattern="dd/MM/yyyy HH:mm" var="dataEntregaFormatada" />
                                         <td>${dataEntregaFormatada}</td>
 
                                         <td>
@@ -109,8 +109,8 @@
                 $(`<ul class="list-unstyled">
                     <li><h6 class="fw-bold">\${venda.dataCompra}</h6></li>
                     <li><h6>\${venda.vendaStatus}</h6></li>
-                    <li>Valor total da venda: \${venda.precoTotal}</li>
-                    <li>Frete: \${venda.frete}</li>
+                    <li>Valor total da venda: R$ \${venda.precoTotal}</li>
+                    <li>Frete: R$ \${venda.frete}</li>
                 </ul>`);
 
             if (venda.dataEntrega != null)
@@ -122,42 +122,106 @@
             adicionaItemBodyModal(detalhesVenda);
             
             venda.carrinho.itensCarrinho.forEach(i => {
-                let itemCompra =
-                    $(`<div class="row border rounded p-3">
-                        <div class="col-2">
-                            <div class="card produto mb-3">
-                                <img alt="produto" src="\${i.produto.imagem}" class="p-2">
-                            </div>
-                        </div>
 
-                        <div class="col">
-                            <h5>\${i.produto.nome}</h5>
-                            <h6>Quantidade: \${i.quant}</h6>
-                            <h6>Valor: R$ \${i.produto.valorCompra}</h6>
-                        </div>
+                // --- Imagem Item
+                let colImagem = document.createElement("div")
+                colImagem.classList.add("col-2")
 
-                        <div class="col-2">
-                            <button type="button" class="btn btn-primary btn-sm">Solicitar troca</button>
-                        </div>
-                    </div>`);
+                let divImagem = document.createElement("div")
+                divImagem.classList.add("card")
+                divImagem.classList.add("produto")
+                divImagem.classList.add("mb-3")
 
-                adicionaItemBodyModal(itemCompra);
+                let imagem = $('<img>')
+                imagem.attr("alt", i.produto.nome)
+                imagem.prop("src", i.produto.imagem)
+                imagem.prop("class", "p-2")
+
+                divImagem.appendChild(imagem[0])
+                colImagem.appendChild(divImagem)
+
+
+                // --- Detalhes
+                let colDetalhesItem = document.createElement("div")
+                colDetalhesItem.classList.add("col")
+
+                let nomeItem = document.createElement("h6")
+                let quantItem = document.createElement("h6")
+                let valorItem = document.createElement("h6")
+                nomeItem.innerHTML = i.produto.nome
+                quantItem.innerHTML = "Quantidade: " + i.quant
+                valorItem.innerHTML = "Valor: R$ " + i.produto.valorVenda
+
+                colDetalhesItem.appendChild(nomeItem)
+                colDetalhesItem.appendChild(quantItem)
+                colDetalhesItem.appendChild(valorItem)
+
+
+                // --- Ação troca
+                let colAcaoTrocaItem = document.createElement("div")
+                colAcaoTrocaItem.classList.add("col-2")
+
+                let linkTrocar = document.createElement("a")
+                linkTrocar.href = "<c:url value='/clientes/trocas?operacao=salvar'/>" + "&idProduto=" + i.produto.id + "&idVenda=" + venda.id
+                
+
+                if (venda.vendaStatus != 'Cancelada'){
+                    if (i.emTroca) {
+                        let texto = document.createElement("small")
+                        texto.classList.add("text-muted")
+                        texto.innerHTML = "Em troca"
+
+                        colAcaoTrocaItem.appendChild(texto)
+                        
+                    } else {
+                        let botaoTrocar = document.createElement("button")
+                        botaoTrocar.type = "button"
+                        botaoTrocar.classList.add("btn")
+                        botaoTrocar.classList.add("btn-primary")
+                        botaoTrocar.classList.add("btn-sm")
+                        botaoTrocar.innerHTML = "Solicitar troca"
+                        
+                        linkTrocar.appendChild(botaoTrocar)
+                        colAcaoTrocaItem.appendChild(linkTrocar)
+                    }
+                }
+                
+
+                let divItem = document.createElement("div")
+                divItem.appendChild(colImagem)
+                divItem.appendChild(colDetalhesItem)
+                divItem.appendChild(colAcaoTrocaItem)
+
+                divItem.classList.add("row")
+                divItem.classList.add("border")
+                divItem.classList.add("rounded")
+                divItem.classList.add("p-3")
+
+                document.getElementById("modalBody").appendChild(divItem);
             }); 
 
+            setTituloModal("Detalhes compra");
+
+            let botaoFecharModal = $('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>');
+
+            let botaoCancelar;
+
+            if (venda.vendaStatus != 'Cancelada'){
+                let urlCancelarVenda = "<c:url value='/clientes/cancelamentos?operacao=salvar&idVenda='/>" + venda.id;
+                botaoCancelar =
+                        $(`<a href="\${urlCancelarVenda}">
+                            <button type="button" class="btn btn-primary" id="botaoCancelarCompra">Cancelar compra</button>
+                        </a>`);
+            } else {
+                botaoCancelar =
+                        $(`<button type="button" class="btn btn-primary" id="botaoCancelarCompra" disabled>Cancelar compra</button>`);
+                
+            }
+
+            adicionaBotaoFooter(botaoCancelar);
+            adicionaBotaoFooter(botaoFecharModal);
+
         });
-
-        setTituloModal("Detalhes compra");
-
-        let botaoFecharModal = $('<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>');
-
-        let urlCancelarVenda = "<c:url value='/clientes/solicitacoes?operacao=salvar&tipoOperacao=cancelar&idVenda=\${idVenda}'/>";
-        let botaoCancelar =
-                $(`<a href="\${urlCancelarVenda}">
-                    <button type="button" class="btn btn-primary" id="botaoCancelarCompra">Cancelar compra</button>
-                </a>`);
-
-        adicionaBotaoFooter(botaoCancelar);
-        adicionaBotaoFooter(botaoFecharModal);
         
     }
 

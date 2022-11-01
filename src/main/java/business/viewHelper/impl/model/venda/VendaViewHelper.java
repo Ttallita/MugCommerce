@@ -10,8 +10,8 @@ import model.cliente.Cliente;
 import model.cliente.endereco.Endereco;
 import model.cliente.endereco.EnderecoType;
 import model.cupom.Cupom;
-import model.venda.Venda;
 import model.venda.StatusVendaType;
+import model.venda.Venda;
 import utils.Utils;
 import utils.UtilsWeb;
 

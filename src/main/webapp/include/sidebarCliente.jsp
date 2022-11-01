@@ -4,7 +4,7 @@
 
 <c:set var="paginaCorrente" value="${pageContext.request.requestURL}"/>
 
-<div class="l-navbar ms-5 me-5">
+<div class="ms-5 me-5">
 
     <p>${cliente.nome} ${cliente.sobrenome}</p>
 
@@ -23,9 +23,22 @@
                     <span class="material-icons inline-icon">shopping_bag</span> Compras
                 </a>
 
-                <a class="nav_link ${ fn:contains(paginaCorrente, 'solicitacoes') ? 'active-navbar' : ''}" id="paginaSolicitacoes" type="button" href="/emug/cliente/solicitacoes.jsp">
+                <small class="nav_link">
                     <span class="material-icons inline-icon">dynamic_feed</span> Solicitações
-                </a>
+                </small>
+                <ul class="ms-4 list-unstyled">
+                    <li>
+                        <a class="nav_link ${ fn:contains(paginaCorrente, 'trocas') ? 'active-navbar' : ''}" id="paginaTrocas" type="button" href="/emug/clientes/trocas?operacao=listar">
+                            <span class="material-icons inline-icon">compare_arrows</span> Trocas
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav_link ${ fn:contains(paginaCorrente, 'cancelamentos') ? 'active-navbar' : ''}" id="paginaCancelamentos" type="button" href="/emug/clientes/cancelamentos?operacao=listar">
+                            <span class="material-icons inline-icon">cancel_presentation</span> Cancelamentos
+                        </a>
+                    </li>
+                </ul>
+
 
                 <a class="nav_link ${ fn:contains(paginaCorrente, 'enderecos') ? 'active-navbar' : ''}" id="paginaEnderecos" type="button" href="/emug/clientes/enderecos?operacao=listar">
                     <span class="material-icons inline-icon">local_shipping</span> Endereços

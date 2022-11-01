@@ -22,7 +22,6 @@ import model.venda.Venda;
 import utils.Conexao;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -236,14 +235,14 @@ public class VendaDAO implements IDAO {
                 vendaConsulta.setFrete(rs.getDouble("vnd_frete"));
                 vendaConsulta.setPagamentoAprovado(rs.getBoolean("vnd_pagamento_aprovado"));
                 vendaConsulta.setVendaStatus(StatusVendaType.valueOf(rs.getString("vnd_status")));
-                vendaConsulta.setDataCompra(rs.getTimestamp("vnd_dt_compra").toLocalDateTime().toLocalDate());
+                vendaConsulta.setDataCompra(rs.getTimestamp("vnd_dt_compra").toLocalDateTime());
                 vendaConsulta.setEnderecoEntrega((Endereco) enderecoDAO.listar(enderecoEntrega, "listarUnico").get(0));
                 vendaConsulta.setEnderecoCobranca((Endereco) enderecoDAO.listar(enderecoCobranca, "listarUnico").get(0));
 
                 Timestamp dtEnvio = rs.getTimestamp("vnd_dt_envio");
                 Timestamp dtEntrega = rs.getTimestamp("vnd_dt_entrega");
-                vendaConsulta.setDataEnvio(dtEnvio != null ? rs.getTimestamp("vnd_dt_envio").toLocalDateTime().toLocalDate() : null);
-                vendaConsulta.setDataEntrega(dtEntrega  != null ? rs.getTimestamp("vnd_dt_entrega").toLocalDateTime().toLocalDate() : null);
+                vendaConsulta.setDataEnvio(dtEnvio != null ? rs.getTimestamp("vnd_dt_envio").toLocalDateTime() : null);
+                vendaConsulta.setDataEntrega(dtEntrega  != null ? rs.getTimestamp("vnd_dt_entrega").toLocalDateTime() : null);
 
                 sql = "SELECT * FROM produtos p " +
                         "RIGHT JOIN (SELECT * FROM produtos_em_venda WHERE prv_vnd_id = ?) pev " +

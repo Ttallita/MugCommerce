@@ -8,9 +8,9 @@ import model.cliente.endereco.Endereco;
 import model.cupom.Cupom;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Venda extends EntidadeDominio {
     private Cliente cliente;
@@ -24,9 +24,9 @@ public class Venda extends EntidadeDominio {
     private Double frete;
     private Double precoTotal;
 
-    private LocalDate dataCompra;
-    private LocalDate dataEnvio;
-    private LocalDate dataEntrega;
+    private LocalDateTime dataCompra;
+    private LocalDateTime dataEnvio;
+    private LocalDateTime dataEntrega;
 
     private boolean pagamentoAprovado;
     private StatusVendaType vendaStatus;
@@ -137,27 +137,27 @@ public class Venda extends EntidadeDominio {
         this.frete = frete;
     }
 
-    public LocalDate getDataCompra() {
+    public LocalDateTime getDataCompra() {
         return dataCompra;
     }
 
-    public void setDataCompra(LocalDate dataCompra) {
+    public void setDataCompra(LocalDateTime dataCompra) {
         this.dataCompra = dataCompra;
     }
 
-    public LocalDate getDataEnvio() {
+    public LocalDateTime getDataEnvio() {
         return dataEnvio;
     }
 
-    public void setDataEnvio(LocalDate dataEnvio) {
+    public void setDataEnvio(LocalDateTime dataEnvio) {
         this.dataEnvio = dataEnvio;
     }
 
-    public LocalDate getDataEntrega() {
+    public LocalDateTime getDataEntrega() {
         return dataEntrega;
     }
 
-    public void setDataEntrega(LocalDate dataEntrega) {
+    public void setDataEntrega(LocalDateTime dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 
