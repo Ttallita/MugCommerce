@@ -5,8 +5,6 @@ public enum StatusSolicitacaoType {
     SOLICITADA ("Solicitado(a)"),
     RECUSADA ("Recusado(a)"),
     ACEITA ("Aceito(a)"),
-    ENVIADO ("Enviado(a)"), // enviado pelo cliente
-    RECEBIDO ("Recebido(a)"), // recebido pelo ecommerce
     REALIZADA ("Realizado(a)"),
     ;
 
