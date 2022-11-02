@@ -24,11 +24,10 @@ VALUES  (1,'COBRANCA_ENTREGA','Minha casa','Sobrado','Avenida','Pingo d''água',
         (1,'ENTREGA','Casa C','Casa','Comunidade','Coroa Lorenzo','333','Carmo Nogueira','33333-333','Camocim','Ceará',''),
         (1,'COBRANCA_ENTREGA','Casa D','Casa','Distrito','Dom Terciário Quarto','444','Dama Claudite','44444-444','Brasília','Distrito Federal','');
 
-
-INSERT INTO cupons (cpm_id, cpm_cli_usr_id, cpm_vnd_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) VALUES
-(1, 1, NULL, 'Cupom aniversariante', 'PROMOCIONAL', 20.0, '2023-01-01', 'Se presenteie bla bla bla...'),
-(2, 1, NULL, 'Cupom natal', 'PROMOCIONAL', 30.0, '2023-01-01', 'HOU! HOU! HOU!..........'),
-(3, 1, NULL, 'Cupom halloween', 'PROMOCIONAL', 50.0, '2023-01-01', 'Buuuuuuuuuuuuuuu...');
+INSERT INTO cupons (cpm_cli_usr_id, cpm_vnd_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) VALUES
+(1, NULL, 'Cupom aniversariante', 'PROMOCIONAL', 20.0, '2023-01-01', 'Se presenteie bla bla bla...'),
+(1, NULL, 'Cupom natal', 'PROMOCIONAL', 30.0, '2023-01-01', 'HOU! HOU! HOU!..........'),
+(1, NULL, 'Cupom halloween', 'PROMOCIONAL', 50.0, '2023-01-01', 'Buuuuuuuuuuuuuuu...');
 
 
 -- Administrador

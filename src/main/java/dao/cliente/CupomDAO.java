@@ -23,17 +23,16 @@ public class CupomDAO implements IDAO {
         try {
             conn = conexao.getConexao();
 
-            String sql = "INSERT INTO cupons (cpm_cli_usr_id, cpm_vnd_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) " +
+            String sql = "INSERT INTO cupons (cpm_cli_usr_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) " +
                     " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1, cupom.getCliente().getUsuario().getId());
-            pstm.setNull(2, Types.BIGINT);
-            pstm.setString(3, cupom.getNome());
-            pstm.setString(4, cupom.getTipo().name());
-            pstm.setDouble(5, cupom.getValor());
-            pstm.setObject(6, cupom.getDataValidade());
-            pstm.setString(7, cupom.getDescricao());
+            pstm.setString(2, cupom.getNome());
+            pstm.setString(3, cupom.getTipo().name());
+            pstm.setDouble(4, cupom.getValor());
+            pstm.setObject(5, cupom.getDataValidade());
+            pstm.setString(6, cupom.getDescricao());
 
             pstm.execute();
 
@@ -99,7 +98,7 @@ public class CupomDAO implements IDAO {
             PreparedStatement pstm = null;
 
             if(operacao.equals("listarTodos")) { // cupons válidos para venda
-                sql = "SELECT * FROM cupons c WHERE c.cpm_cli_usr_id = ? AND c.cpm_vnd_id IS NULL";
+                sql = "SELECT * FROM cupons c WHERE c.cpm_cli_usr_id = ?";
 
                 pstm = conn.prepareStatement(sql);
                 pstm.setLong(1, cupom.getCliente().getUsuario().getId());

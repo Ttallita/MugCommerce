@@ -99,10 +99,12 @@ public class CancelamentoDAO implements IDAO {
                 Cancelamento cancelamentoConsulta = (Cancelamento) listar(cancelamento, "listarUnico")
                         .get(0);
 
-                double totalVenda = cancelamentoConsulta.getVenda().getCalculaTotalVendaSemDesconto();
+
 
                 Cupom cupomTroca = new Cupom();
-                cupomTroca.setValor(totalVenda);
+
+                // TODO precisa ajustar esse valor pois existem itens que podem ter sido comprados
+                cupomTroca.setValor(0.0);
                 cupomTroca.setNome("Troca do dia " + Utils.formataLocalDateBR(LocalDate.now()));
                 cupomTroca.setDescricao("Cupom gerado por cancelamento de venda");
                 cupomTroca.setTipo(CupomType.TROCA);

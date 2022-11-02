@@ -19,7 +19,6 @@ public class Venda extends EntidadeDominio {
     private Carrinho carrinho;
     private List<CartaoDeCredito> cartoes = new ArrayList<>();
     private List<Cupom> cupons = new ArrayList<>();
-
     private Double valorItens;
     private Double frete;
     private Double precoTotal;
@@ -56,7 +55,7 @@ public class Venda extends EntidadeDominio {
         return  carrinho.getTotalCarrinho() + calculaFrete() - valorDesconto;
     }
 
-    public double getCalculaTotalVendaSemDesconto(){
+    public double getCalculaTotalVendaParaCancelamento(){
         return carrinho.getTotalCarrinho() + calculaFrete();
     }
 

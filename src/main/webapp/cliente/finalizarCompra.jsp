@@ -87,7 +87,7 @@
                             <select class="form-select" id="cupons" name="cupons">
                                 <option value="">Selecione</option>
                                 <c:forEach var="cupom" items="${cupons}">
-                                    <option value="${cupom.id}">${cupom.nome}</option>
+                                    <option value="${cupom.id}" data-tipo="${cupom.tipo}">${cupom.nome}</option>
                                 </c:forEach>
                             </select>
                             <button type="button" class="btn btn-outline-primary" id="botaoAplicarCupom" onclick="aplicarCupom()">Aplicar</button>
@@ -183,6 +183,13 @@
 
     const parametroOrigemChamada = "&origemChamada=finalizarCompra";
     const parametrosVendaHref = `&idEnderecoEscolhido=\${idEnderecoEscolhido}&idEnderecoCobrancaEscolhido=\${idEnderecoCobrancaEscolhido}&idsCartoesSelecionados=\${idsCartoesSelecionados}`;
+
+
+    const formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        maximumFractionDigits: 2
+    });
 
     function atualizarCartoesUtilizados(){
         let ids = [];
@@ -348,10 +355,32 @@
 
     async function aplicarCupom(){
         let idCupomSelecionado = $('#cupons option:selected')[0].value;
+        let tipoCupom = $('#cupons option:selected').attr("data-tipo");
 
-        if (idCupomSelecionado == "" || Array.from(document.getElementsByName('idsCupons[]')).find(elem => elem.value == idCupomSelecionado))
+        let idsCupons = Array.from(document.getElementsByName('idsCupons[]'));
+        let temPromocional = Array.from(cuponsAplicados.values()).map(cupom => cupom.tipo).includes("PROMOCIONAL")
+
+        if (idCupomSelecionado == "" || idsCupons.find(elem => elem.value == idCupomSelecionado))
             return;
 
+        if(tipoCupom === 'PROMOCIONAL' && temPromocional) {
+            createNotify("error", "", "Não é possivel utilizar mais de um cupom promocional")
+            return
+        }
+
+
+        let valorVenda = $('#vlrTotalPedido').text()
+            .replace("R$", "")
+            .replaceAll(".", "")
+            .replace(",", ".")
+
+
+        if(valorVenda.trim() === '0.00') {
+            createNotify("error", "", "Não é possivel aplicar o cupom pois já foi superado o valor de venda")
+            return
+        }
+
+        
         fetch('http://localhost:8080/emug/clientes/cupons?operacao=listarUnico&id=' + idCupomSelecionado)
         .then(result => result.json())
         .then(cupom => {
@@ -362,13 +391,13 @@
             $(`<div class="toast align-items-center p-2 m-2 fade show" aria-live="assertive" aria-atomic="true" role="alert">
                 <div class="d-flex justify-content-between">
                     <strong class="fw-bold">\${cupom.tipo}</strong>
-                    <small>Validade: \${cupom.dataValidade}</small>
+                    <small>Validade: \${cupom.dataValidade != undefined ? cupom.dataValidade : 'Sem validade'}</small>
                     <button type="button" class="btn-close" onclick="removerCupomAplicado(\${cupom.id})" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
 
                 <div class="d-flex justify-content-between">
                     <p class="lead">\${cupom.nome}</p>
-                    <strong class="lead fw-bold">R$ \${cupom.valor}</strong>
+                    <strong class="lead fw-bold">\${formatter.format(cupom.valor)}</strong>
                 </div>
             </div>`);
             
@@ -377,7 +406,7 @@
             inputCupom.appendTo(document.getElementById("formFinalizarCompra"));
             cupomAplicado.appendTo(document.getElementById("cuponsAplicados"));
 
-            cuponsAplicados.set(cupom.id, cupom.valor);
+            cuponsAplicados.set(cupom.id, cupom);
 
             atualizarValoresVenda();
         });
@@ -391,20 +420,10 @@
         atualizarValoresVenda();
     }
 
-    let valorVenda = parseFloat('${carrinho.totalCarrinho}') + parseFloat('${valorFrete}');
-    let formatter = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-        maximumFractionDigits: 2
-    });
+
     function atualizarValoresVenda(){
         let somaCupons = 0;
-        cuponsAplicados.forEach((v) => {somaCupons += v;});
-
-        if(valorVenda < 0) {
-            createNotify("error", "", "Não é possivel aplicar o cupom pois já foi superado o valor de venda")
-            return
-        }
+        cuponsAplicados.forEach((v) => {somaCupons += v.valor;});
 
         let cartoes = $('input[name="idsCartoesSelecionados[]"')
 

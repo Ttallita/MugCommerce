@@ -65,7 +65,7 @@ public class VendaDAO implements IDAO {
             pstm.setTimestamp(6, null); // sem data envio
             pstm.setTimestamp(7, null); // sem data entrega
             pstm.setBoolean(8, false); // pagamento aprovado
-            pstm.setString(9, StatusVendaType.EM_ANALISE.name());
+            pstm.setString(9, StatusVendaType.EM_PROCESSAMENTO.name());
             pstm.setLong(10, venda.getEnderecoCobranca().getId());
 
             pstm.execute();
@@ -314,11 +314,15 @@ public class VendaDAO implements IDAO {
 
         defineEnderecosVenda(venda);
 
-        List<CartaoDeCredito> cartoes = cartaoDeCreditoDAO.listar(new CartaoDeCredito(cliente), "listar").stream()
-                .map(entidade -> (CartaoDeCredito) entidade).toList();
+        List<CartaoDeCredito> cartoes = cartaoDeCreditoDAO.listar(new CartaoDeCredito(cliente), "listar")
+                .stream()
+                .map(entidade -> (CartaoDeCredito) entidade)
+                .toList();
 
-        List<Cupom> cupons = cupomDAO.listar(new Cupom(cliente), "listarTodos").stream()
-                .map(entidade -> (Cupom) entidade).toList();
+        List<Cupom> cupons = cupomDAO.listar(new Cupom(cliente), "listarTodos")
+                .stream()
+                .map(entidade -> (Cupom) entidade)
+                .toList();
 
         venda.setCartoes(cartoes);
         venda.setCupons(cupons);
@@ -368,14 +372,17 @@ public class VendaDAO implements IDAO {
     }
 
     private List<Cupom> getCuponsVenda(Cupom cupom, Venda venda) {
-        List<Long> ids = venda.getCupons().stream()
-                .map(Cupom::getId).toList();
+        List<Long> ids = venda.getCupons()
+                .stream()
+                .map(Cupom::getId)
+                .toList();
 
         List<? extends EntidadeDominio> cupons = cupomDAO.listar(cupom, "listarTodos");
 
         return cupons.stream()
                 .map(entidade -> (Cupom) entidade)
-                .filter(c -> ids.contains(c.getId())).toList();
+                .filter(c -> ids.contains(c.getId()))
+                .toList();
     }
 
 }

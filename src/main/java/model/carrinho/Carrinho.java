@@ -51,6 +51,13 @@ public class Carrinho extends EntidadeDominio {
                 .sum();
     }
 
+    public double getTotalCarrinhoSemItensEmTroca() {
+        return itensCarrinho.stream()
+                .map(item -> item.getProduto().getValorVenda() * item.getQuant())
+                .mapToDouble(Double::doubleValue)
+                .sum();
+    }
+
     public int getQuantTotalItens(){
         return itensCarrinho.stream()
                 .map(ItemCarrinho::getQuant)

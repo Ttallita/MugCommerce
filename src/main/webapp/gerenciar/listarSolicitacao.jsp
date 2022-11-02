@@ -1,10 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang=pt-br>
+<c:set var="paginaCorrente" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+<c:set var="isCancelamento" value="${ fn:contains(paginaCorrente, 'cancelamento') }"/>
+<c:set var="nomePaginaCorrente" value="${ isCancelamento ? 'Cancelamento' : 'Troca' }"/>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,15 +25,12 @@
 
     <jsp:include page="/include/header.jsp" />
 
-    <c:set var="paginaCorrente" value="${requestScope['javax.servlet.forward.request_uri']}"/>
-    <c:set var="isCancelamento" value="${ fn:contains(paginaCorrente, 'cancelamento') }"/>    
-    <c:set var="nomePaginaCorrente" value="${ isCancelamento ? 'Cancelamento' : 'Troca'}"/>
-    
+
     <div class="container card w-50 mt-5 mb-5">
 
         <jsp:include page="../include/alert.jsp" />
 
-        <h3 class="text-center mt-5">Detalhes ${nomePaginaCorrente}</h3>
+        <h3 class="text-center mt-5">${isCancelamento ? 'Detalhes do cancelamento' : 'Detalhes da troca'}</h3>
 
         <div class="container overflow-hidden">
             <div class="row">
@@ -118,6 +119,7 @@
                     <div class="p-3 border bg-light">
                         <h6>${isCancelamento ? 'Produtos cancelados' : 'Produto trocado'}</h6>
                         <ul class="list-group">
+                                ${isCancelamento}
 
                             <c:choose>
                                 <c:when test="${isCancelamento}">
@@ -134,7 +136,7 @@
                                                 <div class="col">
                                                     <h5>${item.produto.nome}</h5>
                                                     <h6>Quantidade: ${item.quant}</h6>
-                                                    <h6>Valor unitário: R$ ${item.produto.valorVenda}</h6>
+                                                    <h6>Valor unitário: <fmt:formatNumber value="${item.produto.valorVenda}" type="currency"/></h6>
                                                 </div>
 
                                                 <c:if test="${item.emTroca}">
@@ -186,7 +188,7 @@
                                 Novo status:
 
                                 <form action="${isCancelamento ? '/emug/adm/cancelamentos' : '/emug/adm/trocas'}" method="POST">
-                                    <select ${solicitacao.status == 'REALIZADA' ? 'disabled' : ''} class="form-select" id="status" name="status">
+                                    <select class="form-select" id="status" name="status">
                                         <option value="">Selecione</option>
                                         <c:forEach var="status" items="${listaStatus}">
                                             <option value="${status}">${status.nomeExibicao}</option>

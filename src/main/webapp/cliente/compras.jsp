@@ -67,7 +67,9 @@
                                         <td>${dataEntregaFormatada}</td>
 
                                         <td>
-                                            <button type="button" class="btn btn-primary btn-sm" onclick="montarModal('clientes/compras', '${compra.id}')" data-bs-toggle="modal" data-bs-target="#modal"><span class="material-icons">remove_red_eye</span></button>
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="montarModal('clientes/compras', '${compra.id}')" data-bs-toggle="modal" data-bs-target="#modal">
+                                                <span class="material-icons">remove_red_eye</span>
+                                            </button>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -159,11 +161,8 @@
 
                 // --- Ação troca
                 let colAcaoTrocaItem = document.createElement("div")
-                colAcaoTrocaItem.classList.add("col-2")
+                colAcaoTrocaItem.classList.add("col-3")
 
-                let linkTrocar = document.createElement("a")
-                linkTrocar.href = "<c:url value='/clientes/trocas?operacao=salvar'/>" + "&idProduto=" + i.produto.id + "&idVenda=" + venda.id
-                
 
                 if (venda.vendaStatus != 'Cancelada'){
                     if (i.emTroca) {
@@ -172,17 +171,67 @@
                         texto.innerHTML = "Em troca"
 
                         colAcaoTrocaItem.appendChild(texto)
-                        
                     } else {
-                        let botaoTrocar = document.createElement("button")
-                        botaoTrocar.type = "button"
+                        let formTrocar = document.createElement('form')
+                        formTrocar.action = "<c:url value='/clientes/trocas'/>"
+                        formTrocar.method = 'POST'
+
+                        let inputProduto = document.createElement("input")
+                        inputProduto.type = 'hidden'
+                        inputProduto.value = i.produto.id
+                        inputProduto.name = 'idProduto'
+
+
+                        let inputVenda = document.createElement("input")
+                        inputVenda.type = 'hidden'
+                        inputVenda.value = venda.id
+                        inputVenda.name = 'idVenda'
+
+
+                        let inputOperacao = document.createElement("input")
+                        inputOperacao.type = 'hidden'
+                        inputOperacao.value = 'salvar'
+                        inputOperacao.name = 'operacao'
+
+                        let botaoTrocar = document.createElement("input")
+                        botaoTrocar.type = "submit"
                         botaoTrocar.classList.add("btn")
                         botaoTrocar.classList.add("btn-primary")
                         botaoTrocar.classList.add("btn-sm")
-                        botaoTrocar.innerHTML = "Solicitar troca"
-                        
-                        linkTrocar.appendChild(botaoTrocar)
-                        colAcaoTrocaItem.appendChild(linkTrocar)
+                        botaoTrocar.value = "Solicitar troca"
+             
+
+                        if(i.quant > 1) {
+                            let labelQuantTroca = document.createElement('label')
+                            labelQuantTroca.innerHTML = '<small>Quant. Troca:</small>'
+                            labelQuantTroca.classList.add("form-label")
+                            
+                            let inputNumber = document.createElement('input')
+                            inputNumber.setAttribute("type", "number")
+                            inputNumber.setAttribute("min", "1")
+                            inputNumber.setAttribute("max", i.quant + "")
+                            inputNumber.name = "quantTroca"
+                            
+                            inputNumber.classList.add("form-control")
+                            inputNumber.classList.add("form-control-sm")
+
+                            formTrocar.appendChild(labelQuantTroca)
+                            formTrocar.appendChild(inputNumber)
+                        } else {
+                            let inputNumber = document.createElement("input")
+                            inputNumber.type = 'hidden'
+                            inputNumber.value = 1
+                            inputNumber.name = 'quantTroca'
+
+                            formTrocar.appendChild(inputNumber)
+                        }
+
+                        formTrocar.appendChild(document.createElement('br'))
+                        formTrocar.appendChild(botaoTrocar)
+                        formTrocar.appendChild(inputProduto)
+                        formTrocar.appendChild(inputVenda)
+                        formTrocar.appendChild(inputOperacao)
+                        colAcaoTrocaItem.appendChild(formTrocar)                        
                     }
                 }
                 

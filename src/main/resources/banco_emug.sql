@@ -62,7 +62,6 @@ DROP TABLE IF EXISTS "cupons" CASCADE;
 CREATE TABLE cupons (
     cpm_id          serial NOT NULL,
     cpm_cli_usr_id  integer,
-    cpm_vnd_id      integer,
     cpm_nome        varchar(255),
     cpm_tp          varchar(11) NOT NULL,
     cpm_valor       numeric(8, 2) NOT NULL,
@@ -167,7 +166,8 @@ CREATE TABLE trocas (
     trc_vnd_id              int NOT NULL,
     trc_cli_usr_id          int NOT NULL,
     trc_data                timestamp NOT NULL,
-    trc_status              varchar(50) NOT NULL
+    trc_status              varchar(50) NOT NULL,
+    trc_quant               int NOT NULL
 );
 
 ---- Geral

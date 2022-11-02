@@ -62,12 +62,16 @@ public class VendaViewHelper implements IViewHelper {
                     venda.addCartaoDeCredito(cartao);
                 }
 
-                for (String id : request.getParameterValues("idsCupons[]")){
-                    Cupom cupom = new Cupom(cliente);
-                    cupom.setId(Long.parseLong(id));
+                String[] idsCupons = request.getParameterValues("idsCupons[]");
+                if(idsCupons != null) {
+                    for (String id : request.getParameterValues("idsCupons[]")){
+                        Cupom cupom = new Cupom(cliente);
+                        cupom.setId(Long.parseLong(id));
 
-                    venda.addCupom(cupom);
+                        venda.addCupom(cupom);
+                    }
                 }
+
 
 
                 venda.setCarrinho(carrinho);
@@ -135,7 +139,10 @@ public class VendaViewHelper implements IViewHelper {
 
         switch (operacao){
 
-            case "salvar" -> response.sendRedirect("/emug/index.jsp");
+            case "salvar" -> {
+                request.getSession().setAttribute("carrinho", null);
+                response.sendRedirect("/emug/index.jsp");
+            }
 
             case "atualizar" -> response.sendRedirect("/emug/adm/vendas?operacao=listarTodos");
 
@@ -169,6 +176,9 @@ public class VendaViewHelper implements IViewHelper {
 
                         cartoes = cartoes.stream().filter(c -> idsCartoes.contains(c.getId())).collect(Collectors.toList());
                     } else {
+                        if(idsCartoesSelecionados == null) {
+
+                        }
                         cartoes = cartoes.stream().filter(CartaoDeCredito::isPreferencial).collect(Collectors.toList());
                         idsCartoesSelecionados = cartoes.get(0).getId().toString();
                     }

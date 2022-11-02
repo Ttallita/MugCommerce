@@ -17,6 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
 
 public class TrocaViewHelper implements IViewHelper {
 
@@ -50,6 +52,7 @@ public class TrocaViewHelper implements IViewHelper {
 
                 troca.setVenda(venda);
                 troca.setProduto(produto);
+                troca.setQuantidade(Integer.parseInt(request.getParameter("quantTroca")));
 
                 return troca;
             }
@@ -111,7 +114,13 @@ public class TrocaViewHelper implements IViewHelper {
             case "listarJson" -> UtilsWeb.montaRespostaJson(result, request, response);
 
             case "listarTodos" -> {
-                request.setAttribute("solicitacoes", result.getEntidades());
+                List<Troca> trocasOrdenadasPorData = result.getEntidades()
+                        .stream()
+                        .map(entidade -> (Troca) entidade)
+                        .sorted(Comparator.comparing(Troca::getData, Comparator.reverseOrder()))
+                        .toList();
+
+                request.setAttribute("solicitacoes", trocasOrdenadasPorData);
                 request.getRequestDispatcher("/gerenciar/solicitacoesPendentes.jsp").forward(request, response);
             }
         }

@@ -44,8 +44,8 @@ public class TrocaDAO implements IDAO {
         try {
             connection = conexao.getConexao();
 
-            String sql = "INSERT INTO trocas (trc_pro_id, trc_vnd_id, trc_cli_usr_id, trc_data, trc_status)" +
-                    " VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO trocas (trc_pro_id, trc_vnd_id, trc_cli_usr_id, trc_data, trc_status, trc_quant)" +
+                    " VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1, troca.getProduto().getId());
@@ -53,6 +53,7 @@ public class TrocaDAO implements IDAO {
             pstm.setLong(3, troca.getCliente().getUsuario().getId());
             pstm.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
             pstm.setString(5, StatusSolicitacaoType.SOLICITADA.name());
+            pstm.setInt(6, troca.getQuantidade());
 
             pstm.execute();
 
@@ -110,7 +111,7 @@ public class TrocaDAO implements IDAO {
                     throw new RuntimeException("Erro ao tentar encontrar item da troca na venda");
 
                 Cupom cupomTroca = new Cupom();
-                cupomTroca.setValor(itemCarrinho.getProduto().getValorVenda() * itemCarrinho.getQuant());
+                cupomTroca.setValor(itemCarrinho.getProduto().getValorVenda() * troca.getQuantidade());
                 cupomTroca.setNome("Troca do dia " + Utils.formataLocalDateBR(LocalDate.now()));
                 cupomTroca.setDescricao("Cupom gerado por troca de produto");
                 cupomTroca.setTipo(CupomType.TROCA);
