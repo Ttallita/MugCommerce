@@ -114,7 +114,7 @@ public class TrocaDAO implements IDAO {
                 cupomTroca.setNome("Troca do dia " + Utils.formataLocalDateBR(LocalDate.now()));
                 cupomTroca.setDescricao("Cupom gerado por troca de produto");
                 cupomTroca.setTipo(CupomType.TROCA);
-                cupomTroca.setCliente(troca.getCliente());
+                cupomTroca.setCliente(trocaConsulta.getCliente());
 
                 cupomDAO.salvar(cupomTroca);
 

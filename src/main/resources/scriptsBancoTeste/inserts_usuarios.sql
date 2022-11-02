@@ -27,7 +27,8 @@ VALUES  (1,'COBRANCA_ENTREGA','Minha casa','Sobrado','Avenida','Pingo d''água',
 
 INSERT INTO cupons (cpm_id, cpm_cli_usr_id, cpm_vnd_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) VALUES
 (1, 1, NULL, 'Cupom aniversariante', 'PROMOCIONAL', 20.0, '2023-01-01', 'Se presenteie bla bla bla...'),
-(2, 1, NULL, 'Cupom natal', 'PROMOCIONAL', 30.0, '2023-01-01', 'HOU! HOU! HOU!..........');
+(2, 1, NULL, 'Cupom natal', 'PROMOCIONAL', 30.0, '2023-01-01', 'HOU! HOU! HOU!..........'),
+(3, 1, NULL, 'Cupom halloween', 'PROMOCIONAL', 50.0, '2023-01-01', 'Buuuuuuuuuuuuuuu...');
 
 
 -- Administrador
