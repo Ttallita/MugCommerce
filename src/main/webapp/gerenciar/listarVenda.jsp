@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn"%>
 
 <!DOCTYPE html>
 <html lang=pt-br>
@@ -121,23 +122,25 @@
                                 Status atual: ${venda.vendaStatus.nomeExibicao}
                             </li>
 
-                            <li class="list-group-item">
-                                Novo status:
-                                <form action="/emug/adm/vendas" method="POST">
-                                    <select class="form-select" id="status" name="status">
-                                        <option value="">Selecione</option>
-                                        <c:forEach var="status" items="${listaStatus}">
-                                            <option value="${status}">${status.nomeExibicao}</option>
-                                        </c:forEach>
-                                    </select>
-
-                                    <input type="hidden" name="id" value="${venda.id}">
-                                    <input type="hidden" name="operacao" value="atualizar">
-                                    <button type="submit" class="w-100 btn btn-primary btn-sm">
-                                        Atualizar status
-                                    </button>
-                                </form>
-                            </li>
+                            <c:if test="${venda.vendaStatus != 'FINALIZADO' && venda.vendaStatus != 'CANCELADA'}">
+                                <li class="list-group-item">
+                                    Novo status:
+                                    <form action="/emug/adm/vendas" method="POST">
+                                        <select class="form-select" id="status" name="status">
+                                            <option value="">Selecione</option>
+                                            <c:forEach var="status" items="${listaStatus}">
+                                                <option ${fn:contains(proximoStatus, status) ? '' : 'disabled' } value="${status}">${status.nomeExibicao}</option>
+                                            </c:forEach>
+                                        </select>
+    
+                                        <input type="hidden" name="id" value="${venda.id}">
+                                        <input type="hidden" name="operacao" value="atualizar">
+                                        <button type="submit" class="w-100 btn btn-primary btn-sm">
+                                            Atualizar status
+                                        </button>
+                                    </form>
+                                </li>
+                            </c:if>
                         </ul>
                         
                     </div>

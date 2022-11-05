@@ -412,6 +412,13 @@
         });
     }
 
+
+    const valorVendaInicial = $('#vlrTotalPedido').text()
+            .replace("R$", "")
+            .replaceAll(".", "")
+            .replace(",", ".")
+
+
     function removerCupomAplicado(idCupom){
         let inputCupomAplicado = Array.from(document.getElementsByName('idsCupons[]')).find(elem => elem.value == idCupom);
         inputCupomAplicado.remove();
@@ -427,7 +434,7 @@
 
         let cartoes = $('input[name="idsCartoesSelecionados[]"')
 
-        let valorFinal = (parseFloat(valorVenda) - parseFloat(somaCupons)) * 100.0 / 100.0;
+        let valorFinal = (parseFloat(valorVendaInicial) - parseFloat(somaCupons)) * 100.0 / 100.0;
 
         if(valorFinal < 20 && cartoes.length > 1) {
             createNotify("error", "", "Não é possivel aplicar o cupom pois apenas é possivel usar dois cartões se o valor final for maior ou igual a R$ 20,00")

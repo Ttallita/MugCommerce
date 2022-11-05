@@ -16,6 +16,7 @@ import model.estoque.Estoque;
 import model.produto.Produto;
 import model.solicitacao.StatusSolicitacaoType;
 import model.solicitacao.Troca;
+import model.venda.StatusVendaType;
 import model.venda.Venda;
 import utils.Conexao;
 import utils.Utils;
@@ -54,6 +55,9 @@ public class TrocaDAO implements IDAO {
             pstm.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
             pstm.setString(5, StatusSolicitacaoType.SOLICITADA.name());
             pstm.setInt(6, troca.getQuantidade());
+
+            troca.getVenda().setVendaStatus(StatusVendaType.PEDIDO_TROCA);
+            vendaDAO.atualizar(troca.getVenda());
 
             pstm.execute();
 
@@ -94,11 +98,12 @@ public class TrocaDAO implements IDAO {
 
             pstm.execute();
 
+
+            Troca trocaConsulta = (Troca) listar(troca, "listarUnico")
+                    .get(0);
+
             // Aqui estamos gerando o cupom de troca para o cliente.
             if(troca.getStatus().equals(StatusSolicitacaoType.REALIZADA)) {
-                Troca trocaConsulta = (Troca) listar(troca, "listarUnico")
-                        .get(0);
-
                 ItemCarrinho itemCarrinho = trocaConsulta.getVenda()
                         .getCarrinho()
                         .getItensCarrinho()
@@ -130,7 +135,15 @@ public class TrocaDAO implements IDAO {
 
                     estoqueDAO.atualizar(estoqueConsulta);
                 }
+
+                trocaConsulta.getVenda().setVendaStatus(StatusVendaType.ENTREGA_REALIZADA);
+                vendaDAO.atualizar(trocaConsulta.getVenda());
+            } else if(troca.getStatus().equals(StatusSolicitacaoType.RECUSADA)) {
+                trocaConsulta.getVenda().setVendaStatus(StatusVendaType.ENTREGA_REALIZADA);
+                vendaDAO.atualizar(trocaConsulta.getVenda());
             }
+
+
 
             return troca;
         } catch (Exception e) {
@@ -209,6 +222,7 @@ public class TrocaDAO implements IDAO {
                 trocaConsulta.setCliente(cliente);
                 trocaConsulta.setData(rs.getTimestamp("trc_data").toLocalDateTime());
                 trocaConsulta.setStatus(StatusSolicitacaoType.valueOf(rs.getString("trc_status")));
+                trocaConsulta.setQuantidade(rs.getInt("trc_quant"));
 
                 trocas.add(trocaConsulta);
             }

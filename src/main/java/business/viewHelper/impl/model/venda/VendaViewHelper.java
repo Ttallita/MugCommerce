@@ -151,7 +151,13 @@ public class VendaViewHelper implements IViewHelper {
                 Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
                 if (usuarioLogado.isAdministrador()) {
-                    request.setAttribute("venda", result.getEntidades().get(0));
+
+                    Venda venda = (Venda) result.getEntidades().get(0);
+
+                    List<StatusVendaType> proximosStatus = StatusVendaType.getProximoStatus(venda.getVendaStatus());
+
+                    request.setAttribute("proximoStatus", proximosStatus);
+                    request.setAttribute("venda", venda);
                     request.setAttribute("listaStatus", StatusVendaType.values());
                     request.getRequestDispatcher("/gerenciar/listarVenda.jsp").forward(request, response);
 
@@ -176,9 +182,6 @@ public class VendaViewHelper implements IViewHelper {
 
                         cartoes = cartoes.stream().filter(c -> idsCartoes.contains(c.getId())).collect(Collectors.toList());
                     } else {
-                        if(idsCartoesSelecionados == null) {
-
-                        }
                         cartoes = cartoes.stream().filter(CartaoDeCredito::isPreferencial).collect(Collectors.toList());
                         idsCartoesSelecionados = cartoes.get(0).getId().toString();
                     }

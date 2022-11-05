@@ -120,7 +120,11 @@
 
             if (venda.dataEnvio != null)
                 $(`<li>Data de envio: \${venda.dataEnvio}</li>`).appendTo(detalhesVenda);
-
+            
+            if(venda.vendaStatus != 'Entrega realizada' && venda.vendaStatus != 'Pedido de troca')
+                $("<p><small><b>Atenção:</b> a troca de produtos apenas poderá ser realizada após a entregas dos produtos.</small></p>").appendTo(detalhesVenda)
+            
+            
             adicionaItemBodyModal(detalhesVenda);
             
             venda.carrinho.itensCarrinho.forEach(i => {
@@ -163,8 +167,7 @@
                 let colAcaoTrocaItem = document.createElement("div")
                 colAcaoTrocaItem.classList.add("col-3")
 
-
-                if (venda.vendaStatus != 'Cancelada'){
+                if(venda.vendaStatus == 'Entrega realizada' || venda.vendaStatus == 'Pedido de troca') {
                     if (i.emTroca) {
                         let texto = document.createElement("small")
                         texto.classList.add("text-muted")
@@ -199,19 +202,19 @@
                         botaoTrocar.classList.add("btn-primary")
                         botaoTrocar.classList.add("btn-sm")
                         botaoTrocar.value = "Solicitar troca"
-             
+                
 
                         if(i.quant > 1) {
                             let labelQuantTroca = document.createElement('label')
                             labelQuantTroca.innerHTML = '<small>Quant. Troca:</small>'
                             labelQuantTroca.classList.add("form-label")
-                            
+                                
                             let inputNumber = document.createElement('input')
                             inputNumber.setAttribute("type", "number")
                             inputNumber.setAttribute("min", "1")
                             inputNumber.setAttribute("max", i.quant + "")
                             inputNumber.name = "quantTroca"
-                            
+                                
                             inputNumber.classList.add("form-control")
                             inputNumber.classList.add("form-control-sm")
 
@@ -234,8 +237,8 @@
                         colAcaoTrocaItem.appendChild(formTrocar)                        
                     }
                 }
-                
 
+                
                 let divItem = document.createElement("div")
                 divItem.appendChild(colImagem)
                 divItem.appendChild(colDetalhesItem)

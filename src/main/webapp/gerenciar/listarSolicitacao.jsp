@@ -119,8 +119,6 @@
                     <div class="p-3 border bg-light">
                         <h6>${isCancelamento ? 'Produtos cancelados' : 'Produto trocado'}</h6>
                         <ul class="list-group">
-                                ${isCancelamento}
-
                             <c:choose>
                                 <c:when test="${isCancelamento}">
                                     <!-- Produtos -->
@@ -160,6 +158,7 @@
                                             <div class="col">
                                                 <h5>${solicitacao.produto.nome}</h5>
                                                 <h6>Valor unitário: R$ ${solicitacao.produto.valorVenda}</h6>
+                                                <h6>Quantidade: ${solicitacao.quantidade}</h6>
                                             </div>
                                             <div class="col-3">
                                                 <p class="text-center lead">Produto em Troca</p>
@@ -184,40 +183,42 @@
                                 Status atual: ${solicitacao.status.nomeExibicao}
                             </li>
 
-                            <li class="list-group-item">
-                                Novo status:
-
-                                <form action="${isCancelamento ? '/emug/adm/cancelamentos' : '/emug/adm/trocas'}" method="POST">
-                                    <select class="form-select" id="status" name="status">
-                                        <option value="">Selecione</option>
-                                        <c:forEach var="status" items="${listaStatus}">
-                                            <option value="${status}">${status.nomeExibicao}</option>
-                                        </c:forEach>
-                                    </select>
-
-                                    <div class="form-check" id="divReentrada" style="display: none;">
-                                        <br/>
-                                        <input class="form-check-input" type="checkbox" id="isRetornoEstoque" name="reentradaEstoque">
-                                        <label class="form-check-label" for="isRetornoEstoque">
-                                            Reentrada de estoque
-                                        </label>
-                                    </div>
-
-                                    <input type="hidden" name="id" value="${solicitacao.id}">
-                                    <input type="hidden" name="operacao" value="atualizar">
-                                    <button type="submit" class="w-100 btn btn-primary btn-sm">
-                                        Atualizar status
-                                    </button>
-                                </form>
-                            </li>
+                            <c:if test="${solicitacao.status != RECUSADA && solicitacao.status != 'REALIZADA'}">
+                                <li class="list-group-item">
+                                    Novo status:
+    
+                                    <form action="${isCancelamento ? '/emug/adm/cancelamentos' : '/emug/adm/trocas'}" method="POST">
+                                        <select class="form-select" id="status" name="status">
+                                            <option value="">Selecione</option>
+                                            <c:forEach var="status" items="${listaStatus}">
+                                                <option ${fn:contains(proximoStatus, status) ? '' : 'disabled' } value="${status}">${status.nomeExibicao}</option>
+                                            </c:forEach>
+                                        </select>
+    
+                                        <div class="form-check" id="divReentrada" style="display: none;">
+                                            <br/>
+                                            <input class="form-check-input" type="checkbox" id="isRetornoEstoque" name="reentradaEstoque">
+                                            <label class="form-check-label" for="isRetornoEstoque">
+                                                Reentrada de estoque
+                                            </label>
+                                        </div>
+    
+                                        <input type="hidden" name="id" value="${solicitacao.id}">
+                                        <input type="hidden" name="operacao" value="atualizar">
+                                        <button type="submit" class="w-100 btn btn-primary btn-sm">
+                                            Atualizar status
+                                        </button>
+                                    </form>
+                                </li>
+                            </c:if>
                         </ul>
                         
                     </div>
-                </div>
-                
-            </div>
-        </div>
+                </div>                
 
+            </div>
+            <br/><br/>
+        </div>
     </div>
 
     <jsp:include page="../include/footer.jsp" />

@@ -1,5 +1,7 @@
 package model.solicitacao;
 
+import java.util.List;
+
 public enum StatusSolicitacaoType {
 
     SOLICITADA ("Solicitado(a)"),
@@ -20,5 +22,14 @@ public enum StatusSolicitacaoType {
 
     public void setNomeExibicao(String nomeExibicao) {
         this.nomeExibicao = nomeExibicao;
+    }
+
+    public static List<StatusSolicitacaoType> getProximoStatus(StatusSolicitacaoType status) {
+        if(status.equals(SOLICITADA))
+            return List.of(RECUSADA, ACEITA);
+        else if (status.equals(ACEITA))
+            return List.of(REALIZADA);
+        else
+            return List.of();
     }
 }

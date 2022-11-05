@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public class CancelamentoViewHelper implements IViewHelper {
 
@@ -95,6 +96,10 @@ public class CancelamentoViewHelper implements IViewHelper {
                     request.setAttribute("enderecoEntrega", enderecoEntrega);
                     request.setAttribute("enderecoCobranca", cancelamento.getVenda().getEnderecoCobranca());
                 }
+
+                List<StatusSolicitacaoType> proximoStatus = StatusSolicitacaoType.getProximoStatus(cancelamento.getStatus());
+
+                request.setAttribute("proximoStatus", proximoStatus);
 
                 request.setAttribute("listaStatus", StatusSolicitacaoType.values());
                 request.getRequestDispatcher("/gerenciar/listarSolicitacao.jsp").forward(request, response);

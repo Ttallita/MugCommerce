@@ -105,6 +105,9 @@ public class TrocaViewHelper implements IViewHelper {
                     request.setAttribute("enderecoCobranca", troca.getVenda().getEnderecoCobranca());
                 }
 
+                List<StatusSolicitacaoType> proximoStatus = StatusSolicitacaoType.getProximoStatus(troca.getStatus());
+
+                request.setAttribute("proximoStatus", proximoStatus);
                 request.setAttribute("listaStatus", StatusSolicitacaoType.values());
                 request.getRequestDispatcher("/gerenciar/listarSolicitacao.jsp").forward(request, response);
             }
