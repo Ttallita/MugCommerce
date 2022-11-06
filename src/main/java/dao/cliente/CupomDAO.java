@@ -24,7 +24,7 @@ public class CupomDAO implements IDAO {
             conn = conexao.getConexao();
 
             String sql = "INSERT INTO cupons (cpm_cli_usr_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) " +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    " VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1, cupom.getCliente().getUsuario().getId());

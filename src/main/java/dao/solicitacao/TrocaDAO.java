@@ -116,7 +116,7 @@ public class TrocaDAO implements IDAO {
                     throw new RuntimeException("Erro ao tentar encontrar item da troca na venda");
 
                 Cupom cupomTroca = new Cupom();
-                cupomTroca.setValor(itemCarrinho.getProduto().getValorVenda() * troca.getQuantidade());
+                cupomTroca.setValor(itemCarrinho.getProduto().getValorVenda() * trocaConsulta.getQuantidade());
                 cupomTroca.setNome("Troca do dia " + Utils.formataLocalDateBR(LocalDate.now()));
                 cupomTroca.setDescricao("Cupom gerado por troca de produto");
                 cupomTroca.setTipo(CupomType.TROCA);
@@ -195,6 +195,13 @@ public class TrocaDAO implements IDAO {
                     sql = "SELECT * FROM trocas";
 
                     pstm = connection.prepareStatement(sql);
+                }
+
+                case "listarTrocasPorVenda" -> {
+                    sql = "SELECT * FROM trocas where trc_vnd_id = ? AND trc_cli_usr_id = ?";
+                    pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, troca.getVenda().getId());
+                    pstm.setLong(2, troca.getCliente().getId());
                 }
 
             }
