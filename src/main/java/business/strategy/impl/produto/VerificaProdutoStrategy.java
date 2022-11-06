@@ -13,7 +13,7 @@ public class VerificaProdutoStrategy implements IStrategy {
         if(produto.getNome().isBlank())
             return "Insira um nome para o produto";
 
-        if(produto.getValorCompra() == null)
+        if(produto.getValorCompra() == null || produto.getValorCompra() <= 0.0)
             return "Insira o valor de compra do produto";
 
         if(produto.getDescricao().isBlank())
@@ -26,7 +26,7 @@ public class VerificaProdutoStrategy implements IStrategy {
             return "Escolha um grupo de precificação";
 
         if(produto.getFabricante() == null)
-            return "Escolha um fabricantes";
+            return "Escolha um fabricante";
 
         if(produto.getCodBarras().isBlank())
             return "Digite o código de barras";

@@ -134,7 +134,7 @@
                         <input type="hidden" name="operacao" value="excluir">
                         <input type="hidden" id="idRemover" name="id" value="">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
-                        <input type="submit" class="btn btn-danger" value="Inativar" id="botaoRemoverEndereco">
+                        <input type="submit" class="btn btn-danger" value="Inativar" id="botaoInativarProduto">
                     </div>
                 </form>
             </div>
