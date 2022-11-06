@@ -110,7 +110,8 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <h4>R$ ${itemCarrinho.produto.valorVenda * itemCarrinho.quant}</h4>Quantidade: ${itemCarrinho.quant}
+                                <h4><fmt:formatNumber value="${itemCarrinho.produto.valorVenda * itemCarrinho.quant}" type="currency"/></h4>
+                                Quantidade: ${itemCarrinho.quant}
                             </div>
                         </div>
                     </c:forEach>

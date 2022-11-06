@@ -24,7 +24,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CancelamentoDAO implements IDAO {
 
@@ -32,6 +34,8 @@ public class CancelamentoDAO implements IDAO {
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final EstoqueDAO estoqueDAO = new EstoqueDAO();
     private final CupomDAO cupomDAO = new CupomDAO();
+
+    private final TrocaDAO trocaDAO = new TrocaDAO();
 
     @Override
     public EntidadeDominio salvar(EntidadeDominio entidade) {
@@ -99,12 +103,61 @@ public class CancelamentoDAO implements IDAO {
                 Cancelamento cancelamentoConsulta = (Cancelamento) listar(cancelamento, "listarUnico")
                         .get(0);
 
-
+                List<ItemCarrinho> itensCarrinho = cancelamentoConsulta.getVenda()
+                        .getCarrinho()
+                        .getItensCarrinho();
 
                 Cupom cupomTroca = new Cupom();
 
-                // TODO precisa ajustar esse valor pois existem itens que podem ter sido comprados
-                cupomTroca.setValor(0.0);
+                Troca trocaConsulta = new Troca();
+                trocaConsulta.setVenda(cancelamentoConsulta.getVenda());
+                trocaConsulta.setCliente(cancelamentoConsulta.getCliente());
+
+                List<Troca> trocas = trocaDAO.listar(trocaConsulta, "listarTrocasPorVenda")
+                        .stream()
+                        .map(entidadeDominio -> (Troca) entidadeDominio)
+                        .toList();
+
+                double valorRetornado = itensCarrinho.stream()
+                        .filter(item -> {
+                            if (item.isEmTroca()) {
+                                Troca trocaProdutoCarrinho = trocas.stream()
+                                        .filter(troca -> troca.getProduto().getId().equals(item.getProduto().getId()))
+                                        .findFirst()
+                                        .orElse(null);
+
+                                if (trocaProdutoCarrinho == null)
+                                    throw new RuntimeException("Não foi encontrado o produto da troca");
+
+                                // Se a troca não foi realizada só atualizaremos seu status e somaremos o valor do produto
+                                // para o cupom
+                                if (!trocaProdutoCarrinho.getStatus().equals(StatusSolicitacaoType.REALIZADA)) {
+                                    trocaProdutoCarrinho.setStatus(StatusSolicitacaoType.RECUSADA);
+
+                                    trocaDAO.atualizar(trocaProdutoCarrinho);
+
+                                    return true;
+
+                                // Caso contrario verificaremos a quantidade de trocada e se tiver sobra, usaremos essa quantidade
+                                // para somar no valor do cupom
+                                } else {
+                                    int quantidade = item.getQuant() - trocaProdutoCarrinho.getQuantidade();
+
+                                    if(quantidade != 0) {
+                                        item.setQuant(quantidade);
+                                        return true;
+                                    } else
+                                        return false;
+                                }
+
+                            }
+
+                            return true;
+                        })
+                        .mapToDouble(item -> item.getProduto().getValorVenda() * item.getQuant())
+                        .sum();
+
+                cupomTroca.setValor(valorRetornado);
                 cupomTroca.setNome("Troca do dia " + Utils.formataLocalDateBR(LocalDate.now()));
                 cupomTroca.setDescricao("Cupom gerado por cancelamento de venda");
                 cupomTroca.setTipo(CupomType.TROCA);
@@ -114,13 +167,27 @@ public class CancelamentoDAO implements IDAO {
 
                 // Nesse momento estaremos retornando todos os itens da compra para o estoque
                 if(cancelamento.isReentradaEstoque()) {
-                    List<ItemCarrinho> itensCarrinho = cancelamentoConsulta.getVenda()
-                            .getCarrinho()
-                            .getItensCarrinho();
-
                     itensCarrinho.forEach(item -> {
                         Estoque estoque = new Estoque();
                         estoque.setProduto(item.getProduto());
+
+
+                        if(item.isEmTroca()) {
+                            Troca trocaProdutoAtual = trocas.stream()
+                                    .filter(troca -> troca.getProduto().getId().equals(item.getProduto().getId()))
+                                    .findFirst()
+                                    .orElse(null);
+
+                            if (trocaProdutoAtual == null)
+                                throw new RuntimeException("Não foi encontrado o produto da troca");
+
+                            if (trocaProdutoAtual.getStatus().equals(StatusSolicitacaoType.REALIZADA)) {
+                                int quantidade = item.getQuant() - trocaProdutoAtual.getQuantidade();
+
+                                if (quantidade != 0)
+                                    item.setQuant(quantidade);
+                            }
+                        }
 
                         Estoque estoqueConsulta = (Estoque) estoqueDAO.listar(estoque, "findByIdProduto")
                                 .get(0);

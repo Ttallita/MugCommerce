@@ -12,7 +12,6 @@ public class Cupom extends EntidadeDominio {
 
     private transient Cliente cliente;
     private String nome;
-    private Venda venda;
     private CupomType tipo;
     private Double valor;
     private LocalDate dataValidade;
@@ -38,14 +37,6 @@ public class Cupom extends EntidadeDominio {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public Venda getVenda() {
-        return venda;
-    }
-
-    public void setVenda(Venda venda) {
-        this.venda = venda;
     }
 
     public CupomType getTipo() {
@@ -87,10 +78,8 @@ public class Cupom extends EntidadeDominio {
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Cupom)) return false;
-        Cupom cupom = (Cupom) o;
+        if (!(o instanceof Cupom cupom)) return false;
         return  Objects.equals(nome, cupom.nome)
-                && Objects.equals(venda, cupom.venda)
                 && tipo == cupom.tipo
                 && Objects.equals(valor, cupom.valor)
                 && Objects.equals(dataValidade, cupom.dataValidade)
@@ -100,14 +89,13 @@ public class Cupom extends EntidadeDominio {
 
     @Override
     public final int hashCode() {
-        return Objects.hash(nome, venda, tipo, valor, dataValidade, descricao);
+        return Objects.hash(nome, tipo, valor, dataValidade, descricao);
     }
 
     @Override
     public String toString() {
         return "Cupom{" +
                 " nome='" + nome + '\'' +
-                ", venda=" + venda +
                 ", tipo=" + tipo +
                 ", valor=" + valor +
                 ", dataValidade=" + dataValidade +
