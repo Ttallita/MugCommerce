@@ -6,7 +6,7 @@ import java.util.List;
 
 public enum StatusVendaType {
 
-    @SerializedName("Em análise")
+    @SerializedName("Em processamento")
     EM_PROCESSAMENTO("Em processamento"),
 
     @SerializedName("Pagamento realizado")

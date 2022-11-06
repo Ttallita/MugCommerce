@@ -1,24 +1,24 @@
-package selenium.scripts;
+package selenium.scripts.unitario.cliente;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.WebDriver;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.LoginPage;
 import selenium.dataHelpers.VOs.UsuarioVO;
 import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
+import selenium.scripts.unitario.TesteUnitarioAbstract;
 import selenium.utils.UtilsTeste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TesteLogin extends TesteAbstract{
+public class TesteLogin extends TesteUnitarioAbstract {
 
     @Override
-    void configurarCenarioTeste() { }
+    protected void configurarCenarioTeste() { }
 
     @Test
     public void testeLoginClienteValido(){

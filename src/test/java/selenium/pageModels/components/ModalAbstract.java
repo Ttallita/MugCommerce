@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import selenium.dataHelpers.VOs.CartaoVO;
+import selenium.utils.UtilsTeste;
 
 import java.time.Duration;
 import java.util.NoSuchElementException;
@@ -18,7 +19,7 @@ public abstract class ModalAbstract {
         this.driver = driver;
     }
 
-    public void alterarItensSelecionados(){
+    protected void alterarItensSelecionados(){
         driver.findElement(By.id("botaoAlterarModal")).click();
     }
 

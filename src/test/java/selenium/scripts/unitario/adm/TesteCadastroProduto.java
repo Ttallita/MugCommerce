@@ -1,4 +1,4 @@
-package selenium.scripts;
+package selenium.scripts.unitario.adm;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,13 +8,14 @@ import selenium.pageModels.HomePage;
 import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.dashboard.ProdutoAdmPage;
 import selenium.pageModels.formularios.FormProdutoPage;
+import selenium.scripts.unitario.TesteUnitarioAbstract;
 
-public class TesteProduto extends TesteAbstract{
+public class TesteCadastroProduto extends TesteUnitarioAbstract {
 
     private HeaderAdmComponent header;
 
     @Override
-    void configurarCenarioTeste() {
+    protected void configurarCenarioTeste() {
         HomePage homePage = realizarLoginAdmPadrao();
         header = (HeaderAdmComponent) homePage.getHeader(driver);
     }

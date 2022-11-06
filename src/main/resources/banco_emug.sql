@@ -323,10 +323,6 @@ ALTER TABLE produtos_em_venda
     ADD CONSTRAINT fk_prv_vnd FOREIGN KEY (prv_vnd_id)
         REFERENCES vendas (vnd_id);
 
-ALTER TABLE cupons
-    ADD CONSTRAINT fk_cpm_vnd FOREIGN KEY (cpm_vnd_id)
-        REFERENCES vendas (vnd_id);
-
 ALTER TABLE estoque
     ADD CONSTRAINT fk_prod_id FOREIGN KEY (est_pro_id)
         REFERENCES produtos (pro_id);

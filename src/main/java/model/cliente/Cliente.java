@@ -23,11 +23,19 @@ public class Cliente extends EntidadeDominio {
     private int ranking;
     private Usuario usuario;
 
-    public Cliente() {}
-
     public Cliente(Usuario usuario) {
         super();
         this.usuario = usuario;
+    }
+
+    @Override
+    public Long getId(){
+        return usuario.getId();
+    }
+
+    @Override
+    public void setId(Long id) {
+        usuario.setId(id);
     }
 
     public String getNome() {

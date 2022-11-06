@@ -228,9 +228,7 @@ public class VendaDAO implements IDAO {
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getLong("vnd_cli_usr_id"));
 
-                Cliente clienteVenda = new Cliente();
-                clienteVenda.setUsuario(usuario);
-
+                Cliente clienteVenda = new Cliente(usuario);
                 clienteVenda = (Cliente) clienteDAO.listar(clienteVenda, "listarUnico").get(0);
 
                 Endereco enderecoEntrega = new Endereco();

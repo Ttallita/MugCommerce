@@ -1,4 +1,4 @@
-package selenium.scripts;
+package selenium.scripts.unitario.cliente;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,14 +15,15 @@ import selenium.pageModels.perfilCliente.CartoesPage;
 import selenium.pageModels.perfilCliente.EnderecosPage;
 import selenium.pageModels.perfilCliente.PerfilPrincipalPage;
 import selenium.dataHelpers.VOs.ClienteVO;
+import selenium.scripts.unitario.TesteUnitarioAbstract;
 import selenium.utils.UtilsTeste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TesteCadastroCliente extends TesteAbstract {
+public class TesteCadastroCliente extends TesteUnitarioAbstract {
 
     @Override
-    void configurarCenarioTeste() { }
+    public void configurarCenarioTeste() { }
 
     @Test
     public void testeCadastroClienteValido() {

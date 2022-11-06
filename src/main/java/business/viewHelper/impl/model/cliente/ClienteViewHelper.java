@@ -47,11 +47,7 @@ public class ClienteViewHelper implements IViewHelper {
             }
             case "listarUnico" -> {
                 Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
-
-                Cliente cliente = new Cliente();
-                cliente.setUsuario(usuarioLogado);
-
-                return cliente;
+                return new Cliente(usuarioLogado);
             }
             case "atualizar" -> {
                 Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
@@ -65,8 +61,7 @@ public class ClienteViewHelper implements IViewHelper {
     }
 
     private Cliente criaClienteBasico(HttpServletRequest request, Usuario usuario) {
-        Cliente cliente = new Cliente();
-        cliente.setUsuario(usuario);
+        Cliente cliente = new Cliente(usuario);
         cliente.setNome(request.getParameter("nome"));
         cliente.setSobrenome(request.getParameter("sobrenome"));
         cliente.setCpf(request.getParameter("cpf"));

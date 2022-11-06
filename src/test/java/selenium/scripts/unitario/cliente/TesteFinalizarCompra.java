@@ -1,80 +1,41 @@
-package selenium.scripts;
+package selenium.scripts.unitario.cliente;
 
 import org.junit.jupiter.api.Test;
 import selenium.dataHelpers.ClienteDataHelper;
-import selenium.dataHelpers.ProdutoDataHelper;
 import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.FinalizarCompraPage;
-import selenium.pageModels.ProdutoPage;
 import selenium.pageModels.components.*;
+import selenium.scripts.unitario.TesteUnitarioAbstract;
 import selenium.utils.UtilsTeste;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TesteFinalizarCompra extends TesteAbstract{
+public class TesteFinalizarCompra extends TesteUnitarioAbstract {
 
     private HeaderClienteComponent headerCliente;
     private FinalizarCompraPage finalizarCompra;
 
     @Override
-    void configurarCenarioTeste() {
-
+    protected void configurarCenarioTeste() {
         headerCliente = (HeaderClienteComponent) this.realizarLoginClientePadrao().getHeader(driver);
-
-        // Adiciona produtos ao carrinho
-        List<String> nomesProdutos = ProdutoDataHelper.nomesProdutos();
-        nomesProdutos.forEach(nomeProduto -> {
-            headerCliente.pesquisar(nomeProduto);
-            ProdutoPage.abrirPaginaProduto(nomeProduto).adicionarProdutoCarrinho();
-        });
+        super.populaCarrinho(headerCliente);
 
         finalizarCompra = headerCliente.acessarCarrinho().finalizarCompra();
     }
 
+    // -------------- Cartões
     @Test
     public void testeAlterarCartoesSelecionados(){
         ModalCartoesComponent modalCartoes = finalizarCompra.abrirModalAlterarFormaPagamento();
 
         List<CartaoVO> cartoes = ClienteDataHelper.getCartoesPreviamenteCadastrados().subList(0, 3);
-        for(CartaoVO cartao : cartoes){
-            modalCartoes.selecionarCartao(cartao);
-        }
-
-        modalCartoes.alterarItensSelecionados();
+        modalCartoes.alterarCartoes(cartoes);
 
         for(CartaoVO cartao : cartoes)
             assertTrue(finalizarCompra.isCartaoListado(cartao));
-    }
-
-    @Test
-    public void testeAlterarEnderecoEntrega(){
-        ModalEnderecosComponent modalEnderecos = finalizarCompra.abrirModalAlterarEnderecoEntrega();
-
-        EnderecoVO endereco = ClienteDataHelper.getEnderecosEntregaPreviamenteCadastrados().get(0);
-        modalEnderecos.selecionarEndereco(endereco);
-
-        modalEnderecos.alterarItensSelecionados();
-
-        UtilsTeste.esperarTelaRecarregar(driver);
-
-        assertTrue(finalizarCompra.isEnderecoEntregaListado(endereco));
-    }
-
-    @Test
-    public void testeAlterarEnderecoCobranca(){
-        ModalEnderecosComponent modalEnderecos = finalizarCompra.abrirModalAlterarEnderecoCobranca();
-
-        EnderecoVO endereco = ClienteDataHelper.getEnderecosCobrancaPreviamenteCadastrados().get(0);
-        modalEnderecos.selecionarEndereco(endereco);
-
-        modalEnderecos.alterarItensSelecionados();
-
-        UtilsTeste.esperarTelaRecarregar(driver);
-
-        assertTrue(finalizarCompra.isEnderecoEntregaListado(endereco));
     }
 
     @Test
@@ -105,6 +66,32 @@ public class TesteFinalizarCompra extends TesteAbstract{
 
         formCartao.editarCartao(cartao);
         assertTrue(finalizarCompra.isCartaoListado(cartao));
+    }
+
+    // --------- Endereços
+
+    @Test
+    public void testeAlterarEnderecoEntrega(){
+        ModalEnderecosComponent modalEnderecos = finalizarCompra.abrirModalAlterarEnderecoEntrega();
+
+        EnderecoVO endereco = ClienteDataHelper.getEnderecosEntregaPreviamenteCadastrados().get(0);
+        modalEnderecos.alterarEndereco(endereco);
+
+        UtilsTeste.esperarTelaRecarregar(driver);
+
+        assertTrue(finalizarCompra.isEnderecoEntregaListado(endereco));
+    }
+
+    @Test
+    public void testeAlterarEnderecoCobranca(){
+        ModalEnderecosComponent modalEnderecos = finalizarCompra.abrirModalAlterarEnderecoCobranca();
+
+        EnderecoVO endereco = ClienteDataHelper.getEnderecosCobrancaPreviamenteCadastrados().get(0);
+        modalEnderecos.alterarEndereco(endereco);
+
+        UtilsTeste.esperarTelaRecarregar(driver);
+
+        assertTrue(finalizarCompra.isEnderecoEntregaListado(endereco));
     }
 
     @Test

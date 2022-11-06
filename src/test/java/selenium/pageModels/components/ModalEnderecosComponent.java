@@ -3,7 +3,6 @@ package selenium.pageModels.components;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 
 public class ModalEnderecosComponent extends ModalAbstract {
@@ -23,11 +22,13 @@ public class ModalEnderecosComponent extends ModalAbstract {
         return new FormEnderecoComponent(driver);
     }
 
-    public void selecionarEndereco(EnderecoVO enderecoVO){
+    public void alterarEndereco(EnderecoVO enderecoVO){
         WebElement cartao = getItemModal(enderecoVO.getApelidoEndereco());
 
         cartao.findElement(By.cssSelector("input[type*='radio']")).click();
         cartao.findElement(By.tagName("a"));
+
+        super.alterarItensSelecionados();
     }
 
     public boolean isEnderecoListado(EnderecoVO enderecoVO){

@@ -45,15 +45,21 @@
                             <thead>
                                 <tr>
                                     <th>Data de solicitação</th>
+                                    <th>Data compra</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="solicitacao" items="${solicitacoes}">
                                     <tr>
-                                        <fmt:parseDate  value="${solicitacao.data}"  type="date" pattern="yyyy-MM-dd" var="dataParseada" />
-                                        <fmt:formatDate value="${dataParseada}" type="date" pattern="dd/MM/yyyy" var="dataFormatada" />
-                                        <td>${dataFormatada}</td>
+                                        <fmt:parseDate  value="${solicitacao.data}"  type="date" pattern="yyyy-MM-dd'T'HH:mm" var="dataSolicitacaoParseada" />
+                                        <fmt:formatDate value="${dataSolicitacaoParseada}" type="date" pattern="dd/MM/yyyy HH:mm" var="dataSolicitacaoFormatada" />
+                                        <td>${dataSolicitacaoFormatada}</td>
+
+                                        <fmt:parseDate  value="${solicitacao.venda.dataCompra}"  type="date" pattern="yyyy-MM-dd'T'HH:mm" var="dataCompraParseada" />
+                                        <fmt:formatDate value="${dataCompraParseada}" type="date" pattern="dd/MM/yyyy HH:mm" var="dataCompraFormatada" />
+                                        <td>${dataCompraFormatada}</td>
+
                                         <td>${solicitacao.status.nomeExibicao}</td>
                                         <td>
                                             <button type="button" class="btn btn-primary btn-sm" onclick="montarModal('${solicitacao.id}')" data-bs-toggle="modal" data-bs-target="#modal"><span class="material-icons">remove_red_eye</span></button>
@@ -95,10 +101,10 @@
             if (${isCancelamento}) {
                 
                 let detalhesVenda =
-                    $(`<h5>Detalhes da venda cancelada:</h5>
+                    $(`<p>Detalhes da venda cancelada:</p>
                     <ul class="list-unstyled">
-                        <li><h6 class="fw-bold">\${solicitacao.venda.dataCompra}</h6></li>
-                        <li>Status venda: <h6>\${solicitacao.venda.vendaStatus}</h6></li>
+                        <li><strong class="fw-bold">\${solicitacao.venda.dataCompra}</strong></li>
+                        <li>Status venda: <strong>\${solicitacao.venda.vendaStatus}</strong></li>
                         <li>Valor total da venda: R$ \${solicitacao.venda.precoTotal}</li>
                         <li>Frete: R$ \${solicitacao.venda.frete}</li>
                     </ul>`);
@@ -113,10 +119,10 @@
             } else {
 
                 let detalhesVenda =
-                    $(`<h5>Detalhes da venda do produto trocado:</h5>
+                    $(`<p>Detalhes da venda do produto trocado:</p>
                     <ul class="list-unstyled">
-                        <li>Compra realizada dia: <h6 class="fw-bold">\${solicitacao.venda.dataCompra}</h6></li>
-                        <li>Status venda: <h6>\${solicitacao.venda.vendaStatus}</h6></li>
+                        <li>Compra realizada dia: <strong class="fw-bold">\${solicitacao.venda.dataCompra}</strong></li>
+                        <li>Status venda: <strong>\${solicitacao.venda.vendaStatus}</strong></li>
                     </ul>`);
 
                 if (solicitacao.venda.dataEntrega != null)
