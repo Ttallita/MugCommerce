@@ -134,17 +134,13 @@ public class ClienteDAO implements IDAO {
 
             List<EntidadeDominio> clientes = new ArrayList<>();
             while (rs.next()) {
-                Usuario usuario = new Usuario();
-                usuario.setId(rs.getLong(1));
-
-                Cliente clienteConsulta = new Cliente();
+                Cliente clienteConsulta = new Cliente(new Usuario());
                 clienteConsulta.setId(rs.getLong("cli_usr_id"));
                 clienteConsulta.setNome(rs.getString("cli_nome"));
                 clienteConsulta.setSobrenome(rs.getString("cli_sobrenome"));
                 clienteConsulta.setCpf(rs.getString("cli_cpf"));
                 clienteConsulta.setDataNascimento(rs.getTimestamp("cli_dt_nasc").toLocalDateTime().toLocalDate());
                 clienteConsulta.setGenero(rs.getString("cli_genero"));
-                clienteConsulta.setUsuario(usuario);
 
                 Telefone telefone = new Telefone();
                 telefone.setNumero(rs.getString("cli_telefone_num"));

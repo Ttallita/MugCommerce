@@ -1,53 +1,45 @@
-package selenium.scripts;
+package selenium.scripts.unitario.cliente;
 
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import selenium.dataHelpers.ProdutoDataHelper;
 import selenium.pageModels.HomePage;
 import selenium.pageModels.ProdutoPage;
 import selenium.pageModels.components.HeaderClienteComponent;
 import selenium.pageModels.perfilCliente.CarrinhoPage;
+import selenium.scripts.unitario.TesteUnitarioAbstract;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class TesteCarrinho extends TesteAbstract{
+public class TesteCarrinho extends TesteUnitarioAbstract {
 
     private HomePage homeCliente;
     private HeaderClienteComponent headerCliente;
 
     @Override
-    void configurarCenarioTeste() {
+    protected void configurarCenarioTeste() {
         this.homeCliente = this.realizarLoginClientePadrao();
         headerCliente = (HeaderClienteComponent) homeCliente.getHeader(driver);
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"Caneca Urso Polar"})
-    public void testeAdicionarProdutoIndexCarrinho(String nomeProduto) {
-        homeCliente.abrirPaginaProduto(nomeProduto).adicionarProdutoCarrinho();
+    @Test
+    public void testeAdicionarProdutoPesquisaCarrinho(){
+        String nomeProduto = ProdutoDataHelper.getNomeProdutoAleatorio();
 
-        // Verifica se produto foi adicionado ao carinho
-        driver.findElement(By.linkText(nomeProduto));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"Caneca Urso Polar"})
-    public void testeAdicionarProdutoPesquisaCarrinho(String nomeProduto){
         homeCliente.pesquisar(nomeProduto);
-
-        ProdutoPage.abrirPaginaProduto(nomeProduto).adicionarProdutoCarrinho();
-
-        // Verifica se produto foi adicionado ao carinho
-        driver.findElement(By.linkText(nomeProduto));
+        adicionaProdutoAoCarrinho(driver, headerCliente, nomeProduto);
     }
 
     @ParameterizedTest
     @MethodSource("selenium.dataHelpers.ProdutoDataHelper#quantProdutosCarrinho")
     public void testeAlterarQuantidade(int quantAlterar, String nomeProduto) {
-        this.testeAdicionarProdutoIndexCarrinho(nomeProduto);
+        adicionaProdutoAoCarrinho(driver, headerCliente, nomeProduto);
+
         CarrinhoPage carrinho = headerCliente.acessarCarrinho();
 
         if(quantAlterar < 0) // Garante que o carrinho sempre tenha uma quantidade válida de produtos para o teste
@@ -59,15 +51,29 @@ public class TesteCarrinho extends TesteAbstract{
         assertEquals(quantAnterior + quantAlterar, carrinho.getQuantProduto(nomeProduto));
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"Caneca Urso Polar"})
-    public void testeExcluirProdutocarrinho(String nomeProduto){
-        this.testeAdicionarProdutoIndexCarrinho(nomeProduto);
-        CarrinhoPage carrinho = headerCliente.acessarCarrinho();
+    @Test
+    public void testeExcluirProdutocarrinho(){
+        String nomeProduto = ProdutoDataHelper.getNomeProdutoAleatorio();
 
+        adicionaProdutoAoCarrinho(driver, headerCliente, nomeProduto);
+
+        CarrinhoPage carrinho = headerCliente.acessarCarrinho();
         carrinho.excluirProdutoCarrinho(nomeProduto);
 
         assertFalse(carrinho.isProdutoEmCarrinho(nomeProduto));
+    }
+
+    public static CarrinhoPage adicionaProdutoAoCarrinho(WebDriver driver, HeaderClienteComponent headerCliente, String nomeProduto) {
+        headerCliente.pesquisar(nomeProduto);
+        ProdutoPage produtoPage = ProdutoPage.abrirPaginaProduto(nomeProduto);
+
+//        Thread.sleep(1000L);
+        CarrinhoPage carrinho = produtoPage.adicionarProdutoCarrinho();
+
+        // Verifica se produto foi adicionado ao carinho
+        driver.findElement(By.linkText(nomeProduto));
+
+        return carrinho;
     }
 
 }

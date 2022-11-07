@@ -1,6 +1,7 @@
 package selenium.pageModels.components;
 
 import org.openqa.selenium.WebDriver;
+import selenium.pageModels.perfilCliente.PerfilClientePage;
 
 public class HeaderUsuarioDeslogado extends HeaderComponentAbstract{
 
@@ -8,8 +9,7 @@ public class HeaderUsuarioDeslogado extends HeaderComponentAbstract{
         super(driver);
     }
 
-    @Override
-    public void acessarPagina(String pagina) {
+    public PerfilClientePage acessarPagina(String pagina) {
         throw new RuntimeException("Usuário não está logado para acessar sua página de perfil");
     }
 }

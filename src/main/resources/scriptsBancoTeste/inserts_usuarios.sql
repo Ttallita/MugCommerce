@@ -25,13 +25,12 @@ VALUES  (1,'COBRANCA_ENTREGA','Minha casa','Sobrado','Avenida','Pingo d''água',
         (1,'COBRANCA_ENTREGA','Casa D','Casa','Distrito','Dom Terciário Quarto','444','Dama Claudite','44444-444','Brasília','Distrito Federal','');
 
 INSERT INTO cupons (cpm_cli_usr_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) VALUES
-(1, 'Cupom aniversariante', 'PROMOCIONAL', 20.0, '2023-01-01', 'Se presenteie bla bla bla...'),
-(1, 'Cupom natal', 'PROMOCIONAL', 30.0, '2023-01-01', 'HOU! HOU! HOU!..........'),
-(1, 'Cupom halloween', 'PROMOCIONAL', 50.0, '2023-01-01', 'Buuuuuuuuuuuuuuu...');
+    (1, 'Cupom aniversariante', 'PROMOCIONAL', 20.0, '2023-01-01', 'Se presenteie bla bla bla...'),
+    (1, 'Cupom natal', 'PROMOCIONAL', 30.0, '2023-01-01', 'HOU! HOU! HOU!..........'),
+    (1, 'Cupom halloween', 'PROMOCIONAL', 50.0, '2023-01-01', 'Buuuuuuuuuuuuuuu...');
 
 
 -- Administrador
 -- Senha = "SenhaADM@123"
 INSERT into usuarios (usr_email, usr_senha, usr_tipo, usr_ativo)
 values ('loginADM@teste.com', '1c12fe70e92c3544d88dec0381f6e2e1e245e201078e6c6cf23ee2c5e6523e57d6005dbd7b229beba03c373639bb2f7a316664c85e8bc8a73c397e546522779d', 'ADMINISTRADOR', true);
-

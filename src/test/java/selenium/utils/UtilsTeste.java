@@ -1,9 +1,6 @@
 package selenium.utils;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -29,6 +26,24 @@ public class UtilsTeste {
     public static void esperarJavaScriptExecutar(WebDriverWait wait) {
         wait.until((ExpectedCondition<Boolean>) wd ->
                 ((JavascriptExecutor) Objects.requireNonNull(wd)).executeScript("return document.readyState").equals("complete"));
+    }
+
+    public static WebElement findElementLinhaTabela(WebDriver driver, String textoIdentificador){
+        WebElement linhaTabela = null;
+
+        for (WebElement tr:  driver.findElements(By.cssSelector("tbody > tr"))){
+            linhaTabela = tr.findElements(By.tagName("td")).stream()
+                    .filter(td -> td.getText().equals(textoIdentificador))
+                    .findFirst().orElse(null);
+
+            if (linhaTabela != null)
+                break;
+        }
+
+        if (linhaTabela == null)
+            throw new NoSuchElementException(String.format("Elemento com identificador %s não foi encontrado na tabela!", textoIdentificador));
+
+        return linhaTabela;
     }
 
     public static void esperarTelaRecarregar(WebDriver driver) {

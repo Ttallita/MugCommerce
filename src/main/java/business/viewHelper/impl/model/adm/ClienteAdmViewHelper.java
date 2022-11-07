@@ -4,6 +4,7 @@ import business.viewHelper.IViewHelper;
 import business.viewHelper.impl.model.cliente.ClienteViewHelper;
 import model.EntidadeDominio;
 import model.Result;
+import model.Usuario;
 import model.cliente.Cliente;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ public class ClienteAdmViewHelper implements IViewHelper {
         String operacao = request.getParameter("operacao");
 
         if(operacao.equals("listarTodos"))
-            return new Cliente();
+            return new Cliente(new Usuario());
 
         return null;
     }

@@ -1,12 +1,12 @@
 package selenium.pageModels.perfilCliente;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import selenium.pageModels.FinalizarCompraPage;
 import selenium.pageModels.PageAbstract;
 import selenium.utils.UtilsTeste;
+
+import java.time.Duration;
 
 public class CarrinhoPage extends PageAbstract{
 
@@ -29,7 +29,15 @@ public class CarrinhoPage extends PageAbstract{
         for(int i = 0; i < quantProduto; i++) {
             WebElement trProduto = getLinhaTabelaProduto(nomeProduto);
             trProduto.findElement(By.id(nomeBotao)).click();
-            UtilsTeste.esperarTelaRecarregar(driver);
+
+            try {
+                UtilsTeste.esperarTelaRecarregar(driver);
+            } catch (TimeoutException e){
+                WebElement notificacao = driver.findElement(By.className("notifications-container"));
+                if (notificacao.getText() != null || !notificacao.getText().isEmpty())
+                    break;
+            }
+
         }
     }
 
@@ -57,9 +65,11 @@ public class CarrinhoPage extends PageAbstract{
 
     private WebElement getLinhaTabelaProduto(String nomeProduto) {
         WebElement trProduto = null;
-        for(WebElement e : driver.findElements(By.cssSelector("tr"))){
-            if (driver.findElement(By.cssSelector("td > a > h6")).getText().equals(nomeProduto))
+        for(WebElement e : driver.findElements(By.cssSelector("tbody > tr"))){
+            if (e.findElement(By.cssSelector("td > a > h6")).getText().equals(nomeProduto)) {
                 trProduto = e;
+                break;
+            }
         }
 
         if (trProduto == null)
@@ -69,7 +79,12 @@ public class CarrinhoPage extends PageAbstract{
     }
 
     public FinalizarCompraPage finalizarCompra(){
-        UtilsTeste.getBotaoByLink(LINK_FINALIZAR_COMPRA, driver).click();
+        try {
+            UtilsTeste.getBotaoByLink(LINK_FINALIZAR_COMPRA, driver).click();
+        } catch (NoSuchElementException e){
+            throw new RuntimeException("Carrinho está vazio!");
+        }
+
         return new FinalizarCompraPage(driver);
     }
 }

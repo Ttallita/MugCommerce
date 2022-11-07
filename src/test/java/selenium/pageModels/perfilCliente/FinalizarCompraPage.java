@@ -8,6 +8,7 @@ import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.components.ModalCartoesComponent;
 import selenium.pageModels.components.ModalEnderecosComponent;
+import selenium.utils.UtilsTeste;
 
 import java.util.List;
 
@@ -60,6 +61,12 @@ public class FinalizarCompraPage extends PageAbstract{
                 return true;
         }
         return false;
+    }
+
+    public HomePage confirmarPedido(){
+        UtilsTeste.getBotaoByValueInput("Confirmar pedido", driver).click();
+
+        return new HomePage(driver);
     }
 
 }

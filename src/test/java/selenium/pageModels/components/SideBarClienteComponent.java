@@ -14,6 +14,8 @@ public class SideBarClienteComponent {
     private final WebElement paginaEnderecos;
     private final WebElement paginaCartoes;
     private final WebElement paginaCupons;
+    private final WebElement paginaTrocas;
+    private final WebElement paginaCancelamentos;
 
     protected WebDriver driver;
 
@@ -24,13 +26,15 @@ public class SideBarClienteComponent {
         paginaEnderecos = driver.findElement(By.id("paginaEnderecos"));
         paginaCartoes = driver.findElement(By.id("paginaCartoes"));
         paginaCupons = driver.findElement(By.id("paginaCupons"));
+        paginaTrocas = driver.findElement(By.id("paginaTrocas"));
+        paginaCancelamentos = driver.findElement(By.id("paginaCancelamentos"));
 
         this.driver = driver;
     }
 
-    public PerfilPrincipalPage acessarPerfil(){
+    public PerfilClientePage acessarPerfil(){
         paginaPerfil.click();
-        return new PerfilPrincipalPage(driver);
+        return new PerfilClientePage(driver);
     }
 
     public AtualizarSenhaPage acessarAtualizarSenha(){
@@ -56,6 +60,16 @@ public class SideBarClienteComponent {
     public CuponsPage acessarCupons(){
         paginaCupons.click();
         return new CuponsPage(driver);
+    }
+
+    public CancelamentosPage acessarCancelamentos(){
+        paginaCancelamentos.click();
+        return new CancelamentosPage(driver);
+    }
+
+    public TrocasPage acessarTrocas(){
+        paginaTrocas.click();
+        return new TrocasPage(driver);
     }
 
 }

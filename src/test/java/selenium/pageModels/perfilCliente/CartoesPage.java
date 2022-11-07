@@ -4,10 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import selenium.dataHelpers.VOs.CartaoVO;
+import selenium.pageModels.PageAbstract;
 import selenium.pageModels.formularios.FormCartaoPage;
 import selenium.utils.UtilsTeste;
 
-public class CartoesPage extends PerfilPage {
+public class CartoesPage extends PageAbstract {
 
     public static final String TITULO_PAGINA = "Perfil - Cartões";
 

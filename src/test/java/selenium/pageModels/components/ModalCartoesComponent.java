@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import selenium.dataHelpers.VOs.CartaoVO;
 
+import java.util.List;
+
 public class ModalCartoesComponent extends ModalAbstract{
 
     public ModalCartoesComponent(WebDriver driver){
@@ -30,6 +32,14 @@ public class ModalCartoesComponent extends ModalAbstract{
             checkBox.click();
 
         cartao.findElement(By.tagName("a"));
+    }
+
+    public void alterarCartoes(List<CartaoVO> cartoes){
+        for(CartaoVO cartao : cartoes){
+            this.selecionarCartao(cartao);
+        }
+
+        super.alterarItensSelecionados();
     }
 
     public boolean isCartaoListado(CartaoVO cartao){

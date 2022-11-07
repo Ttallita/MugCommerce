@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import selenium.pageModels.ResultadoPesquisaPage;
+import selenium.pageModels.perfilCliente.PerfilClientePage;
 import selenium.utils.UtilsTeste;
 
 public abstract class HeaderComponentAbstract {
@@ -26,7 +27,7 @@ public abstract class HeaderComponentAbstract {
         return new ResultadoPesquisaPage(driver);
     }
 
-    public abstract void acessarPagina(String pagina);
+    public abstract PerfilClientePage acessarPagina(String pagina);
 
     public void acessarHome(){
         UtilsTeste.getBotaoByLink(LINK_INDEX, driver).click();

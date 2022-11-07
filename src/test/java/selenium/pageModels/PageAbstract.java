@@ -6,6 +6,7 @@ import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
 import selenium.pageModels.components.HeaderComponentAbstract;
 import selenium.pageModels.components.HeaderUsuarioDeslogado;
+import selenium.utils.UtilsTeste;
 
 public abstract class PageAbstract {
 

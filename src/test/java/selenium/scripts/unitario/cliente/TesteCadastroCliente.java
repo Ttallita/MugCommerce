@@ -1,9 +1,10 @@
-package selenium.scripts;
+package selenium.scripts.unitario.cliente;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import selenium.dataHelpers.VOs.CartaoVO;
+import selenium.dataHelpers.VOs.ClienteVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.dataHelpers.VOs.UsuarioVO;
 import selenium.pageModels.CadastroClientePage;
@@ -13,16 +14,15 @@ import selenium.pageModels.formularios.FormCartaoPage;
 import selenium.pageModels.formularios.FormEnderecoPage;
 import selenium.pageModels.perfilCliente.CartoesPage;
 import selenium.pageModels.perfilCliente.EnderecosPage;
-import selenium.pageModels.perfilCliente.PerfilPrincipalPage;
-import selenium.dataHelpers.VOs.ClienteVO;
+import selenium.scripts.unitario.TesteUnitarioAbstract;
 import selenium.utils.UtilsTeste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TesteCadastroCliente extends TesteAbstract {
+public class TesteCadastroCliente extends TesteUnitarioAbstract {
 
     @Override
-    void configurarCenarioTeste() { }
+    public void configurarCenarioTeste() { }
 
     @Test
     public void testeCadastroClienteValido() {
@@ -80,8 +80,7 @@ public class TesteCadastroCliente extends TesteAbstract {
     public void testeCadastroEndereco(){
         HomePage homeCliente = this.realizarLoginClientePadrao();
 
-        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
-        EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
+        EnderecosPage enderecosPage = homeCliente.acessarPerfilCliente().getSideBarCliente().acessarEnderecos();
         FormEnderecoPage formEnderecoPage = enderecosPage.adicionarEndereco();
 
         formEnderecoPage.salvarNovoEndereco(EnderecoVO.createEnderecoPadrao());
@@ -94,8 +93,7 @@ public class TesteCadastroCliente extends TesteAbstract {
     public void testeCadastroEnderecosInvalidos(EnderecoVO endereco, String msgEsperada){
         HomePage homeCliente = this.realizarLoginClientePadrao();
 
-        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
-        EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
+        EnderecosPage enderecosPage = homeCliente.acessarPerfilCliente().getSideBarCliente().acessarEnderecos();
         FormEnderecoPage formEnderecoPage = enderecosPage.adicionarEndereco();
 
         formEnderecoPage.salvarNovoEndereco(endereco);
@@ -108,8 +106,7 @@ public class TesteCadastroCliente extends TesteAbstract {
         EnderecoVO endereco = EnderecoVO.createEnderecoPadrao();
         HomePage homeCliente = this.realizarLoginClientePadrao();
 
-        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
-        EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
+        EnderecosPage enderecosPage = homeCliente.acessarPerfilCliente().getSideBarCliente().acessarEnderecos();
         FormEnderecoPage formEnderecoPage = enderecosPage.adicionarEndereco();
 
         formEnderecoPage.salvarNovoEndereco(endereco);
@@ -124,8 +121,7 @@ public class TesteCadastroCliente extends TesteAbstract {
 
         HomePage homeCliente = this.realizarLoginClientePadrao();
 
-        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
-        EnderecosPage enderecosPage = perfilCliente.acessarEnderecos();
+        EnderecosPage enderecosPage = homeCliente.acessarPerfilCliente().getSideBarCliente().acessarEnderecos();
 
         FormEnderecoPage formEnderecoPage = enderecosPage.adicionarEndereco();
         formEnderecoPage.salvarNovoEndereco(endereco);
@@ -143,8 +139,7 @@ public class TesteCadastroCliente extends TesteAbstract {
     public void testeCadastroNovoCartao(){
         HomePage homeCliente = this.realizarLoginClientePadrao();
 
-        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
-        CartoesPage cartoesPage = perfilCliente.acessarCartoes();
+        CartoesPage cartoesPage = homeCliente.acessarPerfilCliente().getSideBarCliente().acessarCartoes();
         FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
 
         formCartaoPage.salvarNovoCartao(CartaoVO.createCartaoPadrao());
@@ -157,8 +152,7 @@ public class TesteCadastroCliente extends TesteAbstract {
     public void testeCadastroCartoesInvalidos(CartaoVO cartao, String msgEsperada){
         HomePage homeCliente = this.realizarLoginClientePadrao();
 
-        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
-        CartoesPage cartoesPage = perfilCliente.acessarCartoes();
+        CartoesPage cartoesPage = homeCliente.acessarPerfilCliente().getSideBarCliente().acessarCartoes();
         FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
 
         formCartaoPage.salvarNovoCartao(cartao);
@@ -176,8 +170,7 @@ public class TesteCadastroCliente extends TesteAbstract {
 
         HomePage homeCliente = this.realizarLoginClientePadrao();
 
-        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
-        CartoesPage cartoesPage = perfilCliente.acessarCartoes();
+        CartoesPage cartoesPage = homeCliente.acessarPerfilCliente().getSideBarCliente().acessarCartoes();
 
         FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
         formCartaoPage.salvarNovoCartao(cartaoPreferencial);
@@ -196,8 +189,7 @@ public class TesteCadastroCliente extends TesteAbstract {
 
         HomePage homeCliente = this.realizarLoginClientePadrao();
 
-        PerfilPrincipalPage perfilCliente = homeCliente.acessarPerfilCliente();
-        CartoesPage cartoesPage = perfilCliente.acessarCartoes();
+        CartoesPage cartoesPage = homeCliente.acessarPerfilCliente().getSideBarCliente().acessarCartoes();
 
         FormCartaoPage formCartaoPage = cartoesPage.adicionarCartao();
         formCartaoPage.salvarNovoCartao(cartao);

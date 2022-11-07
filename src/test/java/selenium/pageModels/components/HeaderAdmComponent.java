@@ -2,6 +2,7 @@ package selenium.pageModels.components;
 
 import org.openqa.selenium.WebDriver;
 import selenium.pageModels.DashboardPage;
+import selenium.pageModels.perfilCliente.PerfilClientePage;
 import selenium.utils.UtilsTeste;
 
 public class HeaderAdmComponent extends HeaderComponentAbstract{
@@ -12,8 +13,9 @@ public class HeaderAdmComponent extends HeaderComponentAbstract{
         super(driver);
     }
 
-    @Override
-    public void acessarPagina(String pagina) {}
+    public PerfilClientePage acessarPagina(String pagina) {
+        return null;
+    }
 
     public DashboardPage acessarDashboard() {
         UtilsTeste.getBotaoByLink(LINK_DASHBOARD, driver).click();

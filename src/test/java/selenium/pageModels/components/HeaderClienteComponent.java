@@ -2,9 +2,8 @@ package selenium.pageModels.components;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import selenium.pageModels.FinalizarCompraPage;
 import selenium.pageModels.perfilCliente.CarrinhoPage;
-import selenium.pageModels.perfilCliente.CartoesPage;
+import selenium.pageModels.perfilCliente.PerfilClientePage;
 import selenium.utils.UtilsTeste;
 
 import java.util.HashMap;
@@ -26,9 +25,14 @@ public class HeaderClienteComponent extends HeaderComponentAbstract {
         mapPaginaBotao.put("perfil", botaoPerfilCliente::click);
     }
 
-    @Override
-    public void acessarPagina(String pagina) {
+    public PerfilClientePage acessarPagina(String pagina) {
         mapPaginaBotao.get(pagina).run();
+
+        return new PerfilClientePage(driver);
+    }
+
+    public PerfilClientePage acessarPerfil(){
+        return this.acessarPagina("perfil");
     }
 
     public CarrinhoPage acessarCarrinho() {
