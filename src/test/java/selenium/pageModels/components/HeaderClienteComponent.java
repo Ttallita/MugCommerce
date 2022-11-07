@@ -31,6 +31,10 @@ public class HeaderClienteComponent extends HeaderComponentAbstract {
         return new PerfilClientePage(driver);
     }
 
+    public PerfilClientePage acessarPerfil(){
+        return this.acessarPagina("perfil");
+    }
+
     public CarrinhoPage acessarCarrinho() {
         UtilsTeste.getBotaoByLink(LINK_CARRINHO, driver).click();
         return new CarrinhoPage(driver);
