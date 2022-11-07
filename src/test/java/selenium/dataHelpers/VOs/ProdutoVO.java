@@ -104,7 +104,7 @@ public class ProdutoVO {
         Random random = new Random();
 
         vo.setNome("Teste");
-        vo.setValorCompra(new Random().nextDouble(1000));
+        vo.setValorCompra(20.50);
         vo.setCodBarras(new Random().nextInt(100000) + "");
         vo.setMaterial("Porcelana");
         vo.setFabricante("Amazon");

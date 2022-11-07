@@ -53,7 +53,7 @@ public class FormProdutoComponent {
         produto.setImagem(randomImageFile.getAbsolutePath());
 
         campoNome.sendKeys(produto.getNome());
-        campoValorCompra.sendKeys("200");
+        campoValorCompra.sendKeys(produto.getValorCompra() == null ? "" : produto.getValorCompra().toString().replace(".", ","));
         campoCodBarras.sendKeys(produto.getCodBarras());
         campoMaterial.sendKeys(produto.getMaterial());
         campoFabricante.sendKeys(produto.getFabricante());

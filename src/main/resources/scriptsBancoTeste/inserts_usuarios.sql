@@ -29,6 +29,7 @@ INSERT INTO cupons (cpm_cli_usr_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade
     (1, 'Cupom natal', 'PROMOCIONAL', 30.0, '2023-01-01', 'HOU! HOU! HOU!..........'),
     (1, 'Cupom halloween', 'PROMOCIONAL', 50.0, '2023-01-01', 'Buuuuuuuuuuuuuuu...');
 
+
 -- Administrador
 -- Senha = "SenhaADM@123"
 INSERT into usuarios (usr_email, usr_senha, usr_tipo, usr_ativo)
