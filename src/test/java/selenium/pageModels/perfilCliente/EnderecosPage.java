@@ -5,12 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
+import selenium.pageModels.PageAbstract;
 import selenium.pageModels.formularios.FormEnderecoPage;
 import selenium.utils.UtilsTeste;
 
 import java.util.List;
 
-public class EnderecosPage extends PerfilPage {
+public class EnderecosPage extends PageAbstract {
 
     private List<WebElement> enderecos;
 

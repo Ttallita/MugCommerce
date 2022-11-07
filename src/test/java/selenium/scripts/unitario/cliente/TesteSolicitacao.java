@@ -1,7 +1,10 @@
 package selenium.scripts.unitario.cliente;
 
 import org.junit.jupiter.api.Test;
+import selenium.pageModels.HomePage;
 import selenium.pageModels.components.HeaderClienteComponent;
+import selenium.pageModels.perfilCliente.CartoesPage;
+import selenium.pageModels.perfilCliente.PerfilClientePage;
 import selenium.scripts.unitario.TesteUnitarioAbstract;
 
 public class TesteSolicitacao extends TesteUnitarioAbstract {
@@ -15,8 +18,8 @@ public class TesteSolicitacao extends TesteUnitarioAbstract {
     }
 
     @Test
-    public void teste(){
-
+    public void testeRealizaTroca() {
+        
     }
 
 

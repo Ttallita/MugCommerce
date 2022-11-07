@@ -28,9 +28,9 @@ public class SideBarClienteComponent {
         this.driver = driver;
     }
 
-    public PerfilPrincipalPage acessarPerfil(){
+    public PerfilClientePage acessarPerfil(){
         paginaPerfil.click();
-        return new PerfilPrincipalPage(driver);
+        return new PerfilClientePage(driver);
     }
 
     public AtualizarSenhaPage acessarAtualizarSenha(){

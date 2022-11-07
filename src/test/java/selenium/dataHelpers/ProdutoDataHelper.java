@@ -10,6 +10,10 @@ import java.util.stream.Stream;
 
 public class ProdutoDataHelper {
 
+    /**
+     * Essa caneca deve ser utilizada apenas para este teste!!!!
+     * @return
+     */
     private static Stream<Arguments> quantProdutosCarrinho() {
         return Stream.of(
                 Arguments.of(1, "Caneca Urso Polar"),
@@ -27,10 +31,10 @@ public class ProdutoDataHelper {
     }
 
     /**
-     * @return nomes de todos os produtos salvos no banco (script_implantacao.sql)
+     * @return nomes de todos os produtos salvos no banco reservados para os teste de venda(script_implantacao.sql)
      */
     public static List<String> nomesTodosProdutos(){
-        return List.of("Caneca Urso Polar",
+        return List.of(
                 "Caneca Polvinho",
                 "Caneca Gato Preto",
                 "Caneca Yn Yang",

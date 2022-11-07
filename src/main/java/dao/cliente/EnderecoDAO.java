@@ -111,6 +111,8 @@ public class EnderecoDAO implements IDAO {
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setLong(1, endereco.getId());
 
+            // TODO caso o endereço participe de alguma venda ele deve ser inativado e não deletado, mesma coisa para o cartão...
+
             pstm.execute();
 
             return endereco;

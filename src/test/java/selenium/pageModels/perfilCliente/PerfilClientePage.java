@@ -4,17 +4,20 @@ import org.openqa.selenium.WebDriver;
 import selenium.pageModels.PageAbstract;
 import selenium.pageModels.components.SideBarClienteComponent;
 
-public abstract class PerfilPage extends PageAbstract {
+public class PerfilClientePage extends PageAbstract {
 
     protected SideBarClienteComponent sideBarCliente;
 
-    public PerfilPage(WebDriver driver, String tituloPagina) {
-        super(driver, tituloPagina);
+    public static final String TITULO_PAGINA = "Perfil - Principal";
+
+
+    public PerfilClientePage(WebDriver driver) {
+        super(driver, TITULO_PAGINA);
 
         sideBarCliente = new SideBarClienteComponent(driver);
     }
 
-    public PerfilPrincipalPage acessarPerfil(){
+    public PerfilClientePage acessarPerfil(){
         return sideBarCliente.acessarPerfil();
     }
 

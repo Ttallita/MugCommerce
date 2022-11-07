@@ -1,6 +1,7 @@
 package selenium.pageModels;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import selenium.pageModels.perfilCliente.CarrinhoPage;
 import selenium.utils.UtilsTeste;
@@ -17,7 +18,12 @@ public class ProdutoPage extends PageAbstract{
     }
 
     public CarrinhoPage adicionarProdutoCarrinho(){
-        UtilsTeste.getBotaoByValueInput("Adicionar ao carrinho", driver).click();
+        try {
+            UtilsTeste.getBotaoByValueInput("Adicionar ao carrinho", driver).click();
+        } catch (NoSuchElementException e){
+            if (!driver.findElement(By.cssSelector("form > div")).getText().equals("Sem produtos no estoque"))
+                throw e;
+        }
         return new CarrinhoPage(driver);
     }
 

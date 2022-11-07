@@ -66,8 +66,10 @@ public class CarrinhoPage extends PageAbstract{
     private WebElement getLinhaTabelaProduto(String nomeProduto) {
         WebElement trProduto = null;
         for(WebElement e : driver.findElements(By.cssSelector("tbody > tr"))){
-            if (e.findElement(By.cssSelector("td > a > h6")).getText().equals(nomeProduto))
+            if (e.findElement(By.cssSelector("td > a > h6")).getText().equals(nomeProduto)) {
                 trProduto = e;
+                break;
+            }
         }
 
         if (trProduto == null)
@@ -77,7 +79,12 @@ public class CarrinhoPage extends PageAbstract{
     }
 
     public FinalizarCompraPage finalizarCompra(){
-        UtilsTeste.getBotaoByLink(LINK_FINALIZAR_COMPRA, driver).click();
+        try {
+            UtilsTeste.getBotaoByLink(LINK_FINALIZAR_COMPRA, driver).click();
+        } catch (NoSuchElementException e){
+            throw new RuntimeException("Carrinho está vazio!");
+        }
+
         return new FinalizarCompraPage(driver);
     }
 }

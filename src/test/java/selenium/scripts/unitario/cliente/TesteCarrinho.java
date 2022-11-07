@@ -65,7 +65,10 @@ public class TesteCarrinho extends TesteUnitarioAbstract {
 
     public static CarrinhoPage adicionaProdutoAoCarrinho(WebDriver driver, HeaderClienteComponent headerCliente, String nomeProduto) {
         headerCliente.pesquisar(nomeProduto);
-        CarrinhoPage carrinho = ProdutoPage.abrirPaginaProduto(nomeProduto).adicionarProdutoCarrinho();
+        ProdutoPage produtoPage = ProdutoPage.abrirPaginaProduto(nomeProduto);
+
+//        Thread.sleep(1000L);
+        CarrinhoPage carrinho = produtoPage.adicionarProdutoCarrinho();
 
         // Verifica se produto foi adicionado ao carinho
         driver.findElement(By.linkText(nomeProduto));

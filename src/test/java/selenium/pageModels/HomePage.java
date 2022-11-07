@@ -1,15 +1,8 @@
 package selenium.pageModels;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import selenium.pageModels.components.HeaderAdmComponent;
-import selenium.pageModels.components.HeaderClienteComponent;
 import selenium.pageModels.components.HeaderComponentAbstract;
-import selenium.pageModels.perfilCliente.PerfilPrincipalPage;
-import utils.UtilsWeb;
-
-import java.util.List;
+import selenium.pageModels.perfilCliente.PerfilClientePage;
 
 public class HomePage extends PageAbstract{
 
@@ -23,16 +16,15 @@ public class HomePage extends PageAbstract{
         header = getHeader(driver);
     }
 
-    public PerfilPrincipalPage acessarPerfilCliente(){
+    public PerfilClientePage acessarPerfilCliente(){
 
         try {
-             header.acessarPagina("perfil");
+            PerfilClientePage perfil = header.acessarPagina("perfil");
+            return perfil;
         } catch (Exception e){
             e.printStackTrace();
             throw new IllegalStateException("Esta não é a Home de cliente!");
         }
-
-        return new PerfilPrincipalPage(driver);
     }
 
     public ProdutoPage abrirPaginaProduto(String nomeProduto){
