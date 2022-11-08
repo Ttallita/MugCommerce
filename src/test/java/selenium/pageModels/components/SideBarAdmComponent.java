@@ -25,10 +25,9 @@ public class SideBarAdmComponent {
         return new ProdutoAdmPage(driver);
     }
 
-    public VendaAdmPage acessarVenda() {
+    public VendaAdmPage acessarVendas() {
         paginaVendas.click();
         return new VendaAdmPage(driver);
     }
-
 }
 

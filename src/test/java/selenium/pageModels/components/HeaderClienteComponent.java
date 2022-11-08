@@ -14,7 +14,6 @@ public class HeaderClienteComponent extends HeaderComponentAbstract {
 
     private static final String LINK_PERFIL_CLIENTE = "/emug/clientes?operacao=listar";
     private static final String LINK_CARRINHO = "/emug/cliente/carrinho.jsp";
-    private static final String LINK_LOGOUT = "/emug/logout";
 
     public HeaderClienteComponent(WebDriver driver) {
         super(driver);
@@ -33,11 +32,6 @@ public class HeaderClienteComponent extends HeaderComponentAbstract {
     public CarrinhoPage acessarCarrinho() {
         UtilsTeste.getBotaoByLink(LINK_CARRINHO, driver).click();
         return new CarrinhoPage(driver);
-    }
-
-    public HomePage deslogar() {
-        UtilsTeste.getBotaoByLink(LINK_LOGOUT, driver).click();
-        return new HomePage(driver);
     }
 
 }
