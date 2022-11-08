@@ -25,7 +25,7 @@ public class VendaAdmPage extends PageAbstract {
         return new DetalhesCompraPage(driver);
     }
 
-    public void acessaTelaStatusVenda() {
+    public DetalhesCompraPage acessaTelaStatusVenda() {
         WebElement linhaVenda = driver.findElements(By.tagName("tr")).get(1);
 
         List<WebElement> colunasVenda = linhaVenda.findElements(By.tagName("td"));
@@ -34,7 +34,7 @@ public class VendaAdmPage extends PageAbstract {
         WebElement linkListarVenda = webElement.findElement(By.tagName("a"));
 
         linkListarVenda.click();
+
+        return new DetalhesCompraPage(driver);
     }
-
-
 }

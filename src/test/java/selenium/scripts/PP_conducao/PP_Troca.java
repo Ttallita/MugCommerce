@@ -4,10 +4,8 @@ import org.junit.jupiter.api.Test;
 import selenium.dataHelpers.VOs.ClienteVO;
 import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
-import selenium.pageModels.components.SideBarClienteComponent;
 import selenium.scripts.TesteAbstract;
 import selenium.pageModels.dashboard.VendaAdmPage;
-import selenium.scripts.unitario.TesteAbstract;
 import selenium.service.TesteCompraService;
 import utils.Utils;
 

@@ -23,7 +23,7 @@ public class DashboardPage extends PageAbstract{
     }
 
     public VendaAdmPage acessarVendas() {
-        return sideBarAdmComponent.acessarVenda();
+        return sideBarAdmComponent.acessarVendas();
     }
 
     public SideBarAdmComponent getSideBarAdm() {
