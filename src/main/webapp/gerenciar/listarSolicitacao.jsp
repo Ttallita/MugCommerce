@@ -205,7 +205,7 @@
     
                                         <input type="hidden" name="id" value="${solicitacao.id}">
                                         <input type="hidden" name="operacao" value="atualizar">
-                                        <button type="submit" class="w-100 btn btn-primary btn-sm">
+                                        <button type="submit" id="botaoAtualizarStatus" class="w-100 btn btn-primary btn-sm">
                                             Atualizar status
                                         </button>
                                     </form>

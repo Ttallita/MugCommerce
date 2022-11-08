@@ -69,13 +69,13 @@ public class PP_Troca extends TesteAbstract {
         trocasPage.abrirDetalhesTroca(identificadoresCompraAdm).alterarStatus(StatusSolicitacaoType.ACEITA.getNomeExibicao());
         trocasPage.abrirDetalhesTroca(identificadoresCompraAdm).alterarStatus(StatusSolicitacaoType.REALIZADA.getNomeExibicao());
 
+        headerAdm.deslogar();
+
         headerCliente = (HeaderClienteComponent) this.realizarLoginClientePadrao().getHeader(driver);
         perfilCliente = headerCliente.acessarPerfil();
 
         identificadoresTrocaCliente = List.of(dataCompra, StatusSolicitacaoType.REALIZADA.getNomeExibicao());
         // verifica se a troca existe na tela
         perfilCliente.getSideBarCliente().acessarTrocas().abrirModalTrocas(identificadoresTrocaCliente);
-
-
     }
 }
