@@ -1,4 +1,4 @@
-package selenium.scripts.unitario;
+package selenium.scripts;
 
 import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import org.junit.jupiter.api.AfterEach;

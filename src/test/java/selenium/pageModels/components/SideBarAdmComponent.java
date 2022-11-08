@@ -8,23 +8,26 @@ import selenium.pageModels.dashboard.ProdutoAdmPage;
 import selenium.pageModels.dashboard.VendaAdmPage;
 
 public class SideBarAdmComponent {
+    private final WebElement paginaProdutos;
+    private final WebElement paginaVendas;
+
 
     private final WebDriver driver;
 
     public SideBarAdmComponent(WebDriver driver) {
-        ;
-
+        paginaProdutos = driver.findElement(By.id("paginaProdutos"));
+        paginaVendas = driver.findElement(By.id("paginaVendas"));
         this.driver = driver;
     }
 
     public ProdutoAdmPage acessarProdutos() {
-        driver.findElement(By.id("paginaProdutos")).click();
+        paginaProdutos.click();
         return new ProdutoAdmPage(driver);
     }
 
     public VendaAdmPage acessarVendas() {
-        driver.findElement(By.id("paginaVendas")).click();
+        paginaVendas.click();
         return new VendaAdmPage(driver);
     }
-
 }
+

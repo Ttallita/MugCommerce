@@ -11,7 +11,7 @@ import selenium.pageModels.HomePage;
 import selenium.pageModels.ProdutoPage;
 import selenium.pageModels.components.HeaderClienteComponent;
 import selenium.pageModels.perfilCliente.CarrinhoPage;
-import selenium.scripts.unitario.TesteAbstract;
+import selenium.scripts.TesteAbstract;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
