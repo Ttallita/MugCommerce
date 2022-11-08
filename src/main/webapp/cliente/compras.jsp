@@ -44,6 +44,7 @@
                                     <th>Status</th>
                                     <th>Data de envio</th>
                                     <th>Data de entrega</th>
+                                    <th>Visualizar</th>
                                 </tr>
                             </thead>
                             <tbody>

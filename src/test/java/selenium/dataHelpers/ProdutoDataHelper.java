@@ -81,7 +81,7 @@ public class ProdutoDataHelper {
                 "Caneca Peixe Assombrado",
                 "Caneca Arte Abstrata",
                 "Caneca Passaros",
-                "Caneca de Porcelana",
+                "Caneca de Porcelana Azul",
                 "Caneca Raposinha",
                 "Caneca Garota Anime",
                 "Caneca Vaquinha",

@@ -11,12 +11,12 @@ import selenium.pageModels.HomePage;
 import selenium.pageModels.ProdutoPage;
 import selenium.pageModels.components.HeaderClienteComponent;
 import selenium.pageModels.perfilCliente.CarrinhoPage;
-import selenium.scripts.unitario.TesteUnitarioAbstract;
+import selenium.scripts.unitario.TesteAbstract;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-public class TesteCarrinho extends TesteUnitarioAbstract {
+public class TesteCarrinho extends TesteAbstract {
 
     private HomePage homeCliente;
     private HeaderClienteComponent headerCliente;
@@ -70,8 +70,9 @@ public class TesteCarrinho extends TesteUnitarioAbstract {
 //        Thread.sleep(1000L);
         CarrinhoPage carrinho = produtoPage.adicionarProdutoCarrinho();
 
-        // Verifica se produto foi adicionado ao carinho
-        driver.findElement(By.linkText(nomeProduto));
+        if (carrinho != null)
+            // Verifica se produto foi adicionado ao carinho
+            driver.findElement(By.linkText(nomeProduto));
 
         return carrinho;
     }

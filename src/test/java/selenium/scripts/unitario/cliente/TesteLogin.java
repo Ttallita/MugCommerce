@@ -9,13 +9,13 @@ import selenium.pageModels.LoginPage;
 import selenium.dataHelpers.VOs.UsuarioVO;
 import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
-import selenium.scripts.unitario.TesteUnitarioAbstract;
+import selenium.scripts.unitario.TesteAbstract;
 import selenium.utils.UtilsTeste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TesteLogin extends TesteUnitarioAbstract {
+public class TesteLogin extends TesteAbstract {
 
     @Override
     protected void configurarCenarioTeste() { }

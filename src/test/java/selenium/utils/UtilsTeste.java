@@ -3,10 +3,10 @@ package selenium.utils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Objects;
 
 public class UtilsTeste {
@@ -28,22 +28,19 @@ public class UtilsTeste {
                 ((JavascriptExecutor) Objects.requireNonNull(wd)).executeScript("return document.readyState").equals("complete"));
     }
 
-    public static WebElement findElementLinhaTabela(WebDriver driver, String textoIdentificador){
-        WebElement linhaTabela = null;
+    public static WebElement findLinhaTabela(WebDriver driver, List<String> identificadoresLinha){
+        search:
+        for (WebElement linha: driver.findElements(By.cssSelector("tbody > tr"))){
 
-        for (WebElement tr:  driver.findElements(By.cssSelector("tbody > tr"))){
-            linhaTabela = tr.findElements(By.tagName("td")).stream()
-                    .filter(td -> td.getText().equals(textoIdentificador))
-                    .findFirst().orElse(null);
+            for (String id : identificadoresLinha){
+                if (!linha.getText().contains(id))
+                    continue search;
+            }
 
-            if (linhaTabela != null)
-                break;
+            return linha;
         }
 
-        if (linhaTabela == null)
-            throw new NoSuchElementException(String.format("Elemento com identificador %s não foi encontrado na tabela!", textoIdentificador));
-
-        return linhaTabela;
+        throw new NoSuchElementException(String.format("Linha com os identificadores [%s] não foi encontrada na tabela!", identificadoresLinha));
     }
 
     public static void esperarTelaRecarregar(WebDriver driver) {

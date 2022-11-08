@@ -21,8 +21,10 @@ public class ProdutoPage extends PageAbstract{
         try {
             UtilsTeste.getBotaoByValueInput("Adicionar ao carrinho", driver).click();
         } catch (NoSuchElementException e){
-            if (!driver.findElement(By.cssSelector("form > div")).getText().equals("Sem produtos no estoque"))
-                throw e;
+            if (driver.findElement(By.cssSelector("form[action='/emug/clientes/carrinho'] > div")).getText().equals("Sem produtos no estoque"))
+                return null;
+
+            throw e;
         }
         return new CarrinhoPage(driver);
     }

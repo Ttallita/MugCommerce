@@ -14,12 +14,12 @@ import selenium.pageModels.formularios.FormCartaoPage;
 import selenium.pageModels.formularios.FormEnderecoPage;
 import selenium.pageModels.perfilCliente.CartoesPage;
 import selenium.pageModels.perfilCliente.EnderecosPage;
-import selenium.scripts.unitario.TesteUnitarioAbstract;
+import selenium.scripts.unitario.TesteAbstract;
 import selenium.utils.UtilsTeste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TesteCadastroCliente extends TesteUnitarioAbstract {
+public class TesteCadastroCliente extends TesteAbstract {
 
     @Override
     public void configurarCenarioTeste() { }

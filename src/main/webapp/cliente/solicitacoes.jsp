@@ -47,6 +47,7 @@
                                     <th>Data de solicitação</th>
                                     <th>Data compra</th>
                                     <th>Status</th>
+                                    <th>Visualizar</th>
                                 </tr>
                             </thead>
                             <tbody>

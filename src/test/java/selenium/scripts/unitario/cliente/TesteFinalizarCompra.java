@@ -6,14 +6,15 @@ import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.FinalizarCompraPage;
 import selenium.pageModels.components.*;
-import selenium.scripts.unitario.TesteUnitarioAbstract;
+import selenium.scripts.unitario.TesteAbstract;
+import selenium.service.TesteCarrinhoService;
 import selenium.utils.UtilsTeste;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TesteFinalizarCompra extends TesteUnitarioAbstract {
+public class TesteFinalizarCompra extends TesteAbstract {
 
     private HeaderClienteComponent headerCliente;
     private FinalizarCompraPage finalizarCompra;
@@ -21,7 +22,7 @@ public class TesteFinalizarCompra extends TesteUnitarioAbstract {
     @Override
     protected void configurarCenarioTeste() {
         headerCliente = (HeaderClienteComponent) this.realizarLoginClientePadrao().getHeader(driver);
-        super.populaCarrinho(headerCliente);
+        TesteCarrinhoService.populaCarrinho(driver, headerCliente);
 
         finalizarCompra = headerCliente.acessarCarrinho().finalizarCompra();
     }
