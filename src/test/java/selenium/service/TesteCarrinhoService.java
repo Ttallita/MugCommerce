@@ -19,7 +19,7 @@ public class TesteCarrinhoService {
         List<String> nomesProdutos = new ArrayList<>(ProdutoDataHelper.nomesTodosProdutos());
         Collections.shuffle(nomesProdutos);
 
-        nomesProdutos.subList(0, 1).forEach( nomeProduto -> {
+        nomesProdutos.subList(0, rand.nextInt(3) + 1).forEach( nomeProduto -> {
             CarrinhoPage carrinho = TesteCarrinho.adicionaProdutoAoCarrinho(driver, headerCliente, nomeProduto);
 
             if (carrinho != null)

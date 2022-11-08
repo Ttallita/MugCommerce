@@ -215,6 +215,7 @@
                             inputNumber.setAttribute("min", "1")
                             inputNumber.setAttribute("max", i.quant + "")
                             inputNumber.name = "quantTroca"
+                            inputNumber.value = i.quant
                                 
                             inputNumber.classList.add("form-control")
                             inputNumber.classList.add("form-control-sm")
