@@ -14,7 +14,7 @@ import selenium.pageModels.formularios.FormCartaoPage;
 import selenium.pageModels.formularios.FormEnderecoPage;
 import selenium.pageModels.perfilCliente.CartoesPage;
 import selenium.pageModels.perfilCliente.EnderecosPage;
-import selenium.scripts.unitario.TesteAbstract;
+import selenium.scripts.TesteAbstract;
 import selenium.utils.UtilsTeste;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

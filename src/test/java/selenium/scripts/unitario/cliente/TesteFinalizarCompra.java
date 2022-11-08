@@ -6,7 +6,7 @@ import selenium.dataHelpers.VOs.CartaoVO;
 import selenium.dataHelpers.VOs.EnderecoVO;
 import selenium.pageModels.FinalizarCompraPage;
 import selenium.pageModels.components.*;
-import selenium.scripts.unitario.TesteAbstract;
+import selenium.scripts.TesteAbstract;
 import selenium.service.TesteCarrinhoService;
 import selenium.utils.UtilsTeste;
 

@@ -1,4 +1,4 @@
-package selenium.scripts.unitario;
+package selenium.scripts;
 
 import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import org.junit.jupiter.api.AfterEach;
@@ -46,8 +46,8 @@ public abstract class TesteAbstract {
 
     @AfterEach
     public void tearDown(){
-        driver.close();
-        driver.quit();
+        //driver.close();
+        //driver.quit();
     }
 
     public HomePage realizarLoginClientePadrao(){

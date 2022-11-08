@@ -10,7 +10,7 @@ import selenium.pageModels.HomePage;
 import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.dashboard.ProdutoAdmPage;
 import selenium.pageModels.formularios.FormProdutoPage;
-import selenium.scripts.unitario.TesteAbstract;
+import selenium.scripts.TesteAbstract;
 import selenium.utils.UtilsTeste;
 
 public class TesteCadastroProduto extends TesteAbstract {
@@ -62,11 +62,4 @@ public class TesteCadastroProduto extends TesteAbstract {
 
         Assertions.assertEquals("Gerenciar - Produtos", driver.getTitle());
     }
-
-    @Test
-    public void testaEditarProduto() {
-
-    }
-
-
 }
