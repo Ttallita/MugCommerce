@@ -8,7 +8,7 @@ import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
 import selenium.pageModels.dashboard.VendaAdmPage;
 import selenium.pageModels.perfilCliente.PerfilClientePage;
-import selenium.scripts.unitario.TesteAbstract;
+import selenium.scripts.TesteAbstract;
 import selenium.service.TesteCompraService;
 import selenium.utils.UtilsTeste;
 import utils.Utils;
