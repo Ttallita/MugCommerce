@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import selenium.dataHelpers.VOs.ClienteVO;
 import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
+import selenium.pageModels.dashboard.TrocasAdmPage;
 import selenium.pageModels.dashboard.VendaAdmPage;
 import selenium.pageModels.perfilCliente.PerfilClientePage;
 import selenium.scripts.TesteAbstract;
@@ -58,6 +59,23 @@ public class PP_Troca extends TesteAbstract {
         List<String> identificadoresTrocaCliente = List.of(dataCompra, StatusSolicitacaoType.SOLICITADA.getNomeExibicao());
 
         // verifica se a troca existe na tela
+        perfilCliente.getSideBarCliente().acessarTrocas().abrirModalTrocas(identificadoresTrocaCliente).fecharModal();
+        
+        headerCliente.deslogar();
+
+        headerAdm = (HeaderAdmComponent) super.realizarLoginAdmPadrao().getHeader(driver);
+
+        TrocasAdmPage trocasPage = headerAdm.acessarDashboard().getSideBarAdm().acessarTrocas();
+        trocasPage.abrirDetalhesTroca(identificadoresCompraAdm).alterarStatus(StatusSolicitacaoType.ACEITA.getNomeExibicao());
+        trocasPage.abrirDetalhesTroca(identificadoresCompraAdm).alterarStatus(StatusSolicitacaoType.REALIZADA.getNomeExibicao());
+
+        headerCliente = (HeaderClienteComponent) this.realizarLoginClientePadrao().getHeader(driver);
+        perfilCliente = headerCliente.acessarPerfil();
+
+        identificadoresTrocaCliente = List.of(dataCompra, StatusSolicitacaoType.REALIZADA.getNomeExibicao());
+        // verifica se a troca existe na tela
         perfilCliente.getSideBarCliente().acessarTrocas().abrirModalTrocas(identificadoresTrocaCliente);
+
+
     }
 }

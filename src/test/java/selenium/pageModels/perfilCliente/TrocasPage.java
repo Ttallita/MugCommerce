@@ -3,6 +3,7 @@ package selenium.pageModels.perfilCliente;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import selenium.pageModels.PageAbstract;
+import selenium.pageModels.components.ModalTrocasComponent;
 import selenium.pageModels.components.SideBarClienteComponent;
 import selenium.utils.UtilsTeste;
 
@@ -20,10 +21,12 @@ public class TrocasPage extends PageAbstract {
         sideBarCliente = new SideBarClienteComponent(driver);
     }
 
-    public void abrirModalTrocas(List<String> identificadoresCompra){
+    public ModalTrocasComponent abrirModalTrocas(List<String> identificadoresCompra){
         UtilsTeste.findLinhaTabela(driver, identificadoresCompra)
                 .findElement(By.tagName("button"))
                 .click();
+
+        return new ModalTrocasComponent(driver);
     }
 
 }
