@@ -77,5 +77,6 @@ public class PP_Troca extends TesteAbstract {
         identificadoresTrocaCliente = List.of(dataCompra, StatusSolicitacaoType.REALIZADA.getNomeExibicao());
         // verifica se a troca existe na tela
         perfilCliente.getSideBarCliente().acessarTrocas().abrirModalTrocas(identificadoresTrocaCliente);
+        Thread.sleep(2000);
     }
 }

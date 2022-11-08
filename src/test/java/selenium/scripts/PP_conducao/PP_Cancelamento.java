@@ -3,6 +3,8 @@ package selenium.scripts.PP_conducao;
 import model.solicitacao.StatusSolicitacaoType;
 import model.venda.StatusVendaType;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import selenium.dataHelpers.VOs.ClienteVO;
 import selenium.pageModels.components.HeaderAdmComponent;
 import selenium.pageModels.components.HeaderClienteComponent;
@@ -10,7 +12,6 @@ import selenium.pageModels.dashboard.VendaAdmPage;
 import selenium.pageModels.perfilCliente.PerfilClientePage;
 import selenium.scripts.TesteAbstract;
 import selenium.service.TesteCompraService;
-import selenium.utils.UtilsTeste;
 import utils.Utils;
 
 import java.time.LocalDate;
@@ -25,7 +26,7 @@ public class PP_Cancelamento  extends TesteAbstract {
     protected void configurarCenarioTeste() { }
 
     @Test
-    public void testeRealizaTroca() throws InterruptedException {
+    public void testeRealizaCancelamento() throws InterruptedException {
         ClienteVO cliente = ClienteVO.createClienteVOPadrao();
 
         headerCliente = (HeaderClienteComponent) this.realizarLoginClientePadrao().getHeader(driver);
@@ -52,13 +53,14 @@ public class PP_Cancelamento  extends TesteAbstract {
         List<String> identificadoresCompraCliente = List.of(dataCompra, StatusVendaType.ENTREGA_REALIZADA.nomeExibicao);
         perfilCliente.getSideBarCliente().acessarCompras().abrirModalCompra(identificadoresCompraCliente);
 
-        // trocar primeiro produto do modal
-        UtilsTeste.getBotaoByValueInput("Solicitar troca", driver).click();
+        WebElement botaoCancelarCompra = driver.findElement(By.id("botaoCancelarCompra"));
+        botaoCancelarCompra.click();
 
-        List<String> identificadoresTrocaCliente = List.of(dataCompra, StatusSolicitacaoType.SOLICITADA.getNomeExibicao());
+        List<String> identificadores = List.of(dataCompra, StatusSolicitacaoType.SOLICITADA.getNomeExibicao());
 
         // verifica se a troca existe na tela
-        perfilCliente.getSideBarCliente().acessarTrocas().abrirModalTrocas(identificadoresTrocaCliente);
+        perfilCliente.getSideBarCliente().acessarCancelamentos().abrirModalCancelamentos(identificadores);
+        Thread.sleep(2000);
     }
 
 }

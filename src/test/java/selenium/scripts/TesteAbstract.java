@@ -46,8 +46,8 @@ public abstract class TesteAbstract {
 
     @AfterEach
     public void tearDown(){
-//        driver.close();
-//        driver.quit();
+       driver.close();
+       driver.quit();
     }
 
     public HomePage realizarLoginClientePadrao(){
