@@ -2,6 +2,7 @@ package selenium.pageModels;
 
 import org.openqa.selenium.WebDriver;
 import selenium.pageModels.components.SideBarAdmComponent;
+import selenium.pageModels.components.SideBarClienteComponent;
 import selenium.pageModels.dashboard.ProdutoAdmPage;
 
 public class DashboardPage extends PageAbstract{
@@ -19,4 +20,9 @@ public class DashboardPage extends PageAbstract{
     public ProdutoAdmPage acessarProdutos() {
         return sideBarAdmComponent.acessarProdutos();
     }
+
+    public SideBarAdmComponent getSideBarAdm() {
+        return sideBarAdmComponent;
+    }
+
 }

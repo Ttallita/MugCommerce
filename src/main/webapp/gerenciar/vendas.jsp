@@ -45,8 +45,8 @@
                         <tr>
                             <th data-field="nomeCliente" data-filter-control="input">Cliente</th>
                             <th data-field="valor" data-filter-control="input">Valor</th>
-                            <th data-field="dataCompra" data-filter-control="datepicker">Data compra</th>
-                            <th data-field="dataEntrega" data-filter-control="datepicker">Data entrega</th>
+                            <th data-field="dataCompra" data-filter-control="input">Data compra</th>
+                            <th data-field="dataEntrega" data-filter-control="input">Data entrega</th>
                             <th data-field="status" data-filter-control="select">Status</th>
                             <th>Ações</th>
                         </tr>
@@ -58,12 +58,12 @@
                                 <td>${venda.cliente.nome} ${venda.cliente.sobrenome}</td>
                                 <td>R$ ${venda.precoTotal}</td>
 
-                                <fmt:parseDate  value="${venda.dataCompra}"  type="date" pattern="yyyy-MM-dd" var="dataCompraParseada" />
-                                <fmt:formatDate value="${dataCompraParseada}" type="date" pattern="dd/MM/yyyy" var="dataCompraFormatada" />
+                                <fmt:parseDate  value="${venda.dataCompra}"  type="date" pattern="yyyy-MM-dd'T'HH:mm" var="dataCompraParseada" />
+                                <fmt:formatDate value="${dataCompraParseada}" type="date" pattern="dd/MM/yyyy HH:mm" var="dataCompraFormatada" />
                                 <td>${dataCompraFormatada}</td>
 
-                                <fmt:parseDate  value="${venda.dataEntrega}"  type="date" pattern="yyyy-MM-dd" var="dataEntregaParseada" />
-                                <fmt:formatDate value="${dataEntregaParseada}" type="date" pattern="dd/MM/yyyy" var="dataEntregaFormatada" />
+                                <fmt:parseDate  value="${venda.dataEntrega}"  type="date" pattern="yyyy-MM-dd'T'HH:mm" var="dataEntregaParseada" />
+                                <fmt:formatDate value="${dataEntregaParseada}" type="date" pattern="dd/MM/yyyy HH:mm" var="dataEntregaFormatada" />
                                 <td>${dataEntregaFormatada}</td>
                                 <td>${venda.vendaStatus.nomeExibicao}</td>
                                 <td>

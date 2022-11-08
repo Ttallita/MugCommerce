@@ -5,22 +5,26 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import selenium.pageModels.ProdutoPage;
 import selenium.pageModels.dashboard.ProdutoAdmPage;
+import selenium.pageModels.dashboard.VendaAdmPage;
 
 public class SideBarAdmComponent {
-    private final WebElement paginaProdutos;
-
 
     private final WebDriver driver;
 
     public SideBarAdmComponent(WebDriver driver) {
-        paginaProdutos = driver.findElement(By.id("paginaProdutos"));
+        ;
 
         this.driver = driver;
     }
 
     public ProdutoAdmPage acessarProdutos() {
-        paginaProdutos.click();
+        driver.findElement(By.id("paginaProdutos")).click();
         return new ProdutoAdmPage(driver);
+    }
+
+    public VendaAdmPage acessarVendas() {
+        driver.findElement(By.id("paginaVendas")).click();
+        return new VendaAdmPage(driver);
     }
 
 }
