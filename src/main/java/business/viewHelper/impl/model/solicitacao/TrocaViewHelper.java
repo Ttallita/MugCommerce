@@ -114,7 +114,7 @@ public class TrocaViewHelper implements IViewHelper {
 
             case "salvar" -> response.sendRedirect("/emug/clientes/compras?operacao=listar");
 
-            case "listarJson" -> UtilsWeb.montaRespostaJson(result, request, response);
+            case "listarJson" -> UtilsWeb.montaRespostaJson(result, response);
 
             case "listarTodos" -> {
                 List<Troca> trocasOrdenadasPorData = result.getEntidades()

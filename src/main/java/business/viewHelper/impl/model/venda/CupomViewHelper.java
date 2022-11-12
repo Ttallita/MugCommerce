@@ -46,7 +46,7 @@ public class CupomViewHelper implements IViewHelper {
         switch (operacao) {
 
             case "listarUnico" ->
-                UtilsWeb.montaRespostaJson(result, request, response);
+                UtilsWeb.montaRespostaJson(result, response);
 
             case "listarTodos" -> {
                 request.setAttribute("cupons", result.getEntidades());

@@ -1,6 +1,8 @@
 package business.viewHelper.impl.model.venda;
 
 import business.viewHelper.IViewHelper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.EntidadeDominio;
 import model.Result;
 import model.Usuario;
@@ -19,9 +21,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class VendaViewHelper implements IViewHelper {
@@ -203,16 +206,46 @@ public class VendaViewHelper implements IViewHelper {
             }
 
             case "listarTodos" -> {
+                if(Boolean.parseBoolean(request.getParameter("dashboard"))) {
+                    trataValoresDashboard(result, response);
+                    return;
+                }
+
                 List<Venda> vendasOrdenadasDataCompra = ordenaVendasPorDataDeCompra(result.getEntidades());
 
                 request.setAttribute("vendas", vendasOrdenadasDataCompra);
                 request.getRequestDispatcher("/gerenciar/vendas.jsp").forward(request, response);
             }
 
-            case "listarJson" -> UtilsWeb.montaRespostaJson(result, request, response);
+            case "listarJson" -> UtilsWeb.montaRespostaJson(result, response);
 
         }
 
+    }
+
+    private void trataValoresDashboard(Result result, HttpServletResponse response) throws IOException {
+        Map<Integer, List<Venda>> collect = result.getEntidades()
+                .stream()
+                .map(entidade -> (Venda) entidade)
+                .filter(venda -> venda.getDataCompra().getYear() == LocalDate.now().getYear())
+                .collect(Collectors.groupingBy(
+                        venda -> venda.getDataCompra().toLocalDate().getMonth().getValue(),
+                        TreeMap::new,
+                        Collectors.toList()));
+
+        response.setCharacterEncoding("UTF8");
+        response.setContentType("application/json");
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new UtilsWeb.LocalDateSerializer());
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new UtilsWeb.LocalDateTimeSerializer());
+
+        Gson gson = gsonBuilder
+                .create();
+
+        PrintWriter writer = response.getWriter();
+        writer.write(gson.toJson(collect));
+        writer.flush();
     }
 
     public List<Venda> ordenaVendasPorDataDeCompra(List<EntidadeDominio> vendas) {

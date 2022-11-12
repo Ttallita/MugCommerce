@@ -106,7 +106,7 @@ public class EnderecoViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/cliente/enderecos.jsp").forward(request, response);
             }
             case "listarJson" ->
-                UtilsWeb.montaRespostaJson(result, request, response);
+                UtilsWeb.montaRespostaJson(result, response);
             case "listarUnico" -> {
                 request.setAttribute("isEditar", true);
                 request.setAttribute("endereco", result.getEntidades().get(0));

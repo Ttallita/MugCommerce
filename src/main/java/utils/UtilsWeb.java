@@ -21,7 +21,7 @@ public class UtilsWeb {
             "finalizarCompra", "/clientes/carrinho/finalizarCompra?operacao=listarUnico"
     );
 
-    public static void montaRespostaJson(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public static void montaRespostaJson(Result result, HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("UTF8");
         response.setContentType("application/json");
 
@@ -87,14 +87,14 @@ public class UtilsWeb {
         return Arrays.stream(parametros.replace("[","").replace("]","").split(",")).collect(Collectors.toList());
     }
 
-    private static class LocalDateSerializer implements JsonSerializer<LocalDate> {
+    public static class LocalDateSerializer implements JsonSerializer<LocalDate> {
         @Override
         public JsonElement serialize(LocalDate localDate, Type srcType, JsonSerializationContext context) {
             return new JsonPrimitive(Utils.formataLocalDateBR(localDate));
         }
     }
 
-    private static class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime> {
+    public static class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime> {
         @Override
         public JsonElement serialize(LocalDateTime localDate, Type srcType, JsonSerializationContext context) {
             return new JsonPrimitive(Utils.formataLocalDateBR(localDate));

@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProdutoViewHelper implements IViewHelper {
 
@@ -136,7 +135,7 @@ public class ProdutoViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/gerenciar/produtos.jsp").forward(request, response);
             }
 
-            case "listarJson", "listarIndex" -> UtilsWeb.montaRespostaJson(result, request, response);
+            case "listarJson", "listarIndex" -> UtilsWeb.montaRespostaJson(result, response);
 
             case "pesquisar" -> {
                 List<EntidadeDominio> categorias = new CategoriaDAO().listar(new Categoria(), "listar");

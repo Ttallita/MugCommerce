@@ -68,7 +68,7 @@ public class CarrinhoViewHelper implements IViewHelper {
 
         switch (operacao) {
             case "salvar", "excluir" -> response.sendRedirect("/emug/cliente/carrinho.jsp");
-            default -> UtilsWeb.montaRespostaJson(result, request, response);
+            default -> UtilsWeb.montaRespostaJson(result, response);
         }
         
     }

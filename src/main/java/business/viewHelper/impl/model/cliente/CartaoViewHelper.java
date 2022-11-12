@@ -103,7 +103,7 @@ public class CartaoViewHelper implements IViewHelper {
                 request.getRequestDispatcher("/cliente/cartoes.jsp").forward(request, response);
             }
             case "listarJson" ->
-                UtilsWeb.montaRespostaJson(result, request, response);
+                UtilsWeb.montaRespostaJson(result, response);
             case "salvar", "atualizar", "excluir" -> {
                 if (msgTela == null) {
                     CartaoDeCredito cartao = (CartaoDeCredito) result.getEntidades().get(0);
