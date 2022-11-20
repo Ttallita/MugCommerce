@@ -214,10 +214,7 @@ public class VendaViewHelper implements IViewHelper {
             }
 
             case "listarTodos" -> {
-                if(Boolean.parseBoolean(request.getParameter("dashboard"))) {
-                    getValoresParaGraficoVolumeVendas(result, request, response);
-                    return;
-                }
+
 
                 List<Venda> vendasOrdenadasDataCompra = ordenaVendasPorDataDeCompra(result.getEntidades());
 
@@ -231,7 +228,7 @@ public class VendaViewHelper implements IViewHelper {
 
     }
 
-    private void getValoresParaGraficoVolumeVendas(Result result,
+    /* private void getValoresParaGraficoVolumeVendas(Result result,
                                                    HttpServletRequest request,
                                                    HttpServletResponse response) throws IOException {
 
@@ -355,14 +352,6 @@ public class VendaViewHelper implements IViewHelper {
         writer.flush();
     }
 
-    public List<Venda> ordenaVendasPorDataDeCompra(List<EntidadeDominio> vendas) {
-        return vendas.stream()
-                .map(entidade -> (Venda) entidade)
-                .sorted(Comparator.comparing(Venda::getDataCompra, Comparator.reverseOrder()))
-                .toList();
-    }
-
-
     private static class ExcludeImageGson implements ExclusionStrategy {
         @Override
         public boolean shouldSkipField(FieldAttributes fieldAttributes) {
@@ -373,10 +362,13 @@ public class VendaViewHelper implements IViewHelper {
         public boolean shouldSkipClass(Class<?> aClass) {
             return false;
         }
-    }
+    }*/
 
-    public static List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
-        return startDate.datesUntil(endDate.plusDays(1)).collect(Collectors.toList());
+    public List<Venda> ordenaVendasPorDataDeCompra(List<EntidadeDominio> vendas) {
+        return vendas.stream()
+                .map(entidade -> (Venda) entidade)
+                .sorted(Comparator.comparing(Venda::getDataCompra, Comparator.reverseOrder()))
+                .toList();
     }
 
 }

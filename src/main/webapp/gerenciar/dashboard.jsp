@@ -80,8 +80,8 @@
 
        
         async function montaGraficoVolumeVendasProduto() {
-            let url = new URL(baseUrl + "/adm/vendas")
-            let params = { operacao: 'listarTodos', dashboard: true, vendasDataProduto: true }
+            let url = new URL(baseUrl + "/adm/dashboard")
+            let params = { operacao: 'listar' }
 
             url.search = new URLSearchParams(params).toString()
 

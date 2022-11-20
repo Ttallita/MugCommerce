@@ -12,6 +12,7 @@ import dao.cliente.CartaoDeCreditoDAO;
 import dao.cliente.ClienteDAO;
 import dao.cliente.CupomDAO;
 import dao.cliente.EnderecoDAO;
+import dao.dashboard.DashboardDAO;
 import dao.estoque.EstoqueDAO;
 import dao.estoque.EstoqueHistoricoDAO;
 import dao.produto.*;
@@ -31,6 +32,7 @@ import model.cupom.Cupom;
 import model.produto.*;
 import model.solicitacao.Cancelamento;
 import model.solicitacao.Troca;
+import model.venda.DashboardVendasAgrupadas;
 import model.venda.Venda;
 import session.ISessionUtil;
 import session.carrinho.CarrinhoSessionUtil;
@@ -64,6 +66,7 @@ public class Facade implements IFacade {
         daosMap.put(Cancelamento.class.getName(), new CancelamentoDAO());
         daosMap.put(Estoque.class.getName(), new EstoqueDAO());
         daosMap.put(EstoqueHistorico.class.getName(), new EstoqueHistoricoDAO());
+        daosMap.put(DashboardVendasAgrupadas.class.getName(), new DashboardDAO());
 
         sessionMap = new HashMap<>();
         sessionMap.put(ItemCarrinho.class.getName(), new CarrinhoSessionUtil());
