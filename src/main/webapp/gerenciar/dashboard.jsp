@@ -41,6 +41,7 @@
                             <input type="date" class="form-control" id="dataInicio">
                             <span class="input-group-text">a</span>
                             <input type="date" class="form-control" id="dataFim">
+                            <button type="button" class="btn btn-primary" onclick="montaGraficoPeriodo()">Filtrar</button>
                         </div>
                     </div>
                     <div class="col-12 align-self-center text-center">
@@ -72,14 +73,9 @@
     <script>
         const baseUrl = 'http://localhost:8080/emug';
 
-
         $(document).ready(async () => {
-            montaGraficoVolumeVendasProduto()
+            $('#loading').show()
 
-        }) 
-
-       
-        async function montaGraficoVolumeVendasProduto() {
             let url = new URL(baseUrl + "/adm/dashboard")
             let params = { operacao: 'listar' }
 
@@ -88,6 +84,33 @@
             let response = await fetch(url)
             let json = await response.json()
 
+            montaGraficoVolumeVendasProduto(json)
+
+            $('#loading').hide()
+
+        }) 
+
+        async function montaGraficoPeriodo() {
+
+            $('#loading').show()
+
+            let dataInicio = $('#dataInicio').val()
+            let dataFim = $('#dataFim').val()
+            
+            let url = new URL(baseUrl + "/adm/dashboard")
+            let params = { operacao: 'listar', dataInicio: dataInicio, dataFim: dataFim }
+
+            url.search = new URLSearchParams(params).toString()
+
+            let response = await fetch(url)
+            let json = await response.json()
+
+            montaGraficoVolumeVendasProduto(json)
+
+            $('#loading').hide()
+        }
+
+        function montaGraficoVolumeVendasProduto(json) {
             var options = {
                 series: json.options,
                 chart: {
@@ -104,7 +127,7 @@
                     curve: 'straight',
                 },
                 title: {
-                    text: 'Volume de venda de produtos por Data',
+                    text: 'Volume de venda de produtos por data',
                     align: 'left'
                 },
                 markers: {
@@ -115,17 +138,6 @@
                 },
                 xaxis: {
                     categories: json.categories
-                },
-                tooltip: {
-                    y: [
-                        {
-                            title: {
-                                formatter: function (val) {
-                                return val;
-                                }
-                            }
-                        }
-                    ]
                 },
                 grid: {
                     borderColor: '#f1f1f1',
@@ -138,8 +150,6 @@
             options.series.forEach(data => chart.hideSeries(data.name));
 
             chart.showSeries(options.series[0].name)
-
-            $('#loading').hide()
         }
 
     </script>

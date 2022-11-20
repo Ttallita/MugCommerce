@@ -153,6 +153,9 @@ public class DashboardViewHelper implements IViewHelper {
     }
 
     public static List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
+        if(endDate == null)
+            endDate = LocalDate.now();
+
         return startDate.datesUntil(endDate.plusDays(1)).collect(Collectors.toList());
     }
 }
