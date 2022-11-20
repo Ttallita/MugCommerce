@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="<c:url value='/webjars/bootstrap/5.2.0/css/bootstrap.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/webjars/material-design-icons/4.0.0/material-icons.css'/>"/>
+    <link rel="stylesheet" href="<c:url value='/assets/css/simple-notify.min.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/assets/css/apexcharts.css'/>"/>
     <link rel="stylesheet" href="<c:url value='/assets/css/style.css'/>"/>
 </head>
@@ -45,7 +46,7 @@
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-primary btn-sm" onclick="montaGraficoPeriodo()">Filtrar</button>
+                        <button id="botaoFiltrar" type="button" class="btn btn-primary btn-sm" onclick="montaGraficoPeriodo()">Filtrar</button>
                     </div>
                     
                     <div class="col-12 align-self-center text-center">
@@ -72,10 +73,11 @@
     
     <script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js' />"></script>
     <script src="<c:url value='/webjars/jquery/3.6.1/jquery.min.js' />"></script>   
+    <script src='<c:url value="/assets/js/simple-notify.min.js"/>'></script>
+    <script src='<c:url value="/assets/js/geral.js"/>'></script>
     <script src='<c:url value="/assets/js/apexcharts.min.js"/>'></script>
 
     <script>
-        const baseUrl = 'http://localhost:8080/emug';
 
         $(document).ready(async () => {
             $('#loading').show()
@@ -97,6 +99,7 @@
         async function montaGraficoPeriodo() {
 
             $('#loading').show()
+            $('#botaoFiltrar').prop("disabled", true)
 
             let dataInicio = $('#dataInicio').val()
             let dataFim = $('#dataFim').val()
@@ -112,9 +115,16 @@
             montaGraficoVolumeVendasProduto(json)
 
             $('#loading').hide()
+            $('#botaoFiltrar').prop("disabled", false)
         }
 
         function montaGraficoVolumeVendasProduto(json) {
+
+            if (json.options == 0) {
+                createNotify("error", "", "Não existe dados para o período selecionado")
+                return
+            }
+
             var options = {
                 series: json.options,
                 chart: {
@@ -148,7 +158,7 @@
                 }
             };
 
-            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            let chart = new ApexCharts(document.querySelector("#chart"), options);
             chart.render();
 
             options.series.forEach(data => chart.hideSeries(data.name));
