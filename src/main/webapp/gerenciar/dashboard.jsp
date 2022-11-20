@@ -41,9 +41,13 @@
                             <input type="date" class="form-control" id="dataInicio">
                             <span class="input-group-text">a</span>
                             <input type="date" class="form-control" id="dataFim">
-                            <button type="button" class="btn btn-primary" onclick="montaGraficoPeriodo()">Filtrar</button>
                         </div>
                     </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-primary btn-sm" onclick="montaGraficoPeriodo()">Filtrar</button>
+                    </div>
+                    
                     <div class="col-12 align-self-center text-center">
                         <h5>Gráfico vendas</h5>
                         <br/><br/>
