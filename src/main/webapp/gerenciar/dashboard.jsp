@@ -135,6 +135,10 @@
             var chart = new ApexCharts(document.querySelector("#chart"), options);
             chart.render();
 
+            options.series.forEach(data => chart.hideSeries(data.name));
+
+            chart.showSeries(options.series[0].name)
+
             $('#loading').hide()
         }
 

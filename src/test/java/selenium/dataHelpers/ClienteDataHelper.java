@@ -197,7 +197,7 @@ public class ClienteDataHelper {
         EnderecoVO enderecoCadastro = new EnderecoVO();
         enderecoCadastro.setTpResidencia("Sobrado");
         enderecoCadastro.setTpLogradouro("Avenida");
-        enderecoCadastro.setTpEndereco("Entrega");
+        enderecoCadastro.setTpEndereco("Entrega e cobrança");
         enderecoCadastro.setLogradouro("Pingo d'água");
         enderecoCadastro.setBairro("Fernandes");
         enderecoCadastro.setNumeroEndereco("586");

@@ -41,7 +41,7 @@ public abstract class ModalAbstract {
                 return i;
         }
 
-        throw new NoSuchElementException("Item não encontrado no modal");
+        throw new NoSuchElementException("Item não encontrado no modal: " + nomeItem);
     }
 
 }

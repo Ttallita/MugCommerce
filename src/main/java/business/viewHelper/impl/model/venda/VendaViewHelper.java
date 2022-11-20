@@ -239,8 +239,8 @@ public class VendaViewHelper implements IViewHelper {
         LocalDate dataFim = Utils.converteStringLocalDate(request.getParameter("dataFim"));
 
         if(dataInicio == null && dataFim == null) {
-            dataInicio = LocalDate.now().withDayOfMonth(1);
-            dataFim = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
+            dataInicio = LocalDate.of(2022, 10, 1).withDayOfMonth(1);
+            dataFim = LocalDate.of(2022, 10, 31).with(TemporalAdjusters.lastDayOfMonth());
         }
 
         LocalDate finalDataInicio = dataInicio;
@@ -375,11 +375,8 @@ public class VendaViewHelper implements IViewHelper {
         }
     }
 
-    public static List<LocalDate> getDatesBetween(
-            LocalDate startDate, LocalDate endDate) {
-
-        return startDate.datesUntil(endDate.plusDays(1))
-                .collect(Collectors.toList());
+    public static List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
+        return startDate.datesUntil(endDate.plusDays(1)).collect(Collectors.toList());
     }
 
 }
