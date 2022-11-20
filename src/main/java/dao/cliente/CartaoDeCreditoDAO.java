@@ -27,8 +27,8 @@ public class CartaoDeCreditoDAO implements IDAO {
                 atualizaCartaoPreferencial(cartao);
 
             String sql = "INSERT INTO cartoes (crt_cli_usr_id, crt_numero, crt_bandeira, crt_nome_impresso, crt_mes_validade," +
-                    " crt_ano_validade, crt_cod_seg, crt_preferencial)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    " crt_ano_validade, crt_cod_seg, crt_preferencial, crt_ativo)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1, cartao.getCliente().getUsuario().getId());
@@ -39,6 +39,7 @@ public class CartaoDeCreditoDAO implements IDAO {
             pstm.setString(6, cartao.getAnoValidade());
             pstm.setInt(7, cartao.getCodigo());
             pstm.setBoolean(8, !existeCartaoPreferencial(cartao.getCliente().getUsuario()) || cartao.isPreferencial());
+            pstm.setBoolean(9, true);
             pstm.execute();
 
             ResultSet rs = pstm.getGeneratedKeys();
@@ -109,8 +110,23 @@ public class CartaoDeCreditoDAO implements IDAO {
         try {
             conn = conexao.getConexao();
 
-            String sql = "DELETE FROM cartoes where crt_id = ?";
+            String sql = "SELECT true FROM cartoes_em_venda WHERE crv_crt_id = ? LIMIT 1";
             PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setLong(1, cartao.getId());
+
+            ResultSet rs = pstm.executeQuery();
+
+            boolean isEmVenda = false;
+            while (rs.next()) {
+                isEmVenda = rs.getBoolean("isEmVenda");
+            }
+
+            if (isEmVenda)
+                sql = "UPDATE cartoes SET crt_ativo = false WHERE crt_id = ?";
+            else
+                sql = "DELETE FROM cartoes where crt_id = ?";
+
+            pstm = conn.prepareStatement(sql);
             pstm.setLong(1, cartao.getId());
 
             pstm.execute();

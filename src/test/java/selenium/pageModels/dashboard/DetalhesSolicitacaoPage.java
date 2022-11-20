@@ -12,8 +12,11 @@ public class DetalhesSolicitacaoPage extends PageAbstract {
         super(driver, TITULO_PAGINA);
     }
 
-    public TrocasAdmPage alterarStatus(String novoStatus){
+    public TrocasAdmPage alterarStatus(String novoStatus) throws InterruptedException {
         driver.findElement(By.id("status")).sendKeys(novoStatus);
+
+        Thread.sleep(1000);
+
         driver.findElement(By.id("botaoAtualizarStatus")).click();
 
         return new TrocasAdmPage(driver);

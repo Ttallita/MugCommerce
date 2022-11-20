@@ -8,21 +8,21 @@ VALUES ('login@teste.com', 'bf16fadfbdf1f8450d143857c08a8acb70033cc48d18b22037e1
 INSERT INTO clientes (cli_usr_id,cli_nome,  cli_sobrenome,cli_cpf,cli_dt_nasc,cli_genero,cli_telefone_num,cli_telefone_ddd,cli_telefone_tp,cli_rank)
 VALUES (1,'Maria','dos Anjos','303.799.550-59','2001-12-12','Feminino','50678-0441','19','CELULAR',NULL);
 
-INSERT INTO cartoes (crt_cli_usr_id, crt_numero, crt_bandeira, crt_nome_impresso, crt_mes_validade, crt_ano_validade, crt_cod_seg, crt_preferencial) VALUES
-	 (1,'1111 1111 1111 1111','Elo','Alexandre Portugal','01','2031','111',true),
-	 (1,'2222 2222 2222 2222','Mastercard','Bianca Jade','02','2032','222',false),
-	 (1,'3333 3333 3333 3333','American Express','Carlos Sergipe','03','2033','333',false),
-	 (1,'4444 4444 4444 4444','Hipercard','Daniel Salvador','04','2034','444',false),
-	 (1,'5555 5555 5555 5555','Visa','Eduarda Salmão','05','2035','555',false),
-	 (1,'6666 6666 6666 6666','Elo','Fábio Dom Jão','06','2036','666',false);
+INSERT INTO cartoes (crt_cli_usr_id, crt_numero, crt_bandeira, crt_nome_impresso, crt_mes_validade, crt_ano_validade, crt_cod_seg, crt_preferencial, crt_ativo) VALUES
+	 (1,'1111 1111 1111 1111','Elo','Alexandre Portugal','01','2031','111',true, true),
+	 (1,'2222 2222 2222 2222','Mastercard','Bianca Jade','02','2032','222',false, true),
+	 (1,'3333 3333 3333 3333','American Express','Carlos Sergipe','03','2033','333',false, true),
+	 (1,'4444 4444 4444 4444','Hipercard','Daniel Salvador','04','2034','444',false, true),
+	 (1,'5555 5555 5555 5555','Visa','Eduarda Salmão','05','2035','555',false, true),
+	 (1,'6666 6666 6666 6666','Elo','Fábio Dom Jão','06','2036','666',false, true);
 
 
-INSERT INTO enderecos (end_cli_usr_id,end_tp,end_apelido,end_tp_residencia,end_tp_logradouro,end_logradouro,end_num,end_bairro,end_cep,end_cidade,end_estado,end_observacao)
-VALUES  (1,'COBRANCA_ENTREGA','Minha casa','Sobrado','Avenida','Pingo d''água','586','Fernandes','95044-120','Mogi das Cruzes','São Paulo',''),
-        (1,'COBRANCA_ENTREGA','Apartamento A','Apartamento','Alameda','Águas sagradas','111','Amélia Soares','11111-111','Acrelândia','Acre',''),
-        (1,'COBRANCA','Sobrado B','Sobrado','Beco','Bonda dourada','222','Barões','22222-222','Bonito','Bahia',''),
-        (1,'ENTREGA','Casa C','Casa','Comunidade','Coroa Lorenzo','333','Carmo Nogueira','33333-333','Camocim','Ceará',''),
-        (1,'COBRANCA_ENTREGA','Casa D','Casa','Distrito','Dom Terciário Quarto','444','Dama Claudite','44444-444','Brasília','Distrito Federal','');
+INSERT INTO enderecos (end_cli_usr_id,end_tp,end_apelido,end_tp_residencia,end_tp_logradouro,end_logradouro,end_num,end_bairro,end_cep,end_cidade,end_estado,end_observacao, end_ativo)
+VALUES  (1,'COBRANCA_ENTREGA','Minha casa','Sobrado','Avenida','Pingo d''água','586','Fernandes','95044-120','Mogi das Cruzes','São Paulo','', true),
+        (1,'COBRANCA_ENTREGA','Apartamento A','Apartamento','Alameda','Águas sagradas','111','Amélia Soares','11111-111','Acrelândia','Acre','', true),
+        (1,'COBRANCA','Sobrado B','Sobrado','Beco','Bonda dourada','222','Barões','22222-222','Bonito','Bahia','', true),
+        (1,'ENTREGA','Casa C','Casa','Comunidade','Coroa Lorenzo','333','Carmo Nogueira','33333-333','Camocim','Ceará','', true),
+        (1,'COBRANCA_ENTREGA','Casa D','Casa','Distrito','Dom Terciário Quarto','444','Dama Claudite','44444-444','Brasília','Distrito Federal','', true);
 
 INSERT INTO cupons (cpm_cli_usr_id, cpm_nome, cpm_tp, cpm_valor, cpm_dt_validade, cpm_descricao) VALUES
     (1, 'Cupom aniversariante', 'PROMOCIONAL', 20.0, '2023-01-01', 'Se presenteie bla bla bla...'),
