@@ -12,8 +12,11 @@ public class DetalhesCompraPage extends PageAbstract {
         super(driver, TITULO_PAGINA);
     }
 
-    public VendaAdmPage alterarStatus(String novoStatus){
+    public VendaAdmPage alterarStatus(String novoStatus) throws InterruptedException {
         driver.findElement(By.id("status")).sendKeys(novoStatus);
+
+        Thread.sleep(1000);
+
         driver.findElement(By.id("botaoAtualizarStatus")).click();
 
         return new VendaAdmPage(driver);

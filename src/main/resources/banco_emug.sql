@@ -38,12 +38,14 @@ CREATE TABLE cartoes(
     crt_mes_validade  varchar(2)   NOT NULL,
     crt_ano_validade  varchar(4)   NOT NULL,
     crt_cod_seg       varchar(3)   NOT NULL,
-    crt_preferencial  boolean      NOT NULL
+    crt_preferencial  boolean      NOT NULL,
+    crt_ativo         boolean      NOT NULL
 );
 
 DROP TABLE IF EXISTS "enderecos" CASCADE;
 CREATE TABLE enderecos (
     end_id            serial       NOT NULL,
+    end_ativo         boolean      NOT NULL,
     end_cli_usr_id    int          NOT NULL,
     end_tp            varchar(20)  NOT NULL,
     end_apelido       varchar(255) NOT NULL,

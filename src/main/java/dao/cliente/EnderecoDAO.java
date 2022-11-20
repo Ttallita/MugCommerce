@@ -22,8 +22,8 @@ public class EnderecoDAO implements IDAO {
             conn = conexao.getConexao();
 
             String sql = "INSERT INTO enderecos (end_cli_usr_id, end_tp, end_apelido, end_tp_logradouro, end_logradouro," +
-                    " end_num, end_bairro, end_cep, end_cidade, end_estado, end_observacao, end_tp_residencia)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    " end_num, end_bairro, end_cep, end_cidade, end_estado, end_observacao, end_tp_residencia, end_ativo)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setLong(1,endereco.getCliente().getUsuario().getId());
@@ -38,6 +38,7 @@ public class EnderecoDAO implements IDAO {
             pstm.setString(10, endereco.getEstado());
             pstm.setString(11, endereco.getObservacoes());
             pstm.setString(12, endereco.getTipoResidencia());
+            pstm.setBoolean(13, true);
 
             pstm.execute();
 
@@ -107,11 +108,25 @@ public class EnderecoDAO implements IDAO {
         try {
             conn = conexao.getConexao();
 
-            String sql = "DELETE FROM enderecos where end_id = ?";
+            String sql = "SELECT true AS isEmVenda FROM vendas e WHERE vnd_end_entrega_id = ? OR vnd_end_cobranca_id = ? LIMIT 1";
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setLong(1, endereco.getId());
+            pstm.setLong(2, endereco.getId());
 
-            // TODO caso o endereço participe de alguma venda ele deve ser inativado e não deletado, mesma coisa para o cartão...
+            ResultSet rs = pstm.executeQuery();
+
+            boolean isEmVenda = false;
+            while (rs.next()) {
+                isEmVenda = rs.getBoolean("isEmVenda");
+            }
+
+            if (isEmVenda)
+                sql = "UPDATE enderecos SET end_ativo = false WHERE end_id = ?";
+            else
+                sql = "DELETE FROM enderecos where end_id = ?";
+
+            pstm = conn.prepareStatement(sql);
+            pstm.setLong(1, endereco.getId());
 
             pstm.execute();
 
@@ -139,7 +154,7 @@ public class EnderecoDAO implements IDAO {
             PreparedStatement pstm = null;
 
             if(operacao.equals("listar") || operacao.equals("listarJson")) {
-                sql = "SELECT * FROM enderecos where end_cli_usr_id = ?";
+                sql = "SELECT * FROM enderecos WHERE end_cli_usr_id = ? AND end_ativo = true";
 
                 pstm = conn.prepareStatement(sql);
                 pstm.setLong(1,endereco.getCliente().getUsuario().getId());
