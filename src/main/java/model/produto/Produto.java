@@ -3,6 +3,7 @@ package model.produto;
 import model.EntidadeDominio;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Produto extends EntidadeDominio {
     private String nome;
@@ -104,6 +105,33 @@ public class Produto extends EntidadeDominio {
 
     public void setEmTroca(boolean emTroca) {
         this.emTroca = emTroca;
+    }
+
+    protected boolean canEqual(Object obj) {
+        return (obj instanceof Produto);
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Produto produto)) return false;
+        return emTroca == produto.emTroca
+                && Objects.equals(nome, produto.nome)
+                && Objects.equals(valorCompra, produto.valorCompra)
+                && Objects.equals(valorVenda, produto.valorVenda)
+                && Objects.equals(descricao, produto.descricao)
+                && Objects.equals(material, produto.material)
+                && Objects.equals(grupoPrecificacao, produto.grupoPrecificacao)
+                && Objects.equals(fabricante, produto.fabricante)
+                && Objects.equals(codBarras, produto.codBarras)
+                && Objects.equals(categorias, produto.categorias)
+                && Objects.equals(imagem, produto.imagem)
+                && produto.canEqual(this);
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(nome, valorCompra, valorVenda, descricao, material, grupoPrecificacao, fabricante, codBarras, categorias, imagem, emTroca);
     }
 
     @Override

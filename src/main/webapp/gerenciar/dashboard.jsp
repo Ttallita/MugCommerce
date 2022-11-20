@@ -33,9 +33,27 @@
             <!-- Gráficos-->
             <div class="container">
                 <div class="row g-5">
+                    <label><h6>Periodo:</h6></label>
 
+                    <div class="d-flex justify-content-between w-50">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon3">De:</span>
+                            <input type="date" class="form-control" id="dataInicio">
+                            <span class="input-group-text">a</span>
+                            <input type="date" class="form-control" id="dataFim">
+                        </div>
+                    </div>
                     <div class="col-12 align-self-center text-center">
                         <h5>Gráfico vendas</h5>
+                        <br/><br/>
+                        <div id="loading">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                                  <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                      
                         <div id="chart"></div>
                     </div>
 
@@ -50,75 +68,74 @@
     <script src="<c:url value='/webjars/bootstrap/5.2.0/js/bootstrap.bundle.min.js' />"></script>
     <script src="<c:url value='/webjars/jquery/3.6.1/jquery.min.js' />"></script>   
     <script src='<c:url value="/assets/js/apexcharts.min.js"/>'></script>
-    <script src='<c:url value="/assets/js/lodash.js"/>'></script>
 
     <script>
-
-        const mesesGrafico = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Aug', 'Set', 'Out', 'Nov', 'Dez']
         const baseUrl = 'http://localhost:8080/emug';
 
 
         $(document).ready(async () => {
+            montaGraficoVolumeVendasProduto()
+
+        }) 
+
+       
+        async function montaGraficoVolumeVendasProduto() {
             let url = new URL(baseUrl + "/adm/vendas")
-            let params = { operacao: 'listarTodos', dashboard: true }
+            let params = { operacao: 'listarTodos', dashboard: true, vendasDataProduto: true }
 
             url.search = new URLSearchParams(params).toString()
 
             let response = await fetch(url)
             let json = await response.json()
 
-        
-            let valores = getValoresDashboard(json)
-
             var options = {
-                series: [{
-                    name: "Vendas por mês",
-                    data: valores
-                }],
+                series: json.options,
                 chart: {
-                    height: 350,
+                    height: 650,
                     type: 'line',
                     zoom: {
                         enabled: false
-                    }
+                    },
                 },
                 dataLabels: {
                     enabled: false
                 },
                 stroke: {
-                    curve: 'straight'
+                    curve: 'straight',
                 },
                 title: {
-                    text: 'Quantidade de vendas por mês',
+                    text: 'Volume de venda de produtos por Data',
                     align: 'left'
                 },
-                grid: {
-                    row: {
-                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                        opacity: 0.5
-                    },
+                markers: {
+                    size: 0,
+                    hover: {
+                        sizeOffset: 6
+                    }
                 },
                 xaxis: {
-                    categories: mesesGrafico,
+                    categories: json.categories
+                },
+                tooltip: {
+                    y: [
+                        {
+                            title: {
+                                formatter: function (val) {
+                                return val;
+                                }
+                            }
+                        }
+                    ]
+                },
+                grid: {
+                    borderColor: '#f1f1f1',
                 }
             };
 
             var chart = new ApexCharts(document.querySelector("#chart"), options);
             chart.render();
-        }) 
 
-        function getValoresDashboard(vendasAgrupadosPorMes) {
-            let valoresGraficos = []
-            mesesGrafico.forEach(function(valor, i) {
-                let listaVendas = vendasAgrupadosPorMes[i + 1]
-
-                if(listaVendas === undefined || listaVendas === null)
-                    valoresGraficos.push(0)
-                else
-                    valoresGraficos.push(listaVendas.length)
-            })
-
-            return valoresGraficos
+            $('#loading').hide()
         }
 
     </script>
