@@ -112,12 +112,10 @@
             let response = await fetch(url)
             let json = await response.json()
 
-            if(json.options === undefined) {
+            if(json.options === undefined)
                 createNotify("error", "", json)
-                return
-            }            
-
-            montaGraficoVolumeVendasProduto(json)
+            else          
+                montaGraficoVolumeVendasProduto(json)
 
             $('#loading').hide()
             $('#botaoFiltrar').prop("disabled", false)
