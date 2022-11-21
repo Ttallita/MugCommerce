@@ -4,6 +4,7 @@ import business.strategy.IStrategy;
 import business.strategy.impl.carrinho.VerificaCarrinhoStrategy;
 import business.strategy.impl.cliente.*;
 import business.strategy.impl.cliente.cartao.VerificarCartaoStrategy;
+import business.strategy.impl.dashboard.VerificaDashboardStrategy;
 import business.strategy.impl.estoque.VerificaEntradaEstoqueStrategy;
 import business.strategy.impl.produto.VerificaProdutoStrategy;
 import dao.IDAO;

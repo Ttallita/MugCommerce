@@ -1,4 +1,4 @@
-package business.facade;
+package business.strategy.impl.dashboard;
 
 import business.strategy.IStrategy;
 import model.EntidadeDominio;
