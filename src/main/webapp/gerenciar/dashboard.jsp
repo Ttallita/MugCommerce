@@ -112,6 +112,11 @@
             let response = await fetch(url)
             let json = await response.json()
 
+            if(json.options === undefined) {
+                createNotify("error", "", json)
+                return
+            }            
+
             montaGraficoVolumeVendasProduto(json)
 
             $('#loading').hide()
@@ -120,7 +125,7 @@
 
         function montaGraficoVolumeVendasProduto(json) {
 
-            if (json.options == 0) {
+            if (json.options.length == 0) {
                 createNotify("error", "", "Não existe dados para o período selecionado")
                 return
             }

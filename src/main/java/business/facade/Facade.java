@@ -68,6 +68,7 @@ public class Facade implements IFacade {
         daosMap.put(EstoqueHistorico.class.getName(), new EstoqueHistoricoDAO());
         daosMap.put(DashboardVendasAgrupadas.class.getName(), new DashboardDAO());
 
+
         sessionMap = new HashMap<>();
         sessionMap.put(ItemCarrinho.class.getName(), new CarrinhoSessionUtil());
 
@@ -80,6 +81,7 @@ public class Facade implements IFacade {
         regrasDeNegocioMap.put(Produto.class.getName(), getRegrasNegocioProduto());
         regrasDeNegocioMap.put(EstoqueHistorico.class.getName(), getRegrasNegocioEstoqueEntrada());
         regrasDeNegocioMap.put(ItemCarrinho.class.getName(), getRegrasNegocioCarrinho());
+        regrasDeNegocioMap.put(DashboardVendasAgrupadas.class.getName(), getRegrasDashboard());
     }
 
     @Override
@@ -296,6 +298,17 @@ public class Facade implements IFacade {
 
         Map<String, List<IStrategy>> mapStrategy = new HashMap<>();
         mapStrategy.put("atualizar", regraCarrinho);
+
+        return mapStrategy;
+    }
+
+    private Map<String, List<IStrategy>> getRegrasDashboard() {
+        List<IStrategy> regraDashboard = List.of(
+                new VerificaDashboardStrategy()
+        );
+
+        Map<String, List<IStrategy>> mapStrategy = new HashMap<>();
+        mapStrategy.put("listar", regraDashboard);
 
         return mapStrategy;
     }

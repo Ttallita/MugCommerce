@@ -34,10 +34,11 @@ public class DashboardViewHelper implements IViewHelper {
         LocalDate dataInicio = Utils.converteStringLocalDate(request.getParameter("dataInicio"));
         LocalDate dataFim = Utils.converteStringLocalDate(request.getParameter("dataFim"));
 
-        if(dataInicio == null && dataFim == null) {
-            dataInicio = LocalDate.of(2022, 10, 1).withDayOfMonth(1);
-            dataFim = LocalDate.of(2022, 10, 31).with(TemporalAdjusters.lastDayOfMonth());
-        }
+        if(dataInicio == null)
+            dataInicio = LocalDate.now().withDayOfMonth(1);
+
+        if(dataFim == null)
+            dataFim = LocalDate.now();
 
         dashboardVendasAgrupadas.setDataInicio(dataInicio);
         dashboardVendasAgrupadas.setDataFim(dataFim);
@@ -48,79 +49,6 @@ public class DashboardViewHelper implements IViewHelper {
     @Override
     public void setView(Result result, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        DashboardVendasAgrupadas requestDashboard = (DashboardVendasAgrupadas) getEntidade(request);
-
-        Map<LocalDate, List<DashboardVendasAgrupadas>> produtoQuantidadePorData = result.getEntidades().stream()
-                .map(entidade -> (DashboardVendasAgrupadas) entidade)
-                .collect(Collectors.groupingBy(DashboardVendasAgrupadas::getDataCompra));
-
-        Set<String> produtosDoGrafico = result.getEntidades().stream()
-                .map(entidade -> ((DashboardVendasAgrupadas) entidade).getNome())
-                .collect(Collectors.toSet());
-
-        List<LocalDate> datesBetween = getDatesBetween(requestDashboard.getDataInicio(), requestDashboard.getDataFim());
-
-        Map<String, DashboardDataVO> valoresGrafico = new HashMap<>();
-
-        for (LocalDate datasGrafico : datesBetween) {
-            List<DashboardVendasAgrupadas> dashboardVendasAgrupadas = produtoQuantidadePorData.get(datasGrafico);
-
-            Set<String> produtosParaAdicionar = new HashSet<>();
-            if(dashboardVendasAgrupadas != null) {
-
-                for (DashboardVendasAgrupadas produtoQuantidade : dashboardVendasAgrupadas) {
-                    DashboardDataVO dashboardDataVOS = valoresGrafico.get(produtoQuantidade.getNome());
-
-                    if(dashboardDataVOS != null)
-                        dashboardDataVOS.getData().add(produtoQuantidade.getQuantidade());
-                    else {
-                        DashboardDataVO novoData = new DashboardDataVO();
-                        novoData.setName(produtoQuantidade.getNome());
-                        novoData.setData(new ArrayList<>());
-
-                        novoData.getData().add(produtoQuantidade.getQuantidade());
-                        valoresGrafico.put(produtoQuantidade.getNome(), novoData);
-                    }
-                }
-
-                Set<String> produtos = dashboardVendasAgrupadas.stream().map(DashboardVendasAgrupadas::getNome).collect(Collectors.toSet());
-
-                Sets.SetView<String> difference = Sets.difference(produtosDoGrafico, produtos);
-                difference.copyInto(produtosParaAdicionar);
-            } else {
-                produtosParaAdicionar = produtosDoGrafico;
-            }
-
-            Collection<DashboardDataVO> dashboardDataVOS = valoresGrafico.values();
-
-            for (String produto : produtosParaAdicionar) {
-                DashboardDataVO voDashboard = null;
-
-                if (!dashboardDataVOS.isEmpty()) {
-                    Optional<DashboardDataVO> optional = dashboardDataVOS.stream()
-                            .filter(vo -> vo.getName().equals(produto))
-                            .findAny();
-
-                    if(optional.isPresent())
-                        voDashboard = optional.get();
-                }
-
-                if (voDashboard == null) {
-                    DashboardDataVO novoData = new DashboardDataVO();
-                    novoData.setName(produto);
-                    novoData.setData(new ArrayList<>());
-
-                    novoData.getData().add(0);
-
-                    valoresGrafico.put(produto, novoData);
-                } else
-                    voDashboard.getData().add(0);
-            }
-        }
-
-        response.setCharacterEncoding("UTF8");
-        response.setContentType("application/json");
-
         ExcludeImageGson excludeImageGson = new ExcludeImageGson();
 
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -128,16 +56,95 @@ public class DashboardViewHelper implements IViewHelper {
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new UtilsWeb.LocalDateTimeSerializer());
         gsonBuilder.addSerializationExclusionStrategy(excludeImageGson);
 
-
         Gson gson = gsonBuilder
                 .enableComplexMapKeySerialization()
                 .create();
 
+        String msgErro = result.getMsg();
+        String json;
+
+        if(result.getMsg() != null)
+            json = gson.toJson(msgErro);
+        else {
+            DashboardVendasAgrupadas requestDashboard = (DashboardVendasAgrupadas) getEntidade(request);
+
+            Map<LocalDate, List<DashboardVendasAgrupadas>> produtoQuantidadePorData = result.getEntidades().stream()
+                    .map(entidade -> (DashboardVendasAgrupadas) entidade)
+                    .collect(Collectors.groupingBy(DashboardVendasAgrupadas::getDataCompra));
+
+            Set<String> produtosDoGrafico = result.getEntidades().stream()
+                    .map(entidade -> ((DashboardVendasAgrupadas) entidade).getNome())
+                    .collect(Collectors.toSet());
+
+            List<LocalDate> datesBetween = getDatesBetween(requestDashboard.getDataInicio(), requestDashboard.getDataFim());
+
+            Map<String, DashboardDataVO> valoresGrafico = new HashMap<>();
+
+            for (LocalDate datasGrafico : datesBetween) {
+                List<DashboardVendasAgrupadas> dashboardVendasAgrupadas = produtoQuantidadePorData.get(datasGrafico);
+
+                Set<String> produtosParaAdicionar = new HashSet<>();
+                if(dashboardVendasAgrupadas != null) {
+
+                    for (DashboardVendasAgrupadas produtoQuantidade : dashboardVendasAgrupadas) {
+                        DashboardDataVO dashboardDataVOS = valoresGrafico.get(produtoQuantidade.getNome());
+
+                        if(dashboardDataVOS != null)
+                            dashboardDataVOS.getData().add(produtoQuantidade.getQuantidade());
+                        else {
+                            DashboardDataVO novoData = new DashboardDataVO();
+                            novoData.setName(produtoQuantidade.getNome());
+                            novoData.setData(new ArrayList<>());
+
+                            novoData.getData().add(produtoQuantidade.getQuantidade());
+                            valoresGrafico.put(produtoQuantidade.getNome(), novoData);
+                        }
+                    }
+
+                    Set<String> produtos = dashboardVendasAgrupadas.stream().map(DashboardVendasAgrupadas::getNome).collect(Collectors.toSet());
+
+                    Sets.SetView<String> difference = Sets.difference(produtosDoGrafico, produtos);
+                    difference.copyInto(produtosParaAdicionar);
+                } else {
+                    produtosParaAdicionar = produtosDoGrafico;
+                }
+
+                Collection<DashboardDataVO> dashboardDataVOS = valoresGrafico.values();
+
+                for (String produto : produtosParaAdicionar) {
+                    DashboardDataVO voDashboard = null;
+
+                    if (!dashboardDataVOS.isEmpty()) {
+                        Optional<DashboardDataVO> optional = dashboardDataVOS.stream()
+                                .filter(vo -> vo.getName().equals(produto))
+                                .findAny();
+
+                        if(optional.isPresent())
+                            voDashboard = optional.get();
+                    }
+
+                    if (voDashboard == null) {
+                        DashboardDataVO novoData = new DashboardDataVO();
+                        novoData.setName(produto);
+                        novoData.setData(new ArrayList<>());
+
+                        novoData.getData().add(0);
+
+                        valoresGrafico.put(produto, novoData);
+                    } else
+                        voDashboard.getData().add(0);
+                }
+            }
+
+            json = gson.toJson(new DashboardVO(datesBetween, valoresGrafico.values().stream().toList()));
+        }
+
+        response.setCharacterEncoding("UTF8");
+        response.setContentType("application/json");
+
         PrintWriter writer = response.getWriter();
-        writer.write(gson.toJson(new DashboardVO(datesBetween, valoresGrafico.values().stream().toList())));
+        writer.write(json);
         writer.flush();
-
-
     }
 
     private static class ExcludeImageGson implements ExclusionStrategy {
@@ -153,9 +160,6 @@ public class DashboardViewHelper implements IViewHelper {
     }
 
     public static List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
-        if(endDate == null)
-            endDate = LocalDate.now();
-
         return startDate.datesUntil(endDate.plusDays(1)).collect(Collectors.toList());
     }
 }
