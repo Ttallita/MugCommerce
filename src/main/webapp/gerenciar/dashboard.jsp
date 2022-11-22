@@ -90,7 +90,8 @@
             let response = await fetch(url)
             let json = await response.json()
 
-            montaGraficoVolumeVendasProduto(json)
+            if (json.options.length > 0)
+                montaGraficoVolumeVendasProduto(json)
 
             $('#loading').hide()
 
@@ -114,19 +115,18 @@
 
             if(json.options === undefined)
                 createNotify("error", "", json)
-            else          
-                montaGraficoVolumeVendasProduto(json)
+             
+            else 
+                if (json.options.length == 0)
+                    createNotify("error", "", "Não existe dados para o período selecionado")
+                else
+                    montaGraficoVolumeVendasProduto(json)
 
             $('#loading').hide()
             $('#botaoFiltrar').prop("disabled", false)
         }
 
         function montaGraficoVolumeVendasProduto(json) {
-
-            if (json.options.length == 0) {
-                createNotify("error", "", "Não existe dados para o período selecionado")
-                return
-            }
 
             var options = {
                 series: json.options,

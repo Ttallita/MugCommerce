@@ -34,11 +34,10 @@ public class DashboardViewHelper implements IViewHelper {
         LocalDate dataInicio = Utils.converteStringLocalDate(request.getParameter("dataInicio"));
         LocalDate dataFim = Utils.converteStringLocalDate(request.getParameter("dataFim"));
 
-        if(dataInicio == null)
+        if(dataInicio == null && dataFim == null) {
             dataInicio = LocalDate.now().withDayOfMonth(1);
-
-        if(dataFim == null)
             dataFim = LocalDate.now();
+        }
 
         dashboardVendasAgrupadas.setDataInicio(dataInicio);
         dashboardVendasAgrupadas.setDataFim(dataFim);
