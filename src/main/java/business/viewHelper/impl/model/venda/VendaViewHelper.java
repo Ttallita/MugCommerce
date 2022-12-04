@@ -207,18 +207,13 @@ public class VendaViewHelper implements IViewHelper {
             }
 
             case "listar" -> {
-                List<Venda> vendasOrdenadasDataCompra = ordenaVendasPorDataDeCompra(result.getEntidades());
-
-                request.setAttribute("compras", vendasOrdenadasDataCompra);
+                request.setAttribute("compras", result.getEntidades());
                 request.getRequestDispatcher("/cliente/compras.jsp").forward(request, response);
             }
 
             case "listarTodos" -> {
 
-
-                List<Venda> vendasOrdenadasDataCompra = ordenaVendasPorDataDeCompra(result.getEntidades());
-
-                request.setAttribute("vendas", vendasOrdenadasDataCompra);
+                request.setAttribute("vendas", result.getEntidades());
                 request.getRequestDispatcher("/gerenciar/vendas.jsp").forward(request, response);
             }
 
@@ -226,149 +221,6 @@ public class VendaViewHelper implements IViewHelper {
 
         }
 
-    }
-
-    /* private void getValoresParaGraficoVolumeVendas(Result result,
-                                                   HttpServletRequest request,
-                                                   HttpServletResponse response) throws IOException {
-
-        LocalDate dataInicio = Utils.converteStringLocalDate(request.getParameter("dataInicio"));
-        LocalDate dataFim = Utils.converteStringLocalDate(request.getParameter("dataFim"));
-
-        if(dataInicio == null && dataFim == null) {
-            dataInicio = LocalDate.of(2022, 10, 1).withDayOfMonth(1);
-            dataFim = LocalDate.of(2022, 10, 31).with(TemporalAdjusters.lastDayOfMonth());
-        }
-
-        LocalDate finalDataInicio = dataInicio;
-        LocalDate finalDataFim = dataFim;
-
-        List<LocalDate> datesBetween = getDatesBetween(dataInicio, dataFim);
-
-        Map<LocalDate, List<Venda>> vendasAgrupadasPorData = result.getEntidades()
-                .stream()
-                .map(entidade -> (Venda) entidade)
-                .filter(venda -> venda.getDataCompra().toLocalDate().isAfter(finalDataInicio) && venda.getDataCompra().toLocalDate().isBefore(finalDataFim))
-                .collect(Collectors.groupingBy(venda -> venda.getDataCompra().toLocalDate(), Collectors.toList()));
-
-        Map<LocalDate, Map<Produto, Integer>> mapaQuantidadeProdutosPorData = new TreeMap<>();
-
-        Set<Produto> produtosDoGrafico = new HashSet<>();
-
-        vendasAgrupadasPorData.forEach((k, v) -> {
-            Map<Produto, Integer> mapaQuantidadeDeProdutosDaData = new HashMap<>();
-
-            v.forEach(venda -> {
-                for (ItemCarrinho itemCarrinho : venda.getCarrinho().getItensCarrinho()) {
-                    Integer quantidadeData = mapaQuantidadeDeProdutosDaData.getOrDefault(itemCarrinho.getProduto(), 0);
-
-                    mapaQuantidadeDeProdutosDaData.put(itemCarrinho.getProduto(), itemCarrinho.getQuant() + quantidadeData);
-
-                    produtosDoGrafico.add(itemCarrinho.getProduto());
-                }
-            });
-
-            mapaQuantidadeProdutosPorData.put(k, mapaQuantidadeDeProdutosDaData);
-        });
-
-
-        Map<Produto, DashboardDataVO> valoresGrafico = new HashMap<>();
-
-        for (LocalDate datasGrafico : datesBetween) {
-            Map<Produto, Integer> produtoIntegerMap = mapaQuantidadeProdutosPorData.get(datasGrafico);
-
-            Set<Produto> produtosParaAdicionar = new HashSet<>();
-            if(produtoIntegerMap != null) {
-                for (Map.Entry<Produto, Integer> entry : produtoIntegerMap.entrySet()) {
-                    Produto key = entry.getKey();
-                    Integer value = entry.getValue();
-
-                    DashboardDataVO dashboardDataVOS = valoresGrafico.get(key);
-
-                    if(dashboardDataVOS != null)
-                        dashboardDataVOS.getData().add(value);
-                    else {
-                        DashboardDataVO novoData = new DashboardDataVO();
-                        novoData.setName(key.getNome());
-                        novoData.setData(new ArrayList<>());
-
-                        novoData.getData().add(value);
-                        valoresGrafico.put(key, novoData);
-                    }
-                }
-
-                Set<Produto> produtos = produtoIntegerMap.keySet();
-
-                Sets.SetView<Produto> difference = Sets.difference(produtosDoGrafico, produtos);
-                difference.copyInto(produtosParaAdicionar);
-            } else {
-                produtosParaAdicionar = produtosDoGrafico;
-            }
-
-            Collection<DashboardDataVO> dashboardDataVOS = valoresGrafico.values();
-
-            for (Produto produto : produtosParaAdicionar) {
-                DashboardDataVO voDashboard = null;
-
-                if (!dashboardDataVOS.isEmpty()) {
-                    Optional<DashboardDataVO> optional = dashboardDataVOS.stream()
-                            .filter(vo -> vo.getName().equals(produto.getNome()))
-                            .findAny();
-
-                    if(optional.isPresent())
-                        voDashboard = optional.get();
-                }
-
-                if (voDashboard == null) {
-                    DashboardDataVO novoData = new DashboardDataVO();
-                    novoData.setName(produto.getNome());
-                    novoData.setData(new ArrayList<>());
-
-                    novoData.getData().add(0);
-
-                    valoresGrafico.put(produto, novoData);
-                } else
-                    voDashboard.getData().add(0);
-            }
-        }
-
-        response.setCharacterEncoding("UTF8");
-        response.setContentType("application/json");
-
-        ExcludeImageGson excludeImageGson = new ExcludeImageGson();
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(LocalDate.class, new UtilsWeb.LocalDateSerializer());
-        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new UtilsWeb.LocalDateTimeSerializer());
-        gsonBuilder.addSerializationExclusionStrategy(excludeImageGson);
-
-
-        Gson gson = gsonBuilder
-                .enableComplexMapKeySerialization()
-                .create();
-
-        PrintWriter writer = response.getWriter();
-        writer.write(gson.toJson(new DashboardVO(datesBetween, valoresGrafico.values().stream().toList())));
-        writer.flush();
-    }
-
-    private static class ExcludeImageGson implements ExclusionStrategy {
-        @Override
-        public boolean shouldSkipField(FieldAttributes fieldAttributes) {
-            return fieldAttributes.getName().equals("imagem");
-        }
-
-        @Override
-        public boolean shouldSkipClass(Class<?> aClass) {
-            return false;
-        }
-    }*/
-
-    public List<Venda> ordenaVendasPorDataDeCompra(List<EntidadeDominio> vendas) {
-        return vendas.stream()
-                .map(entidade -> (Venda) entidade)
-                .sorted(Comparator.comparing(Venda::getDataCompra, Comparator.reverseOrder()))
-                .toList();
     }
 
 }

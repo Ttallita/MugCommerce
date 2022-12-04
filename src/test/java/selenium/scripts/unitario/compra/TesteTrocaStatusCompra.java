@@ -18,15 +18,16 @@ public class TesteTrocaStatusCompra extends TesteAbstract {
     private HeaderClienteComponent header;
 
     @Override
-    protected void configurarCenarioTeste() {
+    protected void configurarCenarioTeste() throws InterruptedException {
         HomePage homePage = realizarLoginClientePadrao();
         header = (HeaderClienteComponent) homePage.getHeader(driver);
+
+        TesteCompraService.realizarCompra(driver, header);
+        header.deslogar();
     }
 
     @Test
     public void alteraStatusCompra() throws InterruptedException {
-        TesteCompraService.realizarCompra(driver, header);
-        header.deslogar();
 
         HomePage homePage = realizarLoginAdmPadrao();
         HeaderAdmComponent headerAdm = (HeaderAdmComponent) homePage.getHeader(driver);

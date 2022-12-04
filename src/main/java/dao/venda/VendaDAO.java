@@ -207,13 +207,13 @@ public class VendaDAO implements IDAO {
                 }
 
                 case "listar" -> {
-                    sql = "SELECT * FROM vendas v WHERE v.vnd_cli_usr_id = ?";
+                    sql = "SELECT * FROM vendas v WHERE v.vnd_cli_usr_id = ? ORDER BY v.vnd_dt_compra DESC";
                     pstm = connection.prepareStatement(sql);
                     pstm.setLong(1, cliente.getUsuario().getId());
                 }
 
                 case "listarTodos" -> {
-                    sql = "SELECT * FROM vendas";
+                    sql = "SELECT * FROM vendas v ORDER BY v.vnd_dt_compra DESC";
                     pstm = connection.prepareStatement(sql);
                 }
 
@@ -224,69 +224,75 @@ public class VendaDAO implements IDAO {
             List<EntidadeDominio> vendas = new ArrayList<>();
             while (rs.next()) {
                 Venda vendaConsulta = new Venda();
-
                 Usuario usuario = new Usuario();
                 usuario.setId(rs.getLong("vnd_cli_usr_id"));
 
                 Cliente clienteVenda = new Cliente(usuario);
                 clienteVenda = (Cliente) clienteDAO.listar(clienteVenda, "listarUnico").get(0);
 
-                Endereco enderecoEntrega = new Endereco();
-                enderecoEntrega.setId(rs.getLong("vnd_end_entrega_id"));
-                enderecoEntrega.setCliente(clienteVenda);
-
-                Endereco enderecoCobranca = new Endereco();
-                enderecoCobranca.setId(rs.getLong("vnd_end_cobranca_id"));
-                enderecoCobranca.setCliente(clienteVenda);
+                vendaConsulta.setCliente(clienteVenda);
 
                 long idVenda = rs.getLong("vnd_id");
 
                 vendaConsulta.setId(idVenda);
-                vendaConsulta.setCliente(clienteVenda);
                 vendaConsulta.setPrecoTotal(rs.getDouble("vnd_preco_total"));
                 vendaConsulta.setFrete(rs.getDouble("vnd_frete"));
                 vendaConsulta.setPagamentoAprovado(rs.getBoolean("vnd_pagamento_aprovado"));
                 vendaConsulta.setVendaStatus(StatusVendaType.valueOf(rs.getString("vnd_status")));
                 vendaConsulta.setDataCompra(rs.getTimestamp("vnd_dt_compra").toLocalDateTime());
-                vendaConsulta.setEnderecoEntrega((Endereco) enderecoDAO.listar(enderecoEntrega, "listarUnico").get(0));
-                vendaConsulta.setEnderecoCobranca((Endereco) enderecoDAO.listar(enderecoCobranca, "listarUnico").get(0));
 
                 Timestamp dtEnvio = rs.getTimestamp("vnd_dt_envio");
                 Timestamp dtEntrega = rs.getTimestamp("vnd_dt_entrega");
                 vendaConsulta.setDataEnvio(dtEnvio != null ? rs.getTimestamp("vnd_dt_envio").toLocalDateTime() : null);
                 vendaConsulta.setDataEntrega(dtEntrega  != null ? rs.getTimestamp("vnd_dt_entrega").toLocalDateTime() : null);
 
-                sql = "SELECT * FROM produtos p " +
-                        "RIGHT JOIN (SELECT * FROM produtos_em_venda WHERE prv_vnd_id = ?) pev " +
-                        "ON p.pro_id = pev.prv_pro_id;";
+                if (operacao.equals("listarUnico") || operacao.equals("listarJson")) {
 
-                pstm = connection.prepareStatement(sql);
-                pstm.setLong(1, idVenda);
+                    Endereco enderecoEntrega = new Endereco();
+                    enderecoEntrega.setId(rs.getLong("vnd_end_entrega_id"));
+                    enderecoEntrega.setCliente(clienteVenda);
 
-                Carrinho carrinho = new Carrinho();
+                    Endereco enderecoCobranca = new Endereco();
+                    enderecoCobranca.setId(rs.getLong("vnd_end_cobranca_id"));
+                    enderecoCobranca.setCliente(clienteVenda);
 
-                ResultSet rsProdutosVenda = pstm.executeQuery();
-                while (rsProdutosVenda.next()) {
-                    ItemCarrinho item = new ItemCarrinho();
-                    Produto produto = new Produto();
+                    vendaConsulta.setEnderecoEntrega((Endereco) enderecoDAO.listar(enderecoEntrega, "listarUnico").get(0));
+                    vendaConsulta.setEnderecoCobranca((Endereco) enderecoDAO.listar(enderecoCobranca, "listarUnico").get(0));
 
-                    produto.setId(rsProdutosVenda.getLong("pro_id"));
-                    produto.setNome(rsProdutosVenda.getString("pro_nome"));
-                    produto.setValorCompra(rsProdutosVenda.getDouble("pro_valor_compra"));
-                    produto.setValorVenda(rsProdutosVenda.getDouble("pro_valor_venda"));
-                    produto.setDescricao(rsProdutosVenda.getString("pro_descricao"));
-                    produto.setMaterial(rsProdutosVenda.getString("pro_material"));
-                    produto.setCodBarras(rsProdutosVenda.getString("pro_cod_barras"));
-                    produto.setImagem(rsProdutosVenda.getString("pro_imagem"));
+                    sql = "SELECT * FROM produtos p " +
+                            "RIGHT JOIN (SELECT * FROM produtos_em_venda WHERE prv_vnd_id = ?) pev " +
+                            "ON p.pro_id = pev.prv_pro_id;";
 
-                    item.setProduto(produto);
-                    item.setQuant(rsProdutosVenda.getInt("prv_quant"));
-                    item.setEmTroca(rsProdutosVenda.getBoolean("prv_em_troca"));
+                    pstm = connection.prepareStatement(sql);
+                    pstm.setLong(1, idVenda);
 
-                    carrinho.addItem(item);
+                    Carrinho carrinho = new Carrinho();
+
+                    ResultSet rsProdutosVenda = pstm.executeQuery();
+                    while (rsProdutosVenda.next()) {
+                        ItemCarrinho item = new ItemCarrinho();
+                        Produto produto = new Produto();
+
+                        produto.setId(rsProdutosVenda.getLong("pro_id"));
+                        produto.setNome(rsProdutosVenda.getString("pro_nome"));
+                        produto.setValorCompra(rsProdutosVenda.getDouble("pro_valor_compra"));
+                        produto.setValorVenda(rsProdutosVenda.getDouble("pro_valor_venda"));
+                        produto.setDescricao(rsProdutosVenda.getString("pro_descricao"));
+                        produto.setMaterial(rsProdutosVenda.getString("pro_material"));
+                        produto.setCodBarras(rsProdutosVenda.getString("pro_cod_barras"));
+                        produto.setImagem(rsProdutosVenda.getString("pro_imagem"));
+
+                        item.setProduto(produto);
+                        item.setQuant(rsProdutosVenda.getInt("prv_quant"));
+                        item.setEmTroca(rsProdutosVenda.getBoolean("prv_em_troca"));
+
+                        carrinho.addItem(item);
+                    }
+
+                    vendaConsulta.setCarrinho(carrinho);
                 }
 
-                vendaConsulta.setCarrinho(carrinho);
+
                 vendas.add(vendaConsulta);
             }
 

@@ -44,6 +44,12 @@
 
                     <div class="tab-pane fade show active" id="pills-estoque" role="tabpanel" aria-labelledby="pills-estoque-tab" tabindex="0">
 
+                        <a href="${pageContext.request.contextPath}/gerenciar/formularios/entradaEstoque.jsp">
+                            <button type="button" class="w-100 btn btn-primary btn-sm" >
+                                Entrada de estoque
+                            </button>
+                        </a>
+                        
                         <table class="table table-hover w-100">
                             <thead>
                             <tr>
@@ -61,12 +67,6 @@
                             </tbody>
                         </table>
 
-
-                        <a href="${pageContext.request.contextPath}/gerenciar/formularios/entradaEstoque.jsp">
-                            <button type="button" class="w-100 btn btn-primary btn-sm" >
-                                Entrada de estoque
-                            </button>
-                        </a>
                     </div>
 
                     <div class="tab-pane fade" id="pills-estoque-historico" role="tabpanel" aria-labelledby="pills-estoque-historico-tab" tabindex="0">

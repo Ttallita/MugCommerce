@@ -1,4 +1,4 @@
-package selenium.scripts.PP_conducao;
+package selenium.scripts.conducao;
 
 import model.solicitacao.StatusSolicitacaoType;
 import model.venda.StatusVendaType;
@@ -17,7 +17,7 @@ import utils.Utils;
 import java.time.LocalDate;
 import java.util.List;
 
-public class PP_Troca extends TesteAbstract {
+public class TestePPTroca extends TesteAbstract {
 
     private HeaderClienteComponent headerCliente;
     private HeaderAdmComponent headerAdm;

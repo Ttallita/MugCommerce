@@ -9,7 +9,7 @@ public class Conexao {
     public Connection getConexao() throws SQLException, ClassNotFoundException{
 
         final String driver = "org.postgresql.Driver";
-        final String url = "jdbc:postgresql://localhost/emug";
+        final String url = "jdbc:postgresql://localhost/teste_emug";
         final String user = "postgres";
 
         String password = "postgres@local";
